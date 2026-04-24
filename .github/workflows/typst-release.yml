@@ -1,4 +1,8 @@
+
 name: Build and Release Typst PDF
+
+permissions:
+  contents: write
 
 on:
     push:
