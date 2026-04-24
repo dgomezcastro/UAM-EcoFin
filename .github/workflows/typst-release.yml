@@ -19,22 +19,14 @@ jobs:
               run: |
                   typst compile ecofin.typ ecofin.pdf
 
-            - name: Get current date and time
-              id: datetime
-              run: echo "date=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_OUTPUT
+            - name: Set release date variable
+              id: vars
+              run: echo "sha=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_OUTPUT
 
-            - name: Create GitHub Release
-              id: create_release
+            - name: Create GitHub Release and upload PDF
               uses: softprops/action-gh-release@v2
               with:
-                  tag_name: ${{ steps.datetime.outputs.date }}
-                  name: ${{ steps.datetime.outputs.date }}
-                  draft: false
-                  prerelease: false
-
-            - name: Upload PDF as Release Asset
-              uses: softprops/action-gh-release@v2
-              with:
+                  tag_name: release-${{ steps.vars.outputs.sha }}
+                  name: "EcoFin PDF – ${{ steps.vars.outputs.sha }}"
+                  body: "Auto-generated release for ${{ steps.vars.outputs.sha }}"
                   files: ecofin.pdf
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
