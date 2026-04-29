@@ -16,6 +16,14 @@ Texto
   caption: "Test",
 )
 
+#code-block(
+  ```python
+  def f()
+    return true
+  ```,
+  caption: "Test",
+)
+
 #figure([], caption: "Hi")
 
 #algo-block(
