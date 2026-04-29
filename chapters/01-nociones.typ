@@ -37,7 +37,33 @@ Como veremos más abajo, en hipotecas es habitual utilizar fracciones sencillas 
   Se calcula como el resultado de una fórmula matemática normalizada que tiene en cuenta el tipo de interés, las comisiones bancarias, la frecuencia de los pagos (mensuales, trimestrales, etc.) y otros gastos o ingresos.
 ]
 
-La fórmula se recoge en el #link("https://www.boe.es/boe/dias/2012/07/06/pdfs/BOE-A-2012-9058.pdf")[anejo 7 de la Circular 5/2012 de 27 de junio del Banco de España]
+La fórmula se recoge en el #link("https://www.boe.es/boe/dias/2012/07/06/pdfs/BOE-A-2012-9058.pdf")[anejo 7 de la Circular 5/2012 de 27 de junio del Banco de España]. Se origina en regulaciones europeas, y una buena descripción es la siguiente
+#quote(block: true, attribution: "Wikipedia")[
+A single method of calculating the APR was introduced in 1998 (directive 98/7/EC) and is required to be published for the major part of loans. Using the improved notation of directive 2008/48/EC.
+
+      $
+        sum_(i=1)^M C_i (1+"TAE"/100)^(-t_i)=sum_(j=1)^ N D_j (1+ "TAE" /100)^(-s_j)
+      $
+
+    where:
+
+        - $M$ is the total number of drawdowns paid by the lender
+        - $N$ is the total number of repayments paid by the borrower
+        - $i$ is the sequence number of a drawdown paid by the lender
+        - $j$ is the sequence number of a repayment paid by the borrower
+        - $C_i$ is the cash flow amount for drawdown number i
+        - $D_j$ is the cash flow amount for repayment number j
+        - $t_i$ is the interval, expressed in years and fractions of a year, between the date of the first drawdown and the date of drawdown i
+        - $s_j$ is the interval, expressed in years and fractions of a year, between the date of the first drawdown and the date of repayment j.
+
+In this equation the left side is the present value of the drawdowns made by the lender and the right side is the present value of the repayments made by the borrower. In both cases the present value is defined given the APR as the interest rate. So the present value of the drawdowns is equal to the present value of the repayments, given the APR as the interest rate.
+
+Note that neither the amounts nor the periods between transactions are necessarily equal. For the purposes of this calculation, a year is presumed to have 365 days (366 days for leap years), 52 weeks or 12 equal months. As per the standard: "An equal month is presumed to have 30.41666 days (i.e. 365/12) regardless of whether or not it is a leap year." The result is to be expressed to at least one decimal place. This algorithm for APR is required for some but not all forms of consumer debt in the EU. For example, this EU directive is limited to agreements of €50,000 and below and excludes all mortgages.
+
+[...]
+
+If the length of the periods are equal (monthly payments) then the summations can be simplified using the formula for a geometric series. Either way, the APR can be solved iteratively only from the formulas above, apart from trivial cases such as N=1. 
+]
 
 Si no hay gastos, para calcular la TAE en tanto por uno a partir del TIN expresado también en tanto por uno se utiliza esta fórmula:
 $
