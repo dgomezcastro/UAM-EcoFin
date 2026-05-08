@@ -3,7 +3,7 @@
 #import "../header/template.typ": *
 #import "@preview/diagraph:0.3.7": *
 
-= Valoración por no arbitraje, modelos de valoración.
+= Modelos de un paso temporal
 
 // Modelo matricial (un periodo de tiempo)
 // Valoración por replicación, carteras de cobertura, oportunidades de arbitraje.
@@ -15,7 +15,11 @@
 // Paso al límite, fórmulas de Black-Scholes.
 // Valoración de opciones americanas, ejercicio óptimo.
 
-== Modelo matricial
+Supongamos que tenemos un modelo discreto y estudiamos sólo lo tiempos $t = 0$ y $t = T$.
+
+
+== Modelo con un activo y dos estados
+
 #figure(
   raw-render(```
   digraph {
@@ -33,4 +37,8 @@
   caption: "A graph",
 )
 
+== Modelo con un activo y tres estados
 
+== Modelo con $N$ activos y $n$ estados
+
+== La medida libre de riesgo
