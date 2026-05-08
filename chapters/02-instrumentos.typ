@@ -4,5 +4,20 @@
 
 = Instrumentos y mercados financieros
 
-// Bonos, acciones, contratos a plazo, swaps. Opciones europeas
-// y americanas, otros derivados
+== Activos subyacentes
+
+=== Bonos
+
+=== Acciones
+
+== Derivados
+
+=== Contratos a plazo (_futures_)
+
+=== Swaps
+
+=== Opciones europeas
+
+=== Opciones americanas
+
+=== Otros derivados
