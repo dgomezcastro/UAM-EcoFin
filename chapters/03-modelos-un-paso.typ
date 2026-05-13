@@ -138,28 +138,23 @@ Hemos hecho algunas suposiciones:
 - Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
 - Liquidez: el mercado está dispuesto a comprar y vender de todas las acciones que quiera, y en cantidades fraccionarias
 
-=== Valoración por valor esperado, la medida riesgo neutro
+=== La medida riesgo neutro
 
-Es fácil observar que en general el valor libre de arbitraje no es el valor esperado
+Podemos hacer el cálculo anterior de valor esperado. Para ello introducimos el precio descontado
 $
-  C_0 != bb(E)^(bb(P))[ (S_T - K)_+ ] = p (u S_0-K)_+ + (1-p) (d S_0 - K)_+.
+  tilde(S)_t = e^(-r t) S_t
 $
-Sin embargo, es interesar observar que puede existir un valor $q$ tal que
+#definition[Medida libre de riesgo][
+  Medida de probabilidad $QQ$ tal que para todo $t$
+  $
+    EE^QQ [tilde(S_t)] = S_0
+  $
+]
+Dado que sólo hay posibilidades, si llamemos
 $
-  C_0 = q (u S_0-K)_+ + (1-q) (d S_0 - K)_+.
+  q := QQ(tilde(S)_t = u e^(-r T) S_0)
 $
-En el caso no trivial $(u S_0-K)_+ != (d S_0 - K)_+$ obtenemos
-$
-  q = (C_0 - (d S_0 - K)_+) / ((u S_0 - K)_+ - (d S_0 - K)_+).
-$
-Construímos la medida de _riesgo neutro_ o _libre de riesgo_ (ver @fig:binomial_riesgo_neutro)
-$
-  bb(Q) (S_T = u S_0) = q quad bb(Q) (S_T = d S_0) = 1-q.
-$
-sí cumple
-$
-  C_0 = bb(E)^(bb(Q))[(S_T - K)_+].
-$
+Entonces $tilde(S)$ satisface un segundo modelo binomial representado en @fig:binomial_riesgo_neutro
 #figure(
   raw-render(```
   digraph {
@@ -170,12 +165,45 @@ $
   s[label="S_0"]
   s -> s1[label="q"]
   s -> s2[label="1-q"]
-  s1[label="u S_0"]
-  s2[label="d S_0"]
+  s1[label="e^(-r T) u S_0"]
+  s2[label="e^(-r T) d S_0"]
   }
   ```),
-  caption: "Modelo binomial con medida de riesgo neutro",
+  caption: [Modelo binomial para el precio descontado $tilde(S)_t$ con medida de riesgo neutro],
 )<fig:binomial_riesgo_neutro>
+Nos falta conocer $q$. Aplicando la definición buscamos que
+$
+  S_0 = EE^QQ [tilde(S)_T] = e^(-r T) u S_0 q + e^(-r T) d S_0 (1-q)
+$
+podemos despejar
+$
+  q:= (e^(r T) - d )/(u - d)
+$
+que está en $(0,1)$ si $d < e^(r T) < u$. De modo que
+#proposition[Existencia de la medida libre de riesgo][
+  Si
+  $
+    d < e^(r T) < u
+  $<eq-binomial-condicion-no-arbitraje>
+  entonces existe $QQ$.
+]
+Ahora calculamos el valor de la cartera descontada
+$
+  EE^QQ [tilde(V)_t] = x_1 EE^QQ [tilde(S)_t] + x_2 EE^QQ [tilde(B)_t] = x_1 S_0 + x_2 B_0 = V_0.
+$
+De modo que $tilde(V)$ tiene esperanza constante. Pero dado que $C_t = V_t$ entonces $tilde(C)_t = tilde(V)_t$ y, por tanto, también tiene esperanza constante. Entonces
+$
+  C_0 = tilde(C)_0 = EE^QQ [ tilde(C)_T ] = EE^QQ [ e^(-r T) (S_T - K)_+]
+$
+Enunciemos el siguiente resultado como teorema, porque nos será de gran utilidad más adelante:
+#theorem[Valoración por riesgo neutro][
+  Supuesto @eq-binomial-condicion-no-arbitraje entonces
+  $
+    C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
+  $
+]
+
+
 
 *Martingalas*
 

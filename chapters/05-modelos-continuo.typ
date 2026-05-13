@@ -53,34 +53,29 @@ $
 $
 Ahora vamos a construir un proceso límite en tiempo. Consideremos un paso de tiempo $Delta t$ y sea el proceso en tiempo continuo y constante a trozos
 $
-  W_(t)^((Delta t)) := lambda_(Delta t) X_(floor(t/(Delta t)))
+  W_(t)^((n)) := X_(floor(n t))/(sqrt(n))
 $
-Así cuando $t = n Delta t$ tenemos $W_t^((Delta t)) = lambda_(Delta t) X_n$.
 // Deducimos de los anterior que
 // $
-//   W_(n Delta t)^((Delta t)) approx lambda_(Delta t) sqrt(n) N(0,1).
+//   W_(n Delta t)^((n)) approx lambda_(n) sqrt(n) N(0,1).
 // $
-Si queremos que este proceso tenga un buen límite buscamos que todas las $lambda_n sqrt(n)$ sea función de $t$, tomamos
+de modo que
 $
-  lambda_(Delta t) := sqrt(Delta t).
+  W_t^((n)) approx sqrt(t) N(0,1) ~ N(0, t)
 $
-De este modo deducimos que si $t = n Delta t$
+Utilizando el teorema central del límite, existe el siguiente límite en sentido de distribuciones
 $
-  W_t^((Delta t)) approx sqrt(t) N(0,1) ~ N(0, t)
+  W_t := lim_(Delta t -> 0) W^((n))_(t) .
+$<eq-limite-paseo-aleatorio>
+Si $t = k / n$ y $s = ell/n$ entonces
 $
-Como podemos escribir $Delta t = t / n$ llamamos
+  W_(t)^((n)) - W_(s)^((n)) = sqrt(n) sum_(ell = ell)^(k-1) Z_k approx N(0, t - s)
 $
-  W_t := lim_(Delta t -> 0) W^((Delta t))_(ceil(t/(Delta t))Delta t) .
+Además, como los $Z_k$ son independientes, si $s < t <= k/n < ell/n <= r < u$ entonces
 $
-Escribimos
-$
-  W_(k Delta t)^((Delta t)) - W_(n Delta t)^((Delta t)) = sqrt(Delta t) sum_(ell = n)^(k-1) Z_k approx N(0, Delta t ( k - n ))
-$
-Además, como los $Z_k$ son independientes, si $k < n < m < p$ entonces
-$
-  W_(k Delta t)^((Delta t)) - W_(n Delta t)^((Delta t))
+  W_t^((n)) - W_s^((n))
   " y "
-  W_(p Delta t)^((Delta t)) - W_(m Delta t)^((Delta t))
+  W_r^((n)) - W_u^((n))
 $
 son independientes
 
@@ -100,34 +95,60 @@ son independientes
 Hemos hecho la construcción de manera formal. Para una demostración rigurosa ver
 #block(fill: red)[Libro de Evans]
 
-== Límite del modelo de Cox-Ross-Rubinstein
+La construcción que hemos hecho se puede justificar, y de hecho es un resultado famoso.
+#theorem[Teorema de Donsker][
+  El límite @eq-limite-paseo-aleatorio existe en sentido de distribuciones, y $W_t$ es un movimiento Browniano.
+]
+
+Si consideramos un paseo aleatorio sesgado
+$
+  PP(xi=+1) = p " y " PP(xi=-1) = 1-p
+$
+entonces
+$
+  mu_xi := EE[xi] = 2p - 1.
+$
+Aplicando un razonamiento similar al anterior
+$
+  1 / sqrt(n)sum_(k=1)^( floor(t n) ) xi_k ->^d mu_xi t + W_t
+$
+donde $W_t$ es un movimiento Browniano.
+
+== Modelo de Black-Scholes. Límite de Cox-Ross-Rubinstein
 En el modelo de árbol binomial escribimos
 $
   S_(t+Delta t) = S_t R_t " donde " R_t :=
   cases(
-    log u & "con probabilidad " p,
-    log d & "con probabilidad " 1-p
+    u & "con probabilidad " p,
+    d & "con probabilidad " 1-p
   )
 $
-Así, deducimos que $log(b/a) = log b - log a$ tenemos que
+Llamemos
 $
-  log S_(t + Delta t) - log S_t = log R_t.
+  X_n := log S_(n Delta t)
+  " y "
+  Z_(n) := log R_(n Delta t).
 $
-Llamemos $X_n = log S_(n Delta t) - log S_0$ e $Z_(n+1) = log R_(n Delta t)$
-tenemos
+Aplicando las propiedades de logaritmo, tenemos
+$X_(n+1) - X_n = Z_n$ o,
+equivalentemente,
 $
-  X_(n+1) - X_n = Z_n.
+  X_n = X_0 + sum_(k=1)^(n) Z_k
 $
-Equivalentemente
+Descomponemos $Z$ en una parte determinista y un paseo aleatorio
 $
-  X_0 = 0, quad X_n = sum_(k=1)^n Z_k
+  log u = tilde(nu) + tilde(sigma),
+  quad log d = tilde(nu) - tilde(sigma),
+  quad Z_k = tilde(nu) + tilde(sigma) xi_k .
 $
-Para el paso al límite vamos a tomar
+Así
 $
-  log u := mu Delta t + sigma sqrt(Delta t) quad log d := mu Delta t - sigma sqrt(Delta t).
+  X_n & = X_0 + n tilde(nu) + tilde(sigma) sum_(k=1)^(n)xi_k \
+      & ->^d X_0 + (nu + 2p-1) t + sigma W_t,
 $
-
-y sumando obtenemos
+si escalamos $tilde(nu) / (Delta t) -> nu$ y $tilde(sigma) / sqrt(Delta t) -> sigma$.
+Esto quiere decir que
 $
-  X_(t + tau) - X_t = sum_(t<= s < t + tau \ s = k Delta t, k in ZZ ) Y_s ~
-$
+  log S_t = log S_0 + kappa t + sigma W_t
+$<eq-BlackScholes-logSt>
+La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
