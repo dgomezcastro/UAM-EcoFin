@@ -150,5 +150,62 @@ si escalamos $tilde(nu) / (Delta t) -> nu$ y $tilde(sigma) / sqrt(Delta t) -> si
 Esto quiere decir que
 $
   log S_t = log S_0 + kappa t + sigma W_t
-$<eq-BlackScholes-logSt>
+$
+O, despejando
+$
+  S_t = S_0 exp(kappa t + sigma W_t)
+$
+<eq-BlackScholes-St>
 La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
+
+== Un comentario sobre el cálculo de Itô
+Cálculo de Itô permite construir una teoría de ecuaciones diferenciales ordinarias de la forma
+$
+  d X_t = a(t,X_t) dif t + b(t, X_t) dif W_t .
+$
+En este marco, $S_t$ es la solución de la ecuación diferencial
+$
+  d S_t = mu S_t dif t + sigma S_t d W_t .
+$
+En este contexto, $W_t$ es un movimiento Browniano con la medida ambiente $PP$ que es el límite natural de la medida ambiente discreta.
+Esta teoría permite escribir una versión continua de carteras reproductores, que permite escribir el precio de una opción _call_ europea a partir de una Ecuación en Derivadas Parciales (EDP), donde el precio de la opción es
+$
+  C_t = u(t, S_t)
+$
+donde $u$ es la solución de la famosa ecuación de Black-Scholes
+$
+  cases(
+    display((partial u)/(partial t) + 1/2 sigma^2 s^2 (partial u)/(partial s^2) + r s (partial u)/(partial s)- r u = 0)
+    & "for " t in [0,T] "and" s > 0,
+    u(T,s) = e^(-r T)(s - K)_+
+  )
+$<eq-BlackScholes-PDE>
+
+
+Puede construirse la medida libre de riesgo $QQ$ tal que $tilde(S_t)$ satisface una versión continua en tiempo de @eq-arbol-martingala. Con esta medida, se puede escribir
+$
+  d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
+$<eq-BlackScholes-SDEriskfree>
+
+Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree no involucran a $mu$.
+
+== Precio de una opción europea
+
+En lugar de utilizar el cálculo de Itô, en estas notas deduciremos el precio de una _call_ europea como límite de @eq-arbol-call siguiendo @hsiaBINOMIALOPTIONPRICING1983.
+//#link("https://gregorygundersen.com/blog/2023/06/03/hsia-proof-black-scholes/")
+#theorem[Precio de una _call_ europea en el modelo de Black-Scholes][
+  Se tiene que
+  $
+    C_0 = S_0 op("N")(d_1) - K e^(-r T) op("N") (d_2)
+  $<eq-BlackScholes-call>
+  donde $"N"$ es la función de distribución de una $N(0,1)$
+  $
+    op("N")(x) := 1 / sqrt(2 pi) integral_(-oo)^x e^(-z^2/2) dif z
+  $
+  y
+  $
+    d_1 & := ( log(S_0/K) + (log r + sigma^2/2 ) T)/ (sigma sqrt(T)) \
+    d_2 & := ( log(S_0/K) + (log r - sigma^2/2 ) T)/ (sigma sqrt(T)) = d_1 - sigma sqrt(T)
+  $
+]
+Nótese que @eq-BlackScholes-call no involucra a $mu$.

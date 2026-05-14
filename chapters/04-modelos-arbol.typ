@@ -96,7 +96,7 @@ $<eq:arbol-autofinanciacion>
   $
 ]
 #proof[
-  Desconentado el precio también
+  Descontando el precio obtenemos
   $
     (Delta x_t) tilde(S)_(t+Delta t) + (Delta y_t) tilde(B)_(t+Delta t) = 0.
   $
@@ -115,12 +115,62 @@ $
 
 De manera similar al caso de un paso, las opciones _call europeas_ se puede reproducir por una cartera, y deducimos que
 #theorem[
-  El precio de no arbitraje de una opción europea viene dado por
+  El precio de no arbitraje de una opción _call_ europea viene dado por
   $
-    C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
+    C_0 & = e^(-r T) EE^QQ [(S_T - K)_+] \
+        & = S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q) .
+  $<eq-arbol-call>
+  donde $T = N Delta t$ y
+  $
+      a & := min {x in [0, N) inter ZZ : u^x d^(N-x) S_0 >= 0} \
+      q & := (e^(-r Delta t) - d)/(u-d) \
+    rho & := e^(-r Delta t) u q.
   $
 ]
+
+En la fórmula anterior,
+$
+  op("B")(a; N,p) = sum_(j=a)^N binom(N, j) p^j (1-p)^(N-j)
+$
+es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouilli $p$.
+
 #proof[
-  #box(fill: red)[Sólo si da tiempo]
+  Siguiendo la idea del modelo de un paso, es fácil construir una cartera $V_t$ que reproduce la opción _call_. De modo que $V_t = C_t$ en cada tiempo, y por tanto también $tilde(C)_t = tilde(V)_t$. Concluímos que
+  $
+    C_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ[tilde(C)_T] = EE^QQ[e^(-r T) C_T].
+  $
+  Así, tenemos que
+  $
+    EE^QQ [C_T] & = EE^QQ [(S_T - K)_+] = sum_(j=0)^N u^j d^(N-j) QQ(S_T = u^j d^(N-j)).
+  $
+  Observando el árbol es fácil basta contar caminos para ver que
+  $
+    QQ(S_T = u^j d^(N-j)) = binom(N, j) q^j (1-q)^(N-j).
+  $
+  Concluímos que
+  $
+    C_0 = e^(-r T) sum_(j=0)^N binom(N, j) q^j (1-q)^(N-j) (u^j d^(N-j) S_0 - K)_+.
+  $
+  Ahora descomponemos la parte positiva
+  $
+    (u^j d^(n-j) S_0 - K)_+
+    = cases(
+      u^j d^(n-j) S_0 - K & "si " j >= a,
+      0 & "si " j < a.
+    )
+  $
+  Así, reescribimos
+  $
+    C_0 & = e^(-r T) sum_(j=a)^N binom(N, j) q^j (1-q)^(N-j) (u^j d^(n-j) S_0 - K) \
+        & = S_0 sum_(j=a)^N binom(N, j) (e^(-r Delta t) u q)^j (e^(-r Delta t) d(1-q))^(N-j) \
+        & quad - K e^(-r T) sum_(j=a)^N binom(N, j) q^j (1-q)^(N-j) \
+  $
+  Recordando la construcción de $q$ y tomando $rho = e^(-r Delta t) u q$ observamos que $e^(-r Delta t) d (1-q) = 1-rho$. De modo que, recordando la fórmula de una binomial
+  $
+    C_0 & = S_0 sum_(j=a)^N binom(N, j) rho^j (1-rho)^(N-j) - K e^(-r T) sum_(j=a)^N binom(N, j) q^j (1-q)^(N-j) \
+        & = S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q)
+  $
+
+  Lo que concluye la demostración.
 ]
 

@@ -14,6 +14,7 @@
   ],
   bibliography: bibliography("refs.bib", style: "harvard-cite-them-right"),
 )
+
 #include "chapters/intro.typ"
 #include "chapters/01-nociones.typ"
 #include "chapters/02-instrumentos.typ"

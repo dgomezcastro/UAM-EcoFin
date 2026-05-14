@@ -202,7 +202,19 @@ Enunciemos el siguiente resultado como teorema, porque nos será de gran utilida
     C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
   $
 ]
-
+De manera similar, para un _put_ europea, se tiene
+$
+  P_0 = e^(-r T) EE^QQ [(K - S_T)_+].
+$
+Restando obtenemos
+$
+  C_0 - P_0 & = e^(-r T) EE^QQ [S_T - K] = EE^QQ [tilde(S)_t ] - e^(-r T) K
+$
+donde concluímos que
+$
+  C_0 - P_0 & = S_0 - e^(-r T) K.
+$<eq-unpaso-putcall>
+Se llama a esta relación _paridad put-call_.
 
 
 *Martingalas*

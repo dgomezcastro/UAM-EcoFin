@@ -6,6 +6,8 @@
 // #import cosmos.rainbow: *
 // #import cosmos.clouds: *
 
+#import "@preview/headcount:0.1.0": *
+
 #let apuntes(doc, title: none, author: none, date: none, abstract: none, bibliography: none, lang: "es") = {
   show: show-theorion
 
@@ -28,22 +30,37 @@
   set page(paper: "a4")
   set heading(numbering: "1.1.1")
 
-  // show chapter on figure numbering
-  set figure(numbering: (..num) => numbering("1.1", counter(heading).get().first(), num.pos().first()))
+  show heading.where(level: 4): set heading(numbering: none)
+  // #set heading(numbering: (first, ..nums) => numbering("1.", ..nums))
+  set figure(numbering: dependent-numbering("1.1"))
+  show heading: reset-counter(counter(figure.where(kind: image)))
 
-  // show chapter on equation numbering
-  set math.equation(numbering: (..num) => numbering("(1.1)", counter(heading).get().first(), num.pos().first()))
+  set math.equation(numbering: dependent-numbering("(1.1)"))
+  show heading: reset-counter(counter(math.equation))
+  // Number only labeled equations
+  // https://forum.typst.app/t/how-to-conditionally-enable-equation-numbering-for-labeled-equations/977/17
+  show math.equation: it => {
+    if it.block and not it.has("label") and it.numbering != none [
+      #counter(math.equation).update(v => v - 1)
+      #math.equation(it.body, block: true, numbering: none)
+    ] else {
+      it
+    }
+  }
 
-  show heading.where(level: 1): it => {
-    // reset figure counters so they are counted per chapter
-    counter(math.equation).update(0)
-    counter(figure.where(kind: image)).update(0)
-    counter(figure.where(kind: table)).update(0)
-    counter(figure.where(kind: raw)).update(0)
-    counter(figure.where(kind: "code")).update(0)
-    counter(figure.where(kind: "algo")).update(0)
-
-    it
+  show ref: it => {
+    let eq = math.equation
+    let el = it.element
+    if el != none and el.func() == eq {
+      // Override equation references.
+      numbering(
+        el.numbering,
+        ..counter(eq).at(el.location()),
+      )
+    } else {
+      // Other references as usual.
+      it
+    }
   }
 
   doc
