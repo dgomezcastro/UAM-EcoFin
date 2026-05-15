@@ -24,6 +24,7 @@
     table-index: (enabled: false),
     listing-index: (enabled: false),
     footer: "page-number-center",
+    table-of-contents: outline(depth: 2),
   )
 
   set text(lang: lang)

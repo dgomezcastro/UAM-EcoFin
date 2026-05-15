@@ -129,3 +129,17 @@ En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses utiliza c
 === Amortización alemana
 
 === Amortización americana
+
+== Intereses en tiempo continuo: exponencial
+
+Jacob Bernouilli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
+$
+  e := lim_(x -> oo) (1 + 1/x)^x.
+$
+Calculando el límite en la fórmula de interés compuesto obtenemos
+$
+  lim_(n -> oo) (1 + (r t)/n)^(n) & = lim_(n -> oo) [(1 + (r t)/n)^(n/(r t))]^(r t)
+                                    = [lim_(x -> oo) (1 + 1/x)^(x)]^(r t) \
+                                  & = e^(r t)
+$
+Esta representación nos será de gran utilidad.
