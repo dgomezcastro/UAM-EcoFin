@@ -30,6 +30,8 @@ En España: Letras y bonos del Tesoro.
 
 === Curva cupón cero
 
+En su formato más sencillo #link("https://es.wikipedia.org/wiki/Curva_cup%C3%B3n_cero")
+
 #link("https://www.bluegamma.io/post/what-is-a-zero-coupon-curve-and-where-to-download")
 
 #link("https://es.wikipedia.org/wiki/Curva_cup%C3%B3n_cero"):
