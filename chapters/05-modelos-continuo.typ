@@ -155,7 +155,7 @@ O, despejando
 $
   S_t = S_0 exp(kappa t + sigma W_t)
 $
-<eq-BlackScholes-St>
+<eq-BlackScholes-St-P>
 La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
 
 == Un comentario sobre el cálculo de Itô
@@ -181,8 +181,35 @@ $
   )
 $<eq-BlackScholes-PDE>
 
+=== Medida libre de riesgo
 
-Puede construirse la medida libre de riesgo $QQ$ tal que $tilde(S_t)$ satisface una versión continua en tiempo de @eq-arbol-martingala. Con esta medida, se puede escribir
+Siguiendo la idea del caso discreto, busquemos escribir para algún valor $nu$
+$
+  S_t = S_0 exp(nu t + sigma W^QQ_t)
+$
+con una nueva medida $QQ$.
+Si intentamos buscar una versión continua de @eq-arbol-martingala, utilizando la fórmula de la esperanza de una log-normal
+$
+  S_0 & = EE^QQ [tilde(S)_t] = EE^QQ [ S_0 exp(-r t + nu t + sigma W^QQ_t) ] \
+      & = S_0 exp(-r t + nu t + sigma^2/2 t)
+$
+De modo que despejamos $nu$ y tenemos precisamente que
+$
+  S_t = S_0 exp((r-sigma^2/2)t + sigma W_t^QQ).
+$<eq-BlackScholes-St-Q>
+De nuevo, en medida libre de riesgo $QQ$, la ecuación sólo depende de $sigma$ y $r$.
+Al igual que para árboles, de la versión continua de @eq-arbol-martingala se deduce que
+$
+  C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
+$<eq-BlackScholes-call-expectvalue>
+
+De hecho, para construir $QQ$ el procedimiento consiste en observar que dado @eq-BlackScholes-St-P y @eq-BlackScholes-St-Q entonces
+$
+  W_t^QQ = (r/sigma-sigma/2)t + W_t .
+$
+La existencia de $QQ$ con esta propiedad se sigue del teorema de Girsanov, que no estudiaremos en este curso.
+
+Usando cálculo de Itô, estas condiciones son equivalentes a
 $
   d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
 $<eq-BlackScholes-SDEriskfree>
@@ -191,7 +218,8 @@ Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree 
 
 == Precio de una opción europea
 
-En lugar de utilizar el cálculo de Itô, en estas notas deduciremos el precio de una _call_ europea como límite de @eq-arbol-call siguiendo @hsiaBINOMIALOPTIONPRICING1983.
+Podemos calcular el precio de una call europea utilizando @eq-BlackScholes-St-Q -- @eq-BlackScholes-call-expectvalue de forma equivalente a como demostramos @eq-arbol-call a partir de binomiales.
+Sin embargo, en estas notas deduciremos el precio de una _call_ europea como límite de @eq-arbol-call siguiendo @hsiaBINOMIALOPTIONPRICING1983.
 //#link("https://gregorygundersen.com/blog/2023/06/03/hsia-proof-black-scholes/")
 #theorem[Precio de una _call_ europea en el modelo de Black-Scholes][
   Se tiene que
@@ -204,8 +232,8 @@ En lugar de utilizar el cálculo de Itô, en estas notas deduciremos el precio d
   $
   y
   $
-    d_1 & := ( log(S_0/K) + (log r + sigma^2/2 ) T)/ (sigma sqrt(T)) \
-    d_2 & := ( log(S_0/K) + (log r - sigma^2/2 ) T)/ (sigma sqrt(T)) = d_1 - sigma sqrt(T)
+    d_1 & := ( log(S_0/K) + ( r + sigma^2/2 ) T)/ (sigma sqrt(T)) \
+    d_2 & := ( log(S_0/K) + ( r - sigma^2/2 ) T)/ (sigma sqrt(T)) = d_1 - sigma sqrt(T)
   $
 ]
 Nótese que @eq-BlackScholes-call no involucra a $mu$.
