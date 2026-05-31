@@ -38,27 +38,33 @@ $
   tilde(S_t) = e^(-r t) S_t
 $
 #definition[Valor esperado condicionado][
-  Se define
+  Sean $X, Y$ variables aleatorias discretas
+
+  Se define la esperanza condicionada a un evento con $PP(Y=y) > 0$ como el escalar
   $
-    EE^PP [X | Y=y] := sum_(x:PP(X=x) > 0) x PP(X = x|Y=y).
+    EE^PP [X | Y=y] := sum_(x:PP(X=x) > 0) x PP(X = x|Y=y) = sum_(x:PP(X=x) > 0) x (PP(X = x inter Y=y))/(PP(Y=y)).
   $
-  Se dice define la esperanza condicionada
+  Se dice define la esperanza condicionada como
   $
-    EE^PP [X|Y] := sum_(y : PP(Y=y) > 0) EE[X|Y = y] dot PP(Y =y)
+    EE^PP [X|Y] := & "la única variable aleatoria" Z "tal que" \
+                   & PP lr((Z = EE^PP [X | Y = y]), size: #200%) = PP(Y = y) \
+                   & "para todo" y "tal que" PP(Y=y) >0.
   $
+
+  De manera similar se puede definir $EE^PP [X|cal(F)]$ donde $cal(F)$ es una $sigma$-álgebra.
 ]
 Diremos que $QQ << PP$ si $PP(A) = 0$ implica $QQ(A) = 0$.
 
 #definition[Medida de riesgo neutro para un árbol binomial][
   Medida de probabilidad $QQ << PP$ tal que
   $
-    EE^QQ [tilde(S)_(t+Delta t) | tilde(S_t) ] = tilde(S_t)
+    EE^QQ [tilde(S)_(t+Delta t) | tilde(S_t) ] = tilde(S_t).
   $<eq-arbol-medida-libre-de-riesgo>
+  Puede escribirse @eq-arbol-medida-libre-de-riesgo equivalentemente como
+  $
+    EE^QQ lr([tilde(S)_(t+Delta t) | tilde(S_t) = s], size: #200%) = s "para todo" s "tal que" QQ(tilde(S_t) = s) > 0
+  $
 ]
-La definición anterior también puede leerse como
-$
-  s = EE^QQ [tilde(S)_(t+Delta t) | tilde(S_t) = s] " para todo " s " tal que " PP(tilde(S_t) = s) > 0
-$
 Por inducción, es claro que
 #proposition[
   Si $t > s$ entonces
