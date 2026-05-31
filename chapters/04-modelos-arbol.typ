@@ -2,9 +2,7 @@
 #import "../header/template.typ": *
 #import "@preview/diagraph:0.3.7": *
 
-= Modelos en de varios pasos temporales
-
-== Modelo de árboles binomiales
+= Modelo de varios pasos temporales: árbol binomial
 
 #figure(
   raw-render(```
@@ -29,26 +27,46 @@
   ```),
   caption: "Árbol binomial con dos pasos de tiempo",
 )
-
-=== Probabilidades de transición constantes
+Según las hipótesis se habla de modelo de Cox-Ross-Rubinstein o Jarrow-Rudd.
 Por simplicidad, vamos a suponer que
 $
   PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p.
 $
+== Medida libre de riesgo
 Construímos el precio descontado
 $
   tilde(S_t) = e^(-r t) S_t
 $
-#definition[Medida de riesgo neutro para un árbol binomial][
-  Medida de probabilidad $QQ$ tal que
+#definition[Valor esperado condicionado][
+  Se define
   $
-    EE^QQ [tilde(S)_(t+Delta t) | tilde(S_t) =s] = s " para todo " s " tal que " PP(tilde(S_t) = s) > 0
+    EE^PP [X | Y=y] := sum_(x:PP(X=x) > 0) x PP(X = x|Y=y).
+  $
+  Se dice define la esperanza condicionada
+  $
+    EE^PP [X|Y] := sum_(y : PP(Y=y) > 0) EE[X|Y = y] dot PP(Y =y)
+  $
+]
+Diremos que $QQ << PP$ si $PP(A) = 0$ implica $QQ(A) = 0$.
+
+#definition[Medida de riesgo neutro para un árbol binomial][
+  Medida de probabilidad $QQ << PP$ tal que
+  $
+    EE^QQ [tilde(S)_(t+Delta t) | tilde(S_t) ] = tilde(S_t)
   $<eq-arbol-medida-libre-de-riesgo>
 ]
-A veces esto se denota simplemente
+La definición anterior también puede leerse como
 $
-  EE^QQ [tilde(S)_(t+Delta t) | tilde(S)_t] = tilde(S_t)
+  s = EE^QQ [tilde(S)_(t+Delta t) | tilde(S_t) = s] " para todo " s " tal que " PP(tilde(S_t) = s) > 0
 $
+Por inducción, es claro que
+#proposition[
+  Si $t > s$ entonces
+  $
+    EE^QQ [tilde(S_t) | tilde(S)_s] = tilde(S)_s.
+  $ <eq-arbol-martingala>
+]
+
 
 
 Aplicamos la definición para calcular $q$ la probabilidad de subida
@@ -62,20 +80,11 @@ $
 #proposition[
   Existe una medida de riego neutro para el árbol binomial si y sólo si
   $
-    0 < d < e^(-r Delta t) < u.
+    0 <= d <= e^(-r Delta t) <= u.
   $
-]
-Nótese que bajo la medida de riesgo neutro, se tiene
-#proposition[
-  Si $t > s$ entonces
-  $
-    EE^QQ [tilde(S_t) | tilde(S)_s] = tilde(S)_s.
-  $ <eq-arbol-martingala>
-]
-#proof[
-  Por inducción.
 ]
 
+== Valoración de carteras
 Ahora nuestra cartera descontada toma la forma
 $
   V_t := x_t S_t + y_t B_t
@@ -113,6 +122,8 @@ $
   Delta V_t = x_t Delta S_t + y_t Delta B_t.
 $
 
+== Valor de una call europea
+
 De manera similar al caso de un paso, las opciones _call europeas_ se puede reproducir por una cartera, y deducimos que
 #theorem[
   El precio de no arbitraje de una opción _call_ europea viene dado por
@@ -135,7 +146,7 @@ $
 es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouilli $p$.
 
 #proof[
-  Siguiendo la idea del modelo de un paso, es fácil construir una cartera $V_t$ que reproduce la opción _call_. De modo que $V_t = C_t$ en cada tiempo, y por tanto también $tilde(C)_t = tilde(V)_t$. Concluímos que
+  Siguiendo la idea del modelo de un paso, es fácil construir una cartera $V_t$ que reproduce la opción _call_ por inducción. De modo que $V_t = C_t$ en cada tiempo, y por tanto también $tilde(C)_t = tilde(V)_t$. Concluímos que
   $
     C_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ[tilde(C)_T] = EE^QQ[e^(-r T) C_T].
   $
@@ -174,3 +185,35 @@ es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouill
   Lo que concluye la demostración.
 ]
 
+=== Filtraciones y valor de una call en tiempo $t$
+
+Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
+
+Dada una variable aleatoria $X: Omega -> RR$ se define la $sigma$-álgebra generada por $X$ como
+$
+  cal(U)(X) := {X^(-1) (B) : B in cal(B)}
+$
+donde $cal(B)$ es la $sigma$-álgebra de Borel.
+Es la menor $sigma$-álgebra respecto de la cual $X$ es medible.
+
+Llamamos _filtración_ a tiempo $t$ a
+$
+  cal(F)_t := cal(U)(S_s | s in [0,s]).
+$
+De manera que podemos escribir
+$
+  tilde(S)_s = EE^QQ [tilde(S_t) | tilde(S)_s] = EE^QQ [tilde(S_t) | cal(F)_s].
+$
+De este modo, razonando como lo hicimos a tiempo $t = 0$ para tiempos generales, tenemos que
+$
+  C_t = e^(-r(T-t)) EE^QQ [(S_T - K)_+ | cal(F)_t].
+$<eq-arbol-call-tiempot>
+
+
+// Desde el punto de vista teórico, una filtración es
+// #definition[Filtración][
+//   En un espacio de probabilidad $(Omega, cal(U), PP)$,
+//   una familia $cal(F)_t$ de $sigma$-álgebras de $cal(U)$ se llama filtración (o _no-anticipada respecto de $S$_) si
+//   - $t>=s>=0$ implica $cal(F)(t) supset cal(F)(s)$
+//   -
+// ]

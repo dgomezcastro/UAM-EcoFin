@@ -144,15 +144,15 @@ Podemos hacer el cálculo anterior de valor esperado. Para ello introducimos el 
 $
   tilde(S)_t = e^(-r t) S_t
 $
-#definition[Medida libre de riesgo][
-  Medida de probabilidad $QQ$ tal que para todo $t$
+#definition[Medida libre de riesgo para el modelo de un paso temporal][
+  Medida de probabilidad $QQ$ tal que
   $
-    EE^QQ [tilde(S_t)] = S_0
+    EE^QQ [tilde(S_T)] = S_0
   $
 ]
 Dado que sólo hay posibilidades, si llamemos
 $
-  q := QQ(tilde(S)_t = u e^(-r T) S_0)
+  q := QQ(tilde(S)_T = u e^(-r T) S_0)
 $
 Entonces $tilde(S)$ satisface un segundo modelo binomial representado en @fig:binomial_riesgo_neutro
 #figure(
@@ -179,11 +179,11 @@ podemos despejar
 $
   q:= (e^(r T) - d )/(u - d)
 $
-que está en $(0,1)$ si $d < e^(r T) < u$. De modo que
+que está en $[0,1]$ si $d <= e^(r T) <= u$. De modo que
 #proposition[Existencia de la medida libre de riesgo][
   Si
   $
-    d < e^(r T) < u
+    d <= e^(r T) <= u
   $<eq-binomial-condicion-no-arbitraje>
   entonces existe $QQ$.
 ]

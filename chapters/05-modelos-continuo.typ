@@ -151,12 +151,24 @@ Esto quiere decir que
 $
   log S_t = log S_0 + kappa t + sigma W_t
 $
-O, despejando
+Es decir que $S_t$ es log-normal. No sólo eso, si no que para cualquier $Delta t$
+$
+  log S_(t + Delta t) - log S_t = kappa Delta t + sigma (W_(t+Delta t) - W_t).
+$<eq-BlackScholes-incremento-log>
+Despejando
 $
   S_t = S_0 exp(kappa t + sigma W_t)
 $
 <eq-BlackScholes-St-P>
 La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
+
+== Verificando la log-normalidad
+
+Hasta ahora, nuestros modelos han sido puramente teóricos. Pero ahora podemos verificar si @eq-BlackScholes-St-P tiene sentido comprobando si @eq-BlackScholes-incremento-log se cumple.
+Vamos a tomar datos _reales_ de mercado para el valor de un activo, y a mirar si los incrementos del log-precio parecen normalmente distribuidos.
+Para esto, vamos a usar `julia`.
+
+
 
 == Un comentario sobre el cálculo de Itô
 Cálculo de Itô permite construir una teoría de ecuaciones diferenciales ordinarias de la forma
