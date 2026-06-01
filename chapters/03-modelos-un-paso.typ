@@ -216,6 +216,12 @@ $
 $<eq-unpaso-putcall>
 Se llama a esta relación _paridad put-call_.
 
+Observamos en @eq-arbol-call se tiene que
+$
+  C_0 = S_0 e^(-r T)EE^QQ [(S_T/S_0 - K/S_0)_+] = S_0 EE^QQ [(tilde(S)_T/S_0 - tilde(K)/S_0)_+]
+$
+de modo que siempre se puede asumir que $S_0 = 1$, y reescalar $K$. Trabajando con los precios descontados podemos suponer que $r = 1$, lo que puede simplificar operaciones.
+
 
 *Martingalas*
 

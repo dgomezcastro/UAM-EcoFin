@@ -2,7 +2,7 @@
 
 #import "../header/template.typ": *
 
-= Modelos en tiempo continuo
+= Modelo en tiempo continuo: Black-Scholes
 
 Recordamos
 #theorem[Teorema central del límite][
@@ -260,3 +260,55 @@ Sin embargo, en estas notas deduciremos el precio de una _call_ europea como lí
   $
 ]
 Nótese que @eq-BlackScholes-call no involucra a $mu$.
+
+== Volatilidad implícita
+
+Es habitual denotar a @eq-BlackScholes-call mediante un nombre distinguido
+$
+  "Call"_"BS" (sigma,S_0, K,r,T) := S_0 op("N")(d_1) - K e^(-r T) op("N") (d_2).
+$
+En esta función $S_0, K, r, T$ son conocidos a la hora de hacer el contrato, pero $sigma$ es desconocido. De hecho, dados estos valores la función
+$
+  (0,oo) & ->  && (0,oo) \
+   sigma & |-> && "Call"_"BS" (sigma,S_0, K,r,T)
+$
+es estrictamente creciente.
+Vemos que
+$
+  partial / (partial sigma) "Call"_"BS" (sigma,S_0, K,r,T) = ...
+$
+// TODO
+
+Se tiene que
+$
+  & lim_(sigma -> 0) "Call"_"BS" (sigma,S_0, K,r,T) = ... \
+  & lim_(sigma -> oo) "Call"_"BS" (sigma,S_0, K,r,T) = ...
+$
+
+A su inversa, cuando existe, se la conoce como _volatilidad implícita_
+$
+  sigma_"BS" (C_0, S_0, K, r, T)
+  := cases(
+    "si" C_0 in (...,...),
+    "único valor" sigma in (0,oo) "tal que",
+    "Call"_"BS" (sigma,S_0, K,r,T) =C_0.
+  )
+$
+Este problema no tiene una solución analítica sencilla, y se han desarrollado diferentes métodos para resolverlo:
+- Método de la bisección
+- Método de Newton
+- Let's be Rational
+
+Si tomamos, para un vencimiento fijo $T$, los diferentes precios reales de opciones call, encontraremos una curva, que no es muy descriptiva.
+En la práctica, lo que se estudia es la curva de volatilidades implícitas.
+
+Figura con precios de BBVA
+
+Del mismo modo, si tomamos precios reales para diferentes $K$ y $T$, obtenemos una superficie de precios, que no es muy descriptiva.
+En la práctica, lo que se estudia es la superficie de volatilidad implícita, que normalmente se llama simplemente _superficie de volatilidad_.
+
+Figura con precios de BBVA
+
+Big-ask spread.
+
+
