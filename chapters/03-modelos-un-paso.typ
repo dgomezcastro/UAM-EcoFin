@@ -70,10 +70,34 @@ $
   ```),
   caption: "Evolución de una cartera",
 )<fig:binomial_cartera>
+=== Arbitraje
+
+Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversión inicial
+#definition[Oportunidad de arbitraje en el modelo un paso][
+  Decimos que $V$ es una oportunidad de arbitraje si existe
+  $
+    V_0 = 0,
+    quad quad & V_T >= 0,
+                quad quad & PP(V_T > 0) > 0.
+  $
+]
+Si lo intentamos a través de una cartera tenemos que
+$0 = V_0 = x_1 S_0 + x_2 B_0$
+luego $x_2 = -x_1 S_0/B_0$. A tiempo final tenemos entonces
+$
+  V_T = x_1 (S_T - e^(r T)).
+$
+
+- Si $e^(r T) <= d < u$ entonces tomando $x_1 > 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
+- Si $d < u <= e^(r T)$ entonces tomando $x_1 < 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
+De tal manera que la condición de no arbitraje resulta
+$
+  d < e^(r T) < u.
+$<eq-binomial-condicion-no-arbitraje>
 
 === Valor de un contrato a plazo fijo
 
-=== Opción europea. Valoración por replicación
+=== Opción europea
 
 Una opción de compra (_call option_) es el derecho, pero no la obligación, de comprar mañana el activo a un precio $K$. Llamaremos al valor de la call $C$. Hoy su valor, que es lo que queremos fijar, es $C_0$, y el valor mañana es $C_1$.
 
@@ -95,11 +119,6 @@ Si el valor es menor o igual $S_T <= K$, entonces no la ejerzo, y no ganaré nad
   ```),
   caption: "Modelo discreto con un periodo de tiempo",
 )<fig:binomial_opcion>
-
-#block(fill: red.transparentize(50%))[
-  // #set text(fill: red)
-  Representar las regiones donde compensa comprar la opción
-]
 
 Creemos una *cartera de cobertura* haciendo que tanto si ocurre $u S_0$ como si ocurre $d S_0$ obtengamos el mismo resultado
 $
@@ -130,13 +149,35 @@ Al final de la jugada, el inversor inteligente se va a casa con $C_0 - V_0 > 0$ 
 En caso de que $C_0 < V_0$ entonces el inversor me compra la opción, y vende en el mercado la cartera.
 De tal manera que el único precio que no genera opciones de arbitraje es
 $
-  C_0 = x_1 s_0 + x_2 e^(r T) B_0,
+  C_0 = x_1 S_0 + x_2 e^(r T) B_0,
 $
 donde $(x_1,x_2)$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*.
 
 Hemos hecho algunas suposiciones:
 - Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
 - Liquidez: el mercado está dispuesto a comprar y vender de todas las acciones que quiera, y en cantidades fraccionarias
+
+=== Valoración por replicación
+
+
+Podemos pensar en la opción $C_t$, una vez se encuentra en el mercado, es otro activo con el que podemos hacer carteras.
+Supongamos el caso no trivial en que $C_T != 0$ (es decir $u S_0 > K$).
+Sea $V_t$ la cartera autofinanciada que reproduce la opción (es decir $C_T = V_T$), y
+supongamos que $C_0 != V_0$, para comprobar que hay una oportunidad de arbitraje.
+
+Si estamos dispuesto a tomar fracciones de la opción, entonces podemos construir
+$
+  tilde(V)_t := op("signo")(V_0 - C_0 )( V_0 C_t - C_0 V_t )
+$
+Se tiene $tilde(V)_0 = 0$ y $tilde(V)_T = |V_0 - C_0| C_T.$
+
+Si no queremos tomar fracciones de la opción, entonces distinguimos dos casos
+- Si $V_0 = 0$ entonces
+  $tilde(V)_t = op("signo")(C_0) C_t$.
+
+- Si $V_0 != 0$ entonces puedo construir la siguiente cartera
+  $tilde(V)_t := op("signo")(V_0 - C_0)( C_t - C_0 / V_0 V_t )$.
+
 
 === La medida riesgo neutro
 
@@ -147,7 +188,7 @@ $
 #definition[Medida libre de riesgo para el modelo de un paso temporal][
   Medida de probabilidad $QQ$ tal que
   $
-    EE^QQ [tilde(S_T)] = S_0
+    EE^QQ [tilde(S)_T] = S_0
   $
 ]
 Dado que sólo hay posibilidades, si llamemos
@@ -184,8 +225,9 @@ que está en $[0,1]$ si $d <= e^(r T) <= u$. De modo que
   Si
   $
     d <= e^(r T) <= u
-  $<eq-binomial-condicion-no-arbitraje>
+  $
   entonces existe $QQ$.
+  Además, si se da @eq-binomial-condicion-no-arbitraje entonces $QQ$ es no determinista.
 ]
 Ahora calculamos el valor de la cartera descontada
 $
@@ -222,9 +264,76 @@ $
 $
 de modo que siempre se puede asumir que $S_0 = 1$, y reescalar $K$. Trabajando con los precios descontados podemos suponer que $r = 1$, lo que puede simplificar operaciones.
 
-
-*Martingalas*
-
 == Modelo trinomial: un sólo activo con 3 estados
 
-== Modelo matricial: $N$ activos y $n$ estados
+Consideremos como caso académico
+#figure(
+  raw-render(```
+  digraph {
+    rankdir=LR
+  node[math=true, xmath=true]
+  edge[lmath=true]
+  // s[label="sum_(n=0)^3 n"]
+  s[label="S_0"]
+  s -> s1[label="p_1"]
+  s -> s2[label="p_2"]
+  s -> s3[label="1-p_1-p_2"]
+  s1[label="alpha_1 S_0"]
+  s2[label="alpha_2 S_0"]
+  s3[label="alpha_3 S_0"]
+  }
+  ```),
+  caption: "Modelo discreto con un periodo de tiempo",
+)<fig:trinomial>
+
+Ahora ocurre que con un sólo activo de riesgo y el bono, las carteras no permite replicar todos los estados, porque el sistema tiene 2 incógnitas y 3 ecuaciones.
+Se dice que el mercado es *incompleto*.
+
+Construyamos, por el contrario, una cartera con arbitraje
+$
+  tilde(V)_t = x_1 S_t + x_2 B_t + x_3 C_t.
+$
+La primera condición es que no me cueste nada
+$
+  x_1 + x_2 + x_3 = 0
+$
+Pongamos que al final no pierda dinero
+$
+  x_1 alpha_i S_0 + x_2 e^(r T) B_0 + x_3 (alpha_i S_0 - K)_+ >= 0 "para todo" i=1,2,3.
+$
+Y que gana dinero con probabilidad positiva, basta con una de estas tres desigualdades sea estricta.
+Tenemos el sistema de 3 desigualdades
+$
+  x_1 alpha_i S_0 + x_2 e^(r T) B_0 >= (x_1 + x_2) (alpha_i S_0 - K)_+ .
+$
+Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vacío, en su interior cualquier $(x_1, x_2)$ da un punto donde se gana dinero con probabilidad 1.
+
+
+== Modelo matricial: $N$ activos y $M$ estados
+
+Supongamos ahora que hay $N$ activos (incluyendo opciones y bonos). Denotaremos
+$
+  S_t = vec(S^1_t, dots.v, S_t^N) in RR^N
+$
+donde $S^i_t$ denota la cantidad del activo $i$-ésimo a tiempo $t$.
+Asumimos que $S_0$ es conocido y $S_T$ puede estar en $M$ estados.
+Una cartera consiste en un vector $theta_t in RR^N$ donde $theta_t^i$ indica el número de acciones del activo $i$-ésimo.
+Denotamos $D_(i j)$ al valor del activo $i$-ésimo en el estado $j$-ésimo a tiempo $T$. Así el valor de cartera a tiempo $t$
+$
+  V_t = D^* theta_t
+$
+donde $*$ denota la transposición de matrices.
+
+Introducimos la notación para $x in RR^N$ se dice que
+- $x >= 0$ (o $x in RR^N_+$) si $x^i >= 0$ para todo $i$
+- $x > 0$ o si $x>=0$ y $x != 0$ (es decir tiene alguna entrada positiva)
+- $x >> 0$ (o $x in RR^N_(++)$) si $x^i > 0$ para todo $i$.
+
+Así, la condición de arbitraje se traduce en que existe $theta in RR^N$ tal que
+$
+  S_0 dot theta <= 0 & " y " D^t theta > 0 \
+                     & " ó " \
+   S_0 dot theta < 0 & " y " D^t theta >= 0 \
+$
+
+// TODO: Terminar esta sección

@@ -32,6 +32,8 @@ Por simplicidad, vamos a suponer que
 $
   PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p.
 $
+
+
 == Medida libre de riesgo
 Construímos el precio descontado
 $
@@ -90,7 +92,7 @@ $
   $
 ]
 
-== Valoración de carteras
+== Carteras y arbitraje
 Ahora nuestra cartera descontada toma la forma
 $
   V_t := x_t S_t + y_t B_t
@@ -103,6 +105,18 @@ Denotando $Delta x_t := x_(t+Delta t) - x_t$ esto significa que
 $
   (Delta x_t) S_(t+Delta t) + (Delta y_t) B_(t+Delta t) = 0.
 $<eq:arbol-autofinanciacion>
+
+#definition[Oportunidad de arbitraje en el modelo un paso][
+  Decimos que una cartera $V$ es una oportunidad de arbitraje si existe
+  $
+    V_t "es autofinanciada",
+    quad quad & V_0 = 0,
+                quad quad & V_T >= 0,
+                            quad quad & PP(V_T > 0) > 0.
+  $
+]
+
+Las carteras autofinanciadas son martingalas
 
 #theorem[][
   En un árbol binomial, una cartera @eq-arbol-cartera autofinanciada, es decir tal que @eq:arbol-autofinanciacion satisface
