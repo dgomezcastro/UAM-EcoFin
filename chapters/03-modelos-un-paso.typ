@@ -191,6 +191,7 @@ $
     EE^QQ [tilde(S)_T] = S_0
   $
 ]
+Se dice que $tilde(S)_T$ es una martingala respecto de $QQ$. Volveremos sobre este concepto.
 Dado que sólo hay posibilidades, si llamemos
 $
   q := QQ(tilde(S)_T = u e^(-r T) S_0)
@@ -235,17 +236,19 @@ $
 $
 De modo que $tilde(V)$ tiene esperanza constante. Pero dado que $C_t = V_t$ entonces $tilde(C)_t = tilde(V)_t$ y, por tanto, también tiene esperanza constante. Entonces
 $
-  C_0 = tilde(C)_0 = EE^QQ [ tilde(C)_T ] = EE^QQ [ e^(-r T) (S_T - K)_+]
+  C_0 = tilde(C)_0 = EE^QQ [ tilde(C)_T ]. //= EE^QQ [ e^(-r T) (S_T - K)_+]
 $
 Enunciemos el siguiente resultado como teorema, porque nos será de gran utilidad más adelante:
 #theorem[Valoración por riesgo neutro][
   Supuesto @eq-binomial-condicion-no-arbitraje entonces
   $
-    C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
+    C_0 = e^(-r T) EE^QQ [C_T].
   $
 ]
-De manera similar, para un _put_ europea, se tiene
+De manera similar, para una _call_ y _put_ europeas, se tiene
 $
+  C_0 e^(-r T) EE^QQ [(S_T - K)_+]
+  quad "y" quad
   P_0 = e^(-r T) EE^QQ [(K - S_T)_+].
 $
 Restando obtenemos
@@ -311,29 +314,88 @@ Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vac
 
 == Modelo matricial: $N$ activos y $M$ estados
 
+#let trans = { $sans(T)$ }
+
 Supongamos ahora que hay $N$ activos (incluyendo opciones y bonos). Denotaremos
 $
   S_t = vec(S^1_t, dots.v, S_t^N) in RR^N
 $
 donde $S^i_t$ denota la cantidad del activo $i$-ésimo a tiempo $t$.
 Asumimos que $S_0$ es conocido y $S_T$ puede estar en $M$ estados.
-Una cartera consiste en un vector $theta_t in RR^N$ donde $theta_t^i$ indica el número de acciones del activo $i$-ésimo.
-Denotamos $D_(i j)$ al valor del activo $i$-ésimo en el estado $j$-ésimo a tiempo $T$. Así el valor de cartera a tiempo $t$
+Una cartera consiste en un vector $theta in RR^N$ donde $theta_i$ indica el número de acciones del activo $i$-ésimo.
+Denotamos $D_(i j)$ al valor del activo $i$-ésimo en el estado $j$-ésimo a tiempo $T$, de modo que
 $
-  V_t = D^* theta_t
+  S_T in { D_(bullet 1), dots, D_(bullet M) } "donde" D_(bullet j) = vec(D_(1j), dots.v, D_(N j))
 $
-donde $*$ denota la transposición de matrices.
+y $PP(S_T = D_(bullet j)) > 0$ para todo $j$.
+Así el valor de cartera a tiempo $t$
+$
+  V_0 = theta dot S_0 => V_T in { theta dot D_(bullet 1), dots, dot D_(bullet M) } = op("rows") (D^trans theta).
+$
+donde $trans$ denota la transposición de matrices.
 
 Introducimos la notación para $x in RR^N$ se dice que
 - $x >= 0$ (o $x in RR^N_+$) si $x^i >= 0$ para todo $i$
-- $x > 0$ o si $x>=0$ y $x != 0$ (es decir tiene alguna entrada positiva)
-- $x >> 0$ (o $x in RR^N_(++)$) si $x^i > 0$ para todo $i$.
+- $x gt.neq 0$ o si $x>=0$ y $x != 0$ (es decir tiene alguna entrada positiva)
+- $x > 0$ (o $x in RR^N_(++)$) si $x^i > 0$ para todo $i$.
 
-Así, la condición de arbitraje se traduce en que existe $theta in RR^N$ tal que
+Así, la condición de no-arbitraje se traduce en que existe $theta in RR^N$ tal que
 $
-  S_0 dot theta <= 0 & " y " D^t theta > 0 \
-                     & " ó " \
-   S_0 dot theta < 0 & " y " D^t theta >= 0 \
+  S_0 dot theta = 0 & " y " D^t theta gt.neq 0.
+$
+#definition[Vector de estado][
+  Vector $psi in RR^M_(++)$ tal que
+  $
+    S_T = D psi.
+  $
+]
+Llamamos vector de estado a
+Supogamos que podemos encontrar carteras $theta^((i))$ tales que
+$
+  D^trans theta^((i)) = e_i in RR^M "para todo" i in {1,dots,N}.
+$
+se llaman valores de Arrow-Debreu. En tal caso tenemos
+$
+  S_0 dot theta^((i)) = (D psi) dot theta^((i)) = psi dot (D^trans theta^((i))) = psi dot e_i = psi_i.
 $
 
-// TODO: Terminar esta sección
+#theorem[Teorema Fundamental de Valoración de Activos][
+  En el modelo de un paso temporal, $N$ activos, $M$ estados no existe arbitraje si y sólo si existe un vector de estados.
+]
+
+La demostración de este teorema es una aplicación del teorema de separación de Hahn-Banach.
+Ver #cite(<etheridgeCourseFinancialCalculus>, supplement: "Theorem 1.5.2").
+
+Este vector de estados, también nos da una forma de construir la medida de riesgo nulo
+$
+  QQ(S_T = D_(bullet j)) := psi_j / psi_0
+  quad "y" quad
+  psi_0 := sum_(k=1)^M psi_k.
+$
+Entonces observamos que
+$
+  EE^QQ [S_T] = S_0 / psi_0
+$
+Así, $psi_0$ resulta nuestro factor de descuento, y el precio descontado $tilde(S_t) = psi_0 S_t$ es una martingala respecto de $QQ$.
+
+#proposition[][
+  Si existe vector de estados, y $C$ de un _contigent claim_ que puede reproducirse con una cartera, entonces su valor actual libre de arbitraje es
+  $
+    C_0 = psi_0 EE^QQ [C_T].
+  $<eq-Nestados-valoracion-riesgoneutro>
+]
+
+Concluímos la parte de valoración con este resultado
+#theorem[][
+  Este modelo es completo (es decir todo _contingent claim_ se reproducirse con cartera) si y sólo $N >= M$ y $op("rango")(D) = M.$
+]
+Como $psi_0$ es único, si el mercado es completo y libre de riesgo, entonces $QQ$ es única. En resumen:
+#remark[Completitud, arbitraje, y medida libre riesgo][
+  - Son equivalentes:
+    - El mercado es libre de arbitraje
+    - existe medida libre de riesgo
+    - existe vector de estado.
+    Este es el Teorema Fundamental de Valoración de Activos.
+
+  - El mercado es completo si y sólo si $QQ$ es única.
+]

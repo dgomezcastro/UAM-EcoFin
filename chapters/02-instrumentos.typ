@@ -43,7 +43,18 @@ A partir de diferentes curvas observables en el mercado (mercado monetario, swap
 
 === Contrato a plazo (_forward contract_)
 
+$F_0 = S_0 e^(r T)$
+
+Ver @Hull2015 para una explicación del arbitraje.
+
 === _Futures_
+
+Si $r$ es constante entonces el precio de un _future_ es el mismo que el de un _forward_. Aunque la justificación es complicada. @Hull2015
+
+Cuando hay dividendo a ritmo $q$ entonces la fórmula resulta
+$
+  F_0 = S_0 e^((r-q) T).
+$
 
 === _Swaps_
 
