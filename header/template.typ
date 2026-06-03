@@ -1,3 +1,5 @@
+#import "math.typ": *
+
 #import "@preview/ilm:2.0.0": *
 
 #import "@preview/theorion:0.5.0": *
