@@ -135,18 +135,21 @@ equivalentemente,
 $
   X_n = X_0 + sum_(k=1)^(n) Z_k
 $
-Descomponemos $Z$ en una parte determinista y un paseo aleatorio
+Descomponemos $Z$ en una parte determinista y un paseo aleatorio $xi_k$
 $
-  log u = tilde(nu) + tilde(sigma),
-  quad log d = tilde(nu) - tilde(sigma),
-  quad Z_k = tilde(nu) + tilde(sigma) xi_k .
-$
+  log u = nu_(Delta t) + sigma_(Delta t),
+  quad log d = nu_(Delta t) - sigma_(Delta t),
+  quad Z_k = nu_(Delta t) + sigma_(Delta t) xi_k .
+$<eq-BlackScholes-condicionud1>
 Así
 $
-  X_n & = X_0 + n tilde(nu) + tilde(sigma) sum_(k=1)^(n)xi_k \
+  X_n & = X_0 + n nu_(Delta t) + sigma_(Delta t) sum_(k=1)^(n)xi_k \
       & ->^d X_0 + (nu + 2p-1) t + sigma W_t,
 $
-si escalamos $tilde(nu) / (Delta t) -> nu$ y $tilde(sigma) / sqrt(Delta t) -> sigma$.
+si escalamos
+$
+  nu_(Delta t) / (Delta t) -> nu quad "y" quad sigma_(Delta t) / sqrt(Delta t) -> sigma.
+$<eq-BlackScholes-condicionud2>
 Esto quiere decir que
 $
   log S_t = log S_0 + kappa t + sigma W_t
@@ -161,6 +164,20 @@ $
 $
 <eq-BlackScholes-St-P>
 La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
+
+== Los modelos Cox-Ross-Rubinstein y Jarrow-Rudd
+
+Hay dos aproximaciones clásicas para obtener @eq-BlackScholes-condicionud1 y @eq-BlackScholes-condicionud2. La más sencilla consiste es $nu_(Delta t) = 0$ y $sigma_(Delta t) = sigma sqrt(Delta t)$, que corresponde con
+$
+  u = e^(sigma sqrt(Delta t)) " y " d := e^(-sigma sqrt(Delta t)).
+$
+Otra posibilidad, propuesta por Jarrow-Rudd es tomar
+$
+  u = e^((r - sigma^2/2) t + sigma sqrt(Delta t))
+  quad "y" quad
+  d = e^((r - sigma^2/2) t - sigma sqrt(Delta t))
+$
+Cuando $p = 1/2$ esta fórmula lleva a la muy útil representación @eq-BlackScholes-St-Q, en la que no entraremos por ahora.
 
 == Verificando la log-normalidad
 

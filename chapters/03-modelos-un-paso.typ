@@ -28,23 +28,7 @@ Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor 
 $
   bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p
 $
-Se representa en @fig:binomial
-#figure(
-  raw-render(```
-  digraph {
-    rankdir=LR
-  node[math=true, xmath=true]
-  edge[lmath=true]
-  // s[label="sum_(n=0)^3 n"]
-  s[label="S_0"]
-  s -> s1[label="p"]
-  s -> s2[label="1-p"]
-  s1[label="u S_0"]
-  s2[label="d S_0"]
-  }
-  ```),
-  caption: "Modelo discreto con un periodo de tiempo",
-)<fig:binomial>
+Se representa en @fig:binomial.
 Para este modelo no sea determinista, supongamos que $0 < d < u$.
 
 === Cartera
@@ -167,16 +151,16 @@ supongamos que $C_0 != V_0$, para comprobar que hay una oportunidad de arbitraje
 
 Si estamos dispuesto a tomar fracciones de la opción, entonces podemos construir
 $
-  tilde(V)_t := op("signo")(V_0 - C_0 )( V_0 C_t - C_0 V_t )
+  hat(V)_t := op("signo")(V_0 - C_0 )( V_0 C_t - C_0 V_t )
 $
-Se tiene $tilde(V)_0 = 0$ y $tilde(V)_T = |V_0 - C_0| C_T.$
+Se tiene $hat(V)_0 = 0$ y $hat(V)_T = |V_0 - C_0| C_T.$
 
 Si no queremos tomar fracciones de la opción, entonces distinguimos dos casos
 - Si $V_0 = 0$ entonces
-  $tilde(V)_t = op("signo")(C_0) C_t$.
+  $hat(V)_t = op("signo")(C_0) C_t$.
 
 - Si $V_0 != 0$ entonces puedo construir la siguiente cartera
-  $tilde(V)_t := op("signo")(V_0 - C_0)( C_t - C_0 / V_0 V_t )$.
+  $hat(V)_t := op("signo")(V_0 - C_0)( C_t - C_0 / V_0 V_t )$.
 
 
 === La medida riesgo neutro
@@ -328,7 +312,7 @@ $
 y $PP(S_T = D_(bullet j)) > 0$ para todo $j$.
 Así el valor de cartera a tiempo $t$
 $
-  V_0 = theta dot S_0 => V_T in { theta dot D_(bullet 1), dots, dot D_(bullet M) } = op("rows") (D^trans theta).
+  V_0 = S_0 dot theta => V_T in { D_(bullet 1) dot theta, dots, D_(bullet M) dot theta } = op("elements") (D^trans theta).
 $
 donde $trans$ denota la transposición de matrices.
 
@@ -368,7 +352,7 @@ Este vector de estados, también nos da una forma de construir la medida de ries
 $
   QQ(S_T = D_(bullet j)) := psi_j / psi_0
   quad "y" quad
-  psi_0 := sum_(k=1)^M psi_k.
+  psi_0 := sum_(j=1)^M psi_j.
 $
 Entonces observamos que
 $

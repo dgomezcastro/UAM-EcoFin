@@ -15,11 +15,12 @@
   bibliography: bibliography("refs.bib", style: "harvard-cite-them-right"),
 )
 
-#include "chapters/intro.typ"
+#include "chapters/00-intro.typ"
 #include "chapters/01-nociones.typ"
 #include "chapters/02-instrumentos.typ"
 #include "chapters/03-modelos-un-paso.typ"
 #include "chapters/04-modelos-arbol.typ"
 #include "chapters/05-modelos-continuo.typ"
+#include "chapters/06-mas.typ"
 
 

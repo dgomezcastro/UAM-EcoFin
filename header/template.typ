@@ -1,5 +1,7 @@
 #import "math.typ": *
 
+#import "@preview/diagraph:0.3.7": *
+
 #import "@preview/ilm:2.0.0": *
 
 #import "@preview/theorion:0.5.0": *
@@ -34,6 +36,7 @@
   set heading(numbering: "1.1.1")
 
   show heading.where(level: 4): set heading(numbering: none)
+  show heading.where(level: 5): set heading(numbering: none)
   // #set heading(numbering: (first, ..nums) => numbering("1.", ..nums))
   set figure(numbering: dependent-numbering("1.1"))
   show heading: reset-counter(counter(figure.where(kind: image)))

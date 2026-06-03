@@ -1,6 +1,5 @@
 // LTeX: language=es
 #import "../header/template.typ": *
-#import "@preview/diagraph:0.3.7": *
 
 = Modelo de varios pasos temporales: árbol binomial
 
@@ -143,14 +142,37 @@ $
   Delta V_t = x_t Delta S_t + y_t Delta B_t.
 $
 
+#corollary[Valor de un derivado con vencimiento fijo][
+  Sea $H$ un derivado del que conocemos su valor a vencimiento $T$ con $H_T >= 0$. El precio libre de arbitraje viene dado por
+  $
+    H_0 = e^(-r T) EE^QQ [H_T].
+  $
+]
+
+#proof[
+  Siguiendo la idea del modelo de un paso, es fácil construir una cartera autofinanciada $V_t$ tal que $V_T = H_T$.
+  Supongamos que $V_(t_0) != H_(t_0)$ para algún $t_0 in [0,T]$. Entonces la cartera compuesta por
+  $
+    hat(V)_t = cases(
+      0 & "si" t in [0,T],
+      sign(V_(t_0) - C_(t_0))(V_(t_0) C_t - C_(t_0) V_t) & "si" t in [t_0,T]
+    )
+  $
+  es una oportunidad de arbitraje.
+  De modo que $V_t = H_t$ en cada tiempo (o es posible construir una cartera con arbitraje), y por tanto también $tilde(H)_t = tilde(V)_t$. Concluímos que
+  $
+    H_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ [tilde(H)_T] = EE^QQ [e^(-r T) C_T].
+  $
+  Esto concluye la demostración.
+]
+
 == Valor de una call europea
 
 De manera similar al caso de un paso, las opciones _call europeas_ se puede reproducir por una cartera, y deducimos que
 #theorem[
   El precio de no arbitraje de una opción _call_ europea viene dado por
   $
-    C_0 & = e^(-r T) EE^QQ [(S_T - K)_+] \
-        & = S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q) .
+    C_0 & = S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q) .
   $<eq-arbol-call>
   donde $T = N Delta t$ y
   $
@@ -167,13 +189,9 @@ $
 es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouilli $p$.
 
 #proof[
-  Siguiendo la idea del modelo de un paso, es fácil construir una cartera $V_t$ que reproduce la opción _call_ por inducción. De modo que $V_t = C_t$ en cada tiempo, y por tanto también $tilde(C)_t = tilde(V)_t$. Concluímos que
-  $
-    C_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ[tilde(C)_T] = EE^QQ[e^(-r T) C_T].
-  $
   Así, tenemos que
   $
-    EE^QQ [C_T] & = EE^QQ [(S_T - K)_+] = sum_(j=0)^N u^j d^(N-j) QQ(S_T = u^j d^(N-j)).
+    EE^QQ [C_T] & = EE^QQ [(S_T - K)_+] = sum_(j=0)^N (u^j d^(N-j) S_0 - K)_+ QQ(S_T = u^j d^(N-j)).
   $
   Observando el árbol es fácil basta contar caminos para ver que
   $
@@ -229,6 +247,17 @@ De este modo, razonando como lo hicimos a tiempo $t = 0$ para tiempos generales,
 $
   C_t = e^(-r(T-t)) EE^QQ [(S_T - K)_+ | cal(F)_t].
 $<eq-arbol-call-tiempot>
+
+== VaR
+
+Dada una cartera con coeficientes $theta$, se tiene la probabilidad
+$
+  PP(V_T <= v) = sum_(j "s.t." theta dot D_(bullet j) <= v) PP(S_T = D_(bullet j)).
+$
+Esto nos da una función de "distribución" discreta, y hemos de buscar el mínimo $v$ de manera que se de esta propiedad
+$
+  "VaR" N-"días al" X% = "inf" { v "tal que" PP(V_T <= v) >= 1 - X/100 }.
+$
 
 
 // Desde el punto de vista teórico, una filtración es
