@@ -49,12 +49,12 @@ Cuando se usa un valor en riesgo se expresa:
 ]
 Si supiésemos la distribución de los retornos, $R$
 $
-  N"-day" op("VaR") "at" X% := V "tal que" PP lr(("Ganancia/pérdida en" N "días" <= V), size: #200%) = 1 - X/100.
+  op("VaR") N"-días al" X% := "mínimo "V "tal que" PP lr(("ganancia en" N "días" <= V), size: #200%) = 1 - X/100.
 $
 Por motivos que veremos abajo, la ganancia/pérdida escala se suele modelizar con distribuciones normales independientes como veremos más adelante
 y por tanto se suele aproximar
 $
-  N"-day" op("VaR") "at" X% approx sqrt(N) lr((1"-day" op("VaR") "at" X%), size: #200%)
+  op("VaR") N"-días al" X approx sqrt(N) dot lr((op("VaR") 1"-día al" X), size: #200%)
 $
 
 El modelo más habitual es el modelo histórico, que se leer en #cite(<Hull2015>, supplement: "Chapter 22").
@@ -78,18 +78,39 @@ En el periodo de 10 días, la volatilidad es de $sqrt(10) dot 2% approx 6.3%$.
 Sobre esta cartera esto significa que $sigma = 200.000$\$.
 Busquemos el VaR de 1 día al 99% de confianza
 $
-  0.01 = PP(10 dot Normal(0, sigma^2) < V) = PP(Normal(0, 1) < V / sigma)).
+  0.01 = PP(10 dot Normal(0, sigma^2) < V) = PP(Normal(0, 1) < V / sigma).
 $
 con lo que, utilizan las tablas de la Normal (o algún método más novedoso) $V/(sigma) = 2.326$ y deducimos que el VaR de un día resulta $V = 465,300$\$.
 El VaR de diez días corresponde el VaR de 10 días es $sqrt(10) dot 465,300 = 1,471,300$\$.
 
-==== Ejemplo para dos activos
+En resumen, supuesto un compartimento normal de media nula
+$
+  "VaR" N"-días al" X% = sqrt(N) dot sigma_(1 "día") dot "erf"(1-X/100)
+$
+
+
+==== Ejemplo para varios activos
 
 Para reproducir el argumento anterior en un cartera con dos activos debemos tener en cuenta que
 $
   sigma_(X+Y) = sqrt(sigma_X^2 + sigma_Y^2 + 2 rho sigma_X sigma_Y).
 $
 donde $rho$ es la correlación entre ambos productos.
+
+Y de hecho,
+$
+  var(sum_i a_i X_i) =
+  underbrace((a_1, dots, a_N), a^trans)
+  underbrace(
+    mat(
+      V(X_1), cov(X_1, X_2), dots, cov(X_1, X_N); cov(X_2, X_1), var(X_2);
+      , , dots.down;
+      , , , V(X_N)
+    ),
+    cov(X, X)
+  )
+  underbrace(vec(a_1, dots.v, a_N), a),
+$
 
 == Derivados
 

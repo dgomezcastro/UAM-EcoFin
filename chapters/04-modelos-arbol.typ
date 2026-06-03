@@ -4,19 +4,20 @@
 
 = Modelo de varios pasos temporales: árbol binomial
 
+Consideremos ahora un árbol, que podemos denotar como @fig-arbol
 #figure(
   raw-render(```
   digraph {
     rankdir=LR
   node[math=true, xmath=true]
   edge[lmath=true]
-  s[label="s_0"]
-  s1[label="s_1"]
-  s11[label="s_11"]
-  s12[label="s_12"]
-  s2[label="s_2"]
-  s21[label="s_21"]
-  s22[label="s_22"]
+  s[label="S_0"]
+  s1[label="s_1^((0))"]
+  s11[label="s_2^((00))"]
+  s12[label="s_2^((01))"]
+  s2[label="s_1^((1))"]
+  s21[label="s_2^((10))"]
+  s22[label="s_2^((11))"]
   s -> s1[label="p_1"]
   s -> s2[label="1-p_1"]
   s1 -> s11[label="p_12"]
@@ -26,13 +27,13 @@
   }
   ```),
   caption: "Árbol binomial con dos pasos de tiempo",
-)
+)<fig-arbol>
 Según las hipótesis se habla de modelo de Cox-Ross-Rubinstein o Jarrow-Rudd.
 Por simplicidad, vamos a suponer que
 $
   PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p.
 $
-
+De modo que $s_t^((a)) = S_0 u^(k) d^(t-k)$ si la cadena $a$ contiene $k$ ceros y $t-k$ unos.
 
 == Medida libre de riesgo
 Construímos el precio descontado
@@ -176,7 +177,7 @@ es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouill
   $
   Observando el árbol es fácil basta contar caminos para ver que
   $
-    QQ(S_T = u^j d^(N-j)) = binom(N, j) q^j (1-q)^(N-j).
+    QQ(S_T = u^j d^(N-j)S_0) = binom(N, j) q^j (1-q)^(N-j).
   $
   Concluímos que
   $

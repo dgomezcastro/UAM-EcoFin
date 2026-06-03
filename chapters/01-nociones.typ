@@ -10,6 +10,74 @@
 
 == Tipos de interés
 
+Un tipo de interés en una situación particular es la cantidad que el prestatario promete pagar al prestamista.
+Esto incluye tipos hipotecarios, depositarios, y otros.
+El tipo de interés aplicable depende del riesgo del crédito, es decir el riesgo de que el crédito no sea devuelto.
+
+=== Algunos ejemplos
+
+==== Tipos del Tesoro (_Treasury rates_)
+
+Los del #link("https://home.treasury.gov")[_US Treasury_] o el Banco de España, en letras y bonos (_Treasury bills_ and _Treasury bonds_). Estos son los instrumentos usados por los Gobiernos para pedir dineros prestado en su propia moneda.
+Se suele asumir que los gobiernos no llegará a impago (_default_), de manera que se asume que estos tipos de interés son libres de riesgo.
+
+Volveremos sobre las letras y los bonos más abajo.
+==== Tipos interbancarios
+
+LIBOR es el acrónimo del _London Interbank Offered Rate_. Es un tipo de préstamo a corto plazo entre bancos, sin garantías. Se calculan a diario cada día laborable en 10 monedas y 15 periodos (desde 1 día hasta 1 año).
+
+El euríbor (del inglés euribor), acrónimo de _Euro Interbank Offered Rate_ es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.
+
+=== Midiendo tipos de interés. Interés compuesto
+
+Anunciar el tipo de interés como un 10% anual parece claro y nada ambiguo. Sin embargo, depende de cómo se mida. El habitual permitir dividir el tipo de composición.
+Si el tipo de interés con $r = 10%$ se mide con composición anual (_annual compunding_) entonces $100€$ crecen como
+$
+  100€ times 1.1 = 110€.
+$
+Sin embargo, si hablamos de composición bi-anual (_semi-annual compounding_) entonces aplicamos $5%$ cada 6 meses. Tras $6$ meses tendremos $100€ times 1.05 = 110.25€$ y acabado el año
+$
+  100€ times 1.05 times 1.05€ = 110.25€
+$
+En general si lo hacemos en $n$ periodos tendremos
+$
+  100€ times (1 + 0.1/n)^n.
+$
+Vemos la siguiente tabla
+// #table(
+//   columns: (1fr, auto),
+//   table.header([*Composición*], [*Valor de $100€$ a final de año*]),
+//   Anual, hola,
+// )
+
+#figure(
+  table(
+    columns: (1fr, 1fr),
+    inset: 10pt,
+    align: (left, right),
+    table.header([*Frecuencia de composición*], [*Valor de $100€$ a final de año*]),
+    [Anual $m=1$], [110.00€],
+    [Semi-anual ($m=2$)], [110.25€],
+    [Cuatrimestral ($m=4$)], [110.38€],
+    [Mensual ($m=12$)], [110.47€],
+    [Semanal ($m=52$)], [110.51€],
+    [Diario ($m=365$)], [110.52€],
+  ),
+  caption: "Interés compuesto",
+)
+Jacob Bernouilli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
+$
+  e := lim_(x -> oo) (1 + 1/x)^x.
+$
+Calculando el límite en la fórmula de interés compuesto obtenemos
+$
+  lim_(n -> oo) (1 + (r t)/n)^(n) & = lim_(n -> oo) [(1 + (r t)/n)^(n/(r t))]^(r t)
+                                    = [lim_(x -> oo) (1 + 1/x)^(x)]^(r t) \
+                                  & = e^(r t)
+$
+Esta representación nos será de gran utilidad.
+
+
 === Tipo de interés nominal: TIN
 
 #quote(block: true, attribution: "Wikipedia")[
@@ -118,11 +186,8 @@ $
 *Comentario: Hipotecas variables*. Un tipo habitual de hipotecas tiene tipo variable o es mixta (unos primeros años con tipo fijo, y luego tipo variable).
 Es habitual que el tipo variable se exprese en función como
 $
-  "Euribor" + "Diferencial"
+  "Euribor" + "Diferencial".
 $
-donde:
-#quote(block: true, attribution: link("https://es.wikipedia.org/wiki/Eur%C3%ADbor")[Wikipedia])[
-  El euríbor (del inglés euribor) (acrónimo de Euro Interbank Offered Rate, es decir, tipo europeo de oferta interbancaria) es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.]
 El diferencial se pacta con el banco en la hipoteca, y el euribor es anunciado
 En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses utiliza como $"TIN"_"anual"$ el correspondiente #link("https://www.euribor-rates.eu/es/tipos-euribor-actualmente/4/euribor-valor-12-meses/")["Euribor a 12 meses"].
 
@@ -130,16 +195,3 @@ En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses utiliza c
 
 === Amortización americana
 
-== Intereses en tiempo continuo: exponencial
-
-Jacob Bernouilli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
-$
-  e := lim_(x -> oo) (1 + 1/x)^x.
-$
-Calculando el límite en la fórmula de interés compuesto obtenemos
-$
-  lim_(n -> oo) (1 + (r t)/n)^(n) & = lim_(n -> oo) [(1 + (r t)/n)^(n/(r t))]^(r t)
-                                    = [lim_(x -> oo) (1 + 1/x)^(x)]^(r t) \
-                                  & = e^(r t)
-$
-Esta representación nos será de gran utilidad.

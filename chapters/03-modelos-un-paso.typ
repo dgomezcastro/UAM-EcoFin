@@ -314,8 +314,6 @@ Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vac
 
 == Modelo matricial: $N$ activos y $M$ estados
 
-#let trans = { $sans(T)$ }
-
 Supongamos ahora que hay $N$ activos (incluyendo opciones y bonos). Denotaremos
 $
   S_t = vec(S^1_t, dots.v, S_t^N) in RR^N
