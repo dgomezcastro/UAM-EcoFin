@@ -31,8 +31,8 @@ En España: Letras y bonos del Tesoro.
 Supongamos que sabemos las tasas cero para composición continua como en @table-interes-tiposzerotesoro (que más adelante veremos cómo calcular)
 #figure(
   table(
-    columns: (1fr, 1fr),
-    table.header([*Maduración*], [*Índice cero %\ con composición continua*]),
+    columns: (auto, auto),
+    table.header([*Maduración \ (años)*], [*Índice cero %\ con composición continua*]),
     [0.5], [5.0],
     [1.0], [5.8],
     [1.5], [6.4],
@@ -86,7 +86,7 @@ En este caso la hemos utilizado para calcular la curva de bonos del tesoro, pero
 
 #figure(
   table(
-    columns: (1fr, 1fr, 1fr, 1fr),
+    columns: (auto, auto, auto, auto),
     table.header([Principal\ (\$)], [Duración \ (años)], [Cupón anual \ (\$)], [Precio del bono\ (\$)]),
     [100], [0,25], [0], [97.5],
     [100], [0.5], [0], [94.9],
@@ -183,24 +183,37 @@ $
   underbrace(vec(a_1, dots.v, a_N), a),
 $
 
-== Arbitraje y valoración
+== Valoración de derivados
 
 === Contrato a plazo (_forward contract_)
 
-$F_0 = S_0 e^(r T)$
+Ya hemos visto el ejemplo @example-arbitrage-forward que el precio de no arbitraje, en ausencia de dividendos.
 
-Ver @Hull2015 para una explicación del arbitraje.
-
-=== _Futures_
-
-Si $r$ es constante entonces el precio de un _future_ es el mismo que el de un _forward_. Aunque la justificación es complicada. @Hull2015
-
+$
+  F_0 = S_0 e^(r T)
+$
 Cuando hay dividendo a ritmo $q$ entonces la fórmula resulta
 $
   F_0 = S_0 e^((r-q) T).
 $
+Si $r$ es constante entonces el precio de un _future_ es el mismo que el de un _forward_. Aunque la justificación es complicada. @Hull2015
+
+=== Opciones
+
+Una opción de compra (_call option_) es el derecho, pero no la obligación, de comprar el activo a un precio $K$.
+Lo contrario es una opción de venta (_put option_) que es derecho, pero no la obligración, de comprar
+Si esta operación se realiza en un instante concreto $T$ se habla de *opciones europeas*.
+Si la opción puede ejercerse en cualquier momento anterior a $T$, se habla de *opciones americanas*.
+
+==== Opciones call europeas
+
+Denotaremos precio de una _call europea_ de este derecho a tiempo $t$ lo denotaremos $C_t$.
+Como el lógico, si el valor mañana $S_T > K$ entonces puedo me interesará ejercer la opción, y ganaré $S_T - K$.
+Si el valor es menor o igual $S_T <= K$, entonces no la ejerzo, y no ganaré nada. Esto puede escribir como que el beneficio es el valor de la call mañana $C_T = (S_T - K)_+$.
+Su valor hoy, que es lo que queremos fijar, es $C_0$.
 
 
+=== _Swaps_
 
 ==== Ejemplo: permuta de tipos de interés #footnote[Tomado de @Hull2015]
 

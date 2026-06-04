@@ -14,6 +14,91 @@ Un tipo de interés en una situación particular es la cantidad que el prestatar
 Esto incluye tipos hipotecarios, depositarios, y otros.
 El tipo de interés aplicable depende del riesgo del crédito, es decir el riesgo de que el crédito no sea devuelto.
 
+=== Intución
+
+Esto funciona bien si pensamos por ejemplo, en una inversión hecha el 1 de enero 2025, y que devuelve el dinero el 1 de 2026.
+
+En su presentación más sencilla, el tipo de interés $r$ (expresado en %), es el número tal que
+$
+  "dinero recibido \n el 1 de enero de 2026" = (1 + r) times "dinero invertido \n el 1 de enero de 2025."
+$
+Se habla del retorno
+$
+  "retorno" & := "dinero recibido" - "dinero invertido" \
+            & = r times "dinero invertido"
+$
+Esto funciona bien si pensamos por ejemplo, en una inversión hecha el 1 de enero 2025, y que devuelve el dinero el 1 de 2026.
+
+Si tomamos todo el dinero que sale de una inversión, y lo volvemos a invertir por el mismo plazo, al mismo tiempo entonces obtendremos
+$
+  "dinero recibido \n el 1 de enero de 2027" = (1 + r)^2 times "dinero invertido \n el 1 de enero de 2025".
+$
+
+=== Fórmulas de conversión
+
+Si tenemos una inversión que promete un retorno de $r$ a $T$ años (típicamente $1 "año" = N T$ donde $N in NN$), podemos utilizar la fórmula del interés compuesto para deducir cual es el tipo anual
+$
+  1 + r_("anual") = (1 + r)^N.
+$
+Habitualmente se habla de Tipo de Interés Nominal cuando $r = "TIN" / N$.
+
+Esta es la idea detrás del TAE, que es un asunto más profundo del que hablaremos más adelante.
+
+=== Midiendo tipos de interés. Interés compuesto
+
+Anunciar el tipo de interés como un 10% anual parece claro y nada ambiguo. Sin embargo, depende de cómo se mida. El habitual permitir dividir el tipo de composición.
+Si el tipo de interés con $r = 10%$ se mide con composición anual (_annual compunding_) entonces $100€$ crecen como
+$
+  100€ times 1.1 = 110€.
+$
+Sin embargo, si hablamos de composición bi-anual (_semi-annual compounding_) entonces aplicamos $5%$ cada 6 meses. Tras $6$ meses tendremos $100€ times 1.05 = 110.25€$ y acabado el año
+$
+  100€ times 1.05 times 1.05€ = 110.25€
+$
+En general si lo hacemos en $n$ periodos tendremos
+$
+  100€ times (1 + 0.1/n)^n.
+$
+Vemos más ejemplos en @table-interes-compuesto.
+// #table(
+//   columns: (1fr, auto),
+//   table.header([*Composición*], [*Valor de $100€$ a final de año*]),
+//   Anual, hola,
+// )
+
+#figure(
+  table(
+    columns: (auto, auto),
+    inset: 10pt,
+    align: (left, right),
+    table.header([*Frecuencia \ de composición*], [*Valor de $100€$ \ a final de año*]),
+    [Anual ($n=1$)], [110.00€],
+    [Semi-anual ($n=2$)], [110.25€],
+    [Cuatrimestral ($n=4$)], [110.38€],
+    [Mensual ($n=12$)], [110.47€],
+    [Semanal ($n=52$)], [110.51€],
+    [Diario ($n=365$)], [110.52€],
+  ),
+  caption: "Interés compuesto",
+)<table-interes-compuesto>
+
+=== Tipo de interés continuo
+Jacob Bernouilli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
+$
+  e := lim_(x -> oo) (1 + 1/x)^x.
+$
+Calculando el límite en la fórmula de interés compuesto obtenemos
+$
+  lim_(n -> oo) (1 + (r t)/n)^(n) & = lim_(n -> oo) [(1 + (r t)/n)^(n/(r t))]^(r t)
+                                    = [lim_(x -> oo) (1 + 1/x)^(x)]^(r t) \
+                                  & = e^(r t)
+$
+Esta representación nos será de gran utilidad. Si intentamos calcular el tipo anual equivalente, entonces
+$
+  1 + r_"anual" = e^r.
+$
+
+
 === Algunos ejemplos
 
 ==== Tipos del Tesoro (_Treasury rates_)
@@ -38,24 +123,6 @@ $
 $
 La mayor parte de los productos en el mercado no tiene cupón cero.
 
-=== Tipo de interés nominal: TIN
-
-#quote(block: true, attribution: "Wikipedia")[
-  El tipo de interés nominal (o, por sus siglas, TIN), conocido también como interés nominal, es el porcentaje que se agregará al capital cedido como remuneración durante un periodo determinado (no necesariamente un año). El TIN no tiene en cuenta otros gastos de la operación como pueden ser las comisiones o las vinculaciones que conlleva el producto.
-
-  El interés dado un TIN de $r_i$ y un capital $C$ se calcula:
-  $
-    i=C times r_i
-  $
-  A partir de una TIN puede calcularse el interés anual ($r_a$):
-  $
-    r_a=(1+r_i)^(1/n)-1
-  $
-  siendo $n$ el número de años o una fracción si el periodo es menor.
-]
-Como veremos más abajo, en hipotecas es habitual utilizar fracciones sencillas del $"TIN"_"anual"$.
-
-
 == Préstamos
 
 *Ejemplo (Hipoteca)*.
@@ -67,11 +134,11 @@ A esto hay que añadirle una comisión de apertura (por ejemplo el 1.5% del prin
 La premisa de esta amortización es que la cuota mensual, $c$, permanece fija si el interés nominal no cambia.
 De manera que hemos de deducir $c$.
 El interés en el mes $n$-ésimo, $i_n$, es siempre la proporcionales al principal pendiente, $p_n$, es decir $i_n = r p_n$, donde $r$ es el tipo de interés mensual.
+Vamos a suponer que la amortización y pago de intereses se hace mensualmente.
 En la práctica se aplica la convención de que el tipo mensual es
 $
-  r = "TIN"_"anual" / 12.
+  r = "TIN" / 12.
 $
-El $"TIN"_"anual"$ es el tipo de interés que negociaremos con el banco.
 La amortización $a_n$ varía con el tiempo de manera que $c = a_n + i_n$ sea constante. Calculamos la actualización del principal
 $
   p_(n+1) = p_n - a_n = p_n - (c - i_n) = (1 + r) p_n - c .

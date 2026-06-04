@@ -162,10 +162,7 @@ $
 
 === Opción europea
 
-Una opción de compra (_call option_) es el derecho, pero no la obligación, de comprar mañana el activo a un precio $K$. Llamaremos al valor de la call $C$. Hoy su valor, que es lo que queremos fijar, es $C_0$, y el valor mañana es $C_1$.
-
-Como el lógico, si el valor mañana $S_T > K$ entonces puedo me interesará ejercer la opción, y ganaré $S_T - K$.
-Si el valor es menor o igual $S_T <= K$, entonces no la ejerzo, y no ganaré nada. Esto puede escribir como que el beneficio es el valor de la call mañana $C_T = (S_T - K)_+$.
+En este caso una opción europea corresponde a <fig:binomial_opcion>
 #figure(
   raw-render(```
   digraph {

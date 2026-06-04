@@ -4,7 +4,7 @@
 
 = Introducción
 
-#set heading(numbering: none)
+// #set heading(numbering: none)
 
 El objetivo de estas notas es introducir al alumno al "universo" de la Matemática en Mercados Financieros. Veremos quiénes brevemente quienes son los actores, cuáles son los productos, y cuáles son las ideas básica que soportan la valoración.
 
@@ -13,11 +13,12 @@ Al ser un curso introductorio, cubriremos solamente conceptos básicos sin entra
 
 == Activos y derivados
 
+=== Definición
 Un *activo* (_asset_) es un "objeto" con valor.
 En esta asignatura trataremos sobre todo con activos financieros, que son no físicos y cuyo valor se deriva de un contrato:
 - divisas: unidades monetarias imprimidas normalmente por bancos centrales. Por ejemplo el euro € de código EUR.
 - acciones bursátiles: fracciones de una compañía que esta ha puesto a la venta. Por ejemplo, Apple `AAPL`
-- bonos estatales: compromisos del Tesoro de un estado a pagar cantidades fijas en fechas fijas
+- bonos (por ejemplo estatales): compromisos de una entidad (por ejemplo el Tesoro de un estado) a pagar cantidades fijas en fechas fijas. Estos activos se consideran "seguros".
 - fondo índices: es una colección de dinero cuyo objetivo es seguir unas normas prefijadas para intentar reproducir el rendimiento de alguna parte del mercado. Por ejemplo, el S&P500, IBEX35.
 
 También hay activos no-financieros: tanto tangibles (también llamados reales) como tierra o cereales, e intangibles como patentes y propiedad intelectual.
@@ -27,16 +28,40 @@ Sobre estos activos se construyen a veces otros contratos, llamados *derivados*,
 - un acto futuro
 - un precio al que ocurrirá la transacción futura
 - una fecha futura en que ocurrirá el acto
-
 Estos compromisos futuros habitualmente pueden ser comprados o vendidos en cualquier momento, a cualquier persona o entidad. Establecer el precio actual de estos contratos es precisamente el objetivo de esta asignatura.
 
-=== Mercados#footnote[Adaptado de @Hull2015]
+Una de las ideas básicas de esta teoría el tipo de interés $r$ (expresado en %).
+El caso más sencillo, es cuando hablamos de una inversión garantizada a 1 año (por ejemplo un bono) en la que el tipo de interés es tal que
+$
+  "dinero recibido \n el 1 de enero de 2026" = (1 + r) times "dinero invertido \n el 1 de enero de 2025."
+$
+En la teoría de interés con composición continua, que veremos más adelante, se reemplaza $1 + r$ por $e^(r T)$ donde $T$ es la duración del contrato.
 
-==== Exchange-traded markets
+=== Mercados #footnote[Adaptado de @Hull2015]
 
-==== Over-the-counter markets
+==== Bolsa de valores (_Exchange_)
 
-=== Contratos a plazo
+#quote(block: true, attribution: [https://es.wikipedia.org/wiki/Bolsa_de_valores])[
+  La bolsa de valores es una institución, organizada generalmente como sociedad mercantil o asociación civil, que facilita la negociación de valores mobiliarios entre inversores. Su función principal es ofrecer un espacio regulado y transparente en el que los intermediarios financieros introducen órdenes de compra y venta en nombre propio o de sus clientes, contribuyendo a la formación de precios y a la canalización del ahorro hacia la inversión productiva.
+
+  Entre los instrumentos que se negocian en las bolsas se encuentran las acciones de sociedades anónimas, los bonos públicos y privados, los certificados, los títulos de participación y una amplia variedad de instrumentos financieros derivados.[2][3]
+
+  Las bolsas están supervisadas por organismos reguladores de los mercados financieros, como la Comisión Nacional del Mercado de Valores (CNMV) en España, la Comisión Nacional Bancaria y de Valores (CNBV) en México o la Securities and Exchange Commission (SEC) en Estados Unidos, con el fin de garantizar la transparencia, la seguridad y la protección de los inversores.[4]
+]
+
+==== Mercado extra-bursátil (_over-the-counter_ market)
+
+#quote(block: true, attribution: [https://es.wikipedia.org/wiki/Mercado_extrabursátil])[
+  Un mercado extrabursátil, mercado over-the-counter (OTC), mercado paralelo no organizado o mercado de contratos a medida es uno donde se negocian instrumentos financieros (acciones, bonos, materias primas, swaps o derivados de crédito) directamente entre dos partes. Este tipo de negociación se realiza fuera del ámbito de los mercados organizados.
+]
+
+Tradicionalmente, los participantes en los mercados de derivados extrabursátiles se comunicaban directamente por teléfono y correo electrónico, o buscaban contrapartes para sus operaciones a través de intermediarios entre dealers. Los bancos suelen actuar como creadores de mercado (_market makers_) para los instrumentos de mayor negociación, lo que significa que están siempre dispuestos a cotizar un precio de compra —al que están dispuestos a asumir un lado de una operación con derivados— y un precio de venta —al que están dispuestos a asumir el lado contrario.
+
+Antes de la crisis crediticia, que comenzó en 2007 y se analiza con detalle en el Capítulo 8, los mercados de derivados extrabursátiles operaban en gran medida sin regulación. Tras dicha crisis y la quiebra de Lehman Brothers, se produjo el desarrollo de numerosas regulaciones nuevas que afectan al funcionamiento de los mercados extrabursátiles. El objetivo de estas regulaciones es aumentar la transparencia de dichos mercados, mejorar la eficiencia operativa y reducir el riesgo sistémico.
+
+=== Derivados
+
+==== Contratos a plazo (_forward contracts_)
 
 Un derivado relativamente simple es el contrato a plazo. Es un acuerdo para comprar o vender un activo en un momento futuro determinado a un precio determinado. Puede contrastarse con un contrato al contado, que es un acuerdo para comprar o vender un activo de forma casi inmediata. Un contrato a plazo se negocia en el mercado extrabursátil —generalmente entre dos instituciones financieras o entre una institución financiera y uno de sus clientes. Una de las partes del contrato a plazo asume una posición larga y acuerda comprar el activo subyacente en una fecha futura específica a un precio específico. La otra parte asume una posición corta y acuerda vender el activo en la misma fecha al mismo precio. Los contratos a plazo sobre divisas son muy populares. La mayoría de los grandes bancos emplean operadores tanto al contado como a plazo en el mercado de divisas. Un ejemplo de este tipo de contrato en la Tabla @table-forward-bidask
 
@@ -62,95 +87,16 @@ Un derivado relativamente simple es el contrato a plazo. Es un acuerdo para comp
 )<table-forward-bidask>
 
 
-=== Contratos a futuro
+=== Contratos a futuro (_futures_)
+
+Al igual que un contrato a plazo, un contrato de futuros es un acuerdo entre dos partes para comprar o vender un activo en un momento futuro determinado a un precio determinado. A diferencia de los contratos a plazo, los contratos de futuros se negocian habitualmente en un mercado organizado. Para facilitar la negociación, la bolsa establece ciertas características estandarizadas del contrato. Dado que las dos partes contratantes no se conocen necesariamente entre sí, la bolsa también proporciona un mecanismo que ofrece a ambas partes la garantía de que el contrato será cumplido.
+
+Su valoración es similar a la de un futuro, y por tanto no los trataremos en estas notas.
 
 === Opciones
 
-== Tipos de interés
+Una opción es el derecho, pero no la obligación, de comprar (o vender) un activo a un precio y en un momento (que puede ser una fecha o cuando se satisfagan unas condiciones).
 
-Los bancos están dispuestos a prestar dinero a cambio de un interés. La idea es sencilla, pero es una de las claves de nuestra capacidad de operar en el mercado.
-
-=== Intución
-
-Esto funciona bien si pensamos por ejemplo, en una inversión hecha el 1 de enero 2025, y que devuelve el dinero el 1 de 2026.
-
-En su presentación más sencilla, el tipo de interés $r$ (expresado en %), es el número tal que
-$
-  "dinero recibido \n el 1 de enero de 2026" = (1 + r) times "dinero invertido \n el 1 de enero de 2025".
-$
-Se habla del retorno
-$
-  "retorno" & := "dinero recibido" - "dinero invertido" \
-            & = r times "dinero invertido"
-$
-Esto funciona bien si pensamos por ejemplo, en una inversión hecha el 1 de enero 2025, y que devuelve el dinero el 1 de 2026.
-
-Si tomamos todo el dinero que sale de una inversión, y lo volvemos a invertir por el mismo plazo, al mismo tiempo entonces obtendremos
-$
-  "dinero recibido \n el 1 de enero de 2027" = (1 + r)^2 times "dinero invertido \n el 1 de enero de 2025".
-$
-
-=== Fórmulas de conversión
-
-Si tenemos una inversión que promete un retorno de $r$ a $T$ años (típicamente $1/T$ es natural), podemos utilizar la fórmula del interés compuesto para deducir cual es el tipo anual
-$
-  1 + r_("anual") = (1 + r)^(1/T).
-$
-Esta es la idea detrás del TAE, que es un asunto más profundo del que hablaremos más adelante.
-
-=== Midiendo tipos de interés. Interés compuesto
-
-Anunciar el tipo de interés como un 10% anual parece claro y nada ambiguo. Sin embargo, depende de cómo se mida. El habitual permitir dividir el tipo de composición.
-Si el tipo de interés con $r = 10%$ se mide con composición anual (_annual compunding_) entonces $100€$ crecen como
-$
-  100€ times 1.1 = 110€.
-$
-Sin embargo, si hablamos de composición bi-anual (_semi-annual compounding_) entonces aplicamos $5%$ cada 6 meses. Tras $6$ meses tendremos $100€ times 1.05 = 110.25€$ y acabado el año
-$
-  100€ times 1.05 times 1.05€ = 110.25€
-$
-En general si lo hacemos en $n$ periodos tendremos
-$
-  100€ times (1 + 0.1/n)^n.
-$
-Vemos más ejemplos en @table-interes-compuesto.
-// #table(
-//   columns: (1fr, auto),
-//   table.header([*Composición*], [*Valor de $100€$ a final de año*]),
-//   Anual, hola,
-// )
-
-#figure(
-  table(
-    columns: (auto, auto),
-    inset: 10pt,
-    align: (left, right),
-    table.header([*Frecuencia \ de composición*], [*Valor de $100€$ \ a final de año*]),
-    [Anual ($n=1$)], [110.00€],
-    [Semi-anual ($n=2$)], [110.25€],
-    [Cuatrimestral ($n=4$)], [110.38€],
-    [Mensual ($n=12$)], [110.47€],
-    [Semanal ($n=52$)], [110.51€],
-    [Diario ($n=365$)], [110.52€],
-  ),
-  caption: "Interés compuesto",
-)<table-interes-compuesto>
-
-=== Tipo de interés continuo
-Jacob Bernouilli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
-$
-  e := lim_(x -> oo) (1 + 1/x)^x.
-$
-Calculando el límite en la fórmula de interés compuesto obtenemos
-$
-  lim_(n -> oo) (1 + (r t)/n)^(n) & = lim_(n -> oo) [(1 + (r t)/n)^(n/(r t))]^(r t)
-                                    = [lim_(x -> oo) (1 + 1/x)^(x)]^(r t) \
-                                  & = e^(r t)
-$
-Esta representación nos será de gran utilidad. Si intentamos calcular el tipo anual equivalente, entonces
-$
-  1 + r_"anual" = e^r.
-$
 
 == Tipos de _traders_
 
@@ -162,13 +108,21 @@ $
 
 #example(breakable: true)[Arbitraje para un contrato _forward_][
   Nuestra primera introducción al concepto de arbitraje tiene que ver con el precio justo de un contrato _forward_.
-  Supongamos que podemos pedir prestado dinero con un tipo de interés en composición continua $r$ y que $S_0$ es el valor actual de un activo.
-  Si alguien está dispuesto a entrar con nosotros en un contrato a futuro donde $F_0 > S_0 e^(r T)$, entonces hoy podemos pedir prestado el dinero, y comprar el activo. El resultado contable es la @table-forward-arbitrage1. El resultado es que _independientemente del valor $S_T$_ gano dinero seguro. Además, he hecho la operación sin "poner" dinero. Este efecto es el conocido como arbitraje.
+  Supongamos que podemos pedir prestado dinero $S_0$ es el valor actual de un activo, es decir, por cada € que pida prestado hoy he devolver $e^(r T)$€ al vencimiento del contrato. Supongamos que el contrato tiene un strike $F_0$, al que se produce la venta del activo. Normalmente los contratos forward se hacen sin pagar nada el día que se firman.
+
+  A vencimiento, si soy el vendedor del contrato, debo honrarlo. Para ello, debo vender a quien tiene el contrato, el activo al precio pacto.
+  Por ejemplo, si no tengo el activo debo comprarlo en el mercado (pagando $S_T$) y venderlo a mi contrapartido del _forward_ al precio $F_0$. De modo que en mi balance contable resulta en $F_0 - S_T$. Si este valor es positivo gano dinero, si es negativo lo pierdo. Pero lo importante es saber si consigo salir de la operación completa ganando dinero. Para ello, hay que pensar cuál es el valor justo $F_0$ y qué puedo hacer en cada caso.
+
+  Argumentamos que si $F_0 != S_0 e^(r T)$ entonces se puede ganar dinero sin riesgo, esto es lo que se conoce como arbitraje.
+
+  Si alguien está dispuesto a entrar con nosotros en un contrato a futuro donde $F_0 > S_0 e^(r T)$, entonces hoy podemos pedir prestado el dinero, y comprar el activo.
+  Mantenemos el activo en nuestra posesión hasta el vencimiento del contrato, y liquidamos la operación ¡con beneficio!
+  El resultado contable es la @table-forward-arbitrage1. El resultado es que _independientemente del valor $S_T$_ gano dinero seguro. Además, he hecho la operación sin "poner" dinero. Este efecto es el conocido como arbitraje.
   #figure(
     table(
       columns: (auto, auto, auto),
       table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
-      [Comprar el contrato], [#text(fill: red)[0]], [$F_0 - S_T$],
+      [Comprar el contrato], [#text(fill: red)[0]], [$F_0 - S_T$ \ (positivo o negativo)],
       [Comprarel activo], [-#text(fill: red)[$S_0$]], [$S_T$],
       [Pedir prestado], [+$S_0$], [-#text(fill: red)[$S_0 e^(r T)$]],
       table.hline(stroke: 3pt),
@@ -197,21 +151,7 @@ $
   Por supuesto, esto asume que el precio del contrato _forward_ es el mismo al comprarlo que al venderlo (esto es falso), y que podemos pedir prestado o prestar dinero al mismo precio (también falso). Sin embargo, es una aproximación suficientemente buena para gran parte del análisis.
 ]<example-arbitrage-forward>
 
-== El tiempo
-En finanzas, la unidad de tiempo es el año.
-Sin embargo si no se precisa más, esto resulta ambiguo:
-- ¿Cuántos días tiene un año?
-- ¿Qué pasa con los bisiestos?
-- ¿Cuánto son 6 meses?
 
-Para evitar esta y otras ambigüedades, los mercados financieros usan reglas como la 30/360 (bonos municipales y corporativos en USA). Ver
-#quote(block: true)[#link("https://en.wikipedia.org/wiki/Day_count_convention").]
-
-Por ejemplo, uno de los componentes de esta cuenta $D_1/M_1/Y_1$ y $D_2/M_2/Y_2$ se calcula
-$
-  "DayCountFactor" = (360 times (Y_2-Y_1) + 30 times (M_2 - M_1) + (D_2-D_1))/360
-$
-El resultado, natural, queda expresado en años.
 
 
 == Modelización el precio de activos: procesos estocásticos
@@ -251,7 +191,7 @@ Esto nos permitirá hacer algunas interesantes y pasar al límite hacia un model
   caption: "Los log-incrementos del S&P500 ajustados a una normal",
 )<fig-BlackScholes-lognormality-of-returns>
 
-=== Carteras de inversión
+=== Carteras de inversión (_portfolios_)
 
 Una cartera es una combinación de diferentes activos en diferentes cantidades.
 Puede estar compuesta de activos subyacentes y derivados.
@@ -263,6 +203,22 @@ $
   V_t := sum_(i=1)^N x_t^((i)) dot S_t^((i)).
 $
 Según el momento trabajaremos con tiempo $t$ discreto o continuo.
+
+=== El tiempo
+En finanzas, la unidad de tiempo es el año.
+Sin embargo si no se precisa más, esto resulta ambiguo:
+- ¿Cuántos días tiene un año?
+- ¿Qué pasa con los bisiestos?
+- ¿Cuánto son 6 meses?
+
+Para evitar esta y otras ambigüedades, los mercados financieros usan reglas como la 30/360 (bonos municipales y corporativos en USA). Ver
+#quote(block: true)[#link("https://en.wikipedia.org/wiki/Day_count_convention").]
+
+Por ejemplo, uno de los componentes de esta cuenta $D_1/M_1/Y_1$ y $D_2/M_2/Y_2$ se calcula
+$
+  "DayCountFactor" = (360 times (Y_2-Y_1) + 30 times (M_2 - M_1) + (D_2-D_1))/360
+$
+El resultado, natural, queda expresado en años.
 
 == Ejercicios
 + ¿Cuantos años hay entre el 30/11/06 y el 01/03/08?
