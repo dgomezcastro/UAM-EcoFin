@@ -184,12 +184,7 @@ Cuando $p = 1/2$ esta fórmula lleva a la muy útil representación @eq-BlackSch
 Hasta ahora, nuestros modelos han sido puramente teóricos. Pero ahora podemos verificar si @eq-BlackScholes-St-P tiene sentido comprobando si @eq-BlackScholes-incremento-log se cumple.
 Vamos a tomar datos _reales_ de mercado para el valor de un activo, y a mirar si los incrementos del log-precio parecen normalmente distribuidos.
 Para esto, vamos a usar `julia`.
-Los activos que mejor representan este compartimento son los índices, como el S&P500 (`SPX` que include las 500 "principales" empresas americanas) o el Euro Stoxx 50 (`SX5E`)
-
-#figure(
-  image("05-figuras/lognormality.pdf", width: 75%),
-  caption: "Los log-incrementos del S&P500 ajustados a una normal",
-)
+Los activos que mejor representan este compartimento son los índices, como el S&P500 (`SPX` que include las 500 "principales" empresas americanas) o el Euro Stoxx 50 (`SX5E`).
 
 Se puede generar con código julia:
 // #code-block(
@@ -197,6 +192,7 @@ Se puede generar con código julia:
 #codly(languages: codly-languages)
 #raw(read("05-figuras/lognormality.jl"), lang: "julia", block: true)//,
 // )
+Ver @fig-BlackScholes-lognormality-of-returns.
 
 == Un comentario sobre el cálculo de Itô
 Cálculo de Itô permite construir una teoría de ecuaciones diferenciales ordinarias de la forma

@@ -31,6 +31,23 @@ $
 Se representa en @fig:binomial.
 Para este modelo no sea determinista, supongamos que $0 < d < u$.
 
+=== Planteamiento estocástico
+
+De esta manera, a lo largo supondremos que este un espacio de probabilidad $(Omega, cal(F), PP)$,
+donde $Omega$ es el conjunto de sucesos, $cal(F)$ (cuyos elementos son sub-conjuntos de $Omega$) es una $sigma$-álgebra de sucesiones medibles y $PP:cal(F) -> [0,1]$ es una medida de probabilidad.
+Así $S_t : Omega -> [0,oo)$ asumimos que para cualquier $A$ de la $sigma$-álgebra de Borel $S_t^(-1)(A) in cal(F)$ y, de esta manera damos sentido a
+$
+  PP(S_t in A) := PP(S_t^(-1)(A)).
+$
+Habitualmente hay más de un activo de riesgo, con lo que $S_t = (S_t^((1)), dots, S_t^((N)))$ donde cada $S_t^((i)) : Omega -> [0,oo)$.
+
+Esto quiere decir que $Omega$ es un conjunto de dos elementos (cualesquiera), por ejemplo
+$
+  Omega = {"sube", "baja"}
+$
+Así $cal(F)$
+// TODO FINISH
+
 === Cartera
 
 Dado que suponemos que hay un bono, una _cartera_ consiste en tener $x_1$ unidades de la acción, y $x_2$ unidades del bono. El valor de esta cartera es

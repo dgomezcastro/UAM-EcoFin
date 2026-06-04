@@ -126,51 +126,45 @@ $
 El resultado, natural, queda expresado en años.
 
 
-== El planteamiento estocástico
+== Modelización el precio de activos: procesos estocásticos
 
 El mercado contiene una serie de activos de diferentes tipos que ya hemos presentado: acciones, bonos, opciones, ...
 Habitualmente denotamos por $S_t$ al valor de un activo a tiempo $t$.
 Modelizar la evolución valor de los activos de riesgo, $S_t$, es el problema más difícil en Matemática Financiera. Dado que en este valor influyen muchos factores que no somos capaces de modelizar, pensaremos que el valor tiene una componente estocástica. Así, usaremos nociones de procesos estocásticos.
 
-De esta manera, a lo largo supondremos que este un espacio de probabilidad $(Omega, cal(F), PP)$,
-donde $Omega$ es el conjunto de sucesos, $cal(F)$ (cuyos elementos son sub-conjuntos de $Omega$) es una $sigma$-álgebra de sucesiones medibles y $PP:cal(F) -> [0,1]$ es una medida de probabilidad.
-Así $S_t : Omega -> [0,oo)$ asumimos que para cualquier $A$ de la $sigma$-álgebra de Borel $S_t^(-1)(A) in cal(F)$ y, de esta manera damos sentido a
+=== Árbol binomial
+Consideremos un activo muy sencillo descrito mediante
+Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor $u$ con cierta probabilidad $p$ o bajar por un factor $d$, es decir
 $
-  PP(S_t in A) := PP(S_t^(-1)(A)).
+  bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p
 $
-Habitualmente hay más de un activo de riesgo, con lo que $S_t = (S_t^((1)), dots, S_t^((N)))$ donde cada $S_t^((i)) : Omega -> [0,oo)$.
 
-#example[Árbol binomial][
-  Consideremos un activo muy sencillo descrito mediante
-  Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor $u$ con cierta probabilidad $p$ o bajar por un factor $d$, es decir
-  $
-    bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p
-  $
-  Esto quiere decir que $Omega$ es un conjunto de dos elementos (cualesquiera), por ejemplo
-  $
-    Omega = {"sube", "baja"}
-  $
-  Así $cal(F)$
+// TODO FINISH
 
-  // TODO FINISH
+#figure(
+  raw-render(```
+  digraph {
+    rankdir=LR
+  node[math=true, xmath=true]
+  edge[lmath=true]
+  // s[label="sum_(n=0)^3 n"]
+  s[label="S_0"]
+  s -> s1[label="p"]
+  s -> s2[label="1-p"]
+  s1[label="u S_0"]
+  s2[label="d S_0"]
+  }
+  ```),
+  caption: "Modelo discreto con un periodo de tiempo",
+)<fig:binomial>
 
-  #figure(
-    raw-render(```
-    digraph {
-      rankdir=LR
-    node[math=true, xmath=true]
-    edge[lmath=true]
-    // s[label="sum_(n=0)^3 n"]
-    s[label="S_0"]
-    s -> s1[label="p"]
-    s -> s2[label="1-p"]
-    s1[label="u S_0"]
-    s2[label="d S_0"]
-    }
-    ```),
-    caption: "Modelo discreto con un periodo de tiempo",
-  )<fig:binomial>
-]
+Esto nos permitirá hacer algunas interesantes y pasar al límite hacia un modelo más realista, donde $S_(t+Delta t)/S_t$ viene dada por una log-normal.
+
+#figure(
+  image("05-figuras/lognormality.pdf", width: 75%),
+  caption: "Los log-incrementos del S&P500 ajustados a una normal",
+)<fig-BlackScholes-lognormality-of-returns>
+
 === Carteras de inversión
 
 Una cartera es una combinación de diferentes activos en diferentes cantidades.

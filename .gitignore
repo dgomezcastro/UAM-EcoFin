@@ -1,5 +1,6 @@
 ecofin.pdf
 Manifest.toml
 # .vscode
+.vscode/settings.json
 
 !.vscode/ltex.dictionary.es.txt
