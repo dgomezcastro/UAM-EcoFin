@@ -67,15 +67,6 @@ Diremos que $QQ << PP$ si $PP(A) = 0$ implica $QQ(A) = 0$.
     EE^QQ lr([tilde(S)_(t+Delta t) | tilde(S_t) = s], size: #200%) = s "para todo" s "tal que" QQ(tilde(S_t) = s) > 0
   $
 ]
-Por inducción, es claro que
-#proposition[
-  Si $t > s$ entonces
-  $
-    EE^QQ [tilde(S_t) | tilde(S)_s] = tilde(S)_s.
-  $ <eq-arbol-martingala>
-]
-
-
 
 Aplicamos la definición para calcular $q$ la probabilidad de subida
 $
@@ -92,40 +83,63 @@ $
   $
 ]
 
+Por inducción, es claro que
+#proposition[
+  Si $t > s$ entonces
+  $
+    EE^QQ [tilde(S_t) | tilde(S)_s] = tilde(S)_s.
+  $ <eq-arbol-martingala>
+]
+
 == Carteras y arbitraje
-Ahora nuestra cartera descontada toma la forma
+Ahora nuestra cartera toma la forma
 $
   V_t := x_t S_t + y_t B_t
 $<eq-arbol-cartera>
-Añadimos la condición de que sea autofinanciada, es decir que a tiempo $t+Delta t$ liquidamos la posición y usamos todo el dinero para una nueva cartera
+Añadimos la condición de que sea autofinanciada, es decir que a tiempo $t+Delta t$ podríamos la posición y usamos todo el dinero para una nueva cartera
 $
-  x_t S_(t+Delta t) + y_t B_(t + Delta t) = x_(t+ Delta t) S_(t+Delta t) + y_(t + Delta t) B_(t + Delta t)
+  underbrace(x_t S_(t+Delta t) + y_t B_(t + Delta t), "valor de la cartera" \ "construida a tiempo" t "en" t + Delta t) = underbrace(x_(t+ Delta t) S_(t+Delta t) + y_(t + Delta t) B_(t + Delta t), "valor de la nueva cartera" \ "en" t + Delta t)
 $
-Denotando $Delta x_t := x_(t+Delta t) - x_t$ esto significa que
+Denotando
+$
+  Delta S_t := S_(t + Delta t) - S_t,
+$
+$Delta x_t := x_(t+Delta t) - x_t$, etc...  esto significa que
 $
   (Delta x_t) S_(t+Delta t) + (Delta y_t) B_(t+Delta t) = 0.
-$<eq:arbol-autofinanciacion>
-
-#definition[Oportunidad de arbitraje en el modelo un paso][
+$<eq:arbol-autofinanciacion2>
+Desarrollando
+$
+  Delta V_t & = (Delta x_t) S_(t+Delta t) + (Delta y_t) B_(t+Delta t) + x_t Delta S_t + y_t Delta B_t
+$
+obtenemos la formulación equivalente
+#definition[Cartera autofinanciada][
+  Diremos que una cartera es autofinanciada si satisface
+  $
+    Delta V_t = x_t Delta S_t + y_t Delta B_t.
+  $<eq:arbol-autofinanciacion>
+]
+La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nuestra parte. Esto quiere decir no hacer inversión inicial, y no tener que hacer inversiones posteriores. De aquí que nuestra nueva definición incluya la autofinanciación.
+#definition[Oportunidad de arbitraje en el modelo discreto en tiempo][
   Decimos que una cartera $V$ es una oportunidad de arbitraje si existe
   $
     V_t "es autofinanciada",
-    quad quad & V_0 = 0,
+    quad quad & V_0 <= 0,
                 quad quad & V_T >= 0,
                             quad quad & PP(V_T > 0) > 0.
   $
 ]
 
-Las carteras autofinanciadas son martingalas
+Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noción detallada, vamos simplemente a demostrar la siguiente propiedad que nos permitirá valor activos a tiempo $t = 0$.
 
-#theorem[][
+#proposition[][
   En un árbol binomial, una cartera @eq-arbol-cartera autofinanciada, es decir tal que @eq:arbol-autofinanciacion satisface
   $
     EE^QQ [tilde(V)_t] = V_0
   $
 ]
 #proof[
-  Descontando el precio obtenemos
+  Multiplicando @eq:arbol-autofinanciacion2 por $e^(-r (t + Delta t))$ obtenemos la versión descontada
   $
     (Delta x_t) tilde(S)_(t+Delta t) + (Delta y_t) tilde(B)_(t+Delta t) = 0.
   $
@@ -133,16 +147,12 @@ Las carteras autofinanciadas son martingalas
   $
     Delta tilde(V_t)
     &= (Delta x_t) tilde(S)_(t+Delta t) + (Delta y_t) tilde(B)_(t+Delta t) + x_t Delta tilde(S)_t + y_t Delta tilde(B)_t \
-    &=x_t Delta tilde(S)_t + y_t Delta tilde(B)_t.
+    &=x_t Delta tilde(S)_t + y_t Delta tilde(B)_t = x_t Delta tilde(S)_t.
   $
-  Aplicando @eq-arbol-martingala deducimos que $EE^QQ [tilde(V)_(t + Delta t)] = E^QQ [tilde(V)_t]$. Inductivamente deducimos el resultado.
+  Aplicando @eq-arbol-martingala con $s = 0$ deducimos que $EE^QQ [tilde(S)_t] = S_0$ y deducimos que $EE^QQ [tilde(V)_(t + Delta t)] = E^QQ [tilde(V)_t]$. Inductivamente deducimos el resultado.
 ]
-También cabe señalar que
-$
-  Delta V_t = x_t Delta S_t + y_t Delta B_t.
-$
 
-#corollary[Valor de un derivado con vencimiento fijo][
+#corollary[Valor de un derivado con vencimiento a tiempo fijo][
   Sea $H$ un derivado del que conocemos su valor a vencimiento $T$ con $H_T >= 0$. El precio libre de arbitraje viene dado por
   $
     H_0 = e^(-r T) EE^QQ [H_T].

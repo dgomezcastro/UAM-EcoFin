@@ -26,26 +26,55 @@ Denotemos por el precio en € de una unidad de este activo a tiempo por $S_t$.
 El valor a $t = 0$, $S_0 > 0$, es conocido.
 Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor $u$ con cierta probabilidad $p$ o bajar por un factor $d$, es decir
 $
-  bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p
-$
+  bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p \
+  bb(P)(B_T = e^(r T) B_0) = 1.
+$<eq-unpaso-2states>
 Se representa en @fig:binomial.
 Para este modelo no sea determinista, supongamos que $0 < d < u$.
 
 === Planteamiento estocástico
 
 De esta manera, a lo largo supondremos que este un espacio de probabilidad $(Omega, cal(F), PP)$,
-donde $Omega$ es el conjunto de sucesos, $cal(F)$ (cuyos elementos son sub-conjuntos de $Omega$) es una $sigma$-álgebra de sucesiones medibles y $PP:cal(F) -> [0,1]$ es una medida de probabilidad.
+donde $Omega$ es el conjunto de sucesos, $cal(F)$ (cuyos elementos son sub-conjuntos de $Omega$) es la $sigma$-álgebra de conjuntos medibles y $PP:cal(F) -> [0,1]$ es una medida de probabilidad.
 Así $S_t : Omega -> [0,oo)$ asumimos que para cualquier $A$ de la $sigma$-álgebra de Borel $S_t^(-1)(A) in cal(F)$ y, de esta manera damos sentido a
 $
   PP(S_t in A) := PP(S_t^(-1)(A)).
 $
 Habitualmente hay más de un activo de riesgo, con lo que $S_t = (S_t^((1)), dots, S_t^((N)))$ donde cada $S_t^((i)) : Omega -> [0,oo)$.
 
-Esto quiere decir que $Omega$ es un conjunto de dos elementos (cualesquiera), por ejemplo
+Vamos a construir rigurosamente @eq-unpaso-2states. Esto quiere decir que $Omega$ es un conjunto de dos elementos (cualesquiera), por ejemplo
 $
   Omega = {"sube", "baja"}
 $
-Así $cal(F)$
+El mercado se compone de dos procesos $S = (S_0, S_T)$ y $B = (B_0, B_T)$
+$
+  {S, B} : Omega & -> [0,+oo)^2 \
+          "sube" & |-> lr({(S_0, S_0 u), (B_0, e^(r T) B_0)}, size: #200%) \
+          "baja" & |-> lr({(S_0, S_0 d), (B_0, e^(r T) B_0)}, size: #200%).
+$
+Los conjuntos medibles son todos los posibles $cal(F)$ es $sigma$-álgebra de puntos
+$
+  cal(F) := cal(P)(Omega) = lr({ emptyset, {"sube"}, {"baja"}, {"sube", "baja"}}, size: #200%)
+$
+De esta manera
+$
+        PP: cal(F) & -> [0,1] \
+          emptyset & |-> 0 \
+          {"sube"} & |-> p \
+          {"baja"} & |-> 1-p \
+  {"sube", "baja"} & |-> 1.
+$
+
+Informalmente, denotamos
+$
+  {S_T = S_0 u} := {(s_0,s_T) in RR^2 : s_T = S_0 u}
+$
+Así, la notación $PP(S_T = S_0 u)$ quiere decir la medida del conjunto informalmente escrito ${S_T = S_0 u}$,
+$
+  PP(S_T = S_0 u) := PP(S^(-1) lr(({S_T = S_0 u}), size: #200%)) = PP({"sube"}) = p.
+$
+Por salud mental, en adelante no volveremos a mencionar esta construcción tan complicada y tan poco descriptiva. Pero las matemáticas sustentas nuestros cálculos.
+
 // TODO FINISH
 
 === Cartera
@@ -77,10 +106,11 @@ Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversi
 #definition[Oportunidad de arbitraje en el modelo un paso][
   Decimos que $V$ es una oportunidad de arbitraje si existe
   $
-    V_0 = 0,
+    V_0 <= 0,
     quad quad & V_T >= 0,
                 quad quad & PP(V_T > 0) > 0.
   $
+  Habitualmente podemos construirlo con $V_0 = 0.$
 ]
 Si lo intentamos a través de una cartera tenemos que
 $0 = V_0 = x_1 S_0 + x_2 B_0$
@@ -97,6 +127,38 @@ $
 $<eq-binomial-condicion-no-arbitraje>
 
 === Valor de un contrato a plazo fijo
+
+Vamos a volver sobre el @example-arbitrage-forward.
+Un contrato a plazo es el derecho y la obligación de comprar un bien a un valor fijado $F_0$ a un tiempo fijado $T$.
+Sea $H_T$ el valor de este contrato.
+Como en el contrato a futuro no se intercambia dinero a tiempo $0$ se establece que $H_0 = 0$.
+A tiempo $T$ ejecuto el contrato, como el bien por $F_0$€, y luego puedo venderlo inmediatamente por $S_T$€.
+De modo que el beneficio es
+$
+  H_T = S_T - F_0.
+$
+Cuando introducimos un nuevo producto, por ejemplo $H_t$, en el mercado, estamos extendiendo el mercado de tal modo que ahora tiene tres activos con los que construir carteras: ${S, B, H}$.
+Veamos cuál debe ser el valor $F_0$.
+#proposition[Precio de un contrato forward][
+  En el mercado @eq-unpaso-2states el precio de no arbitraje de un contrato forward es
+  $
+    F_0 = S_0 e^(r T)
+  $
+]
+#proof[
+  Supongamos que $F_0 > S_0 e^(r T)$. Entonces construimos la cartera
+  $
+    V_t = underbrace(-H_t, "vender contrato") + underbrace(S_t, "comprar el activo") - underbrace(S_0 B_t / B_0, "financiarlo con deuda").
+  $
+  Esta cartera tiene $V_0 = 0 + S_0 - S_0 = 0$, y $V_T = -(S_T - F_0) + S_T - e^(r T) S_0 = F_0 - e^(r T) S_0 > 0$. Esta es una oportunidad de arbitraje.
+
+  Si $F_0 < S_0 e^(r T)$ entonces construimos la cartera al revés.
+]
+En la demostración anterior, podríamos haber construído ambos casos con la cartera
+$
+  V_t = sign(F_0 - e^(r T) S_0) (-H_t + S_t - S_0 B_t / B_0).
+$
+
 
 === Opción europea
 
@@ -152,7 +214,7 @@ De tal manera que el único precio que no genera opciones de arbitraje es
 $
   C_0 = x_1 S_0 + x_2 e^(r T) B_0,
 $
-donde $(x_1,x_2)$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*.
+donde $(x_1,x_2)$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*. Hay otra forma, más elegante, de expresar este valor.
 
 Hemos hecho algunas suposiciones:
 - Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
@@ -246,9 +308,10 @@ Enunciemos el siguiente resultado como teorema, porque nos será de gran utilida
     C_0 = e^(-r T) EE^QQ [C_T].
   $
 ]
+En realidad, este razonamiento, puede usar para valorar cualquier producto $H_t$ del que se conoce el valor a vencimiento.
 De manera similar, para una _call_ y _put_ europeas, se tiene
 $
-  C_0 e^(-r T) EE^QQ [(S_T - K)_+]
+  C_0 = e^(-r T) EE^QQ [(S_T - K)_+]
   quad "y" quad
   P_0 = e^(-r T) EE^QQ [(K - S_T)_+].
 $
@@ -340,7 +403,7 @@ Introducimos la notación para $x in RR^N$ se dice que
 
 Así, la condición de no-arbitraje se traduce en que existe $theta in RR^N$ tal que
 $
-  S_0 dot theta = 0 & " y " D^t theta gt.neq 0.
+  S_0 dot theta <= 0 & " y " D^t theta gt.neq 0.
 $
 #definition[Vector de estado][
   Vector $psi in RR^M_(++)$ tal que

@@ -185,14 +185,12 @@ Hasta ahora, nuestros modelos han sido puramente teóricos. Pero ahora podemos v
 Vamos a tomar datos _reales_ de mercado para el valor de un activo, y a mirar si los incrementos del log-precio parecen normalmente distribuidos.
 Para esto, vamos a usar `julia`.
 Los activos que mejor representan este compartimento son los índices, como el S&P500 (`SPX` que include las 500 "principales" empresas americanas) o el Euro Stoxx 50 (`SX5E`).
-
-Se puede generar con código julia:
+Estudiar con el siguiente código de `julia`, cuyo resultado es @fig-BlackScholes-lognormality-of-returns:
 // #code-block(
 #show: codly-init.with()
 #codly(languages: codly-languages)
 #raw(read("05-figuras/lognormality.jl"), lang: "julia", block: true)//,
 // )
-Ver @fig-BlackScholes-lognormality-of-returns.
 
 == Un comentario sobre el cálculo de Itô
 Cálculo de Itô permite construir una teoría de ecuaciones diferenciales ordinarias de la forma
@@ -282,7 +280,7 @@ $
 $
 En esta función $S_0, K, r, T$ son conocidos a la hora de hacer el contrato, pero $sigma$ es desconocido.
 #theorem[][
-  La función
+  Dados $S_0, K, r, T$ fijos, la función
   $
     (0,oo) & ->  && (0,oo) \
      sigma & |-> && "Call"_"BS" (sigma,S_0, K,r,T)

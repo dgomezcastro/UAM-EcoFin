@@ -6,7 +6,6 @@
 
 #set heading(numbering: none)
 
-
 == Mercados
 
 === Over-the-counter markets
@@ -17,15 +16,9 @@
 
 === Opciones
 
-== Tipos de _traders_
-
-==== _Hedgers_
-
-==== Especuladores
-
-==== _Arbitrageurs_
-
 == Tipos de interés
+
+Los bancos están dispuestos a prestar dinero a cambio de un interés. La idea es sencilla, pero es una de las claves de nuestra capacidad de operar en el mercado.
 
 === Intución
 
@@ -79,16 +72,16 @@ Vemos más ejemplos en @table-interes-compuesto.
 
 #figure(
   table(
-    columns: (1fr, 1fr),
+    columns: (auto, auto),
     inset: 10pt,
     align: (left, right),
-    table.header([*Frecuencia de composición*], [*Valor de $100€$ a final de año*]),
-    [Anual $m=1$], [110.00€],
-    [Semi-anual ($m=2$)], [110.25€],
-    [Cuatrimestral ($m=4$)], [110.38€],
-    [Mensual ($m=12$)], [110.47€],
-    [Semanal ($m=52$)], [110.51€],
-    [Diario ($m=365$)], [110.52€],
+    table.header([*Frecuencia \ de composición*], [*Valor de $100€$ \ a final de año*]),
+    [Anual ($n=1$)], [110.00€],
+    [Semi-anual ($n=2$)], [110.25€],
+    [Cuatrimestral ($n=4$)], [110.38€],
+    [Mensual ($n=12$)], [110.47€],
+    [Semanal ($n=52$)], [110.51€],
+    [Diario ($n=365$)], [110.52€],
   ),
   caption: "Interés compuesto",
 )<table-interes-compuesto>
@@ -108,6 +101,51 @@ Esta representación nos será de gran utilidad. Si intentamos calcular el tipo 
 $
   1 + r_"anual" = e^r.
 $
+
+== Tipos de _traders_
+
+==== _Hedgers_
+
+==== Especuladores
+
+==== _Arbitrageurs_
+
+#example(breakable: true)[Arbitraje para un contrato _forward_][
+  Nuestra primera introducción al concepto de arbitraje tiene que ver con el precio justo de un contrato _forward_.
+  Supongamos que podemos pedir prestado dinero con un tipo de interés en composición continua $r$ y que $S_0$ es el valor actual de un activo.
+  Si alguien está dispuesto a entrar con nosotros en un contrato a futuro donde $F_0 > S_0 e^(r T)$, entonces hoy podemos pedir prestado el dinero, y comprar el activo. El resultado contable es la @table-forward-arbitrage1. El resultado es que _independientemente del valor $S_T$_ gano dinero seguro. Además, he hecho la operación sin "poner" dinero. Este efecto es el conocido como arbitraje.
+  #figure(
+    table(
+      columns: (auto, auto, auto),
+      table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
+      [Comprar el contrato], [#text(fill: red)[0]], [$F_0 - S_T$],
+      [Comprarel activo], [-#text(fill: red)[$S_0$]], [$S_T$],
+      [Pedir prestado], [+$S_0$], [-#text(fill: red)[$S_0 e^(r T)$]],
+      table.hline(stroke: 3pt),
+      [Total], [0], [$F_0 - S_0 e^(r T)$],
+    ),
+    caption: [Arbitraje en un contrato forward si $F_0 > S_0 e^(r T)$. Cada casilla representa el apunte contable correspondiente (donde negro significa ingreso, y rojo significa gasto).],
+  )<table-forward-arbitrage1>
+  Por contra, si hubiese alguien dispuesto a hacer el contrato con $F_0 < S_0 e^(r T)$ podría hacer la operación inversa, como detalla @table-forward-arbitrage2.
+  #figure(
+    table(
+      columns: (auto, auto, auto),
+      table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
+      [Vender el contrato], [#text(fill: black)[0]], [-#text(fill: red)[$(S_T - F_0)$]],
+      [Comprar el activo], [#text(fill: black)[$S_0$]], [-#text(fill: red)[$S_T$]],
+      [Pretar \
+        a un tercero],
+      [-#text(fill: red)[$S_0$]],
+      [#text(fill: black)[$S_0 e^(r T)$]],
+      table.hline(stroke: 3pt),
+      [Total], [0], [$S_0 e^(r T) - F_0$],
+    ),
+    caption: [Arbitraje en un contrato forward si $F_0 < S_0 e^(r T)$. Cada casilla representa el apunte contable correspondiente (donde negro significa ingreso, y rojo significa gasto).],
+  )<table-forward-arbitrage2>
+  De modo que el precio libre de arbitraje es
+  $F_0 = S_0 e^(r T).$
+  Por supuesto, esto asume que el precio del contrato _forward_ es el mismo al comprarlo que al venderlo (esto es falso), y que podemos pedir prestado o prestar dinero al mismo precio (también falso). Sin embargo, es una aproximación suficientemente buena para gran parte del análisis.
+]<example-arbitrage-forward>
 
 == El tiempo
 En finanzas, la unidad de tiempo es el año.
@@ -132,14 +170,12 @@ El mercado contiene una serie de activos de diferentes tipos que ya hemos presen
 Habitualmente denotamos por $S_t$ al valor de un activo a tiempo $t$.
 Modelizar la evolución valor de los activos de riesgo, $S_t$, es el problema más difícil en Matemática Financiera. Dado que en este valor influyen muchos factores que no somos capaces de modelizar, pensaremos que el valor tiene una componente estocástica. Así, usaremos nociones de procesos estocásticos.
 
-=== Árbol binomial
+=== Precio del activo subjacente
 Consideremos un activo muy sencillo descrito mediante
 Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor $u$ con cierta probabilidad $p$ o bajar por un factor $d$, es decir
 $
   bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p
 $
-
-// TODO FINISH
 
 #figure(
   raw-render(```
