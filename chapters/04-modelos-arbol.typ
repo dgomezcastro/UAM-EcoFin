@@ -38,7 +38,7 @@ De modo que $s_t^((a)) = S_0 u^(k) d^(t-k)$ si la cadena $a$ contiene $k$ ceros 
 == Carteras y arbitraje
 
 #definition[Cartera de inversión][
-  Si tenemos algunos activos de cuyo valores denotamos $S_t^((i))$ una cartera consiste en mantener cantidades $theta^((i))_t in RR$ de ellos.
+  Si tenemos algunos activos de cuyo valores denotamos $S_t^((i))$ una cartera consiste en mantener cantidades $theta^((i))_t in RR$ de ellos en los tiempos $[t, t + Delta t]$.
   Cuando $theta_t^((i)) > 0$ decimos que estamos en una posición larga, y si $theta_t^((i)) < 0$ decimos que estamos en una posición corta.
   Una cartera es un proceso estocástico $theta_t = (theta_t^(1), dots.c, theta_t^(N))$
   adaptado a la información conocida, es decir tal que
@@ -52,7 +52,7 @@ De modo que $s_t^((a)) = S_0 u^(k) d^(t-k)$ si la cadena $a$ contiene $k$ ceros 
 ]
 Añadimos la condición de que sea autofinanciada, es decir que a tiempo $t+Delta t$ podríamos la posición y usamos todo el dinero para una nueva cartera
 $
-  underbrace(theta_t dot S_(t+Delta t), "valor de la cartera" \ "construida a tiempo" t "en" t + Delta t) = underbrace(theta_(t+ Delta t) S_(t+Delta t), "valor de la nueva cartera" \ "en" t + Delta t)
+  underbrace(theta_t dot S_(t), "valor de la cartera" \ "construida a tiempo" t-Delta t "en" t) = underbrace(theta_(t+ Delta t) dot S_(t), "valor de la nueva cartera" \ "en" t)
 $
 Denotando
 $
@@ -60,11 +60,11 @@ $
 $
 $Delta theta_t := theta_(t+Delta t) - theta_t$, etc...  esto significa que
 $
-  S_(t+Delta t) dot Delta theta_t = 0.
+  S_(t) dot Delta theta_t = 0.
 $<eq:arbol-autofinanciacion2>
 Desarrollando
 $
-  Delta V_t & = (Delta theta_t) dot S_(t+Delta t) + theta_t dot Delta S_t
+  Delta V_t & = (Delta theta_t) dot S_(t) + theta_t dot Delta S_t
 $
 obtenemos la formulación equivalente
 #definition[Cartera autofinanciada][
@@ -86,27 +86,41 @@ La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nue
 
 
 #theorem[Valoración por replicación][
-  Si $V_t$ y $H_t$ son dos productos tales que $H_T = V_T$, entonces $H_t = V_t$ para todo $t in [0,T]$.
+  Si $V_t$ y $H_t$ son dos productos tales que $H_T = V_T != 0$, entonces $H_t = V_t$ para todo $t in [0,T]$.
 ]
 #proof[
   Veamos que si $V_t != H_t$ para algún $t$ entonces el mercado admite una oportunidad de arbitraje.
-  Sea $t_0$ el mínimo tiempo donde no coinciden.
+  Sea $t_0$ cualquier tiempo donde.
+  Por construcción $t_0 < T$.
   En el mercado de productos $(V_t, H_t)$ podemos construir el producto
-  construímos una nueva cartera formada por $hat(x)_t^((1))$ unidades de la cartera replicante, y $hat(x)_t^((2))$ unidades del derivado donde
+  construímos una nueva cartera formada por $hat(theta)_t^((1))$ unidades de la cartera replicante, y $hat(theta)_t^((2))$ unidades del derivado donde
   $
-    hat(x)_t^((1)) & := cases(0 & "si" t<t_0, -sign(V_(t_0) - H_(t_0))H_(t_0) & "si" t>=t_0+Delta t) \
-    hat(x)_t^((2)) & := cases(0 & "si" t<t_0, sign(V_(t_0) - H_(t_0))V_(t_0) & "si" t>=t_0+Delta t)
+    hat(theta)_t^((1)) & := cases(0 & "si" t<=t_0, -sign(V_(t_0) - H_(t_0))H_(t_0) & "si" t>=t_0+Delta t) \
+    hat(theta)_t^((2)) & := cases(0 & "si" t<=t_0, sign(V_(t_0) - H_(t_0))V_(t_0) & "si" t>=t_0+Delta t)
   $
   donde $sign(0) = 0$.
   Esta es una cartera admisible, porque mira sólo al pasado.
-  Entonces el valor de esta cartera resulta
+
+  Comprobamos que es autofinanciada verificando @eq:arbol-autofinanciacion2.
+  Si $t != t_0$ entonces la condición es trivial porque $Delta theta_t = 0$.
+  Tenemos que $theta_(t_0) = 0$.
+  Por la elección de $t_0$ tenemos que $V_(t_0 + Delta t) = H_(t + Delta t_0)$ de modo que
+  $
+    Delta hat(theta)_(t_0)^((1)) dot V_(t_0) + Delta hat(theta)_(t_0)^((2)) dot H_(t_0) &= hat(theta)_(t_0+Delta t)^((1)) dot V_(t_0) + hat(theta)_(t_0 )^((2)) dot H_(t_0)
+    \
+    &= -sign(V_(t_0) - H_(t_0)) V_(t_0) H_(t_0) + sign(V_(t_0) - H_(t_0))H_(t_0) V(t_0)
+    \
+    &= 0.
+  $
+
+  Además, el valor de esta cartera resulta
   $
     hat(V)_t := cases(
       0 & "si" t in [0,t_0],
-      sign(V_(t_0) - H_(t_0))(V_(t_0) H_t - H_(t_0) V_t) & "si" t in [t_0,T]
+      sign(V_(t_0) - H_(t_0))(V_(t_0) H_t - H_(t_0) V_t) & "si" t in [t_0 + Delta t,T]
     )
   $
-  Así, la cartera es autofinanciada, $V_0 = 0$, $V_T = |V_(t_0) - H_(t_0)| H_T >= 0$. Como $V_(t_0) != H_(t_0)$ entonces $V_T > 0$ con probabilidad positiva.
+  De este modo $V_0 = 0$, $V_T = |V_(t_0) - H_(t_0)| H_T >= 0$. Como $V_(t_0) != H_(t_0)$ entonces $V_T > 0$ con probabilidad positiva.
 ]
 
 == Medida libre de riesgo
@@ -177,11 +191,11 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 #proof[
   Multiplicando @eq:arbol-autofinanciacion2 por $e^(-r (t + Delta t))$ obtenemos la versión descontada
   $
-    sum_(i=1)^N (Delta theta_t^((i))) tilde(S)_(t+Delta t) = 0.
+    (Delta theta_t) dot tilde(S)_(t+Delta t) = 0.
   $
   Así, desarrollamos la resta
   $
-    Delta tilde(V_t) & = sum_(i=1)^N theta_t^((i)) Delta tilde(S)_t^((i)).
+    Delta tilde(V_t) & = theta_t dot Delta tilde(S)_t.
   $
   Aplicando @eq-arbol-martingala con $s = 0$ deducimos que $EE^QQ [tilde(S)_t] = S_0$ y deducimos que $EE^QQ [tilde(V)_(t + Delta t)] = E^QQ [tilde(V)_t]$. Inductivamente deducimos el resultado.
 ]
@@ -265,6 +279,11 @@ es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouill
 
 Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
 
+Una filtración es una sucesión no-decreciente de $sigma$-algebras
+$
+  s < t => cal(F)_s subset cal(F)_t.
+$
+
 Dada una variable aleatoria $X: Omega -> RR$ se define la $sigma$-álgebra generada por $X$ como
 $
   cal(U)(X) := {X^(-1) (B) : B in cal(B)}
@@ -277,6 +296,12 @@ $
   cal(F)_t := cal(U)(S_s | s in [0,s]).
 $
 La condición de que la cartera esté adaptada a la información conocida (ver @eq-arbol-carteraadaptada) se expresa en estos términos como que $theta_t$ es un *proceso adaptado a $cal(F)_t$*.
+
+Podemos pensar en
+$
+  EE[Phi(S_0, dots.c, S_T) | cal(F)_t]
+$
+como la esperanza fijados $S_0, dots.c, S_t$ y promediando entre los valores de $S_(t+Delta t), dots.c, S_T$.
 
 De manera que podemos escribir
 $
