@@ -6,11 +6,61 @@
 
 #set heading(numbering: none)
 
-== Mercados
+El objetivo de estas notas es introducir al alumno al "universo" de la Matemática en Mercados Financieros. Veremos quiénes brevemente quienes son los actores, cuáles son los productos, y cuáles son las ideas básica que soportan la valoración.
 
-=== Over-the-counter markets
+Al ser un curso introductorio, cubriremos solamente conceptos básicos sin entrar en algunas de las principales sutilezas, y los métodos de valoración que presentaremos están ya algo desfasados respecto al "estado del arte". Sin embargo, son el fundamento que sustenta estos métodos más nuevos.
+
+
+== Activos y derivados
+
+Un *activo* (_asset_) es un "objeto" con valor.
+En esta asignatura trataremos sobre todo con activos financieros, que son no físicos y cuyo valor se deriva de un contrato:
+- divisas: unidades monetarias imprimidas normalmente por bancos centrales. Por ejemplo el euro € de código EUR.
+- acciones bursátiles: fracciones de una compañía que esta ha puesto a la venta. Por ejemplo, Apple `AAPL`
+- bonos estatales: compromisos del Tesoro de un estado a pagar cantidades fijas en fechas fijas
+- fondo índices: es una colección de dinero cuyo objetivo es seguir unas normas prefijadas para intentar reproducir el rendimiento de alguna parte del mercado. Por ejemplo, el S&P500, IBEX35.
+
+También hay activos no-financieros: tanto tangibles (también llamados reales) como tierra o cereales, e intangibles como patentes y propiedad intelectual.
+
+Sobre estos activos se construyen a veces otros contratos, llamados *derivados*, que tiene 4 elementos:
+- un elemento (llamado subyacente) que se puede o debe comprar o vender
+- un acto futuro
+- un precio al que ocurrirá la transacción futura
+- una fecha futura en que ocurrirá el acto
+
+Estos compromisos futuros habitualmente pueden ser comprados o vendidos en cualquier momento, a cualquier persona o entidad. Establecer el precio actual de estos contratos es precisamente el objetivo de esta asignatura.
+
+=== Mercados#footnote[Adaptado de @Hull2015]
+
+==== Exchange-traded markets
+
+==== Over-the-counter markets
 
 === Contratos a plazo
+
+Un derivado relativamente simple es el contrato a plazo. Es un acuerdo para comprar o vender un activo en un momento futuro determinado a un precio determinado. Puede contrastarse con un contrato al contado, que es un acuerdo para comprar o vender un activo de forma casi inmediata. Un contrato a plazo se negocia en el mercado extrabursátil —generalmente entre dos instituciones financieras o entre una institución financiera y uno de sus clientes. Una de las partes del contrato a plazo asume una posición larga y acuerda comprar el activo subyacente en una fecha futura específica a un precio específico. La otra parte asume una posición corta y acuerda vender el activo en la misma fecha al mismo precio. Los contratos a plazo sobre divisas son muy populares. La mayoría de los grandes bancos emplean operadores tanto al contado como a plazo en el mercado de divisas. Un ejemplo de este tipo de contrato en la Tabla @table-forward-bidask
+
+#figure(
+  caption: [
+    Cotizaciones al contado y a plazo del tipo de cambio USD/GBP,
+    6 de mayo de 2013 (GBP = libra esterlina; USD = dólar estadounidense;
+    la cotización es el número de USD por GBP).
+  ],
+  table(
+    columns: (2fr, 1fr, 1fr),
+    align: (left, center, center),
+    stroke: none,
+    table.hline(stroke: 1pt),
+    table.header([], [*Compra (_bid_)*], [*Venta (_sell_)*]),
+    table.hline(stroke: 0.5pt),
+    [Contado], [1,5541], [1,5545],
+    [Plazo a 1 mes], [1,5538], [1,5543],
+    [Plazo a 3 meses], [1,5533], [1,5538],
+    [Plazo a 6 meses], [1,5526], [1,5532],
+    table.hline(stroke: 1pt),
+  ),
+)<table-forward-bidask>
+
 
 === Contratos a futuro
 
