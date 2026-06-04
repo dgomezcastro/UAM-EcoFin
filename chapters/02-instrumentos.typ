@@ -197,7 +197,7 @@ $
   F_0 = S_0 e^((r-q) T).
 $
 Si $r$ es constante entonces el precio de un _future_ es el mismo que el de un _forward_. Aunque la justificación es complicada. @Hull2015
-
+<
 === Opciones
 
 Una opción de compra (_call option_) es el derecho, pero no la obligación, de comprar el activo a un precio $K$.

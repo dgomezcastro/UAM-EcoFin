@@ -195,7 +195,7 @@ Estudiar con el siguiente código de `julia`, cuyo resultado es @fig-BlackSchole
 == Un comentario sobre el cálculo de Itô
 Cálculo de Itô permite construir una teoría de ecuaciones diferenciales ordinarias de la forma
 $
-  d X_t = a(t,X_t) dif t + b(t, X_t) dif W_t .
+  d theta_t = a(t,theta_t) dif t + b(t, theta_t) dif W_t .
 $
 En este marco, $S_t$ es la solución de la ecuación diferencial
 $

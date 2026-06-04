@@ -3,7 +3,7 @@
 
 = Modelo de varios pasos temporales: árbol binomial
 
-Consideremos ahora un árbol, que podemos denotar como @fig-arbol
+Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k = k Delta t$ que podemos denotar como @fig-arbol
 #figure(
   raw-render(```
   digraph {
@@ -30,9 +30,84 @@ Consideremos ahora un árbol, que podemos denotar como @fig-arbol
 Según las hipótesis se habla de modelo de Cox-Ross-Rubinstein o Jarrow-Rudd.
 Por simplicidad, vamos a suponer que
 $
-  PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p.
-$
+  PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p \
+  PP(B_t = e^(r t) B_0) = 1
+$<eq-arbol>
 De modo que $s_t^((a)) = S_0 u^(k) d^(t-k)$ si la cadena $a$ contiene $k$ ceros y $t-k$ unos.
+
+== Carteras y arbitraje
+
+#definition[Cartera de inversión][
+  Si tenemos algunos activos de cuyo valores denotamos $S_t^((i))$ una cartera consiste en mantener cantidades $theta^((i))_t in RR$ de ellos.
+  Cuando $theta_t^((i)) > 0$ decimos que estamos en una posición larga, y si $theta_t^((i)) < 0$ decimos que estamos en una posición corta.
+  Una cartera es un proceso estocástico $theta_t = (theta_t^(1), dots.c, theta_t^(N))$
+  adaptado a la información conocida, es decir tal que
+  $
+    theta_t = F_t (S_0, S_(Delta t), S_(2 Delta t), dots.c, S_(t-1)).
+  $<eq-arbol-carteraadaptada>
+  El valor de la cartera se expresa
+  $
+    V_t := sum_(i=1)^N theta_t^((i)) S_t^((i)) = theta_t dot S_t.
+  $<eq-arbol-valorcartera>
+]
+Añadimos la condición de que sea autofinanciada, es decir que a tiempo $t+Delta t$ podríamos la posición y usamos todo el dinero para una nueva cartera
+$
+  underbrace(theta_t dot S_(t+Delta t), "valor de la cartera" \ "construida a tiempo" t "en" t + Delta t) = underbrace(theta_(t+ Delta t) S_(t+Delta t), "valor de la nueva cartera" \ "en" t + Delta t)
+$
+Denotando
+$
+  Delta S_t := S_(t + Delta t) - S_t,
+$
+$Delta theta_t := theta_(t+Delta t) - theta_t$, etc...  esto significa que
+$
+  S_(t+Delta t) dot Delta theta_t = 0.
+$<eq:arbol-autofinanciacion2>
+Desarrollando
+$
+  Delta V_t & = (Delta theta_t) dot S_(t+Delta t) + theta_t dot Delta S_t
+$
+obtenemos la formulación equivalente
+#definition[Cartera autofinanciada][
+  Diremos que una cartera $theta_t$ es autofinanciada si satisface
+  $
+    Delta V_t = theta_t dot Delta S_t .
+  $<eq:arbol-autofinanciacion>
+]
+La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nuestra parte. Esto quiere decir no hacer inversión inicial, y no tener que hacer inversiones posteriores. De aquí que nuestra nueva definición incluya la autofinanciación.
+#definition[Oportunidad de arbitraje en el modelo discreto en tiempo][
+  Decimos que una cartera $V$ es una oportunidad de arbitraje si existe
+  $
+    V_t "es autofinanciada",
+    quad quad & V_0 <= 0,
+                quad quad & V_T >= 0,
+                            quad quad & PP(V_T > 0) > 0.
+  $
+]
+
+
+#theorem[Valoración por replicación][
+  Si $V_t$ y $H_t$ son dos productos tales que $H_T = V_T$, entonces $H_t = V_t$ para todo $t in [0,T]$.
+]
+#proof[
+  Veamos que si $V_t != H_t$ para algún $t$ entonces el mercado admite una oportunidad de arbitraje.
+  Sea $t_0$ el mínimo tiempo donde no coinciden.
+  En el mercado de productos $(V_t, H_t)$ podemos construir el producto
+  construímos una nueva cartera formada por $hat(x)_t^((1))$ unidades de la cartera replicante, y $hat(x)_t^((2))$ unidades del derivado donde
+  $
+    hat(x)_t^((1)) & := cases(0 & "si" t<t_0, -sign(V_(t_0) - H_(t_0))H_(t_0) & "si" t>=t_0+Delta t) \
+    hat(x)_t^((2)) & := cases(0 & "si" t<t_0, sign(V_(t_0) - H_(t_0))V_(t_0) & "si" t>=t_0+Delta t)
+  $
+  donde $sign(0) = 0$.
+  Esta es una cartera admisible, porque mira sólo al pasado.
+  Entonces el valor de esta cartera resulta
+  $
+    hat(V)_t := cases(
+      0 & "si" t in [0,t_0],
+      sign(V_(t_0) - H_(t_0))(V_(t_0) H_t - H_(t_0) V_t) & "si" t in [t_0,T]
+    )
+  $
+  Así, la cartera es autofinanciada, $V_0 = 0$, $V_T = |V_(t_0) - H_(t_0)| H_T >= 0$. Como $V_(t_0) != H_(t_0)$ entonces $V_T > 0$ con probabilidad positiva.
+]
 
 == Medida libre de riesgo
 Construímos el precio descontado
@@ -91,49 +166,10 @@ Por inducción, es claro que
   $ <eq-arbol-martingala>
 ]
 
-== Carteras y arbitraje
-Ahora nuestra cartera toma la forma
-$
-  V_t := x_t S_t + y_t B_t
-$<eq-arbol-cartera>
-Añadimos la condición de que sea autofinanciada, es decir que a tiempo $t+Delta t$ podríamos la posición y usamos todo el dinero para una nueva cartera
-$
-  underbrace(x_t S_(t+Delta t) + y_t B_(t + Delta t), "valor de la cartera" \ "construida a tiempo" t "en" t + Delta t) = underbrace(x_(t+ Delta t) S_(t+Delta t) + y_(t + Delta t) B_(t + Delta t), "valor de la nueva cartera" \ "en" t + Delta t)
-$
-Denotando
-$
-  Delta S_t := S_(t + Delta t) - S_t,
-$
-$Delta x_t := x_(t+Delta t) - x_t$, etc...  esto significa que
-$
-  (Delta x_t) S_(t+Delta t) + (Delta y_t) B_(t+Delta t) = 0.
-$<eq:arbol-autofinanciacion2>
-Desarrollando
-$
-  Delta V_t & = (Delta x_t) S_(t+Delta t) + (Delta y_t) B_(t+Delta t) + x_t Delta S_t + y_t Delta B_t
-$
-obtenemos la formulación equivalente
-#definition[Cartera autofinanciada][
-  Diremos que una cartera es autofinanciada si satisface
-  $
-    Delta V_t = x_t Delta S_t + y_t Delta B_t.
-  $<eq:arbol-autofinanciacion>
-]
-La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nuestra parte. Esto quiere decir no hacer inversión inicial, y no tener que hacer inversiones posteriores. De aquí que nuestra nueva definición incluya la autofinanciación.
-#definition[Oportunidad de arbitraje en el modelo discreto en tiempo][
-  Decimos que una cartera $V$ es una oportunidad de arbitraje si existe
-  $
-    V_t "es autofinanciada",
-    quad quad & V_0 <= 0,
-                quad quad & V_T >= 0,
-                            quad quad & PP(V_T > 0) > 0.
-  $
-]
-
 Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noción detallada, vamos simplemente a demostrar la siguiente propiedad que nos permitirá valor activos a tiempo $t = 0$.
 
 #proposition[][
-  En un árbol binomial, una cartera @eq-arbol-cartera autofinanciada, es decir tal que @eq:arbol-autofinanciacion satisface
+  En un árbol binomial, una cartera @eq-arbol-valorcartera autofinanciada, es decir tal que @eq:arbol-autofinanciacion satisface
   $
     EE^QQ [tilde(V)_t] = V_0
   $
@@ -141,19 +177,18 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 #proof[
   Multiplicando @eq:arbol-autofinanciacion2 por $e^(-r (t + Delta t))$ obtenemos la versión descontada
   $
-    (Delta x_t) tilde(S)_(t+Delta t) + (Delta y_t) tilde(B)_(t+Delta t) = 0.
+    sum_(i=1)^N (Delta theta_t^((i))) tilde(S)_(t+Delta t) = 0.
   $
   Así, desarrollamos la resta
   $
-    Delta tilde(V_t)
-    &= (Delta x_t) tilde(S)_(t+Delta t) + (Delta y_t) tilde(B)_(t+Delta t) + x_t Delta tilde(S)_t + y_t Delta tilde(B)_t \
-    &=x_t Delta tilde(S)_t + y_t Delta tilde(B)_t = x_t Delta tilde(S)_t.
+    Delta tilde(V_t) & = sum_(i=1)^N theta_t^((i)) Delta tilde(S)_t^((i)).
   $
   Aplicando @eq-arbol-martingala con $s = 0$ deducimos que $EE^QQ [tilde(S)_t] = S_0$ y deducimos que $EE^QQ [tilde(V)_(t + Delta t)] = E^QQ [tilde(V)_t]$. Inductivamente deducimos el resultado.
 ]
 
+
 #corollary[Valor de un derivado con vencimiento a tiempo fijo][
-  Sea $H$ un derivado del que conocemos su valor a vencimiento $T$ con $H_T >= 0$. El precio libre de arbitraje viene dado por
+  En el modelo @eq-arbol, consideremos un derivado de valor $H$ del que conocemos su valor a vencimiento $T$ con $H_T >= 0$. El precio libre de arbitraje viene dado por
   $
     H_0 = e^(-r T) EE^QQ [H_T].
   $
@@ -161,14 +196,6 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 
 #proof[
   Siguiendo la idea del modelo de un paso, es fácil construir una cartera autofinanciada $V_t$ tal que $V_T = H_T$.
-  Supongamos que $V_(t_0) != H_(t_0)$ para algún $t_0 in [0,T]$. Entonces la cartera compuesta por
-  $
-    hat(V)_t = cases(
-      0 & "si" t in [0,T],
-      sign(V_(t_0) - C_(t_0))(V_(t_0) C_t - C_(t_0) V_t) & "si" t in [t_0,T]
-    )
-  $
-  es una oportunidad de arbitraje.
   De modo que $V_t = H_t$ en cada tiempo (o es posible construir una cartera con arbitraje), y por tanto también $tilde(H)_t = tilde(V)_t$. Concluímos que
   $
     H_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ [tilde(H)_T] = EE^QQ [e^(-r T) C_T].
@@ -249,6 +276,8 @@ Llamamos _filtración_ a tiempo $t$ a
 $
   cal(F)_t := cal(U)(S_s | s in [0,s]).
 $
+La condición de que la cartera esté adaptada a la información conocida (ver @eq-arbol-carteraadaptada) se expresa en estos términos como que $theta_t$ es un *proceso adaptado a $cal(F)_t$*.
+
 De manera que podemos escribir
 $
   tilde(S)_s = EE^QQ [tilde(S_t) | tilde(S)_s] = EE^QQ [tilde(S_t) | cal(F)_s].

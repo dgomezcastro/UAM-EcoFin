@@ -197,10 +197,10 @@ Una cartera es una combinación de diferentes activos en diferentes cantidades.
 Puede estar compuesta de activos subyacentes y derivados.
 Por ejemplo: 5 acciones de IBM, 1 bono del Tesoro, y una opción europeas de compra de 5 acciones de Microsoft.
 Lo normal es que estas cantidades cambien con el tiempo.
-Se suele expresar $x^((i))_t$ denota la cantidad del activo $i$-ésimo a tiempo $t$.
+Se suele expresar $theta^((i))_t$ denota la cantidad del activo $i$-ésimo a tiempo $t$.
 Si llamamos $S_t^((i))$ al valor del activo $i$-ésimo en tiempo $t$, el valor de la cartera se escribe como
 $
-  V_t := sum_(i=1)^N x_t^((i)) dot S_t^((i)).
+  V_t := sum_(i=1)^N theta_t^((i)) dot S_t^((i)).
 $
 Según el momento trabajaremos con tiempo $t$ discreto o continuo.
 
