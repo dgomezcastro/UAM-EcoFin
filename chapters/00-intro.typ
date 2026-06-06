@@ -221,19 +221,23 @@ $
 El resultado, natural, queda expresado en años.
 
 == Ejercicios
-+ ¿Cuantos años hay entre el 30/11/06 y el 01/03/08?
 
-+ El 1 de enero de 2007, A invirtió 1000€ en su libreta. El 1 de enero de 2008 el banco le informa que ha recibido 40€ de intereses a lo largo del año.
-  - ¿Cuales son los intereses brutos asociados?
-  - ¿Qué intereses recibirá a lo largo de 2008?
-  - ¿Cuánto habría recibido de haber cerrado su cuenta el 1 de julio.
+#exercise_list[
+  + ¿Cuantos años hay entre el 30/11/06 y el 01/03/08? <ex-primero>
 
-+ Ordenar de menor a mayor los siguientes tipos de interés:
-  - 6% anual;
-  - 0,5% mensual;
-  - 30% por 5 años;
-  - 10% el primer año y 4% los dos siguientes.
+  + El 1 de enero de 2007, invirtió 1000€ en su libreta. El 1 de enero de 2008 el banco le informa que ha recibido 40€ de intereses a lo largo del año.
+    - ¿Cuales son los intereses brutos asociados?
+    - ¿Qué intereses recibirá a lo largo de 2008?
+    - ¿Cuánto habría recibido de haber cerrado su cuenta el 1 de julio.
 
-+ Responder a las siguientes preguntas:
-  - Dado un tipo del 10% compuesto semianualmente, ¿Cuál es el tipo continuo equivalente?
-  - Un prestamista pretende conseguir el 8% continuo y cobra trimestralmente. ¿Cuál es el tipo anual para composición trimestral equivalente?
+  + Ordenar de menor a mayor los siguientes tipos de interés:
+    - 6% anual;
+    - 0,5% mensual;
+    - 30% por 5 años;
+    - 10% el primer año y 4% los dos siguientes.
+
+  + Responder a las siguientes preguntas:
+    - Dado un tipo del 10% compuesto semianualmente, ¿Cuál es el tipo continuo equivalente?
+    - Un prestamista pretende conseguir el 8% continuo y cobra trimestralmente. ¿Cuál es el tipo anual para composición trimestral equivalente?
+]
+#exercise_ref(<ex-primero>)

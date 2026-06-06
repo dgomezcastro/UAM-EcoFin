@@ -1,5 +1,7 @@
 #import "math.typ": *
 
+#import "@preview/itemize:0.2.0" as el
+
 #import "@preview/diagraph:0.3.7": *
 
 #import "@preview/ilm:2.0.0": *
@@ -11,6 +13,22 @@
 // #import cosmos.clouds: *
 
 #import "@preview/headcount:0.1.0": *
+
+#let chapter-item-numbering(..nums) = context {
+  let headings = counter(heading).get()
+  numbering("1.1", headings.first(), ..nums)
+}
+
+#let exercise_list(body) = {
+  show: el.default-enum-list
+  set enum(numbering: chapter-item-numbering, full: true)
+  body
+}
+
+#let exercise_ref(label) = {
+  show: el.config.ref.with(supplement: "Ejercicio")
+  ref(label)
+}
 
 #let apuntes(doc, title: none, author: none, date: none, abstract: none, bibliography: none, lang: "es") = {
   show: show-theorion
@@ -34,6 +52,7 @@
   set text(lang: lang)
   set page(paper: "a4")
   set heading(numbering: "1.1.1")
+  // set enum(numbering: chapter-item-numbering, full: true)
 
   show heading.where(level: 4): set heading(numbering: none)
   show heading.where(level: 5): set heading(numbering: none)
@@ -101,4 +120,3 @@
     caption: caption,
   )
 }
-
