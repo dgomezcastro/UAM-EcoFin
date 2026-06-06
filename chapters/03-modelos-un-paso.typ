@@ -79,9 +79,9 @@ Por salud mental, en adelante no volveremos a mencionar esta construcción tan c
 
 === Cartera
 
-Dado que suponemos que hay un bono, una _cartera_ consiste en tener $x_1$ unidades de la acción, y $x_2$ unidades del bono. El valor de esta cartera es
+Dado que suponemos que hay un bono, una _cartera_ consiste en tener $theta^((1))$ unidades de la acción, y $theta^((2))$ unidades del bono. El valor de esta cartera es
 $
-  V_t = x_1 S_t + x_2 B_t " donde " t in {0, T}.
+  V_t = theta^((1)) S_t + theta^((2)) B_t " donde " t in {0, T}.
 $
 
 #figure(
@@ -91,11 +91,11 @@ $
   node[math=true, xmath=true]
   edge[lmath=true]
   // s[label="sum_(n=0)^3 n"]
-  s[label="x_1 S_0 + x_2 B_0"]
+  s[label="theta^((1)) S_0 + theta^((2)) B_0"]
   s -> s1[label="p"]
   s -> s2[label="1-p"]
-  s1[label="x_1 u S_0 + x_2 e^(r T) B_0"]
-  s2[label="x_1 d S_0 + x_2 e^(r T) B_0"]
+  s1[label="theta^((1)) u S_0 + theta^((2)) e^(r T) B_0"]
+  s2[label="theta^((1)) d S_0 + theta^((2)) e^(r T) B_0"]
   }
   ```),
   caption: "Evolución de una cartera",
@@ -113,14 +113,14 @@ Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversi
   Habitualmente podemos construirlo con $V_0 = 0.$
 ]
 Si lo intentamos a través de una cartera tenemos que
-$0 = V_0 = x_1 S_0 + x_2 B_0$
-luego $x_2 = -x_1 S_0/B_0$. A tiempo final tenemos entonces
+$0 = V_0 = theta^((1)) S_0 + theta^((2)) B_0$
+luego $theta^((2)) = -theta^((1)) S_0/B_0$. A tiempo final tenemos entonces
 $
-  V_T = x_1 (S_T - e^(r T)).
+  V_T = theta^((1)) (S_T - e^(r T)).
 $
 
-- Si $e^(r T) <= d < u$ entonces tomando $x_1 > 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
-- Si $d < u <= e^(r T)$ entonces tomando $x_1 < 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
+- Si $e^(r T) <= d < u$ entonces tomando $theta^((1)) > 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
+- Si $d < u <= e^(r T)$ entonces tomando $theta^((1)) < 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
 De tal manera que la condición de no arbitraje resulta
 $
   d < e^(r T) < u.
@@ -177,13 +177,13 @@ En este caso una opción europea corresponde a <fig:binomial_opcion>
   s2[label="(d S_T-K)_+"]
   }
   ```),
-  caption: "Modelo discreto con un periodo de tiempo",
+  caption: "Opción europea y cartera con un período de tiempo",
 )<fig:binomial_opcion>
 
 Creemos una *cartera de cobertura* haciendo que tanto si ocurre $u S_0$ como si ocurre $d S_0$ obtengamos el mismo resultado
 $
-  x_1 u S_0 + x_2 e^(r T) B_0 = (u S_0 - K)_+ \
-  x_1 d S_0 + x_2 e^(r T) B_0 = (d S_0 - K)_+
+  theta^((1)) u S_0 + theta^((1)) e^(r T) B_0 = (u S_0 - K)_+ \
+  theta^((1)) d S_0 + theta^((2)) e^(r T) B_0 = (d S_0 - K)_+
 $
 Matricialmente
 $
@@ -191,7 +191,7 @@ $
     u S_0, e^(r T) B_0;
     d S_0, e^(r T) B_0
   )
-  mat(x_1; x_2)
+  mat(theta^((1)); theta^((2)))
   =
   mat((u S_0-K)_+; (d S_0 - K)_+)
 $<eq:cobertura>
@@ -202,16 +202,16 @@ Supongamos que yo valoro la opción con un valor $C_0 > V_0$ (y estoy dispuesto 
   Por ahora tiene un beneficio neto de $C_0 - V_0 > 0$.
   Esto requiere pedir "prestada" una de las acciones (lo que habitualmente se conoce como quedarse "corto").
 - Mañana: como el inversor a pedido prestadas acciones, debe liquidar la cartera.
-  + Si el valor de la acción es $S_T <= K$, yo no ejercerá la opción. La cartera ahora vale $x_2 S_T + x_2 e^(r T) B_0 = (S_T - K)_+ = 0$, con lo que puede liquidarla sin perder o ganar dinero y ya no está corto ni largo acciones.
-  + Si el valor de la acción es $S_T > K$. Yo querré ejercer la opción, y comprar la acción por $K$€. Al liquidar la cartera el inversor obtiene (o pierde) $x_1 S_T + x_2 e^(r T) B_0 = (S_T - K)_+ = S_T - K$. Junto esto con los $K$€ que yo le doy, puede comprar la acción, y dármela. En esta operación no pierde o gana dinero.
+  + Si el valor de la acción es $S_T <= K$, yo no ejercerá la opción. La cartera ahora vale $theta^((2)) S_T + theta^((2)) e^(r T) B_0 = (S_T - K)_+ = 0$, con lo que puede liquidarla sin perder o ganar dinero y ya no está corto ni largo acciones.
+  + Si el valor de la acción es $S_T > K$. Yo querré ejercer la opción, y comprar la acción por $K$€. Al liquidar la cartera el inversor obtiene (o pierde) $theta^((1)) S_T + theta^((2)) e^(r T) B_0 = (S_T - K)_+ = S_T - K$. Junto esto con los $K$€ que yo le doy, puede comprar la acción, y dármela. En esta operación no pierde o gana dinero.
 
 Al final de la jugada, el inversor inteligente se va a casa con $C_0 - V_0 > 0$ ¡con probabilidad 1! Este es el efecto es el conocido como *arbitraje*.
 En caso de que $C_0 < V_0$ entonces el inversor me compra la opción, y vende en el mercado la cartera.
 De tal manera que el único precio que no genera opciones de arbitraje es
 $
-  C_0 = x_1 S_0 + x_2 e^(r T) B_0,
+  C_0 = theta^((1)) S_0 + theta^((2)) e^(r T) B_0,
 $
-donde $(x_1,x_2)$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*. Hay otra forma, más elegante, de expresar este valor.
+donde $(theta^((1)),theta^((2)))$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*. Hay otra forma, más elegante, de expresar este valor.
 
 Hemos hecho algunas suposiciones:
 - Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
@@ -292,7 +292,7 @@ que está en $[0,1]$ si $d <= e^(r T) <= u$. De modo que
 ]
 Ahora calculamos el valor de la cartera descontada
 $
-  EE^QQ [tilde(V)_t] = x_1 EE^QQ [tilde(S)_t] + x_2 EE^QQ [tilde(B)_t] = x_1 S_0 + x_2 B_0 = V_0.
+  EE^QQ [tilde(V)_t] = theta^((1)) EE^QQ [tilde(S)_t] + theta^((2)) EE^QQ [tilde(B)_t] = theta^((1)) S_0 + theta^((2)) B_0 = V_0.
 $
 De modo que $tilde(V)$ tiene esperanza constante. Pero dado que $C_t = V_t$ entonces $tilde(C)_t = tilde(V)_t$ y, por tanto, también tiene esperanza constante. Entonces
 $
@@ -355,22 +355,22 @@ Se dice que el mercado es *incompleto*.
 
 Construyamos, por el contrario, una cartera con arbitraje
 $
-  tilde(V)_t = x_1 S_t + x_2 B_t + x_3 C_t.
+  tilde(V)_t = theta^((1)) S_t + theta^((2)) B_t + theta^((3)) C_t.
 $
 La primera condición es que no me cueste nada
 $
-  x_1 + x_2 + x_3 = 0
+  theta^((1)) + theta^((2)) + theta^((3)) = 0
 $
 Pongamos que al final no pierda dinero
 $
-  x_1 alpha_i S_0 + x_2 e^(r T) B_0 + x_3 (alpha_i S_0 - K)_+ >= 0 "para todo" i=1,2,3.
+  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) B_0 + theta^((3)) (alpha_i S_0 - K)_+ >= 0 "para todo" i=1,2,3.
 $
 Y que gana dinero con probabilidad positiva, basta con una de estas tres desigualdades sea estricta.
 Tenemos el sistema de 3 desigualdades
 $
-  x_1 alpha_i S_0 + x_2 e^(r T) B_0 >= (x_1 + x_2) (alpha_i S_0 - K)_+ .
+  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) B_0 >= (theta^((1)) + theta^((2))) (alpha_i S_0 - K)_+ .
 $
-Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vacío, en su interior cualquier $(x_1, x_2)$ da un punto donde se gana dinero con probabilidad 1.
+Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vacío, en su interior cualquier $(theta^((1)), theta^((2)))$ da un punto donde se gana dinero con probabilidad 1.
 
 
 == Modelo matricial: $N$ activos y $M$ estados

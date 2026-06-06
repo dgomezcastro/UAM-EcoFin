@@ -90,22 +90,28 @@ Muchas de las construcciones que vamos a hacer son completamente generales, pero
 
 == Carteras y arbitraje
 
-#definition[Cartera de inversión][
-  Si tenemos algunos activos de cuyo valores denotamos $S_t^((i))$ una cartera consiste en mantener cantidades $theta^((i))_t in RR$ de ellos en los tiempos $[t, t + Delta t]$.
-  Cuando $theta_t^((i)) > 0$ decimos que estamos en una posición larga, y si $theta_t^((i)) < 0$ decimos que estamos en una posición corta.
-  Una cartera es un proceso estocástico $theta_t = (theta_t^(1), dots.c, theta_t^(N))$
+Una presentación introductoria de esta sección se puede encontrar en @etheridgeCourseFinancialCalculus. Una presentación más avanzada puede verse en @bjorkArbitrageTheoryContinuous2019.
+
+#definition(breakable: true)[Cartera de inversión][
+  Si tenemos $M$ activos de cuyo valores denotamos $S_t^((i))$ una cartera consiste en mantener cantidades $theta^((i))_t in RR$ de ellos en los tiempos $[t , t + Delta t]$.
+  Utilizamos la siguiente convención:
+  - si $theta_t^((i)) > 0$ decimos que estamos en una posición larga (hemos comprado el activo en el mercado), y
+  - si $theta_t^((i)) < 0$ decimos que estamos en una posición corta (hemos pedido prestado a un broker el activo).
+  Una cartera es un proceso estocástico $theta_t = (theta_t^((1)), dots.c, theta_t^((M)))$
+  definido para $t = 0, ..., T-Delta t$
   adaptado a la información conocida, es decir tal que
   $
-    theta_t = F_t (S_0, S_(Delta t), S_(2 Delta t), dots.c, S_(t-1)).
+    theta_t = F_t (S_0, S_(Delta t), S_(2 Delta t), dots.c, S_(t-Delta t)).
   $<eq-arbol-carteraadaptada>
   El valor de la cartera se expresa
   $
-    V_t := sum_(i=1)^N theta_t^((i)) S_t^((i)) = theta_t dot S_t.
+    V_t := sum_(i=1)^M theta_t^((i)) S_t^((i)) = theta_t dot S_t.
   $<eq-arbol-valorcartera>
 ]
 Añadimos la condición de que sea autofinanciada, es decir que a tiempo $t+Delta t$ podríamos la posición y usamos todo el dinero para una nueva cartera
 $
   underbrace(theta_t dot S_(t), "valor de la cartera" \ "construida a tiempo" t-Delta t "en" t) = underbrace(theta_(t+ Delta t) dot S_(t), "valor de la nueva cartera" \ "en" t)
+  " para todo " t = 0, ..., T - Delta t.
 $
 Denotando
 $
@@ -123,7 +129,7 @@ obtenemos la formulación equivalente
 #definition[Cartera autofinanciada][
   Diremos que una cartera $theta_t$ es autofinanciada si satisface
   $
-    Delta V_t = theta_t dot Delta S_t .
+    Delta V_t = theta_t dot Delta S_t " para todo " t = 0, ... , T - Delta t.
   $<eq:arbol-autofinanciacion>
 ]
 La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nuestra parte. Esto quiere decir no hacer inversión inicial, y no tener que hacer inversiones posteriores. De aquí que nuestra nueva definición incluya la autofinanciación.
@@ -181,7 +187,7 @@ Construímos el precio descontado
 $
   tilde(S_t) = e^(-r t) S_t
 $
-#definition[Valor esperado condicionado][
+#definition(breakable: true)[Valor esperado condicionado][
   Sean $X, Y$ variables aleatorias discretas
 
   Se define la esperanza condicionada a un evento con $PP(Y=y) > 0$ como el escalar
@@ -222,7 +228,7 @@ $
 #proposition[
   Existe una medida de riego neutro para el árbol binomial si y sólo si
   $
-    0 <= d <= e^(-r Delta t) <= u.
+    d <= e^(-r Delta t) <= u.
   $
 ]
 

@@ -28,8 +28,7 @@
 //     #body
 //   ],
 // )
-
-#show: show-exercise
+// #show: show-exercise
 
 #let apuntes(doc, title: none, author: none, date: none, abstract: none, bibliography: none, lang: "es") = {
   show: show-theorion

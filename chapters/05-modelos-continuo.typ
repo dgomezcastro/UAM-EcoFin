@@ -92,12 +92,12 @@ son independientes
     W_t - W_s " y " W_r - W_u " son independientes".
   $<eq-browniano-incrementos-independientes>
 ]
-Hemos hecho la construcción de manera formal. Para una demostración rigurosa ver
-#block(fill: red)[Libro de Evans]
+Hemos hecho la construcción de manera formal. Para una construcción analítica con funciones de Haar ver @Evans2013.
+Es interesante también la presentación hecha en @bjorkArbitrageTheoryContinuous2019, donde se justifica con más detalle el paso el límite $Delta t -> 0$.
 
 La construcción que hemos hecho se puede justificar, y de hecho es un resultado famoso.
 #theorem[Teorema de Donsker][
-  El límite @eq-limite-paseo-aleatorio existe en sentido de distribuciones, y $W_t$ es un movimiento Browniano.
+  El límite @eq-limite-paseo-aleatorio se da  en sentido de distribuciones, y $W_t$ es un movimiento Browniano.
 ]
 
 Si consideramos un paseo aleatorio sesgado
@@ -115,55 +115,64 @@ $
 donde $W_t$ es un movimiento Browniano.
 
 == Modelo de Black-Scholes. Límite de Cox-Ross-Rubinstein
-En el modelo de árbol binomial escribimos
-$
-  S_(t+Delta t) = S_t R_t " donde " R_t :=
-  cases(
-    u & "con probabilidad " p,
-    d & "con probabilidad " 1-p
-  )
-$
-Llamemos
-$
-  X_n := log S_(n Delta t)
-  " y "
-  Z_(n) := log R_(n Delta t).
-$
-Aplicando las propiedades de logaritmo, tenemos
-$X_(n+1) - X_n = Z_n$ o,
-equivalentemente,
-$
-  X_n = X_0 + sum_(k=1)^(n) Z_k
-$
-Descomponemos $Z$ en una parte determinista y un paseo aleatorio $xi_k$
-$
-  log u = nu_(Delta t) + sigma_(Delta t),
-  quad log d = nu_(Delta t) - sigma_(Delta t),
-  quad Z_k = nu_(Delta t) + sigma_(Delta t) xi_k .
-$<eq-BlackScholes-condicionud1>
-Así
-$
-  X_n & = X_0 + n nu_(Delta t) + sigma_(Delta t) sum_(k=1)^(n)xi_k \
-      & ->^d X_0 + (nu + 2p-1) t + sigma W_t,
-$
-si escalamos
-$
-  nu_(Delta t) / (Delta t) -> nu quad "y" quad sigma_(Delta t) / sqrt(Delta t) -> sigma.
-$<eq-BlackScholes-condicionud2>
-Esto quiere decir que
-$
-  log S_t = log S_0 + kappa t + sigma W_t
-$
-Es decir que $S_t$ es log-normal. No sólo eso, si no que para cualquier $Delta t$
-$
-  log S_(t + Delta t) - log S_t = kappa Delta t + sigma (W_(t+Delta t) - W_t).
-$<eq-BlackScholes-incremento-log>
-Despejando
-$
-  S_t = S_0 exp(kappa t + sigma W_t)
-$
-<eq-BlackScholes-St-P>
-La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
+
+modelo de árbol binomial está definido en tiempo $0$, $Delta t$, ...
+Definamos el proceso discreto
+$$
+#theorem[
+  Sea $S^((Delta t))$ el proceso construido por el árbol binomial.
+  Definimos la interpolación constante a trozos
+  $
+    S_t^((Delta t)) := S_(n Delta t)^((Delta t)) quad "si " n Delta t <= t < (n+1) Delta t.
+  $
+  Supongamos que se puede descomponer
+  $
+    log u = nu^((Delta t)) + sigma^((Delta t)),
+    quad log d = nu^((Delta t)) - sigma^((Delta t))
+  $
+  de tal modo que existen los límite
+  $
+    nu := lim_(Delta t -> 0) nu^((Delta t)) / (Delta t) quad "y" quad sigma := lim_(Delta t -> 0) sigma^((Delta t)) / sqrt(Delta t).
+  $<eq-BlackScholes-condicionud2>
+  Entonces se tiene que
+  $
+    S_t^((Delta t)) ->^d S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t)
+  $
+  donde $W_t$ es un movimiento Browniano y $mu$ depende sólo de $nu$ y $p$.
+]
+#proof[
+  Para $t in (Delta t) NN$ tenemos que
+  $
+    S_(t+Delta t)^((Delta t)) = S_t^((Delta t)) R_t^((Delta t)) " donde " R_t^((Delta t)) :=
+    cases(
+      u & "con probabilidad " p,
+      d & "con probabilidad " 1-p
+    )
+  $
+  Aplicando las propiedades del logaritmo deducimos que
+  $
+    log S^((Delta t))_(n Delta t) = ln S_0 + sum_(k=1)^(n) log R^((Delta t))_(n Delta t)
+  $
+  Descomponemos $log R^((Delta t))_(n Delta t)$ en una parte determinista y un paseo aleatorio $xi_k$ sesgado
+  $
+    log R^((Delta t))_(n Delta t) = nu^((Delta t)) + sigma^((Delta t)) xi_k .
+  $<eq-BlackScholes-condicionud1>
+  Así
+  $
+    log S^((Delta t))_(n Delta t) & = log S_0 + n nu^((Delta t)) + sigma^((Delta t)) sum_(k=1)^(n)xi_k \
+                                  & ->^d log S_0 + underbrace((nu + 2p-1), kappa) t + sigma W_t,
+  $
+  Es decir que $S_t$ es log-normal. No sólo eso, si no que para cualquier $Delta t$
+  $
+    log S_(t + Delta t) - log S_t = kappa Delta t + sigma (W_(t+Delta t) - W_t).
+  $<eq-BlackScholes-incremento-log>
+  Despejando
+  $
+    S_t = S_0 exp(kappa t + sigma W_t)
+  $
+  <eq-BlackScholes-St-P>
+  La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
+]
 
 == Los modelos Cox-Ross-Rubinstein y Jarrow-Rudd
 
