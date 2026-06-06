@@ -14,23 +14,24 @@
 
 #import "@preview/headcount:0.1.0": *
 
-#let chapter-item-numbering(..nums) = context {
-  let headings = counter(heading).get()
-  numbering("1.1", headings.first(), ..nums)
-}
+#let format-chapter-item-numbering(chapter, ..nums) = numbering("1.1", chapter, ..nums)
 
-#let exercise_list(body) = {
-  show: el.default-enum-list
-  //// This did not store the value in the label. It failed in the following chapter
-  // set enum(numbering: chapter-item-numbering, full: true)
+#let (exercise-counter, exercise-box, exercise, show-exercise) = make-frame(
+  "exercise",
+  theorion-i18n-map.at("exercise"),
+  inherited-levels: 1,
+  inherited-from: heading,
+  numbering: "1.1",
+  render: (prefix: none, title: "", full-title: auto, body) => block(width: 100%)[
+    #if full-title != "" {
+      strong[#full-title.]
+      sym.space
+    }
+    #body
+  ],
+)
 
-  body
-}
-
-#let exercise_ref(label) = {
-  show: el.config.ref.with(supplement: "Ejercicio")
-  ref(label)
-}
+#show: show-exercise
 
 #let apuntes(doc, title: none, author: none, date: none, abstract: none, bibliography: none, lang: "es") = {
   show: show-theorion

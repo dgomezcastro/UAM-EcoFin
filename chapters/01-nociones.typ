@@ -166,4 +166,3 @@ En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses utiliza c
 === Amortización alemana
 
 === Amortización americana
-
