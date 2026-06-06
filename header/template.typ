@@ -6,7 +6,7 @@
 
 #import "@preview/ilm:2.0.0": *
 
-#import "@preview/theorion:0.5.0": *
+#import "@preview/theorion:0.6.0": *
 // #import cosmos.simple: *
 #import cosmos.fancy: *
 // #import cosmos.rainbow: *
