@@ -1,0 +1,35 @@
+name: Build and Release Typst PDF
+
+permissions:
+    contents: write
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build-release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Typst
+              uses: typst-community/setup-typst@v3
+
+            - name: Compile Typst document
+              run: |
+                  typst compile ecofin.typ ecofin.pdf
+
+            - name: Set release date variable
+              id: vars
+              run: echo "sha=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_OUTPUT
+
+            - name: Create GitHub Release and upload PDF
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: release-${{ steps.vars.outputs.sha }}
+                  name: "EcoFin PDF – ${{ steps.vars.outputs.sha }}"
+                  body: "Auto-generated release for ${{ steps.vars.outputs.sha }}"
+                  files: ecofin.pdf
