@@ -21,7 +21,9 @@
 
 #let exercise_list(body) = {
   show: el.default-enum-list
-  set enum(numbering: chapter-item-numbering, full: true)
+  //// This did not store the value in the label. It failed in the following chapter
+  // set enum(numbering: chapter-item-numbering, full: true)
+
   body
 }
 
