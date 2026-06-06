@@ -3,6 +3,8 @@
 
 = Modelo de varios pasos temporales: árbol binomial
 
+== Modelo de 2 pasos
+
 Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k = k Delta t$ que podemos denotar como @fig-arbol
 #figure(
   raw-render(```
@@ -11,12 +13,12 @@ Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k
   node[math=true, xmath=true]
   edge[lmath=true]
   s[label="S_0"]
-  s1[label="s_1^((0))"]
-  s11[label="s_2^((00))"]
-  s12[label="s_2^((01))"]
-  s2[label="s_1^((1))"]
-  s21[label="s_2^((10))"]
-  s22[label="s_2^((11))"]
+  s1[label="s_1^((1))"]
+  s11[label="s_2^((11))"]
+  s12[label="s_2^((10))"]
+  s2[label="s_1^((0))"]
+  s21[label="s_2^((01))"]
+  s22[label="s_2^((00))"]
   s -> s1[label="p_1"]
   s -> s2[label="1-p_1"]
   s1 -> s11[label="p_12"]
@@ -26,14 +28,65 @@ Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k
   }
   ```),
   caption: "Árbol binomial con dos pasos de tiempo",
-)<fig-arbol>
-Según las hipótesis se habla de modelo de Cox-Ross-Rubinstein o Jarrow-Rudd.
-Por simplicidad, vamos a suponer que
+)
+Podría ocurrir que algunos de los valores anteriores coincidan.
+
+$
+  Omega = {(00), (01), (10), (11)}
+$
+En este modelo definimos $S_0, S_1, S_2 : Omega -> RR$ mediante
+$
+  S_0 (omega_1 omega_2) := S_0, quad S_1 (omega_1 omega_2) := s_1^( (omega_1)), quad S_2(omega_1 omega_2) := s_2^((omega_1omega_2))
+$
+En interesante señalar que $S_1$ no depende de $omega_2$.
+Esta misma idea puede reproducirse en múltiples pasos.
+
+== Modelo de $N$ pasos
+
+Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k = k Delta t$ donde, por simplicidad, nos vamos
 $
   PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p \
   PP(B_t = e^(r t) B_0) = 1
 $<eq-arbol>
-De modo que $s_t^((a)) = S_0 u^(k) d^(t-k)$ si la cadena $a$ contiene $k$ ceros y $t-k$ unos.
+Podemos verlo en como @fig-arbol
+#figure(
+  raw-render(```
+  digraph {
+    rankdir=LR
+  node[math=true, xmath=true]
+  edge[lmath=true]
+  s[label="S_0"]
+  s1[label="u S_0"]
+  s11[label="u^2 S_0"]
+  s12[label="u d S_0"]
+  s2[label="d S_0"]
+  s22[label="d^2 S_0"]
+  s111[label="..."]
+  s112[label="..."]
+  s -> s1[label="p"]
+  s -> s2[label="1-p"]
+  s1 -> s11[label="p"]
+  s1 -> s12 [label="1-p"]
+  s2 -> s12 [label="p"]
+  s2 -> s22[label="1-p"]
+  s11 -> s111[label="...."]
+  s11 -> s112[label="...."]
+  }
+  ```),
+  caption: "Árbol binomial con dos pasos de tiempo",
+)<fig-arbol>
+
+Según las hipótesis la elección de $u$ y $d$ se habla de modelo de Cox-Ross-Rubinstein o Jarrow-Rudd.
+
+Muchas de las construcciones que vamos a hacer son completamente generales, pero este elección simple basta para la mayoría de ejemplos.
+
+#exercise[
+  Comprobar que si $t = n Delta t$ entonces
+  $
+    PP(S_t = S_0 u^k d^(n-k)) = binom(n, k) p^k (1-p)^(n-k).
+  $
+]
+
 
 == Carteras y arbitraje
 
@@ -145,9 +198,10 @@ $
   De manera similar se puede definir $EE^PP [X|cal(F)]$ donde $cal(F)$ es una $sigma$-álgebra.
 ]
 Diremos que $QQ << PP$ si $PP(A) = 0$ implica $QQ(A) = 0$.
+Diremos que $QQ ~ PP$ si $PP(A) = 0$ si y sólo si $QQ(A) = 0$.
 
 #definition[Medida de riesgo neutro para un árbol binomial][
-  Medida de probabilidad $QQ << PP$ tal que
+  Medida de probabilidad $QQ ~ PP$ tal que
   $
     EE^QQ [tilde(S)_(t+Delta t) | tilde(S_t) ] = tilde(S_t).
   $<eq-arbol-medida-libre-de-riesgo>
@@ -277,25 +331,34 @@ es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouill
 
 === Filtraciones y valor de una call en tiempo $t$
 
-Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
+Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por que cada paso depende sólo del anterior, a esto se lo conoce como Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
 
 Una filtración es una sucesión no-decreciente de $sigma$-algebras
 $
   s < t => cal(F)_s subset cal(F)_t.
 $
 
-Dada una variable aleatoria $X: Omega -> RR$ se define la $sigma$-álgebra generada por $X$ como
+Dado que a tiempo $t = n Delta t$ sabemos qué ha ocurrido pero no qué ocurrirá, los conjuntos de sucesos que podemos medir
+son los que están en la $sigma$-álgebra correspondiente es
 $
-  cal(U)(X) := {X^(-1) (B) : B in cal(B)}
+  cal(F)_t := {S_s^(-1) (B) : B in cal(B), s in [0,t]}.
 $
-donde $cal(B)$ es la $sigma$-álgebra de Borel.
-Es la menor $sigma$-álgebra respecto de la cual $X$ es medible.
+Si $A in cal(F)_t$ entonces
+$
+  A = A' times {0,1}^(N-n) " con " A' in {0,1}^n.
+$
 
-Llamamos _filtración_ a tiempo $t$ a
-$
-  cal(F)_t := cal(U)(S_s | s in [0,s]).
-$
-La condición de que la cartera esté adaptada a la información conocida (ver @eq-arbol-carteraadaptada) se expresa en estos términos como que $theta_t$ es un *proceso adaptado a $cal(F)_t$*.
+Esta es la llamada $sigma$-álgebra generada por $(S_s | s in [0,s])$, que a veces se denota $cal(U)(S_s | s in [0,s])$.
+
+La condición de que la cartera esté adaptada a la información conocida (ver @eq-arbol-carteraadaptada) se expresa en estos términos como que $theta_t$ sea medible respecto de $cal(F)_(t-Delta t)$, lo que a veces se llama que sea *proceso adaptado a $cal(F)_(t-Delta t)$*.
+
+#exercise[
+  Sea $theta_t = F_t (S_0, dots.c, S_N)$ con $T = N Delta t$ y sea $t = n Delta t$ con $n < N$.
+  Comprobar que son equivalentes
+  - $theta_t = F_t (S_0, dots.c, S_(t-Delta t))$
+  - $theta_t^(-1) ({a}) = A' times {0,1}^(N-n+1)$
+  - $theta_t$ es medible respecto $cal(F)_(t-Delta t)$
+]
 
 Podemos pensar en
 $

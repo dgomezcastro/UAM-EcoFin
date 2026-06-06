@@ -14,22 +14,20 @@
 
 #import "@preview/headcount:0.1.0": *
 
-#let format-chapter-item-numbering(chapter, ..nums) = numbering("1.1", chapter, ..nums)
-
-#let (exercise-counter, exercise-box, exercise, show-exercise) = make-frame(
-  "exercise",
-  theorion-i18n-map.at("exercise"),
-  inherited-levels: 1,
-  inherited-from: heading,
-  numbering: "1.1",
-  render: (prefix: none, title: "", full-title: auto, body) => block(width: 100%)[
-    #if full-title != "" {
-      strong[#full-title.]
-      sym.space
-    }
-    #body
-  ],
-)
+// #let (exercise-counter, exercise-box, exercise, show-exercise) = make-frame(
+//   "exercise",
+//   theorion-i18n-map.at("exercise"),
+//   inherited-levels: 1,
+//   inherited-from: heading,
+//   numbering: "1.1",
+//   render: (prefix: none, title: "", full-title: auto, body) => block(width: 100%)[
+//     #if full-title != "" {
+//       strong[#full-title.]
+//       sym.space
+//     }
+//     #body
+//   ],
+// )
 
 #show: show-exercise
 
