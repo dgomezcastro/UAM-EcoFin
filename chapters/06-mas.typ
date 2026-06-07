@@ -1,7 +1,11 @@
-= Más
+#import "../header/template.typ": *
+
+#counter(heading).update(0)
+#set heading(numbering: "A.1", supplement: [Apéndice])
+= Apéndice
 
 
-== Tasa anual equivalente: TAE
+== Tasa anual equivalente: TAE <sec-TAE>
 
 #quote(block: true, attribution: "Wikipedia")[
   En finanzas, la Tasa Anual Equivalente o de Equivalencia (TAE) es una referencia orientativa del coste o rendimiento efectivo anual de un producto financiero independientemente de su plazo. Su cálculo incluye la tasa de interés nominal, los gastos, comisiones, pagos e ingresos y permite comparar de una manera homogénea el rendimiento de productos financieros diferentes.
@@ -39,23 +43,15 @@ La fórmula se recoge en el #link("https://www.boe.es/boe/dias/2012/07/06/pdfs/B
   If the length of the periods are equal (monthly payments) then the summations can be simplified using the formula for a geometric series. Either way, the APR can be solved iteratively only from the formulas above, apart from trivial cases such as N=1.
 ]
 
-Si no hay gastos, para calcular la TAE en tanto por uno a partir del TIN expresado también en tanto por uno se utiliza esta fórmula:
-$
-  "TAE"=(1+r/f)^f-1
-$
-Donde:
-- $r$ es el tipo de interés nominal TIN (mensual, semestral...) expresado en tanto por uno.
-- $f$ es la frecuencia de pagos/cobros de intereses: 1 (tipo Anual), 2 (semestral), 3 (cuatrimestral), 4 (trimestral), 6 (bimestral), 12 (mensual).
-Cuando hay gastos, este valor es el llamado _tipo efectivo en la definición restringida_ (TEDR) en la #link("https://clientebancario.bde.es/pcb/es/menu-horizontal/productosservici/relacionados/tiposinteres/guia-textual/latae/tipo-efectivo-definicion-restringida.html")[web del banco de España].
+#exercise[TAE sin gastos][
+  Comprobar que,
+  si no hay gastos, para calcular la TAE en tanto por uno a partir del TIN expresado también en tanto por uno se utiliza esta fórmula:
+  $
+    "TAE"=(1+r/f)^f-1
+  $
+  Donde:
+  - $r$ es el tipo de interés nominal TIN (mensual, semestral...) expresado en tanto por uno.
+  - $f$ es la frecuencia de pagos/cobros de intereses: 1 (tipo Anual), 2 (semestral), 3 (cuatrimestral), 4 (trimestral), 6 (bimestral), 12 (mensual).
+  Cuando hay gastos, este valor es el llamado _tipo efectivo en la definición restringida_ (TEDR) en la #link("https://clientebancario.bde.es/pcb/es/menu-horizontal/productosservici/relacionados/tiposinteres/guia-textual/latae/tipo-efectivo-definicion-restringida.html")[web del banco de España].
 
-=== Ejemplo
-Por ejemplo, queremos comprar un teléfono que vale 500 euros y nos ofrecen la posibilidad de financiar en cuatro meses. En muy grande, vemos que es una financiación sin intereses, es decir, el TIN es del 0%. Los gastos de gestión, leemos en la letra pequeña, son 20 euros.
-
-Así, la cuota mensual será de 125 euros, pero al sumar esos 20 euros de gastos de gestión (que pagaremos al principio, por ejemplo), la TAE será del 21,74%. En total, se pagarán los 500 euros del teléfono, más los 20 de gestión, por lo que la operación saldrá en 520 euros.
-
-Si otra entidad ofrece esa misma opción de financiación, sin gastos de gestión ni comisiones, pero con un TIN del 5%, se podría pensar al comparar un TIN con el otro que la primera opción (0% TIN) es mejor, pero al hacer los cálculos, la TAE sale aquí del 5,1%. La cuota mensual será de 126,30 euros. En total pagaremos 505,2 euros.
-¿Qué es el TIN y en qué se diferencia de la TAE?
-
-#link("https://www.bbva.com/es/salud-financiera/tin-que-es-diferencias-tae/")[Figura]
-
-
+]

@@ -14,6 +14,11 @@
   Stock can be bought and sold privately or on stock exchanges. Transactions of the former are closely overseen by governments and regulatory bodies to prevent fraud, protect investors, and benefit the larger economy. As new shares are issued by a company, the ownership and rights of existing shareholders are diluted in return for cash to sustain or grow the business. Companies can also buy back stock, which often lets investors recoup the initial investment plus capital gains from subsequent rises in stock price. Stock options issued by many companies as part of employee compensation do not represent ownership, but represent the right to buy ownership at a future time at a specified price. This would represent a windfall to the employees if the option were exercised when the market price is higher than the promised price, since if they immediately sold the stock they would keep the difference (minus taxes).
 ]
 
+#figure(
+  image("02-figuras/Compania_Guipuzcoana_Accion_2124_Madrid_1_junio_1752.jpg"),
+  caption: [Acción n.º 2124 de la Real Compañía Guipuzcoana de Caracas a favor de Doña Juana de Ortega. Madrid, 1 de junio de 1752. #link("https://commons.wikimedia.org/wiki/File:Compania_Guipuzcoana_Accion_2124_Madrid_1_junio_1752.jpg")[Wikipedia]. Ver más certificados de acción en: #link("https://commons.wikimedia.org/wiki/Stock_certificates")[link]],
+)
+
 Cuando la acciones son públicas, se le asigna un _ticker_ (por ejemplo Apple, Inc. es `AAPL`).
 Por ejemplo, en junio de 2026 Apple contaba con (ver #link("https://companiesmarketcap.com/apple/shares-outstanding/")[Fuente]) con 14,673,278,000 a un precio de 307.34\$ cada una. Esto hace que esté valorada en 450 mil millones de dólares americanos.
 Modelizar la evolución del precio de los stocks es una de las tareas más difíciles de la Matemática Financiera.
@@ -46,6 +51,8 @@ En España: Letras y bonos del Tesoro.
   image("02-figuras/bono-tesoro.jpg", width: 70%),
   caption: [Bono del Tesoro Español. Fuente: #link("https://bidkit.ams3.digitaloceanspaces.com/34/imgBig/50/2623.jpg")[link]],
 )
+
+==== Bono de cupón cero
 
 #definition[Bono de cupón cero][
   Un bono de cupón cero con fecha de maduración $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ pagada en la fecha $T$.
@@ -126,7 +133,7 @@ $
 $
 
 
-
+==== Bono de cupón fijo
 
 #definition[Bono de cupón fijo][
   Bono con cupones $c_i$ a tiempo $T_i$ y muduración $T_n$ y principal $K$ es un bono que
@@ -143,7 +150,7 @@ $
 
 Al igual que pasa con los contratos a plazo, el precio de un bono con cupón fijo debe ser
 $
-  p lr((t; (c_1, T_1), dots.c, (c_n, T_n)), size: #200%) = sum_(i=1)^(n) c_i p(t, T_i) + K p(t, T_n).
+  p_"fijo"(t) = sum_(i=1)^(n) c_i p(t, T_i) + K p(t, T_n).
 $
 
 
@@ -172,7 +179,7 @@ $
 
 El rendimiento de un bono es el tipo de descuento que da el mismo valor. Es decir, $y$ tal que
 $
-  p(t) = sum_(i=1)^n c_i e^(-y (T_i - t)).
+  p_"fijo"(t) = sum_(i=1)^n c_i e^(-y (T_i - t)).
 $
 En el ejemplo
 $
@@ -260,7 +267,7 @@ $
 $
 Así deducimos que el valor a tiempo $t$ del bono con tipo variable es
 $
-  p(t) = p(t, T_n) + sum_(i=1)^n [p(t, T_(i-1)) - p(t, T_i)] = p(t, T_0).
+  p_"var" (t) = p(t, T_n) + sum_(i=1)^n [p(t, T_(i-1)) - p(t, T_i)] = p(t, T_0).
 $
 Es decir $p(0) = 1$.
 
@@ -331,7 +338,7 @@ Vamos a considerar el caso en el que el interés se paga con atraso.
   $
   El valor total del swap sumando y reordenando la suma
   $
-    Pi(t) & = K sum_(i=1)^n [p(t, T_(i-1)) - (1 + delta R) p(t, T_i)].
+    Pi_"swap" (t) & = K sum_(i=1)^n [p(t, T_(i-1)) - (1 + delta R) p(t, T_i)].
   $
   Reordenando la suma se obtiene el resultado.
 ]
@@ -395,18 +402,45 @@ Hay diferentes motivos para hacer esto. Uno de ellos sería conventir un tipo va
 
 ==== La crisis de 2008: _credit default swaps_
 
+#text(fill: red)[Detalles]
+
+
 === Opciones
 
-Una opción de compra (_call option_) es el derecho, pero no la obligación, de comprar el activo a un precio $K$.
-Lo contrario es una opción de venta (_put option_) que es derecho, pero no la obligración, de comprar
-Si esta operación se realiza en un instante concreto $T$ se habla de *opciones europeas*.
-Si la opción puede ejercerse en cualquier momento anterior a $T$, se habla de *opciones americanas*.
+Una contrato de opción, o simplemente opción es "una promesa que alcanza los requisitos de formación de contrato y limita el poder del quién promete de revocar el contrato".
 
-La valoración de opciones depende fuertemente de nuestra modelización del activo subyacente, y las presentaremos más adelante.
+Una opción de compra (_call option_) es el derecho, pero no la obligación, de comprar el activo subyacente bajo unas ciertas condiciones.
+Lo contrario es una opción de venta (_put option_) que es derecho, pero no la obligación, de vender el subyacente.
+
+Si esta operación se realiza en un instante concreto $T$ y a un precio fijado $K$ (llamado _strike_) se habla de *opciones europeas*.
+Si la opción puede ejercerse en cualquier momento anterior a $T$ a un precio $K$, se habla de *opciones americanas*.
+Existen muchos más tipos de opciones: asiáticas, bermúdeas, ...
+
+En este tipo de derivados, lo que conocemos con certeza es el valor a vencimiento en función del valor del activo subyacente. Pero el valor del activo subyacente es deconocido, y tan sólo podemos modelizarlo, típicamente como una distribución de probabilidad.
+
+El valor de no arbitraje a tiempo $t = 0$ depende fuertemente de nuestra modelización del activo subyacente, y las presentaremos más adelante.
 
 ==== Opciones call europeas
 
-Denotaremos precio de una _call europea_ de este derecho a tiempo $t$ lo denotaremos $C_t$.
-Como el lógico, si el valor mañana $S_T > K$ entonces puedo me interesará ejercer la opción, y ganaré $S_T - K$.
-Si el valor es menor o igual $S_T <= K$, entonces no la ejerzo, y no ganaré nada. Esto puede escribir como que el beneficio es el valor de la call mañana $C_T = (S_T - K)_+$.
+Denotaremos precio de una _call_ europea de este derecho a tiempo $t$ lo denotaremos $C_t$.
+Como el lógico, si el valor del subyacente a vencimiento $S_T > K$ entonces puedo me interesará ejercer la opción, y ganaré $S_T - K$.
+Si el valor es menor o igual $S_T <= K$, entonces no la ejerzo, y no ganaré nada. Esto puede escribir como que el beneficio es el valor de la call a vencimiento $C_T = (S_T - K)_+$.
 Su valor hoy, que es lo que queremos fijar, es $C_0$.
+
+== Ejercicios
+
+#exercise[La tasa anual equivalente#footnote[Tomado de "https://www.bbva.com/es/salud-financiera/tin-que-es-diferencias-tae/"]][
+  En @sec-TAE se detalla el cálculo de la tasa anual equivalente, que incluye los gastos equiparando los _cash flows_.
+
+  Si queremos comprar un teléfono que vale 500 euros y nos ofrecen la posibilidad de financiar en cuatro meses. En muy grande, vemos que es una financiación sin intereses, es decir, el TIN es del 0%. Los gastos de gestión, leemos en la letra pequeña, son 20 euros.
+
+  Comprobar que la cuota mensual será de 125 euros, pero al sumar esos 20 euros de gastos de gestión (que pagaremos al principio, por ejemplo), la TAE será del 21,74%. En total, se pagarán los 500 euros del teléfono, más los 20 de gestión, por lo que la operación saldrá en 520 euros.
+
+  Si otra entidad ofrece esa misma opción de financiación, sin gastos de gestión ni comisiones, pero con un TIN del 5%, se podría pensar al comparar un TIN con el otro que la primera opción (0% TIN) es mejor.
+  Comprobar que la TAE sale aquí del 5,1%. La cuota mensual será de 126,30 euros. En total pagaremos 505,2 euros.
+]
+
+#exercise[Cálculo de la TAE][
+  En @sec-TAE se detalla el cálculo de la tasa anual equivalente, que incluye los gastos equiparando los _cash flows_.
+  Escribir un programa que resuelva numéricamente el problema.
+]
