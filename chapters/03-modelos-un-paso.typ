@@ -3,7 +3,7 @@
 #import "../header/template.typ": *
 #import "@preview/diagraph:0.3.7": *
 
-= Modelos de un paso temporal
+= Modelos de un periodo temporal
 
 // Modelo matricial (un periodo de tiempo)
 // Valoración por replicación, carteras de cobertura, oportunidades de arbitraje.
@@ -12,10 +12,10 @@
 // Modelos en árboles binomiales.
 // Construcción del modelo binomial de Jarrow-Rudd.
 // Valoración de opciones europeas.
-// Paso al límite, fórmulas de Black-Scholes.
+// periodo al límite, fórmulas de Black-Scholes.
 // Valoración de opciones americanas, ejercicio óptimo.
 
-Supondremos un modelo de un paso temporal, que pasa de $t=0$ a $t = T$.
+Supondremos un modelo de un periodo temporal, que pasa de $t=0$ a $t = T$.
 Consideramos un bono, $B$, cuyo valor $B_0$ es conocido y $B_T = e^(r T) B_0$.
 Se conoce a $r$ como ...........
 
@@ -28,7 +28,7 @@ Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor 
 $
   bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p \
   bb(P)(B_T = e^(r T) B_0) = 1.
-$<eq-unpaso-2states>
+$<eq-unperiodo-2states>
 Se representa en @fig:binomial.
 Para este modelo no sea determinista, supongamos que $0 < d < u$.
 
@@ -42,7 +42,7 @@ $
 $
 Habitualmente hay más de un activo de riesgo, con lo que $S_t = (S_t^((1)), dots, S_t^((N)))$ donde cada $S_t^((i)) : Omega -> [0,oo)$.
 
-Vamos a construir rigurosamente @eq-unpaso-2states. Esto quiere decir que $Omega$ es un conjunto de dos elementos (cualesquiera), por ejemplo
+Vamos a construir rigurosamente @eq-unperiodo-2states. Esto quiere decir que $Omega$ es un conjunto de dos elementos (cualesquiera), por ejemplo
 $
   Omega = {"sube", "baja"}
 $
@@ -103,7 +103,7 @@ $
 === Arbitraje
 
 Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversión inicial
-#definition[Oportunidad de arbitraje en el modelo un paso][
+#definition[Oportunidad de arbitraje en el modelo un periodo][
   Decimos que $V$ es una oportunidad de arbitraje si existe
   $
     V_0 <= 0,
@@ -140,7 +140,7 @@ $
 Cuando introducimos un nuevo producto, por ejemplo $H_t$, en el mercado, estamos extendiendo el mercado de tal modo que ahora tiene tres activos con los que construir carteras: ${S, B, H}$.
 Veamos cuál debe ser el valor $F_0$.
 #proposition[Precio de un contrato forward][
-  En el mercado @eq-unpaso-2states el precio de no arbitraje de un contrato forward es
+  En el mercado @eq-unperiodo-2states el precio de no arbitraje de un contrato forward es
   $
     F_0 = S_0 e^(r T)
   $
@@ -245,7 +245,7 @@ Podemos hacer el cálculo anterior de valor esperado. Para ello introducimos el 
 $
   tilde(S)_t = e^(-r t) S_t
 $
-#definition[Medida libre de riesgo para el modelo de un paso temporal][
+#definition[Medida libre de riesgo para el modelo de un periodo temporal][
   Medida de probabilidad $QQ$ tal que
   $
     EE^QQ [tilde(S)_T] = S_0
@@ -319,7 +319,7 @@ $
 donde concluímos que
 $
   C_0 - P_0 & = S_0 - e^(-r T) K.
-$<eq-unpaso-putcall>
+$<eq-unperiodo-putcall>
 Se llama a esta relación _paridad put-call_.
 
 Observamos en @eq-arbol-call se tiene que
@@ -419,7 +419,7 @@ $
 $
 
 #theorem[Teorema Fundamental de Valoración de Activos][
-  En el modelo de un paso temporal, $N$ activos, $M$ estados no existe arbitraje si y sólo si existe un vector de estados.
+  En el modelo de un periodo temporal, $N$ activos, $M$ estados no existe arbitraje si y sólo si existe un vector de estados.
 ]
 
 La demostración de este teorema es una aplicación del teorema de separación de Hahn-Banach.

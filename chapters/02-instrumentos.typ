@@ -8,7 +8,9 @@
 
 === Acciones
 
-=== Activos de renta fija: Bonos
+// TODO
+
+=== Bonos de renta fija
 
 
 In finance, a bond is a type of security under which the issuer (debtor) owes the holder (creditor) a debt, and is obliged – depending on the terms – to provide cash flow to the creditor; which usually consists of repaying the principal (the amount borrowed) of the bond at the maturity date, as well as interest (called the coupon) over a specified amount of time.
@@ -24,7 +26,37 @@ En España: Letras y bonos del Tesoro.
   caption: [Bono del Tesoro Español. Fuente: #link("https://bidkit.ams3.digitaloceanspaces.com/34/imgBig/50/2623.jpg")[link]],
 )
 
-==== Valoración de un bono #footnote[Los ejemplos de esta sección están tomados de @Hull2015]
+#definition[Bono de cupón cero][
+  Un bono de cupón cero con fecha de maduración $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ pagada en la fecha $T$.
+  Denotaremos el precio a tiempo $t$ de un bono de principal $K = 1$ y maduración $T$ como $p(t, T)$.
+  El precio del bono de cupón cero y principal $K$ es $K p(t,T).$
+
+  Asumimos que:
+  - Se puede comprar o vender sin coste
+  - $p(t,t) = 1$ para todo $t$.
+]
+
+La fórmula de composición continua con tasa hacia delante $r$ es la solución de la ecuación
+$
+  e^(r (T-S)) = (p(t,S))/(p(t,T)).
+$
+Llamamos *índice cupón cero en composición continua con maduración $T$* al $r_T$ tal que $e^(r_T T) = p(0,T)$.
+$
+  r_T := (log p(0,T))/T.
+$
+
+#definition[Bono de cupón fijo][
+  Bono con cupones $c_i$ a tiempo $T_i$ y muduración $T_n$ y principal $K$ es un bono que
+  - En cada fecha $T_i$ emite un cupón (pago) de $c_i$
+  - A tiempo $T_n$ se reciben el cupón correspondiente y el principal.
+]
+
+==== Valoración de un bono de cupón fijo #footnote[Los ejemplos de esta sección están tomados de @Hull2015]
+
+Al igual que pasa con los contratos a plazo, el precio de un bono con cupón fijo debe ser
+$
+  p lr((t; (c_1, T_1), dots.c, (c_n, T_n)), size: #200%) = sum_(i=1)^(n) c_i p(t, T_i) + K p(t, T_n).
+$
 
 
 
@@ -43,13 +75,14 @@ Supongamos que sabemos las tasas cero para composición continua como en @table-
 Supongamos un bono cuyo principal es de $100$\$ con un cupón del 6% semi-anual. Es decir, cada 6 meses recibimos 3\$.
 El precio actual del bono es
 $
-  underbrace(3, "primer cupón") underbrace(e^(-underbrace(0.5, "tipo") times underbrace(0.5, "6 meses")), "descontando") + 3 e^(-0.058 times 1.0) + 3 e^(-0.064 times 1.5)
-  + (underbrace(100, "principal") + 3) e^(-0.068 times 2.0) = 98.39
+  p(t) & = underbrace(3, "primer cupón") underbrace(e^(-underbrace(0.5, "tipo") times underbrace(0.5, "6 meses")), "descontando") + 3 e^(-0.058 times 1.0) + 3 e^(-0.064 times 1.5)
+         + (underbrace(100, "principal") + 3) e^(-0.068 times 2.0) \
+       & = 98.39
 $
 
 ==== Rendimiento del bono
 
-El rendimiento de un bono es tipo de descontinuo que da el mismo valor. Es decir, $y$ tal que
+El rendimiento de un bono es el tipo de descuento que da el mismo valor. Es decir, $y$ tal que
 $
   3 e^(-y times 0.5)+ 3 e^(-y times 1.0) + 3 e^(-y times 1.5)
   + (100 + 3) e^(-y times 2.0) = 98.39
@@ -58,7 +91,7 @@ Esta ecuación no admite una solución sencilla, pero claramente el lado derecho
 
 // === _Yield curve_
 
-==== Índice cupón-cero del Tesoro#footnote[El ejemplo de esta sección están tomados de @Hull2015]
+==== Cálculo del índice cupón-cero del Tesoro a partir de bonos de cupón fijo#footnote[El ejemplo de esta sección están tomados de @Hull2015]
 
 
 Para construir los valores de la tabla @table-interes-tiposzerotesoro se utilizan los pagos que hacen distintos tipos de bonos.
@@ -110,80 +143,9 @@ En este caso la hemos utilizado para calcular la curva de bonos del tesoro, pero
 // A partir de diferentes curvas observables en el mercado (mercado monetario, swaps de tipos de interés, etc.) se construye la curva cupón cero. Se utilizan diferentes metodologías para su cálculo y, en especial, estimación para puntos no observables de la curva de tipos, como por ejemplo, el "bootstrapping"#footnote[#link("https://www.bis.org/publ/bppdf/bispap25.pdf")]
 //
 
+=== Bonos de interés variables
 
-
-== _Value-at-risk_ VaR
-
-Cuando se usa un valor en riesgo se expresa:
-#quote(block: true)[
-  Estoy $X$% seguro de que no habrá una pérdida de más de $v$\$ en los próximos $N$ días.
-]
-Si supiésemos la distribución de los retornos y esta fuese continua, $R$
-$
-  op("VaR") N"-días al" X% := v "tal que" PP lr(("ganancia en" N "días" <= v), size: #200%) = 1 - X/100.
-$
-Por motivos que veremos abajo, la ganancia/pérdida escala se suele modelizar con distribuciones normales independientes como veremos más adelante
-y por tanto se suele aproximar
-$
-  op("VaR") N"-días al" X approx sqrt(N) dot lr((op("VaR") 1"-día al" X), size: #200%)
-$
-
-El modelo más habitual es el modelo histórico, que se leer en #cite(<Hull2015>, supplement: "Chapter 22").
-
-==== Ejemplo para un sólo activo
-
-Estudiemos el VaR de una cartera de 10M\$ en acciones de Microsoft, al 99% de confianza a lo largo de $N=10$ días.
-
-Normalmente se asume que el cambio esperado de valor de una variable de mercado en un periodo corto es cero. Esto no es estrictamente cierto, pero es una hipótesis razonable porque es un cambio pequeño comparado con la volatilidad.
-Si pensamos que
-$
-  "Ganancia/pérdida" N "días" approx dot Normal (N mu, N sigma^2).
-$
-entonces estamos diciendo que $mu << sigma$ y que podemos suponer $mu = 0$.
-Por ejemplo, podríamos pensar que Microsoft tiene una volatilidad diaria del $sigma = 2%$ (que es una volatilidad anual del 32%).
-Supongamos además que tiene un retornos del 20% anual.
-En el periodo de 1 día estamos diciendo que tiene un retorno del $0.2/252 = 0.08%$ mientas que la volatilidad es del 2%.
-
-En el periodo de 10 días, la volatilidad es de $sqrt(10) dot 2% approx 6.3%$.
-
-Sobre esta cartera esto significa que $sigma = 200.000$\$.
-Busquemos el VaR de 1 día al 99% de confianza
-$
-  0.01 = PP(10 dot Normal(0, sigma^2) < v) = PP(Normal(0, 1) < v / sigma).
-$
-con lo que, utilizan las tablas de la Normal (o algún método más novedoso) $v/(sigma) = 2.326$ y deducimos que el VaR de un día resulta $v = 465,300$\$.
-El VaR de diez días corresponde el VaR de 10 días es $sqrt(10) dot 465,300 = 1,471,300$\$.
-
-En resumen, supuesto un compartimento normal de media nula
-$
-  "VaR" N"-días al" X% = sqrt(N) dot sigma_(1 "día") dot "erf"(1-X/100)
-$
-
-
-==== Ejemplo para varios activos
-
-Para reproducir el argumento anterior en un cartera con dos activos debemos tener en cuenta que
-$
-  sigma_(X+Y) = sqrt(sigma_X^2 + sigma_Y^2 + 2 rho sigma_X sigma_Y).
-$
-donde $rho$ es la correlación entre ambos productos.
-
-Y de hecho,
-$
-  var(sum_i a_i X_i) =
-  underbrace((a_1, dots, a_N), a^trans)
-  underbrace(
-    mat(
-      V(X_1), cov(X_1, X_2), dots, cov(X_1, X_N); cov(X_2, X_1), var(X_2);
-      , , dots.down;
-      , , , V(X_N)
-    ),
-    cov(X, X)
-  )
-  underbrace(vec(a_1, dots.v, a_N), a),
-$
-
-== Valoración de derivados
+== Derivados
 
 === Contrato a plazo (_forward contract_)
 

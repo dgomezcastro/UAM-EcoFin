@@ -166,3 +166,77 @@ En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses utiliza c
 === Amortización alemana
 
 === Amortización americana
+
+
+
+== _Value-at-risk_ VaR
+
+Cuando se usa un valor en riesgo se expresa:
+#quote(block: true)[
+  Estoy $X$% seguro de que no habrá una pérdida de más de $v$\$ en los próximos $N$ días.
+]
+Si supiésemos la distribución de los retornos y esta fuese continua, $R$
+$
+  op("VaR") N"-días al" X% := v "tal que" PP lr(("ganancia en" N "días" <= v), size: #200%) = 1 - X/100.
+$
+Por motivos que veremos abajo, la ganancia/pérdida escala se suele modelizar con distribuciones normales independientes como veremos más adelante
+y por tanto se suele aproximar
+$
+  op("VaR") N"-días al" X approx sqrt(N) dot lr((op("VaR") 1"-día al" X), size: #200%)
+$
+
+El modelo más habitual es el modelo histórico, que se leer en #cite(<Hull2015>, supplement: "Chapter 22").
+
+==== Ejemplo para un sólo activo
+
+Estudiemos el VaR de una cartera de 10M\$ en acciones de Microsoft, al 99% de confianza a lo largo de $N=10$ días.
+
+Normalmente se asume que el cambio esperado de valor de una variable de mercado en un periodo corto es cero. Esto no es estrictamente cierto, pero es una hipótesis razonable porque es un cambio pequeño comparado con la volatilidad.
+Si pensamos que
+$
+  "Ganancia/pérdida" N "días" approx dot Normal (N mu, N sigma^2).
+$
+entonces estamos diciendo que $mu << sigma$ y que podemos suponer $mu = 0$.
+Por ejemplo, podríamos pensar que Microsoft tiene una volatilidad diaria del $sigma = 2%$ (que es una volatilidad anual del 32%).
+Supongamos además que tiene un retornos del 20% anual.
+En el periodo de 1 día estamos diciendo que tiene un retorno del $0.2/252 = 0.08%$ mientas que la volatilidad es del 2%.
+
+En el periodo de 10 días, la volatilidad es de $sqrt(10) dot 2% approx 6.3%$.
+
+Sobre esta cartera esto significa que $sigma = 200.000$\$.
+Busquemos el VaR de 1 día al 99% de confianza
+$
+  0.01 = PP(10 dot Normal(0, sigma^2) < v) = PP(Normal(0, 1) < v / sigma).
+$
+con lo que, utilizan las tablas de la Normal (o algún método más novedoso) $v/(sigma) = 2.326$ y deducimos que el VaR de un día resulta $v = 465,300$\$.
+El VaR de diez días corresponde el VaR de 10 días es $sqrt(10) dot 465,300 = 1,471,300$\$.
+
+En resumen, supuesto un compartimento normal de media nula
+$
+  "VaR" N"-días al" X% = sqrt(N) dot sigma_(1 "día") dot "erf"(1-X/100)
+$
+
+
+==== Ejemplo para varios activos
+
+Para reproducir el argumento anterior en un cartera con dos activos debemos tener en cuenta que
+$
+  sigma_(X+Y) = sqrt(sigma_X^2 + sigma_Y^2 + 2 rho sigma_X sigma_Y).
+$
+donde $rho$ es la correlación entre ambos productos.
+
+Y de hecho,
+$
+  var(sum_i a_i X_i) =
+  underbrace((a_1, dots, a_N), a^trans)
+  underbrace(
+    mat(
+      V(X_1), cov(X_1, X_2), dots, cov(X_1, X_N); cov(X_2, X_1), var(X_2);
+      , , dots.down;
+      , , , V(X_N)
+    ),
+    cov(X, X)
+  )
+  underbrace(vec(a_1, dots.v, a_N), a),
+$
+

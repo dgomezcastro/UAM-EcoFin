@@ -1,9 +1,9 @@
 // LTeX: language=es
 #import "../header/template.typ": *
 
-= Modelo de varios pasos temporales: árbol binomial
+= Modelo de varios periodos temporales: árbol binomial
 
-== Modelo de 2 pasos
+== Modelo de 2 periodos
 
 Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k = k Delta t$ que podemos denotar como @fig-arbol
 #figure(
@@ -27,7 +27,7 @@ Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k
   s2 -> s22[label="1-p_22"]
   }
   ```),
-  caption: "Árbol binomial con dos pasos de tiempo",
+  caption: "Árbol binomial con dos periodos de tiempo",
 )
 Podría ocurrir que algunos de los valores anteriores coincidan.
 
@@ -39,9 +39,9 @@ $
   S_0 (omega_1 omega_2) := S_0, quad S_1 (omega_1 omega_2) := s_1^( (omega_1)), quad S_2(omega_1 omega_2) := s_2^((omega_1omega_2))
 $
 En interesante señalar que $S_1$ no depende de $omega_2$.
-Esta misma idea puede reproducirse en múltiples pasos.
+Esta misma idea puede reproducirse en múltiples periodos.
 
-== Modelo de $N$ pasos
+== Modelo de $N$ periodos
 
 Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k = k Delta t$ donde, por simplicidad, nos vamos
 $
@@ -73,7 +73,7 @@ Podemos verlo en como @fig-arbol
   s11 -> s112[label="...."]
   }
   ```),
-  caption: "Árbol binomial con dos pasos de tiempo",
+  caption: "Árbol binomial con dos periodos de tiempo",
 )<fig-arbol>
 
 Según las hipótesis la elección de $u$ y $d$ se habla de modelo de Cox-Ross-Rubinstein o Jarrow-Rudd.
@@ -269,7 +269,7 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 ]
 
 #proof[
-  Siguiendo la idea del modelo de un paso, es fácil construir una cartera autofinanciada $V_t$ tal que $V_T = H_T$.
+  Siguiendo la idea del modelo de un periodo, es fácil construir una cartera autofinanciada $V_t$ tal que $V_T = H_T$.
   De modo que $V_t = H_t$ en cada tiempo (o es posible construir una cartera con arbitraje), y por tanto también $tilde(H)_t = tilde(V)_t$. Concluímos que
   $
     H_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ [tilde(H)_T] = EE^QQ [e^(-r T) C_T].
@@ -279,7 +279,7 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 
 == Valor de una call europea
 
-De manera similar al caso de un paso, las opciones _call europeas_ se puede reproducir por una cartera, y deducimos que
+De manera similar al caso de un periodo, las opciones _call europeas_ se puede reproducir por una cartera, y deducimos que
 #theorem[
   El precio de no arbitraje de una opción _call_ europea viene dado por
   $
@@ -337,7 +337,7 @@ es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouill
 
 === Filtraciones y valor de una call en tiempo $t$
 
-Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por que cada paso depende sólo del anterior, a esto se lo conoce como Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
+Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por que cada periodo depende sólo del anterior, a esto se lo conoce como Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
 
 Una filtración es una sucesión no-decreciente de $sigma$-algebras
 $
