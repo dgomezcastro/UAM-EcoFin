@@ -98,21 +98,6 @@ $
   1 + r_"anual" = e^r.
 $
 
-
-=== Algunos ejemplos
-
-==== Tipos del Tesoro (_Treasury rates_)
-
-Los del #link("https://home.treasury.gov")[_US Treasury_] o el Banco de España, en letras y bonos (_Treasury bills_ and _Treasury bonds_). Estos son los instrumentos usados por los Gobiernos para pedir dineros prestado en su propia moneda.
-Se suele asumir que los gobiernos no llegará a impago (_default_), de manera que se asume que estos tipos de interés son libres de riesgo.
-
-Volveremos sobre las letras y los bonos más abajo.
-==== Tipos interbancarios
-
-LIBOR es el acrónimo del _London Interbank Offered Rate_. Es un tipo de préstamo a corto plazo entre bancos, sin garantías. Se calculan a diario cada día laborable en 10 monedas y 15 periodos (desde 1 día hasta 1 año).
-
-El euríbor (del inglés euribor), acrónimo de _Euro Interbank Offered Rate_ es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.
-
 ==== Cupón cero
 
 Se llama cupón a la cantidad de beneficios que recuperamos de una inversión antes del vencimiento en forma de dividendo, y por tanto dinero que no re-invertimos.
@@ -123,7 +108,7 @@ $
 $
 La mayor parte de los productos en el mercado no tiene cupón cero.
 
-== Préstamos
+== Préstamos a tipo fijo
 
 *Ejemplo (Hipoteca)*.
 En una hipoteca el tipo de interés se suele expresar en TIN anual.

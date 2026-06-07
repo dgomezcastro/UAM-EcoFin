@@ -18,7 +18,8 @@ Un *activo* (_asset_) es un "objeto" con valor.
 En esta asignatura trataremos sobre todo con activos financieros, que son no físicos y cuyo valor se deriva de un contrato:
 - divisas: unidades monetarias imprimidas normalmente por bancos centrales. Por ejemplo el euro € de código EUR.
 - acciones bursátiles: fracciones de una compañía que esta ha puesto a la venta. Por ejemplo, Apple `AAPL`
-- bonos (por ejemplo estatales): compromisos de una entidad (por ejemplo el Tesoro de un estado) a pagar cantidades fijas en fechas fijas. Estos activos se consideran "seguros".
+- bonos de renta variable: compromisos de una entidad (por ejemplo el Tesoro de un estado) a pagar cantidades fijas en fechas fijas. Estos activos se consideran "seguros".
+- bonos de renta variable: compromisos de una entidad a pagar cantidades que dependen un _benchmark_ que se determinará en el futuro. Por ejemplo el LIBOR o el EURIBOR.
 - fondo índices: es una colección de dinero cuyo objetivo es seguir unas normas prefijadas para intentar reproducir el rendimiento de alguna parte del mercado. Por ejemplo, el S&P500, IBEX35.
 
 También hay activos no-financieros: tanto tangibles (también llamados reales) como tierra o cereales, e intangibles como patentes y propiedad intelectual.

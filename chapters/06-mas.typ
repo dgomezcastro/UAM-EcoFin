@@ -58,10 +58,4 @@ Si otra entidad ofrece esa misma opción de financiación, sin gastos de gestió
 
 #link("https://www.bbva.com/es/salud-financiera/tin-que-es-diferencias-tae/")[Figura]
 
-== Swaps
 
-Una permuta financiera o swap es un contrato por el cual dos partes se comprometen a intercambiar una serie de cantidades de dinero en fechas futuras, y cómo se calcularán.
-
-The most popular (plain vanilla) interest rate swap is one where LIBOR is exchanged for a fixed rate of interest.
-
-To understand how it is used, consider a 5-year bond with a rate of interest specified as 6-month LIBOR plus 0.5% per annum. The life of the bond is divided into 10 periods, each 6 months in length. For each period, the rate of interest is set at 0.5% per annum above the 6-month LIBOR rate at the beginning of the period. Interest is paid at the end of the period. We will refer to a swap where LIBOR is exchanged for a fixed rate of interest as a ‘‘LIBOR-for-fixed’’ swap.
