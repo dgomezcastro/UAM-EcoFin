@@ -37,7 +37,7 @@ $
 #exercise[Interés compuesto][
   Supongamos que si invertimos 1€ en el índice S&P500 obtenemos una rentabilidad del 7% anual en promedio.
   - Si invertimos 500€ hoy ¿cuánto dinero tendremos en 5, 10, 15 años?
-  - Si suponemos que el dinero se devalúa en promedio un 2% anual, ¿cuánto dinero tendremos "equivalente" tendremos en 5, 10, 15 años?
+  - Si suponemos que el dinero se devalúa en promedio un 2% anual, ¿cuánto dinero "equivalente" tendremos en 5, 10, 15 años?
 ]<ex-interes-compuesto>
 
 === Fórmulas de conversión

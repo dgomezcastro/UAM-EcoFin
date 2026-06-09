@@ -14,24 +14,34 @@
 
 #import "@preview/headcount:0.1.0": *
 
-// #let (exercise-counter, exercise-box, exercise, show-exercise) = make-frame(
-//   "exercise",
-//   theorion-i18n-map.at("exercise"),
-//   inherited-levels: 1,
-//   inherited-from: heading,
-//   numbering: "1.1",
-//   render: (prefix: none, title: "", full-title: auto, body) => block(width: 100%)[
-//     #if full-title != "" {
-//       strong[#full-title.]
-//       sym.space
-//     }
-//     #body
-//   ],
-// )
-// #show: show-exercise
+#let (example-counter, example-box, example, show-example) = make-frame(
+  "example",
+  theorion-i18n-map.at("example"),
+  counter: theorem-counter,
+  render: fancy-box.with(
+    get-border-color: _ => yellow.darken(50%),
+    get-body-color: _ => yellow.lighten(90%),
+    get-symbol: get-quaternary-symbol,
+  ),
+)
+
+#let (exercise-counter, exercise-box, exercise, show-exercise) = make-frame(
+  "exercise",
+  theorion-i18n-map.at("exercise"),
+  counter: theorem-counter,
+  render: fancy-box.with(
+    get-border-color: _ => luma(130),
+    get-body-color: _ => luma(245),
+    get-symbol: get-quaternary-symbol,
+  ),
+)
 
 #let apuntes(doc, title: none, author: none, date: none, abstract: none, bibliography: none, lang: "es") = {
   show: show-theorion
+  show: show-example
+  show: show-exercise
+  set-inherited-levels(1)
+  set-theorion-numbering("1.1")
 
   // set page(paper: "a4")
   // set heading(numbering: "1.1")
