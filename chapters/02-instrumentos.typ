@@ -93,7 +93,12 @@ El valor $p(t, T_1) / p(t, T_2)$ es factor de retorno a tiempo $t$ del intervalo
   De modo que
   $
     L(t; T_1, T_2) := - (p(t, T_2) - p(t, T_1)) / ((T_2 - T_1) p(t; T_2).)
-  $
+  $<eq-LIBOR>
+
+#remark[
+  En realidad, lo que ocurre es que el tipo LIBOR entre $T_1$ y $T_2$, un valor que decide el organismo correspondiente a tiempo $T_1$, fuerza el valor de retorno índice cero (que es un ente abstracto), si creemos en la ausencia de arbitraje.
+]
+
 - El _simple spot rate for $[S,T]$_ o _LIBOR spot rate_ se define como
   $
     L(T_1, T_2) := - (p(T_1, T_2) - 1)/((T_2-T_1) p(T_1, T_2))
@@ -243,29 +248,37 @@ Despejando obtenemos $y(1.5)=10.681%$.
 
 Hay diferentes tipos de bonos en los que el tipo de interés no se fija cuando se emite el bono, si no que se fija en cada periodo de cupón. Habitualmente esto se hace a través de algún _benchmark_ financiero, como el LIBOR o el EURIBOR.
 
-LIBOR es el acrónimo del _London Interbank Offered Rate_. Es un tipo de préstamo a corto plazo entre bancos, sin garantías. Se calculan a diario cada día laborable en 10 monedas y 15 periodos (desde 1 día hasta 1 año).
 
-El euríbor (del inglés euribor), acrónimo de _Euro Interbank Offered Rate_ es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.
+#proposition[Valor de un cupón LIBOR][
+  El cupón $i$-ésimo se fija a tiempo $T_i$ como
+  $
+    c_i = (T_i - T_(i-1)) L(T_(i-1), T_i) K
+  $
+  donde $L(T_(i-1), T_i)$ es el spot del LIBOR, fijado a fecha $T_(i-1)$, pero el cupón no se cobra hasta tiempo $T_i$.
 
-Pongamos por ejemplo caso del LIBOR. Entonces el cupón $i$-ésimo se fija a tiempo $T_i$ como
-$
-  c_i = (T_i - T_(i-1)) L(T_(i-1), T_i) K
-$
-donde $L(T_(i-1), T_i)$ es el spot del LIBOR, fijado a fecha $T_(i-1)$, pero el cupón no se cobra hasta tiempo $T_i$.
-Usando la definición
-$
-  c_i = delta (1 - p(T_(i-1), T_i))/(delta p(T_(i-1), T_i)) = 1 / p(T_(i-1), T_i) - 1.
-$
-La siguiente estrategia permite calcular $1/p(T_(i-1), T_i)$:
-- A tiempo $t$ compra un bono de maduración $T_(i-1)$, que cuesta $p(t, T_(i-1))$\$.
-- A tiempo $T_(i-1)$ esto da 1\$.
-- Dedica este dólar a comprar bonos de maduración a tiempo $T_i$, es decir obtén $1/p(T_(i-1), T_i)$.
-- A tiempo $T_i$ recibes 1\$ por cada bono, es decir $1/p(T_(i-1), T_i)$\$.
-Así, invirtiendo $p(t, T_i)$\$ a tiempo $t$ se obtienen $1/p(T_(i-1), T_i)$ \$ a tiempo $T_i$. Luego este es valor de no arbitraje de la inversión. Así, el valor a tiempo $t$ del cupón $c_i$ cobra a tiempo $T_i$ es
-$
-  p(t, T_(i-1)) - p(t, T_(i)).
-$
-Así deducimos que el valor a tiempo $t$ del bono con tipo variable es
+  El valor a tiempo $t$ del cupón $c_i$ cobrado a tiempo $T_i$ es
+  $
+    p(t, T_(i-1)) - p(t, T_(i)).
+  $
+]<lem-cupon-LIBOR>
+#proof[
+  Pongamos por ejemplo caso del LIBOR. Entonces el cupón $i$-ésimo se fija a tiempo $T_i$ como
+  $
+    c_i = (T_i - T_(i-1)) L(T_(i-1), T_i) K
+  $
+  donde $L(T_(i-1), T_i)$ es el spot del LIBOR, fijado a fecha $T_(i-1)$, pero el cupón no se cobra hasta tiempo $T_i$.
+  Usando la definición
+  $
+    c_i = delta (1 - p(T_(i-1), T_i))/(delta p(T_(i-1), T_i)) = 1 / p(T_(i-1), T_i) - 1.
+  $
+  La siguiente estrategia permite calcular $1/p(T_(i-1), T_i)$:
+  - A tiempo $t$ compra un bono de maduración $T_(i-1)$, que cuesta $p(t, T_(i-1))$\$.
+  - A tiempo $T_(i-1)$ esto da 1\$.
+  - Dedica este dólar a comprar bonos de maduración a tiempo $T_i$, es decir obtén $1/p(T_(i-1), T_i)$.
+  - A tiempo $T_i$ recibes 1\$ por cada bono, es decir $1/p(T_(i-1), T_i)$\$.
+  Así, invirtiendo $p(t, T_i)$\$ a tiempo $t$ se obtienen $1/p(T_(i-1), T_i)$ \$ a tiempo $T_i$. Luego este es valor de no arbitraje de la inversión.
+]
+Así deducimos que el valor a tiempo $t$ del bono con tipo variable LIBOR es
 $
   p_"var" (t) = p(t, T_n) + sum_(i=1)^n [p(t, T_(i-1)) - p(t, T_i)] = p(t, T_0).
 $
@@ -332,7 +345,7 @@ Vamos a considerar el caso en el que el interés se paga con atraso.
   $
     K delta [L (T_(i-1), T_i) - R]
   $
-  Usando el resultado de nuestro tipo variable, para $t < T_0$ este cash flow tiene el valor
+  Usando la @lem-cupon-LIBOR, para $t < T_0$ este cash flow tiene el valor
   $
     underbrace(K (p (t, T_(i-1)) - p(t, T_i)), "valor de " K delta L (T_(i-1), T_i)) - underbrace(K delta R p(t, T_i), "valor de" K delta R) = K p (t, T_(i-1)) - K (1 + delta R) p(t, T_i).
   $
@@ -402,8 +415,18 @@ Hay diferentes motivos para hacer esto. Uno de ellos sería conventir un tipo va
 
 ==== La crisis de 2008: _credit default swaps_
 
-#text(fill: red)[Detalles]
+#quote(block: true, attribution: "https://en.wikipedia.org/wiki/Credit_default_swap")[
+  A credit default swap (CDS) is a financial swap agreement that the seller of the CDS will compensate the buyer in the event of a debt default (by the debtor) or other credit event.
+  That is, the seller of the CDS insures the buyer against some reference asset defaulting. The buyer of the CDS makes a series of payments (the CDS "fee" or "spread") to the seller and, in exchange, may expect to receive a payoff if the asset defaults.
 
+  In the event of default, the buyer of the credit default swap receives compensation (usually the face value of the loan), and the seller of the CDS takes possession of the defaulted loan or its market value in cash. However, anyone can purchase a CDS, even buyers who do not hold the loan instrument and who have no direct insurable interest in the loan (these are called "naked" CDSs). If there are more CDS contracts outstanding than bonds in existence, a protocol exists to hold a credit event auction. The payment received is often substantially less than the face value of the loan.[2]
+]
+
+En la crisis de 2008 algunos inversores inteligentes (entre ellos Michael Burry) consiguieron retornos astronómicos.
+La clave es que estos inversores fueron mucho más conscientes de la probabilidad de _default_ de estos productos de lo que el _spread_ ofrecido por los bancos les haría pagar.
+
+Para una dramatización se recomienda la película _The Big Short_ (donde algunos nombres fueron sustituidos), basada en el libro _"The Big Short: Inside the Doomsday Machine."_.
+Otras buena película sobre esta crisis es #link("https://en.wikipedia.org/wiki/Margin_Call")[_Margin Call_].
 
 === Opciones
 

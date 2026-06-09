@@ -98,23 +98,30 @@ $
   1 + r_"anual" = e^r.
 $
 
-==== Cupón cero
+=== ¿Quién fija los tipos de interés?
 
-Se llama cupón a la cantidad de beneficios que recuperamos de una inversión antes del vencimiento en forma de dividendo, y por tanto dinero que no re-invertimos.
+Hay diferentes productos con tipos de interés públicos.
+Los bonos estatales tiene unos cupones fijados a través de los cuales se obtiene beneficio. Este producto nos permite valorar "la evolución del valor del dinero" si no queremos que exista arbitraje. Nos habla del valor del dinero en los momentos de vencimiento de estos cupones.
 
-Se habla de tipo de interés con cupo cero en $n$ años (_$n$-year zero-coupon interest rate_). Por ejemplo, sin invertimos $100€$ al 5% a lo largo de 5 años, podemos calcular
-$
-  100 times e^(0.05 times 5) = 128.40€.
-$
-La mayor parte de los productos en el mercado no tiene cupón cero.
+También existen tipos de interés a "corto plazo", con el que los bancos se prestan dinero entre sí.
+Esto también estable "restricciones".
+Los dos ejemplo más relevantes en nuestro contexto son:
 
-== Préstamos a tipo fijo
+- LIBOR es el acrónimo del _London Interbank Offered Rate_. Es un tipo de préstamo a corto plazo entre bancos, sin garantías. Se calculan a diario cada día laborable en 10 monedas y 15 periodos (desde 1 día hasta 1 año).
 
-*Ejemplo (Hipoteca)*.
+- El euríbor (del inglés euribor), acrónimo de _Euro Interbank Offered Rate_ es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.
+
+#figure(
+  image("02-figuras/euribor.png"),
+  caption: [Euribor a 12 meses. https://www.euribor-rates.eu/en/euribor-charts/],
+)
+
+La forma de normalizar la evolución del "valor del dinero" es lo que llamamos *curva de cupón cero*, que veremos más adelante.
+
+== Un ejemplo sencillo de tipos de interés: \ hipoteca con amortización francesa.
+
 En una hipoteca el tipo de interés se suele expresar en TIN anual.
 A esto hay que añadirle una comisión de apertura (por ejemplo el 1.5% del principal), así como otras posibles comisiones por cancelación anticipada, etc...
-
-=== Amortización francesa
 
 La premisa de esta amortización es que la cuota mensual, $c$, permanece fija si el interés nominal no cambia.
 De manera que hemos de deducir $c$.
@@ -147,12 +154,9 @@ $
 $
 El diferencial se pacta con el banco en la hipoteca, y el euribor es anunciado
 En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses utiliza como $"TIN"_"anual"$ el correspondiente #link("https://www.euribor-rates.eu/es/tipos-euribor-actualmente/4/euribor-valor-12-meses/")["Euribor a 12 meses"].
+El capital amortizado cada mes no cambia, pero se pagan los intereses que correspondan.
 
-=== Amortización alemana
-
-=== Amortización americana
-
-
+*Otros tipos de amortización:* Existen hipotecas con otros tipos de amortización como el alemán, pero no son muy relevantes en nuestro contexto.
 
 == _Value-at-risk_ VaR
 
