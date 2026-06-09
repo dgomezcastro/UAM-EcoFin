@@ -96,7 +96,7 @@ El valor $p(t, T_1) / p(t, T_2)$ es factor de retorno a tiempo $t$ del intervalo
   $<eq-LIBOR>
 
 #remark[
-  En realidad, lo que ocurre es que el tipo LIBOR entre $T_1$ y $T_2$, un valor que decide el organismo correspondiente a tiempo $T_1$, fuerza el valor de retorno índice cero (que es un ente abstracto), si creemos en la ausencia de arbitraje.
+  En realidad, el tipo LIBOR entre $T_1$ y $T_2$ (denotado $L(T_1, T_2)$) es un valor que decide el organismo correspondiente a tiempo $T_1$, y este «fuerza» el rendimiento cupón cero (que es un ente "a posteriori"), si creemos en la ausencia de arbitraje.
 ]
 
 - El _simple spot rate for $[S,T]$_ o _LIBOR spot rate_ se define como
