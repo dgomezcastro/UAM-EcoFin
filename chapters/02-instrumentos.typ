@@ -54,7 +54,10 @@ En España: Letras y bonos del Tesoro.
 
 ==== Bono de cupón cero
 
-#definition[Bono de cupón cero][
+La hipótesis de no-arbitraje hace que un producto consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
+Como lo que viene en los bonos es el "principal", es decir cuánto pagan a vencimiento definimos
+
+#definition[Bono de cupón cero bajo la hipótesis de no-arbitraje][
   Un bono de cupón cero con fecha de maduración $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ pagada en la fecha $T$.
   Denotaremos
   $
@@ -65,10 +68,11 @@ En España: Letras y bonos del Tesoro.
   - Se puede comprar o vender sin coste
   - $p(t,t) = 1$ para todo $t$.
 ]
+Una de las tareas difíciles de la Matemática Financiera es aproximar este valor. Nótese que su existencia depende fuertemente de la hipótesis de no-arbitraje (que podría no cumplirse).
 
-Hay otra forma muy habitual de expresar este valor
+Hay otra forma muy habitual de expresar este valor, que es la siguiente
 
-#definition[Rendimiento (o tipo o índice) del cupón cero con composición continua a tiempo $t$ con maduración (o vencimiento) $T$][
+#definition[Rendimiento (o _yield_) del cupón cero con composición continua a tiempo $t$ con vencimiento $T$][
   Valor $y(t,T)$ tal que $p(t,T) = e^(-y(T -t))$, es decir
   $
     y(t, T) := -(log p(t,T))/(T-t).
@@ -76,6 +80,8 @@ Hay otra forma muy habitual de expresar este valor
   A la curva $T |-> y(t,T)$ se la llama curva de rendimiento de cupón cero.
   Por comodidad denotaremos $y(T) = y(0,T).$
 ]
+También se utilizan otras terminologías como tipo (_rate_) o índice (_index_).
+La traducción de vencimiento en inglés es _maturity_.
 
 Para entender el precio de un bono cupón cero a diferentes tiempo podemos pensar en la siguiente estrategia. Sea $t < T_1 < T_2$:
 - A tiempo $t$ compramos un bono con bono con vencimiento en $T_1$. Esto nos da $p(t, T_1)$\$.
@@ -96,7 +102,8 @@ El valor $p(t, T_1) / p(t, T_2)$ es factor de retorno a tiempo $t$ del intervalo
   $<eq-LIBOR>
 
 #remark[
-  En realidad, el tipo LIBOR entre $T_1$ y $T_2$ (denotado $L(T_1, T_2)$) es un valor que decide el organismo correspondiente a tiempo $T_1$, y este «fuerza» el rendimiento cupón cero (que es un ente "a posteriori"), si creemos en la ausencia de arbitraje.
+  En realidad, el tipo LIBOR entre $T_1$ y $T_2$ (denotado $L(T_1, T_2)$) es un valor que decide el organismo correspondiente a tiempo $T_1$, y este «fija una condición» sobre el rendimiento cupón cero (que es un ente "a posteriori"), si creemos en la ausencia de arbitraje.
+  Más abajo en @ex-calculo-zerocouponyield haremos el $y(t;T)$ a partir de bonos de cupón fijo. Podríamos al cálculo otros productos, como tipos LIBOR entre fechas, o precios de otros derivados.
 ]
 
 - El _simple spot rate for $[S,T]$_ o _LIBOR spot rate_ se define como
@@ -127,7 +134,7 @@ El valor $p(t, T_1) / p(t, T_2)$ es factor de retorno a tiempo $t$ del intervalo
     r(t) := f(t,t).
   $
 
-El bono de composición continua con valor iniclal $B_0 = 1$ viene dado por
+El bono de composición continua con valor inicial $B_0 = 1$ (a tiempo $t = 0$) viene dado por
 $
   B_t = exp(integral_0^t r(s) dif s).
 $
@@ -195,42 +202,43 @@ Esta ecuación no admite una solución sencilla, pero claramente el lado derecho
 
 // === _Yield curve_
 
-==== Cálculo del rendimiento del cupón-cero del Tesoro a partir de bonos de cupón fijo#footnote[El ejemplo de esta sección están tomados de @Hull2015]
+#example(
+  breakable: true,
+)[Cálculo del rendimiento de cupón-cero a partir de bonos de cupón fijo#footnote[El ejemplo de esta sección están tomados de @Hull2015]][
+  Para construir los valores de la tabla @table-interes-tiposzerotesoro se utilizan los pagos que hacen distintos tipos de bonos.
+  Hay diferentes formas de hacer este cálculo, pero vamos a  hablar del método _bootstrap_. La idea es ir utilizando bonos de menor duración para ir fijando $y(0, T)$ a cada periodo $T$.
+  Por ejemplo, pensemos que tenemos los bonos de @table-interes-bootstrap.
 
+  Para el bono de 3 meses (0.25 años), calculamos
+  $
+    100 = 97.5 e^(y(0.25) times 0.25).
+  $
+  De donde $y(0.25) = 10.127%$. Los de 6 meses y un año nos dan $y(0.5) = 10.469%$ y $y(1.0) = 10.536%$.
 
-Para construir los valores de la tabla @table-interes-tiposzerotesoro se utilizan los pagos que hacen distintos tipos de bonos.
-Hay diferentes formas de hacer este cálculo, pero vamos a  hablar del método _bootstrap_. La idea es ir utilizando bonos de menor duración para ir fijando $y(0, T)$ a cada periodo $T$.
-Por ejemplo, pensemos que tenemos los bonos de @table-interes-bootstrap.
+  El cuarto bono dura 1.5 años. Y paga lo que sigue:
+  - 6 meses: 4\$
+  - 1 año: 4\$
+  - 1.5 años: 104\$
+  Para los dos primeros plazos podemos usar las fórmulas de descuento anteriores, y sólo nos queda la última por despejar
+  $
+    4e^(-0.10469 times 0.5) + 4 e^(-0.10536 times 1.0) + 104 e^(-y(1.5) times 1.5) = 96.
+  $
+  Despejando obtenemos $y(1.5)=10.681%$.
 
-Para el bono de 3 meses (0.25 años), calculamos
-$
-  100 = 97.5 e^(y(0.25) times 0.25).
-$
-De donde $y(0.25) = 10.127%$. Los de 6 meses y un año nos dan $y(0.5) = 10.469%$ y $y(1.0) = 10.536%$.
-
-El cuarto bono dura 1.5 años. Y paga lo que sigue:
-- 6 meses: 4\$
-- 1 año: 4\$
-- 1.5 años: 104\$
-Para los dos primeros plazos podemos usar las fórmulas de descuento anteriores, y sólo nos queda la última por despejar
-$
-  4e^(-0.10469 times 0.5) + 4 e^(-0.10536 times 1.0) + 104 e^(-y(1.5) times 1.5) = 96.
-$
-Despejando obtenemos $y(1.5)=10.681%$.
-
-#figure(
-  table(
-    columns: (auto, auto, auto, auto),
-    table.header([Principal\ (\$)], [Duración \ (años)], [Cupón anual \ (\$)], [Precio del bono\ (\$)]),
-    [100], [0,25], [0], [97.5],
-    [100], [0.5], [0], [94.9],
-    [100], [1.0], [0], [90.0],
-    [100], [1.5], [8], [96.0],
-    [100], [2.0], [12], [101.6],
-  ),
-  caption: [Precio de bonos para el método de _bootstrap_],
-)<table-interes-bootstrap>
-
+  #figure(
+    table(
+      columns: (auto, auto, auto, auto),
+      table.header([Principal\ (\$)], [Duración \ (años)], [Cupón anual \ (\$)], [Precio del bono\ (\$)]),
+      [100], [0,25], [0], [97.5],
+      [100], [0.5], [0], [94.9],
+      [100], [1.0], [0], [90.0],
+      [100], [1.5], [8], [96.0],
+      [100], [2.0], [12], [101.6],
+    ),
+    caption: [Precio de bonos para el método de _bootstrap_],
+  )<table-interes-bootstrap>
+]
+<ex-calculo-zerocouponyield>
 
 // #link("https://en.wikipedia.org/wiki/Yield_curve")
 

@@ -34,6 +34,12 @@ $
   "dinero recibido \n el 1 de enero de 2027" = (1 + r)^2 times "dinero invertido \n el 1 de enero de 2025".
 $
 
+#exercise[Interés compuesto][
+  Supongamos que si invertimos 1€ en el índice S&P500 obtenemos una rentabilidad del 7% anual en promedio.
+  - Si invertimos 500€ hoy ¿cuánto dinero tendremos en 5, 10, 15 años?
+  - Si suponemos que el dinero se devalúa en promedio un 2% anual, ¿cuánto dinero tendremos "equivalente" tendremos en 5, 10, 15 años?
+]<ex-interes-compuesto>
+
 === Fórmulas de conversión
 
 Si tenemos una inversión que promete un retorno de $r$ a $T$ años (típicamente $1 "año" = N T$ donde $N in NN$), podemos utilizar la fórmula del interés compuesto para deducir cual es el tipo anual
@@ -82,6 +88,15 @@ Vemos más ejemplos en @table-interes-compuesto.
   caption: "Interés compuesto",
 )<table-interes-compuesto>
 
+#exercise[
+  Ordenar de menor a mayor los siguientes tipos de interés:
+  - 6% anual;
+  - 0,5% mensual;
+  - 30% por 5 años;
+  - 10% el primer año y 4% los dos siguientes.
+]
+
+
 === Tipo de interés continuo
 Jacob Bernouilli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
 $
@@ -97,6 +112,12 @@ Esta representación nos será de gran utilidad. Si intentamos calcular el tipo 
 $
   1 + r_"anual" = e^r.
 $
+
+#exercise[
+  Responder a las siguientes preguntas:
+  - Dado un tipo del 10% compuesto semianualmente, ¿Cuál es el tipo continuo equivalente?
+  - Un prestamista pretende conseguir el 8% continuo y cobra trimestralmente. ¿Cuál es el tipo anual para composición trimestral equivalente?
+]
 
 === ¿Quién fija los tipos de interés?
 

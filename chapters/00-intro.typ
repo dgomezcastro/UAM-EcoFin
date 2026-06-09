@@ -11,9 +11,9 @@ El objetivo de estas notas es introducir al alumno al "universo" de la Matemáti
 Al ser un curso introductorio, cubriremos solamente conceptos básicos sin entrar en algunas de las principales sutilezas, y los métodos de valoración que presentaremos están ya algo desfasados respecto al "estado del arte". Sin embargo, son el fundamento que sustenta estos métodos más nuevos.
 
 
-== Activos y derivados
+== Productos financieros
 
-=== Definición
+=== Activos
 Un *activo* (_asset_) es un "objeto" con valor.
 En esta asignatura trataremos sobre todo con activos financieros, que son no físicos y cuyo valor se deriva de un contrato:
 - divisas: unidades monetarias imprimidas normalmente por bancos centrales. Por ejemplo el euro € de código EUR.
@@ -24,6 +24,7 @@ En esta asignatura trataremos sobre todo con activos financieros, que son no fí
 
 También hay activos no-financieros: tanto tangibles (también llamados reales) como tierra o cereales, e intangibles como patentes y propiedad intelectual.
 
+=== Derivados
 Sobre estos activos se construyen a veces otros contratos, llamados *derivados*, que tiene 4 elementos:
 - un elemento (llamado subyacente) que se puede o debe comprar o vender
 - un acto futuro
@@ -31,12 +32,52 @@ Sobre estos activos se construyen a veces otros contratos, llamados *derivados*,
 - una fecha futura en que ocurrirá el acto
 Estos compromisos futuros habitualmente pueden ser comprados o vendidos en cualquier momento, a cualquier persona o entidad. Establecer el precio actual de estos contratos es precisamente el objetivo de esta asignatura.
 
-Una de las ideas básicas de esta teoría el tipo de interés $r$ (expresado en %).
+=== Beneficio o retorno de una inversión.
+
+Una de las conceptos básicas de esta teoría el beneficio.
 El caso más sencillo, es cuando hablamos de una inversión garantizada a 1 año (por ejemplo un bono) en la que el tipo de interés es tal que
 $
   "dinero recibido \n el 1 de enero de 2026" = (1 + r) times "dinero invertido \n el 1 de enero de 2025."
 $
+En muchos conceptos llamamos a $r$ tipo de  interés o simplemente interés, y lo medimos en $%$ (donde $1% = 0.01$).
+
 En la teoría de interés con composición continua, que veremos más adelante, se reemplaza $1 + r$ por $e^(r T)$ donde $T$ es la duración del contrato.
+
+=== Arbitraje
+
+Imaginemos que dos bancos ofrecen productos de inversión a un año, y por cada 1€ de inversión el primer banco devuelve $(1 + r_1) €$ y el segundo ofrecen $(1 + r_2)€$, donde $r_1 < r_2$.
+
+Entonces un inversor inteligente podría:
+- Buscar a los clientes del banco 1, y ofrecerles un producto de interés de un valor $r in (r_1, r_2)$. Supongamos que somos capaces de vender $X$€ de este producto.
+- Coger todo el dinero de estos inversores e invertirlo en el banco 2.
+- No hemos invertido nada de dinero.
+Pasado un año:
+- El banco dos nos dará $(1 + r_2)X$€.
+- Usamos este dinero para pagar los $(1 + r)X$€ a los inversores que nos dieron el dinero.
+- Nos quedamos con $(r_2 - r)X$€ de beneficio.
+
+Esta situación es la como
+#definition[Arbitraje][
+  Una oportunidad de arbitraje es la posibilidad de invertir en el mercado, sin coste inicial, de manera que tengamos beneficio de forma segura.
+]
+
+Si existen bancos con productos de inversión del mismo plazo y distintos intereses, entonces existe una oportunidad de arbitraje.
+
+Además, para poder un precio único a los productos asumiremos
+#definition[Hipótesis de no arbitraje][
+  En el mercado no existen posibilidades de arbitraje.
+]
+
+Hay algunas otras simplificaciones naturales, que utilizaremos más adelante
+
+#definition(breakable: true)[Hipótesis del mercado financier][
+  - Se permite posiciones en corto (vender un producto que está en el mercado o pedir prestadas acciones), así como posiciones fraccionarias (es decir se pueden tener cualquiera cantidades reales de los productos).
+  - No existe _bid-ask_ spread, es decir que el precio de compra de un activo es el mismo que su precio de venta.
+  - Para cada producto en venta a un cierto precio, hay alguien dispuesto a comprar al mismo precio
+  - La compra o venta de productos se realiza sin coste
+  - El mercado es completamente líquido, es decir podemos comprar o vender cantidades ilimitadas de los productos. También podemos pedir cantidades ilimitadas de dinero prestadas.
+]
+
 
 === Mercados #footnote[Adaptado de @Hull2015]
 
@@ -99,7 +140,7 @@ Su valoración es similar a la de un futuro, y por tanto no los trataremos en es
 Una opción es el derecho, pero no la obligación, de comprar (o vender) un activo a un precio y en un momento (que puede ser una fecha o cuando se satisfagan unas condiciones).
 
 
-== Tipos de _traders_
+== Tipos de _traders_#footnote[Sección resumida de @Hull2015]
 
 ==== _Hedgers_
 
@@ -107,7 +148,7 @@ Una opción es el derecho, pero no la obligación, de comprar (o vender) un acti
 
 ==== _Arbitrageurs_
 
-#example(breakable: true)[Arbitraje para un contrato _forward_][
+#example(breakable: true)[Precio de no arbitraje para un contrato _forward_][
   Nuestra primera introducción al concepto de arbitraje tiene que ver con el precio justo de un contrato _forward_.
   Supongamos que podemos pedir prestado dinero $S_0$ es el valor actual de un activo, es decir, por cada € que pida prestado hoy he devolver $e^(r T)$€ al vencimiento del contrato. Supongamos que el contrato tiene un strike $F_0$, al que se produce la venta del activo. Normalmente los contratos forward se hacen sin pagar nada el día que se firman.
 
@@ -232,17 +273,4 @@ El resultado, natural, queda expresado en años.
   - ¿Cuales son los intereses brutos asociados?
   - ¿Qué intereses recibirá a lo largo de 2008?
   - ¿Cuánto habría recibido de haber cerrado su cuenta el 1 de julio.
-]
-
-#exercise[
-  Ordenar de menor a mayor los siguientes tipos de interés:
-  - 6% anual;
-  - 0,5% mensual;
-  - 30% por 5 años;
-  - 10% el primer año y 4% los dos siguientes.
-]
-#exercise[
-  Responder a las siguientes preguntas:
-  - Dado un tipo del 10% compuesto semianualmente, ¿Cuál es el tipo continuo equivalente?
-  - Un prestamista pretende conseguir el 8% continuo y cobra trimestralmente. ¿Cuál es el tipo anual para composición trimestral equivalente?
 ]
