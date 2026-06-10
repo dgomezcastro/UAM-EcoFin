@@ -93,7 +93,7 @@ Hay algunas otras simplificaciones naturales, que utilizaremos más adelante
 
 ==== Mercado extra-bursátil (_over-the-counter_ market)
 
-#quote(block: true, attribution: [https://es.wikipedia.org/wiki/Mercado_extrabursátil])[
+#quote(block: true, attribution: ["https://es.wikipedia.org/wiki/Mercado_extrabursátil"])[
   Un mercado extrabursátil, mercado over-the-counter (OTC), mercado paralelo no organizado o mercado de contratos a medida es uno donde se negocian instrumentos financieros (acciones, bonos, materias primas, swaps o derivados de crédito) directamente entre dos partes. Este tipo de negociación se realiza fuera del ámbito de los mercados organizados.
 ]
 
@@ -103,15 +103,16 @@ Antes de la crisis crediticia, que comenzó en 2007 y se analiza con detalle en 
 
 === Derivados
 
-==== Contratos a plazo (_forward contracts_)
+==== Contratos a plazo (_forward contracts_)#footnote[Resumido de @Hull2015]
 
-Un derivado relativamente simple es el contrato a plazo. Es un acuerdo para comprar o vender un activo en un momento futuro determinado a un precio determinado. Puede contrastarse con un contrato al contado, que es un acuerdo para comprar o vender un activo de forma casi inmediata. Un contrato a plazo se negocia en el mercado extrabursátil —generalmente entre dos instituciones financieras o entre una institución financiera y uno de sus clientes. Una de las partes del contrato a plazo asume una posición larga y acuerda comprar el activo subyacente en una fecha futura específica a un precio específico. La otra parte asume una posición corta y acuerda vender el activo en la misma fecha al mismo precio. Los contratos a plazo sobre divisas son muy populares. La mayoría de los grandes bancos emplean operadores tanto al contado como a plazo en el mercado de divisas. Un ejemplo de este tipo de contrato en la Tabla @table-forward-bidask
+Un contrato a plazo es un acuerdo para comprar o vender un activo en un momento futuro determinado, llamado fecha de vencimiento, a un precio determinado, llamado _strike_.
+Un contrato a plazo se negocia en el mercado extrabursátil —generalmente entre dos instituciones financieras o entre una institución financiera y uno de sus clientes. Una de las partes del contrato a plazo asume una posición larga y acuerda comprar el activo subyacente en una fecha futura específica a un precio específico. La otra parte asume una posición corta y acuerda vender el activo en la misma fecha al mismo precio. Un ejemplo de este tipo de contrato en la Tabla @table-forward-bidask
 
 #figure(
   caption: [
     Cotizaciones al contado y a plazo del tipo de cambio USD/GBP,
     6 de mayo de 2013 (GBP = libra esterlina; USD = dólar estadounidense;
-    la cotización es el número de USD por GBP).
+    la cotización es el número de USD por GBP. #cite(<Hull2015>, supplement: "Tabla 1.1").
   ],
   table(
     columns: (2fr, 1fr, 1fr),
@@ -129,7 +130,7 @@ Un derivado relativamente simple es el contrato a plazo. Es un acuerdo para comp
 )<table-forward-bidask>
 
 
-=== Contratos a futuro (_futures_)
+=== Contratos a futuro (_futures_)#footnote[Resumido de @Hull2015]
 
 Al igual que un contrato a plazo, un contrato de futuros es un acuerdo entre dos partes para comprar o vender un activo en un momento futuro determinado a un precio determinado. A diferencia de los contratos a plazo, los contratos de futuros se negocian habitualmente en un mercado organizado. Para facilitar la negociación, la bolsa establece ciertas características estandarizadas del contrato. Dado que las dos partes contratantes no se conocen necesariamente entre sí, la bolsa también proporciona un mecanismo que ofrece a ambas partes la garantía de que el contrato será cumplido.
 
@@ -138,62 +139,13 @@ Su valoración es similar a la de un futuro, y por tanto no los trataremos en es
 === Opciones
 
 Una opción es el derecho, pero no la obligación, de comprar (o vender) un activo a un precio y en un momento (que puede ser una fecha o cuando se satisfagan unas condiciones).
+Existen diferentes variantes que comentaremos que veremos en diferentes niveles de detalle: europeas, americanas, asiáticas, bermúdeas, ...
 
 
-== Tipos de _traders_#footnote[Sección resumida de @Hull2015]
+== Tipos de _traders_
 
-==== _Hedgers_
-
-==== Especuladores
-
-==== _Arbitrageurs_
-
-#example(breakable: true)[Precio de no arbitraje para un contrato _forward_][
-  Nuestra primera introducción al concepto de arbitraje tiene que ver con el precio justo de un contrato _forward_.
-  Supongamos que podemos pedir prestado dinero $S_0$ es el valor actual de un activo, es decir, por cada € que pida prestado hoy he devolver $e^(r T)$€ al vencimiento del contrato. Supongamos que el contrato tiene un strike $F_0$, al que se produce la venta del activo. Normalmente los contratos forward se hacen sin pagar nada el día que se firman.
-
-  A vencimiento, si soy el vendedor del contrato, debo honrarlo. Para ello, debo vender a quien tiene el contrato, el activo al precio pacto.
-  Por ejemplo, si no tengo el activo debo comprarlo en el mercado (pagando $S_T$) y venderlo a mi contrapartido del _forward_ al precio $F_0$. De modo que en mi balance contable resulta en $F_0 - S_T$. Si este valor es positivo gano dinero, si es negativo lo pierdo. Pero lo importante es saber si consigo salir de la operación completa ganando dinero. Para ello, hay que pensar cuál es el valor justo $F_0$ y qué puedo hacer en cada caso.
-
-  Argumentamos que si $F_0 != S_0 e^(r T)$ entonces se puede ganar dinero sin riesgo, esto es lo que se conoce como arbitraje.
-
-  Si alguien está dispuesto a entrar con nosotros en un contrato a futuro donde $F_0 > S_0 e^(r T)$, entonces hoy podemos pedir prestado el dinero, y comprar el activo.
-  Mantenemos el activo en nuestra posesión hasta el vencimiento del contrato, y liquidamos la operación ¡con beneficio!
-  El resultado contable es la @table-forward-arbitrage1. El resultado es que _independientemente del valor $S_T$_ gano dinero seguro. Además, he hecho la operación sin "poner" dinero. Este efecto es el conocido como arbitraje.
-  #figure(
-    table(
-      columns: (auto, auto, auto),
-      table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
-      [Comprar el contrato], [#text(fill: red)[0]], [$F_0 - S_T$ \ (positivo o negativo)],
-      [Comprarel activo], [-#text(fill: red)[$S_0$]], [$S_T$],
-      [Pedir prestado], [+$S_0$], [-#text(fill: red)[$S_0 e^(r T)$]],
-      table.hline(stroke: 3pt),
-      [Total], [0], [$F_0 - S_0 e^(r T)$],
-    ),
-    caption: [Arbitraje en un contrato forward si $F_0 > S_0 e^(r T)$. Cada casilla representa el apunte contable correspondiente (donde negro significa ingreso, y rojo significa gasto).],
-  )<table-forward-arbitrage1>
-  Por contra, si hubiese alguien dispuesto a hacer el contrato con $F_0 < S_0 e^(r T)$ podría hacer la operación inversa, como detalla @table-forward-arbitrage2.
-  #figure(
-    table(
-      columns: (auto, auto, auto),
-      table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
-      [Vender el contrato], [#text(fill: black)[0]], [-#text(fill: red)[$(S_T - F_0)$]],
-      [Comprar el activo], [#text(fill: black)[$S_0$]], [-#text(fill: red)[$S_T$]],
-      [Pretar \
-        a un tercero],
-      [-#text(fill: red)[$S_0$]],
-      [#text(fill: black)[$S_0 e^(r T)$]],
-      table.hline(stroke: 3pt),
-      [Total], [0], [$S_0 e^(r T) - F_0$],
-    ),
-    caption: [Arbitraje en un contrato forward si $F_0 < S_0 e^(r T)$. Cada casilla representa el apunte contable correspondiente (donde negro significa ingreso, y rojo significa gasto).],
-  )<table-forward-arbitrage2>
-  De modo que el precio libre de arbitraje es
-  $F_0 = S_0 e^(r T).$
-  Por supuesto, esto asume que el precio del contrato _forward_ es el mismo al comprarlo que al venderlo (esto es falso), y que podemos pedir prestado o prestar dinero al mismo precio (también falso). Sin embargo, es una aproximación suficientemente buena para gran parte del análisis.
-]<example-arbitrage-forward>
-
-
+Existen esencilamente tres tipos de _traders_: hedgers, especuladores y arbitrageurs.
+Ver #cite(<Hull2015>, supplement: "Secciones 1.6-1.10"), donde se describen estos actores, se explica qué es un _hedge fund_ y se dan ejemplos de los peligros involucrados en este tipo de actividades con ejemplos concretos.
 
 
 == Modelización el precio de activos: procesos estocásticos
@@ -262,15 +214,6 @@ $
 $
 El resultado, natural, queda expresado en años.
 
-== Ejercicios
-
 #exercise[
   ¿Cuantos años hay entre el 30/11/06 y el 01/03/08?
 ]<ex-años>
-
-#exercise[
-  El 1 de enero de 2007, invirtió 1000€ en su libreta. El 1 de enero de 2008 el banco le informa que ha recibido 40€ de intereses a lo largo del año.
-  - ¿Cuales son los intereses brutos asociados?
-  - ¿Qué intereses recibirá a lo largo de 2008?
-  - ¿Cuánto habría recibido de haber cerrado su cuenta el 1 de julio.
-]

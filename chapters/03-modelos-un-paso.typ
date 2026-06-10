@@ -16,8 +16,7 @@
 // Valoración de opciones americanas, ejercicio óptimo.
 
 Supondremos un modelo de un periodo temporal, que pasa de $t=0$ a $t = T$.
-Consideramos un bono, $B$, cuyo valor $B_0$ es conocido y $B_T = e^(r T) B_0$.
-Se conoce a $r$ como ...........
+Consideramos un bono, $B$, con $B_T = e^(r T)$.
 
 == Modelo binomial: un sólo activo con dos posible estados
 
@@ -27,7 +26,7 @@ El valor a $t = 0$, $S_0 > 0$, es conocido.
 Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor $u$ con cierta probabilidad $p$ o bajar por un factor $d$, es decir
 $
   bb(P)(S_T = u S_0) = p " y " bb(P)(S_T = d S_0) = 1-p \
-  bb(P)(B_T = e^(r T) B_0) = 1.
+  bb(P)(B_T = e^(r T) ) = 1.
 $<eq-unperiodo-2states>
 Se representa en @fig:binomial.
 Para este modelo no sea determinista, supongamos que $0 < d < u$.
@@ -46,11 +45,11 @@ Vamos a construir rigurosamente @eq-unperiodo-2states. Esto quiere decir que $Om
 $
   Omega = {"sube", "baja"}
 $
-El mercado se compone de dos procesos $S = (S_0, S_T)$ y $B = (B_0, B_T)$
+El mercado se compone de dos procesos $S = (S_0, S_T)$ y $B = (1, B_T)$
 $
   {S, B} : Omega & -> [0,+oo)^2 \
-          "sube" & |-> lr({(S_0, S_0 u), (B_0, e^(r T) B_0)}, size: #200%) \
-          "baja" & |-> lr({(S_0, S_0 d), (B_0, e^(r T) B_0)}, size: #200%).
+          "sube" & |-> lr({(S_0, S_0 u), (1, e^(r T) )}, size: #200%) \
+          "baja" & |-> lr({(S_0, S_0 d), (1, e^(r T) )}, size: #200%).
 $
 Los conjuntos medibles son todos los posibles $cal(F)$ es $sigma$-álgebra de puntos
 $
@@ -91,11 +90,11 @@ $
   node[math=true, xmath=true]
   edge[lmath=true]
   // s[label="sum_(n=0)^3 n"]
-  s[label="theta^((1)) S_0 + theta^((2)) B_0"]
+  s[label="theta^((1)) S_0 + theta^((2)) 1"]
   s -> s1[label="p"]
   s -> s2[label="1-p"]
-  s1[label="theta^((1)) u S_0 + theta^((2)) e^(r T) B_0"]
-  s2[label="theta^((1)) d S_0 + theta^((2)) e^(r T) B_0"]
+  s1[label="theta^((1)) u S_0 + theta^((2)) e^(r T) 1"]
+  s2[label="theta^((1)) d S_0 + theta^((2)) e^(r T) 1"]
   }
   ```),
   caption: "Evolución de una cartera",
@@ -113,8 +112,8 @@ Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversi
   Habitualmente podemos construirlo con $V_0 = 0.$
 ]
 Si lo intentamos a través de una cartera tenemos que
-$0 = V_0 = theta^((1)) S_0 + theta^((2)) B_0$
-luego $theta^((2)) = -theta^((1)) S_0/B_0$. A tiempo final tenemos entonces
+$0 = V_0 = theta^((1)) S_0 + theta^((2)) 1$
+luego $theta^((2)) = -theta^((1)) S_0$. A tiempo final tenemos entonces
 $
   V_T = theta^((1)) (S_T - e^(r T)).
 $
@@ -148,7 +147,7 @@ Veamos cuál debe ser el valor $F_0$.
 #proof[
   Supongamos que $F_0 > S_0 e^(r T)$. Entonces construimos la cartera
   $
-    V_t = underbrace(-H_t, "vender contrato") + underbrace(S_t, "comprar el activo") - underbrace(S_0 B_t / B_0, "financiarlo con deuda").
+    V_t = underbrace(-H_t, "vender contrato") + underbrace(S_t, "comprar el activo") - underbrace(S_0 B_t, "financiarlo con deuda").
   $
   Esta cartera tiene $V_0 = 0 + S_0 - S_0 = 0$, y $V_T = -(S_T - F_0) + S_T - e^(r T) S_0 = F_0 - e^(r T) S_0 > 0$. Esta es una oportunidad de arbitraje.
 
@@ -156,7 +155,7 @@ Veamos cuál debe ser el valor $F_0$.
 ]
 En la demostración anterior, podríamos haber construído ambos casos con la cartera
 $
-  V_t = sign(F_0 - e^(r T) S_0) (-H_t + S_t - S_0 B_t / B_0).
+  V_t = sign(F_0 - e^(r T) S_0) (-H_t + S_t - S_0 B_t ).
 $
 
 
@@ -182,14 +181,14 @@ En este caso una opción europea corresponde a <fig:binomial_opcion>
 
 Creemos una *cartera de cobertura* haciendo que tanto si ocurre $u S_0$ como si ocurre $d S_0$ obtengamos el mismo resultado
 $
-  theta^((1)) u S_0 + theta^((1)) e^(r T) B_0 = (u S_0 - K)_+ \
-  theta^((1)) d S_0 + theta^((2)) e^(r T) B_0 = (d S_0 - K)_+
+  theta^((1)) u S_0 + theta^((1)) e^(r T) 1 = (u S_0 - K)_+ \
+  theta^((1)) d S_0 + theta^((2)) e^(r T) 1 = (d S_0 - K)_+
 $
 Matricialmente
 $
   mat(
-    u S_0, e^(r T) B_0;
-    d S_0, e^(r T) B_0
+    u S_0, e^(r T);
+    d S_0, e^(r T)
   )
   mat(theta^((1)); theta^((2)))
   =
@@ -202,14 +201,14 @@ Supongamos que yo valoro la opción con un valor $C_0 > V_0$ (y estoy dispuesto 
   Por ahora tiene un beneficio neto de $C_0 - V_0 > 0$.
   Esto requiere pedir "prestada" una de las acciones (lo que habitualmente se conoce como quedarse "corto").
 - Mañana: como el inversor a pedido prestadas acciones, debe liquidar la cartera.
-  + Si el valor de la acción es $S_T <= K$, yo no ejercerá la opción. La cartera ahora vale $theta^((2)) S_T + theta^((2)) e^(r T) B_0 = (S_T - K)_+ = 0$, con lo que puede liquidarla sin perder o ganar dinero y ya no está corto ni largo acciones.
-  + Si el valor de la acción es $S_T > K$. Yo querré ejercer la opción, y comprar la acción por $K$€. Al liquidar la cartera el inversor obtiene (o pierde) $theta^((1)) S_T + theta^((2)) e^(r T) B_0 = (S_T - K)_+ = S_T - K$. Junto esto con los $K$€ que yo le doy, puede comprar la acción, y dármela. En esta operación no pierde o gana dinero.
+  + Si el valor de la acción es $S_T <= K$, yo no ejercerá la opción. La cartera ahora vale $theta^((2)) S_T + theta^((2)) e^(r T) = (S_T - K)_+ = 0$, con lo que puede liquidarla sin perder o ganar dinero y ya no está corto ni largo acciones.
+  + Si el valor de la acción es $S_T > K$. Yo querré ejercer la opción, y comprar la acción por $K$€. Al liquidar la cartera el inversor obtiene (o pierde) $theta^((1)) S_T + theta^((2)) e^(r T) = (S_T - K)_+ = S_T - K$. Junto esto con los $K$€ que yo le doy, puede comprar la acción, y dármela. En esta operación no pierde o gana dinero.
 
 Al final de la jugada, el inversor inteligente se va a casa con $C_0 - V_0 > 0$ ¡con probabilidad 1! Este es el efecto es el conocido como *arbitraje*.
 En caso de que $C_0 < V_0$ entonces el inversor me compra la opción, y vende en el mercado la cartera.
 De tal manera que el único precio que no genera opciones de arbitraje es
 $
-  C_0 = theta^((1)) S_0 + theta^((2)) e^(r T) B_0,
+  C_0 = theta^((1)) S_0 + theta^((2)) e^(r T),
 $
 donde $(theta^((1)),theta^((2)))$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*. Hay otra forma, más elegante, de expresar este valor.
 
@@ -292,7 +291,7 @@ que está en $[0,1]$ si $d <= e^(r T) <= u$. De modo que
 ]
 Ahora calculamos el valor de la cartera descontada
 $
-  EE^QQ [tilde(V)_t] = theta^((1)) EE^QQ [tilde(S)_t] + theta^((2)) EE^QQ [tilde(B)_t] = theta^((1)) S_0 + theta^((2)) B_0 = V_0.
+  EE^QQ [tilde(V)_t] = theta^((1)) EE^QQ [tilde(S)_t] + theta^((2)) EE^QQ [tilde(B)_t] = theta^((1)) S_0 + theta^((2)) = V_0.
 $
 De modo que $tilde(V)$ tiene esperanza constante. Pero dado que $C_t = V_t$ entonces $tilde(C)_t = tilde(V)_t$ y, por tanto, también tiene esperanza constante. Entonces
 $
@@ -363,12 +362,12 @@ $
 $
 Pongamos que al final no pierda dinero
 $
-  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) B_0 + theta^((3)) (alpha_i S_0 - K)_+ >= 0 "para todo" i=1,2,3.
+  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) + theta^((3)) (alpha_i S_0 - K)_+ >= 0 "para todo" i=1,2,3.
 $
 Y que gana dinero con probabilidad positiva, basta con una de estas tres desigualdades sea estricta.
 Tenemos el sistema de 3 desigualdades
 $
-  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) B_0 >= (theta^((1)) + theta^((2))) (alpha_i S_0 - K)_+ .
+  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) >= (theta^((1)) + theta^((2))) (alpha_i S_0 - K)_+ .
 $
 Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vacío, en su interior cualquier $(theta^((1)), theta^((2)))$ da un punto donde se gana dinero con probabilidad 1.
 

@@ -46,7 +46,7 @@ Esta misma idea puede reproducirse en múltiples periodos.
 Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k = k Delta t$ donde, por simplicidad, nos vamos
 $
   PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p \
-  PP(B_t = e^(r t) B_0) = 1
+  PP(B_t = e^(r t)) = 1
 $<eq-arbol>
 Podemos verlo en como @fig-arbol
 #figure(
@@ -380,6 +380,10 @@ De este modo, razonando como lo hicimos a tiempo $t = 0$ para tiempos generales,
 $
   C_t = e^(-r(T-t)) EE^QQ [(S_T - K)_+ | cal(F)_t].
 $<eq-arbol-call-tiempot>
+
+== Opciones americanas
+
+// TODO
 
 == VaR
 

@@ -4,6 +4,8 @@
 
 = Instrumentos y mercados financieros
 
+// Instrumentos y mercados financieros. Bonos, acciones, contratos a plazo, swaps. Opciones europeas y americanas, otros derivados.
+
 == Activos subyacentes
 
 === Acciones
@@ -52,99 +54,6 @@ En España: Letras y bonos del Tesoro.
   caption: [Bono del Tesoro Español. Fuente: #link("https://bidkit.ams3.digitaloceanspaces.com/34/imgBig/50/2623.jpg")[link]],
 )
 
-==== Bono de cupón cero
-
-La hipótesis de no-arbitraje hace que un producto consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
-Como lo que viene en los bonos es el "principal", es decir cuánto pagan a vencimiento definimos
-
-#definition[Bono de cupón cero bajo la hipótesis de no-arbitraje][
-  Un bono de cupón cero con fecha de maduración $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ pagada en la fecha $T$.
-  Denotaremos
-  $
-    p(t, T) := "precio a tiempo "t" de un bono de principal "K = 1" y maduración" T.
-  $
-  El precio del bono de cupón cero y principal $K$ es $K p(t,T)$.
-  Asumimos que:
-  - Se puede comprar o vender sin coste
-  - $p(t,t) = 1$ para todo $t$.
-]
-Una de las tareas difíciles de la Matemática Financiera es aproximar este valor. Nótese que su existencia depende fuertemente de la hipótesis de no-arbitraje (que podría no cumplirse).
-
-Hay otra forma muy habitual de expresar este valor, que es la siguiente
-
-#definition[Rendimiento (o _yield_) del cupón cero con composición continua a tiempo $t$ con vencimiento $T$][
-  Valor $y(t,T)$ tal que $p(t,T) = e^(-y(T -t))$, es decir
-  $
-    y(t, T) := -(log p(t,T))/(T-t).
-  $<eq-zerocoupon-yield>
-  A la curva $T |-> y(t,T)$ se la llama curva de rendimiento de cupón cero.
-  Por comodidad denotaremos $y(T) = y(0,T).$
-]
-También se utilizan otras terminologías como tipo (_rate_) o índice (_index_).
-La traducción de vencimiento en inglés es _maturity_.
-
-Para entender el precio de un bono cupón cero a diferentes tiempo podemos pensar en la siguiente estrategia. Sea $t < T_1 < T_2$:
-- A tiempo $t$ compramos un bono con bono con vencimiento en $T_1$. Esto nos da $p(t, T_1)$\$.
-- A tiempo $t$ usamos ese dinero para comprar $p(t,T_1) / p(t, T_2)$ bono con vencimiento $T_2$. No hemos invertido nada.
-- A tiempo $T_1$ debemos pagar 1\$.
-- A tiempo $T_2$ recibimos $p(t,T_1) / p(t, T_2)$\$.
-- La inversión de 1\$ a tiempo $T_1$ ha producido $p(t,T_1) / p(t, T_2)$ \$ a tiempo $T_2$. Esto está garantizado.
-
-El valor $p(t, T_1) / p(t, T_2)$ es factor de retorno a tiempo $t$ del intervalo $[T_1, T_2]$. Este el llamado tipo _forward_. Podemos escribirlos de diferentes maneras:
-
-- El tipo simple hacia adelante (_simple forward rate_ o tipo LIBOR _forward_), es la solución de la ecuación
-  $
-    1 + (T-S) L = p(t,S)/p(t,T)
-  $
-  De modo que
-  $
-    L(t; T_1, T_2) := - (p(t, T_2) - p(t, T_1)) / ((T_2 - T_1) p(t; T_2).)
-  $<eq-LIBOR>
-
-#remark[
-  En realidad, el tipo LIBOR entre $T_1$ y $T_2$ (denotado $L(T_1, T_2)$) es un valor que decide el organismo correspondiente a tiempo $T_1$, y este «fija una condición» sobre el rendimiento cupón cero (que es un ente "a posteriori"), si creemos en la ausencia de arbitraje.
-  Más abajo en @ex-calculo-zerocouponyield haremos el $y(t;T)$ a partir de bonos de cupón fijo. Podríamos al cálculo otros productos, como tipos LIBOR entre fechas, o precios de otros derivados.
-]
-
-- El _simple spot rate for $[S,T]$_ o _LIBOR spot rate_ se define como
-  $
-    L(T_1, T_2) := - (p(T_1, T_2) - 1)/((T_2-T_1) p(T_1, T_2))
-  $
-
-- El *_continuously compounded spot rate_* en el periodo $[T_1,T_2]$ contratado en $t$ viene dado por
-  $
-    e^(r (T-S)) = (p(t,S))/(p(t,T)).
-  $
-  es decir tal que
-  $
-    R(t; T_1, T_2) := - (log p(t, T_2) - log p (t, T_1)) / ( T_2 - T_1 )
-  $
-- El _continuously compounded spot rate_ del periodo $[T_1, T_2]$ viene dado por
-  $
-    R(T_1, T_2) := - (log p(T_1, T_2)) / (T_2 - T_1).
-  $
-  Nótese que coincide con el rendimiento del cupón cero en ese periodo.
-
-- Se llama _instantenous forward rate rate with maturity $T$ contracted at $t$_ a
-  $
-    f(t, T) := - (partial log p (t,T)) / (partial T)
-  $
-- _instanteneous short rate_ viene dado por
-  $
-    r(t) := f(t,t).
-  $
-
-El bono de composición continua con valor inicial $B_0 = 1$ (a tiempo $t = 0$) viene dado por
-$
-  B_t = exp(integral_0^t r(s) dif s).
-$
-
-Se tiene la relación
-$
-  p(t, T) = p(t,s) exp(- integral_s^T f(t,u) dif u).
-$
-
-
 ==== Bono de cupón fijo
 
 #definition[Bono de cupón fijo][
@@ -171,7 +80,7 @@ Supongamos que sabemos las tasas cero para composición continua como en @table-
 #figure(
   table(
     columns: (auto, auto),
-    table.header([*Maduración \ (años)*], [*Rendimiento cupón-cero \ con composición continua* $y(0, T)$\ (%)]),
+    table.header([*Maduración \ (años)*], [*Rendimiento cupón-cero \ con composición continua* $R(0, T)$\ (%)]),
     [0.5], [5.0],
     [1.0], [5.8],
     [1.5], [6.4],
@@ -206,14 +115,14 @@ Esta ecuación no admite una solución sencilla, pero claramente el lado derecho
   breakable: true,
 )[Cálculo del rendimiento de cupón-cero a partir de bonos de cupón fijo#footnote[El ejemplo de esta sección están tomados de @Hull2015]][
   Para construir los valores de la tabla @table-interes-tiposzerotesoro se utilizan los pagos que hacen distintos tipos de bonos.
-  Hay diferentes formas de hacer este cálculo, pero vamos a  hablar del método _bootstrap_. La idea es ir utilizando bonos de menor duración para ir fijando $y(0, T)$ a cada periodo $T$.
+  Hay diferentes formas de hacer este cálculo, pero vamos a  hablar del método _bootstrap_. La idea es ir utilizando bonos de menor duración para ir fijando $R(T) := R(0, T)$ a cada periodo $T$.
   Por ejemplo, pensemos que tenemos los bonos de @table-interes-bootstrap.
 
   Para el bono de 3 meses (0.25 años), calculamos
   $
-    100 = 97.5 e^(y(0.25) times 0.25).
+    100 = 97.5 e^(R(0.25) times 0.25).
   $
-  De donde $y(0.25) = 10.127%$. Los de 6 meses y un año nos dan $y(0.5) = 10.469%$ y $y(1.0) = 10.536%$.
+  De donde $R(0.25) = 10.127%$. Los de 6 meses y un año nos dan $R(0.5) = 10.469%$ y $R(1.0) = 10.536%$.
 
   El cuarto bono dura 1.5 años. Y paga lo que sigue:
   - 6 meses: 4\$
@@ -221,9 +130,9 @@ Esta ecuación no admite una solución sencilla, pero claramente el lado derecho
   - 1.5 años: 104\$
   Para los dos primeros plazos podemos usar las fórmulas de descuento anteriores, y sólo nos queda la última por despejar
   $
-    4e^(-0.10469 times 0.5) + 4 e^(-0.10536 times 1.0) + 104 e^(-y(1.5) times 1.5) = 96.
+    4e^(-0.10469 times 0.5) + 4 e^(-0.10536 times 1.0) + 104 e^(-R(1.5) times 1.5) = 96.
   $
-  Despejando obtenemos $y(1.5)=10.681%$.
+  Despejando obtenemos $R(1.5)=10.681%$.
 
   #figure(
     table(
@@ -290,7 +199,7 @@ Así deducimos que el valor a tiempo $t$ del bono con tipo variable LIBOR es
 $
   p_"var" (t) = p(t, T_n) + sum_(i=1)^n [p(t, T_(i-1)) - p(t, T_i)] = p(t, T_0).
 $
-Es decir $p(0) = 1$.
+Es decir $p_"var" (0) = 1$.
 
 #exercise[][
   Deducir esta fórmula directamente,
@@ -299,13 +208,61 @@ Es decir $p(0) = 1$.
 
 == Derivados
 
-=== Contrato a plazo (_forward contract_)
+=== Contrato a plazo (_forward contract_) <example-arbitrage-forward>
 
-Ya hemos visto el ejemplo @example-arbitrage-forward que el precio de no arbitraje, en ausencia de dividendos.
+#definition[_Contrato a plazo_][
+  Compromiso (derecho y obligración) de intercambiar un activo a un pricio $F_0$, llamado _strike_, en una fecha de vencimiento dada $T$.
+  Este contrato se realiza sin intercambio de dinero o activos el día de la firma.
+]
 
+Si denotamos por $S_0$ el precio actual del activo, y $r$ es interés de cupón cero para ese periodo (es decir $e^(-r T) = p(0,T)$), veamos que la condición de no-arbitraje es equivalente a que
 $
-  F_0 = S_0 e^(r T)
+  F_0 = S_0 e^(r T).
 $
+<eq-forward>
+
+Supongamos que podemos pedir prestado dinero $S_0$ es el valor actual de un activo, es decir, por cada € que pida prestado hoy he devolver $e^(r T)$€ al vencimiento del contrato. Supongamos que el contrato tiene un strike $F_0$, al que se produce la venta del activo.
+
+A vencimiento, si soy el vendedor del contrato, debo honrarlo. Para ello, debo vender a quien tiene el contrato, el activo al precio pacto.
+Por ejemplo, si no tengo el activo debo comprarlo en el mercado (pagando $S_T$) y venderlo a mi contrapartido del _forward_ al precio $F_0$. De modo que en mi balance contable resulta en $F_0 - S_T$. Si este valor es positivo gano dinero, si es negativo lo pierdo. Pero lo importante es saber si consigo salir de la operación completa ganando dinero. Para ello, hay que pensar cuál es el valor justo $F_0$ y qué puedo hacer en cada caso.
+
+Argumentamos que si $F_0 != S_0 e^(r T)$ entonces se puede ganar dinero sin riesgo.
+
+Si alguien está dispuesto a entrar con nosotros en un contrato a futuro donde $F_0 > S_0 e^(r T)$, entonces hoy podemos pedir prestado el dinero, y comprar el activo.
+Mantenemos el activo en nuestra posesión hasta el vencimiento del contrato, y liquidamos la operación ¡con beneficio!
+El resultado contable es la @table-forward-arbitrage1. El resultado es que _independientemente del valor $S_T$_ gano dinero seguro. Además, he hecho la operación sin "poner" dinero. Este efecto es el conocido como arbitraje.
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
+    [Comprar el contrato], [#text(fill: red)[0]], [$F_0 - S_T$ \ (positivo o negativo)],
+    [Comprar el activo], [-#text(fill: red)[$S_0$]], [$S_T$],
+    [Pedir prestado], [+$S_0$], [-#text(fill: red)[$S_0 e^(r T)$]],
+    table.hline(stroke: 3pt),
+    [Total], [0], [$F_0 - S_0 e^(r T)$],
+  ),
+  caption: [Arbitraje en un contrato forward si $F_0 > S_0 e^(r T)$. Cada casilla representa el apunte contable correspondiente (donde negro significa ingreso, y rojo significa gasto).],
+)<table-forward-arbitrage1>
+Por contra, si hubiese alguien dispuesto a hacer el contrato con $F_0 < S_0 e^(r T)$ podría hacer la operación inversa, como detalla @table-forward-arbitrage2.
+#figure(
+  table(
+    columns: (auto, auto, auto),
+    table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
+    [Vender el contrato], [#text(fill: black)[0]], [-#text(fill: red)[$(S_T - F_0)$]],
+    [Comprar el activo], [#text(fill: black)[$S_0$]], [-#text(fill: red)[$S_T$]],
+    [Pretar \
+      a un tercero],
+    [-#text(fill: red)[$S_0$]],
+    [#text(fill: black)[$S_0 e^(r T)$]],
+    table.hline(stroke: 3pt),
+    [Total], [0], [$S_0 e^(r T) - F_0$],
+  ),
+  caption: [Arbitraje en un contrato forward si $F_0 < S_0 e^(r T)$. Cada casilla representa el apunte contable correspondiente (donde negro significa ingreso, y rojo significa gasto).],
+)<table-forward-arbitrage2>
+De modo que el precio libre de arbitraje es @eq-forward.
+
+Por supuesto, esto asume que el precio del contrato _forward_ es el mismo al comprarlo que al venderlo (esto es una simplificación excesiva), y que podemos pedir prestado o prestar dinero al mismo precio (también falso). Sin embargo, es una aproximación suficientemente buena para gran parte del análisis.
+
 Cuando hay dividendo a ritmo $q$ entonces la fórmula resulta
 $
   F_0 = S_0 e^((r-q) T).
