@@ -52,7 +52,7 @@ Entonces un inversor inteligente podría:
 - Coger todo el dinero de estos inversores e invertirlo en el banco 2.
 - No hemos invertido nada de dinero.
 Pasado un año:
-- El banco dos nos dará $(1 + r_2)X$€.
+- El banco 2 nos dará $(1 + r_2)X$€.
 - Usamos este dinero para pagar los $(1 + r)X$€ a los inversores que nos dieron el dinero.
 - Nos quedamos con $(r_2 - r)X$€ de beneficio.
 
