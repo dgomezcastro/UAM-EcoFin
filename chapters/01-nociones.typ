@@ -236,7 +236,7 @@ Podemos escribirlos de diferentes maneras:
 //   $
 //   Nótese que coincide con el rendimiento del cupón cero en ese periodo.
 
-- Se llama _instantenous forward rate rate with maturity $T$ contracted at $t$_ a
+- Se llama _instantenous forward rate with maturity $T$ contracted at $t$_ a
   $
     f(t, T) := - (partial log p (t,T)) / (partial T)
   $
@@ -244,6 +244,15 @@ Podemos escribirlos de diferentes maneras:
   $
     r(t) := f(t,t).
   $
+
+Nótese que
+$
+  R(t , t + Delta t) = - (log p(t, t + Delta t)) / (Delta t).
+$
+Pasando al límite, podemos fijar
+$
+  r(t) = lim_(Delta t->0) R(t, t + Delta t).
+$
 
 El bono de composición continua con valor inicial $B_0 = 1$ (a tiempo $t = 0$) viene dado por
 $
