@@ -4,9 +4,11 @@
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ d041d108-75d3-41b9-b345-1a8f59eb6c47
+using YFinance, DataFrames, Plots, LaTeXStrings
+
 # ╔═╡ 9cf68c7c-6655-11f1-a12f-8b4d9411788c
 begin
-    using YFinance, DataFrames, Plots, LaTeXStrings
     Δt = "1d"
     #ticker1 = "AAPL" #Apple Computers
     ticker1 = "NVDA" #NVIDIA
@@ -16,8 +18,11 @@ begin
     ticker2 = "F" #Ford Motor Company (negatively correlated to APPLE)
     #ticker2 = "NEE" # NextEra Energy, Inc.
     #ticker2="BLK" #BlackRock, Inc.
-    
-    prices1 = get_prices(ticker1, range="max", interval=Δt);
+end
+
+# ╔═╡ afb64ce1-de77-4d90-ae04-afad0b9e08aa
+begin 
+	prices1 = get_prices(ticker1, range="max", interval=Δt);
     prices2 = get_prices(ticker2, range="max", interval=Δt);
 
     t1 = prices1["timestamp"]
@@ -32,25 +37,25 @@ begin
         label=ticker1
     )
     plot!(p1, t2, log.(S2t), label=ticker2)
-
 end
 
-# ╔═╡ afb64ce1-de77-4d90-ae04-afad0b9e08aa
+# ╔═╡ fa4b4a9d-4ba6-42b0-93db-908b8e6bee77
 begin 
-	using Dates
+	using Dates, Statistics
 	day_start = max(t1[1],t2[1])
 	index1 = t1 .> day_start
 	S1 = S1t[index1]
 	index2 = t2 .> day_start
 	S2 = S2t[index2]
 	length(S1) == length(S2) 
-end
-
-# ╔═╡ fa4b4a9d-4ba6-42b0-93db-908b8e6bee77
-begin 
-	using Statistics 
+	
 	cor(S1,S2)
 end
+
+# ╔═╡ faaa86c8-15e1-4faa-bd57-7cd2b14d055c
+md"""
+Tomamos la parte común de los datos y calculamos la correlación
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1318,8 +1323,10 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╠═d041d108-75d3-41b9-b345-1a8f59eb6c47
 # ╠═9cf68c7c-6655-11f1-a12f-8b4d9411788c
-# ╠═afb64ce1-de77-4d90-ae04-afad0b9e08aa
+# ╟─afb64ce1-de77-4d90-ae04-afad0b9e08aa
+# ╟─faaa86c8-15e1-4faa-bd57-7cd2b14d055c
 # ╠═fa4b4a9d-4ba6-42b0-93db-908b8e6bee77
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
