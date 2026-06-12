@@ -224,7 +224,7 @@ $
   )
 $<eq-BlackScholes-PDE>
 
-=== Medida libre de riesgo
+== Medida libre de riesgo
 
 Siguiendo la idea del caso discreto, busquemos escribir para algún valor $nu$
 $
@@ -356,6 +356,41 @@ En la práctica, lo que se estudia es la superficie de volatilidad implícita, q
   caption: [Tomado de @gatheralVolatilitySurfacePractitioners2006],
 )<fig-BlackScholes-surface>
 
+== Sistemas de actividades. Correlación.
 
+Al igual que en el mercado discreto en tiempo, podemos tener sistemas de activos en cuyo caso el límite satisface ecuaciones
+$
+  d S_t^((i)) = mu^((i)) S_t^((i)) dif t + sigma^((i)) S_t^((i)) dif W_t^((i))
+$
+cuya solución es
+$
+  log S_t^((i)) = (mu^((i)) - (sigma^((i)))^2/2) t + sigma^((i)) W_t^((i))
+$
+Dado que los activos son "independientes", estamos ante un movimiento Browniano multi-dimensional $W_t = (W_t^((i)))$. Podemos pensar en medir
+$
+  corr(W_(t + h)^((i)) - W_t^((i)), W_(t+h)^((j)) - W_t^((j)))
+  &= (EE[(W_(t + h)^((i)) - W_t^((i)))( W_(t+h)^((j)) - W_t^((j)))])/(EE[W_(t+h)^((i)) - W_t^((i))] EE[W_(t+h)^((j)) - W_t^((j))])
+  \
+  &= (EE[(W_(t + h)^((i)) - W_t^((i)))( W_(t+h)^((j)) - W_t^((j)))])/(h).
+$
+Si seguimos una construcción como la de Cox-Ross-Rubinstein, llegaremos a que esta cantidad es constante en $h$, y la podemos llamar $rho^((i j))$.
+Para un Browniano multi-dimensional asumimos que este valor es constante, y en términos de cálculo de Itô se denota
+$
+  d W_t^((i)) dot.c d W_t^((j)) := rho_(i j).
+$
+Dado que
+$
+  log S_(t + h)^((i)) - log S_t^((i)) = (mu^((i)) - (sigma^((i)))^2/2) h + sigma^((i)) (W_(t+h)^((i)) - W_t^((i)))
+$
+La primera parte nos da el valor esperado. Así, deducimos que
+$
+  cov(log S_(t + h)^((i)) - log S_t^((i)), log S_(t + h)^((j)) - log S_t^((j))) = sigma^((i)) sigma^((j)) rho^((i j)) h.
+$
+Dado que $sigma^((i)) sqrt(h) = var(log S_(t +h)^((i)) - log S_(t)^((i)))$ obtenemos
+$
+  rho^((i j)) = corr(log S_(t + h)^((i)) - log S_t^((i)), log S_(t + h)^((j)) - log S_t^((j))) .
+$<eq-correlation-from-market-data>
 
+Podemos deducir estos valores de datos de mercado.
 
+Esta cantidad nos permite construir "carteras equilibridas" donde el riesgo de que un active baje se compensa con el que tiene negativamente correlado suba. Existe toda una cartera de optimización de carteras, en la que no entraremos.

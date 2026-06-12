@@ -212,30 +212,53 @@ $
 $
 donde $(theta^((1)),theta^((2)))$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*. Hay otra forma, más elegante, de expresar este valor.
 
-Hemos hecho algunas suposiciones:
-- Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
-- Liquidez: el mercado está dispuesto a comprar y vender de todas las acciones que quiera, y en cantidades fraccionarias
+#remark[Hipótesis sobre el mercado][
+  Hemos hecho algunas suposiciones:
+  - Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
+  - Liquidez: el mercado está dispuesto a comprar y vender de todas las acciones que quiera, y en cantidades fraccionarias
+]
+
+=== Completitud del mercado
+
+Llamaremos _contingent claim_ a un producto cuyo valor futuro puede deducirse del valor del activo subyacente (_underlying asset_). En este modelo, este _claim_ es otro proceso estocástico ${H_t}_(t in cal(T))$.
+Llamamos cartera de cobertura a una cartera con valor $V_t = theta^((1)) S_t + theta^((2)) B_t$ y tal que $H_T = V_T$. Esto quiere decir que $H_T (omega) = V_T (omega)$ para todo $omega in Omega$.
+
+Como en el caso de la opción _call_ europea, esto nos lleva a un sistema compatible determinado
+$
+  mat(
+    u S_0, e^(r T);
+    d S_0, e^(r T)
+  )
+  mat(theta^((1)); theta^((2)))
+  =
+  mat(H_T ("sube"); H_T ("baja")).
+$
+
+#definition[Mercado completo][
+  Decimos que un mercado es completo si cada _contingent claim_ tiene una cartera de cobertura.
+]
 
 === Valoración por replicación
 
 
-Podemos pensar en la opción $C_t$, una vez se encuentra en el mercado, es otro activo con el que podemos hacer carteras.
-Supongamos el caso no trivial en que $C_T != 0$ (es decir $u S_0 > K$).
-Sea $V_t$ la cartera autofinanciada que reproduce la opción (es decir $C_T = V_T$), y
-supongamos que $C_0 != V_0$, para comprobar que hay una oportunidad de arbitraje.
+Podemos pensar en la opción $H_t$, una vez se encuentra en el mercado, es otro activo con el que podemos hacer carteras.
+Sea $V_t$ la cartera autofinanciada que reproduce la opción (es decir $H_T = V_T$), y
+supongamos que $H_0 != V_0$, para comprobar que hay una oportunidad de arbitraje.
+
+En realidad, lo que estamos diciendo es que el mercado extendido $(S_t, B_t, H_t)$
 
 Si estamos dispuesto a tomar fracciones de la opción, entonces podemos construir
 $
-  hat(V)_t := op("signo")(V_0 - C_0 )( V_0 C_t - C_0 V_t )
+  hat(V)_t := op("signo")(V_0 - H_0 )( V_0 H_t - H_0 V_t )
 $
-Se tiene $hat(V)_0 = 0$ y $hat(V)_T = |V_0 - C_0| C_T.$
+Se tiene $hat(V)_0 = 0$ y $hat(V)_T = |V_0 - H_0| H_T.$
 
 Si no queremos tomar fracciones de la opción, entonces distinguimos dos casos
 - Si $V_0 = 0$ entonces
-  $hat(V)_t = op("signo")(C_0) C_t$.
+  $hat(V)_t = op("signo")(H_0) H_t$.
 
 - Si $V_0 != 0$ entonces puedo construir la siguiente cartera
-  $hat(V)_t := op("signo")(V_0 - C_0)( C_t - C_0 / V_0 V_t )$.
+  $hat(V)_t := op("signo")(V_0 - H_0)( H_t - H_0 / V_0 V_t )$.
 
 
 === La medida riesgo neutro
@@ -293,18 +316,17 @@ Ahora calculamos el valor de la cartera descontada
 $
   EE^QQ [tilde(V)_t] = theta^((1)) EE^QQ [tilde(S)_t] + theta^((2)) EE^QQ [tilde(B)_t] = theta^((1)) S_0 + theta^((2)) = V_0.
 $
-De modo que $tilde(V)$ tiene esperanza constante. Pero dado que $C_t = V_t$ entonces $tilde(C)_t = tilde(V)_t$ y, por tanto, también tiene esperanza constante. Entonces
+De modo que $tilde(V)$ tiene esperanza constante. Pero dado que $H_t = V_t$ entonces $tilde(C)_t = tilde(V)_t$ y, por tanto, también tiene esperanza constante. Entonces
 $
-  C_0 = tilde(C)_0 = EE^QQ [ tilde(C)_T ]. //= EE^QQ [ e^(-r T) (S_T - K)_+]
+  H_0 = tilde(H)_0 = EE^QQ [ tilde(H)_T ]. //= EE^QQ [ e^(-r T) (S_T - K)_+]
 $
 Enunciemos el siguiente resultado como teorema, porque nos será de gran utilidad más adelante:
 #theorem[Valoración por riesgo neutro][
-  Supuesto @eq-binomial-condicion-no-arbitraje entonces
+  Supuesto @eq-binomial-condicion-no-arbitraje entonces para todo contingent claim $H_t$
   $
-    C_0 = e^(-r T) EE^QQ [C_T].
+    H_0 = e^(-r T) EE^QQ [H_T].
   $
 ]
-En realidad, este razonamiento, puede usar para valorar cualquier producto $H_t$ del que se conoce el valor a vencimiento.
 De manera similar, para una _call_ y _put_ europeas, se tiene
 $
   C_0 = e^(-r T) EE^QQ [(S_T - K)_+]
@@ -326,6 +348,17 @@ $
   C_0 = S_0 e^(-r T)EE^QQ [(S_T/S_0 - K/S_0)_+] = S_0 EE^QQ [(tilde(S)_T/S_0 - tilde(K)/S_0)_+]
 $
 de modo que siempre se puede asumir que $S_0 = 1$, y reescalar $K$. Trabajando con los precios descontados podemos suponer que $r = 1$, lo que puede simplificar operaciones.
+
+=== Volatilidad de una cartera
+
+Hemos visto que
+$ EE [V_t] = theta^((1)) EE [S_t] + theta^((2)) e^(r T) = theta^((1)) (p u S_0 + (1-p) d S_0) + theta^((2)) e^(r T). $
+Observamos que
+$
+  var (V_t) = EE [(V_t - overline(V)_t)^2] = EE [(theta^((1)) (S_t - overline(S)_t))^2] = (theta^((1)))^2 var (S_t).
+$
+Y lo mismo es cierto para el precio descontado.
+Con la misma inversión inicial $theta^((1)) S_0 + theta^((2))$, podemos controlar el "riesgo" deciendo cuanto invertimos en el "activo de riesgo" y cuanto en el activo seguro.
 
 == Modelo trinomial: un sólo activo con 3 estados
 
@@ -386,6 +419,8 @@ $
   S_T in { D_(bullet 1), dots, D_(bullet M) } "donde" D_(bullet j) = vec(D_(1j), dots.v, D_(N j))
 $
 y $PP(S_T = D_(bullet j)) > 0$ para todo $j$.
+
+=== Carteras y vector de estado
 Así el valor de cartera a tiempo $t$
 $
   V_0 = S_0 dot theta => V_T in { D_(bullet 1) dot theta, dots, D_(bullet M) dot theta } = op("elements") (D^trans theta).
@@ -424,6 +459,7 @@ $
 La demostración de este teorema es una aplicación del teorema de separación de Hahn-Banach.
 Ver #cite(<etheridgeCourseFinancialCalculus>, supplement: "Theorem 1.5.2").
 
+=== Medida de riesgo neutro
 Este vector de estados, también nos da una forma de construir la medida de riesgo nulo
 $
   QQ(S_T = D_(bullet j)) := psi_j / psi_0
@@ -457,3 +493,13 @@ Como $psi_0$ es único, si el mercado es completo y libre de riesgo, entonces $Q
 
   - El mercado es completo si y sólo si $QQ$ es única.
 ]
+
+=== Volatilidad de una cartera
+
+Ahora estudiamos
+$
+  var(V_t) & = EE [(theta dot.c S_t - overline(theta dot.c S_t) )^2] = EE[ ( theta dot.c (S_t - overline(S)_t) )^2] \
+           & = sum_(i,j) theta_i theta_j cov(S_t^((i)), S_t^((j))) \
+           & = theta^trans Sigma(S_t) theta
+$
+donde $Sigma (S_t)$ es la matriz de covarianzas.
