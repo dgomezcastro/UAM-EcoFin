@@ -17,7 +17,7 @@
 ]
 
 #figure(
-  image("02-figuras/Compania_Guipuzcoana_Accion_2124_Madrid_1_junio_1752.jpg"),
+  image("../figures/Compania_Guipuzcoana_Accion_2124_Madrid_1_junio_1752.jpg"),
   caption: [Acción n.º 2124 de la Real Compañía Guipuzcoana de Caracas a favor de Doña Juana de Ortega. Madrid, 1 de junio de 1752. #link("https://commons.wikimedia.org/wiki/File:Compania_Guipuzcoana_Accion_2124_Madrid_1_junio_1752.jpg")[Wikipedia]. Ver más certificados de acción en: #link("https://commons.wikimedia.org/wiki/Stock_certificates")[link]],
 )
 
@@ -50,7 +50,7 @@ A zero-coupon bond (also discount bond or deep discount bond) is a bond in which
 En España: Letras y bonos del Tesoro.
 #figure(
   // placement: bottom,
-  image("02-figuras/bono-tesoro.jpg", width: 70%),
+  image("../figures/bono-tesoro.jpg", width: 70%),
   caption: [Bono del Tesoro Español. Fuente: #link("https://bidkit.ams3.digitaloceanspaces.com/34/imgBig/50/2623.jpg")[link]],
 )
 

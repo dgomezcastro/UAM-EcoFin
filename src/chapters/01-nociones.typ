@@ -138,7 +138,7 @@ Los dos ejemplo más relevantes en nuestro contexto son:
 - El euríbor (del inglés euribor), acrónimo de _Euro Interbank Offered Rate_ es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.
 
 #figure(
-  image("02-figuras/euribor.png"),
+  image("../figures/euribor.png"),
   caption: [Euribor a 12 meses. https://www.euribor-rates.eu/en/euribor-charts/],
 )
 

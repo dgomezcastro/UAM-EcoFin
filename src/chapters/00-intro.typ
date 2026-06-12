@@ -181,7 +181,7 @@ $
 Esto nos permitirá hacer algunas interesantes y pasar al límite hacia un modelo más realista, donde $S_(t+Delta t)/S_t$ viene dada por una log-normal.
 
 #figure(
-  image("05-figuras/lognormality.pdf", width: 75%),
+  image("../figures/lognormality.pdf", width: 75%),
   caption: "Los log-incrementos del S&P500 ajustados a una normal",
 )<fig-BlackScholes-lognormality-of-returns>
 

@@ -4,7 +4,7 @@
 
 #import "@preview/diagraph:0.3.7": *
 
-#import "@preview/ilm:2.0.0": *
+#import "@preview/ilm:2.1.1": *
 
 #import "@preview/theorion:0.6.0": *
 // #import cosmos.simple: *

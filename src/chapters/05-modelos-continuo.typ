@@ -198,7 +198,7 @@ Estudiar con el siguiente código de `julia`, cuyo resultado es @fig-BlackSchole
 // #code-block(
 #show: codly-init.with()
 #codly(languages: codly-languages)
-#raw(read("05-figuras/lognormality.jl"), lang: "julia", block: true)//,
+#raw(read("../scripts/lognormality.jl"), lang: "julia", block: true)//,
 // )
 
 == Un comentario sobre el cálculo de Itô
@@ -334,7 +334,7 @@ Este problema no tiene una solución analítica sencilla, y se han desarrollado 
 - Let's be Rational
 
 Es posible acceder a datos de mercado de estos valores, por ejemplo a través de Yahoo Finance. Tiene una API implementada en muchos lenguajes.
-#raw(read("05-figuras/yfinance-option.jl"), lang: "julia", block: true)
+#raw(read("../scripts/yfinance-option.jl"), lang: "julia", block: true)
 Aunque los datos de mayor "calidad" se obtienen de proveedores de pago.
 
 Nótese en particular que estos datos hablan de bid y ask. Volvemos sobre la idea de que los market-makers no venden y comprar las opciones al mismo precio, si no que se quedan una diferencia como beneficio.
@@ -343,7 +343,7 @@ Si tomamos, para un vencimiento fijo $T$, los diferentes precios reales de opcio
 En la práctica, lo que se estudia es la curva de volatilidades implícitas. Ver @fig-BlackScholes-smiles.
 #figure(
   placement: auto,
-  image("05-figuras/gatheral-smiles.pdf"),
+  image("../figures/gatheral-smiles.pdf"),
   caption: [Tomado de @gatheralVolatilitySurfacePractitioners2006],
 )<fig-BlackScholes-smiles>
 
@@ -352,7 +352,7 @@ En la práctica, lo que se estudia es la superficie de volatilidad implícita, q
 
 #figure(
   placement: auto,
-  image("05-figuras/gatheral-surface.pdf"),
+  image("../figures/gatheral-surface.pdf"),
   caption: [Tomado de @gatheralVolatilitySurfacePractitioners2006],
 )<fig-BlackScholes-surface>
 
