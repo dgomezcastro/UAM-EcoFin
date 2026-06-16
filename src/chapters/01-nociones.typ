@@ -35,15 +35,10 @@ $
 $
 
 #exercise[
-  El 1 de enero de 2007, invirtió 1000€ en su libreta. El 1 de enero de 2008 el banco le informa que ha recibido 40€ de intereses a lo largo del año.
-  - ¿Cuales son los intereses brutos asociados?
-  - ¿Qué intereses recibirá a lo largo de 2008?
-  - ¿Cuánto habría recibido de haber cerrado su cuenta el 1 de julio.
-]
-
-#exercise[Interés compuesto][
-  Supongamos que si invertimos 1€ en el índice S&P500 obtenemos una rentabilidad del 7% anual en promedio. Si invertimos 500€ hoy ¿cuánto dinero tendremos en 5, 10, 15 años?
+  Supongamos que si invertimos 1€ en el índice S&P500 obtenemos una rentabilidad del 7% anual en promedio. Si invertimos 500€ hoy y cada año re-invertimos el principal y los intereses acumulados ¿cuánto dinero tendremos en 5, 10, 15 años?
 ]<ex-interes-compuesto>
+
+
 
 === Fórmulas de conversión
 
@@ -54,6 +49,13 @@ $
 Habitualmente se habla de Tipo de Interés Nominal cuando $r = "TIN" / N$.
 
 Esta es la idea detrás del TAE, que es un asunto más profundo del que hablaremos más adelante.
+
+#exercise[
+  El 1 de enero de 2007, invirtió 1000€ en su libreta. El 1 de enero de 2008 el banco le informa que ha recibido 40€ de intereses a lo largo del año.
+  - ¿Cuales son los intereses brutos asociados?
+  - ¿Qué intereses recibirá a lo largo de 2008?
+  - ¿Cuánto habría recibido de haber cerrado su cuenta el 1 de julio?
+]
 
 === Midiendo tipos de interés. Interés compuesto
 
@@ -174,7 +176,7 @@ Una de las tareas difíciles de la Matemática Financiera es aproximar este valo
 Hay otra forma muy habitual de expresar este valor, que es la siguiente
 
 #definition[Rendimiento (o _yield_) del cupón cero con composición continua a tiempo $t$ con vencimiento $T$][
-  Valor $R(t,T)$ tal que $R(t,T) = e^(-y(T -t))$, es decir
+  Valor $R(t,T)$ tal que $p(t,T) = e^(-R dot.c (T -t))$, es decir
   $
     R(t, T) := -(log p(t,T))/(T-t).
   $<eq-zerocoupon-yield>
@@ -184,13 +186,13 @@ Hay otra forma muy habitual de expresar este valor, que es la siguiente
 También se utilizan otras terminologías como tipo (_rate_) o índice (_index_).
 La traducción de vencimiento en inglés es _maturity_.
 
-#proposition[Tipo _forward_. Estructura temporal de los tipos de interés][
+#proposition[Estructura temporal de los tipos de interés][
   Bajo la hipótesis de no arbitraje, el valor a tiempo $t$ de la inversión de $1$\$ a tiempo $T_1 > t$ y vencimiento $T_2 > T_1$
   es
   $
     p(t, T_1) / p(t, T_2)
   $
-  Este el llamado tipo _forward_.
+  Este el llamado *tipo _forward_*.
 ]
 #proof[
   Para entender el precio de un bono cupón cero a diferentes tiempo podemos pensar en la siguiente estrategia. Sea $t < T_1 < T_2$:

@@ -13,13 +13,18 @@ Al ser un curso introductorio, cubriremos solamente conceptos básicos sin entra
 
 == Productos financieros
 
+A continuación vamos a introducir informalmente algunos de los conceptos con los que trabajaremos en la asignatura.
+
 === Activos
 Un *activo* (_asset_) es un "objeto" con valor.
 En esta asignatura trataremos sobre todo con activos financieros, que son no físicos y cuyo valor se deriva de un contrato:
 - divisas: unidades monetarias imprimidas normalmente por bancos centrales. Por ejemplo el euro € de código EUR.
 - acciones bursátiles: fracciones de una compañía que esta ha puesto a la venta. Por ejemplo, Apple `AAPL`
-- bonos de renta variable: compromisos de una entidad (por ejemplo el Tesoro de un estado) a pagar cantidades fijas en fechas fijas. Estos activos se consideran "seguros".
-- bonos de renta variable: compromisos de una entidad a pagar cantidades que dependen un _benchmark_ que se determinará en el futuro. Por ejemplo el LIBOR o el EURIBOR.
+- bonos: compromisos de una entidad (por ejemplo el Tesoro de un estado) a pagar cantidades en fechas fijas.
+  Estos contratos tienen una fecha de vencimiento, donde se devuelve el principal, y pagos intermedios de intereses llamados cupones.
+- bonos de renta fija: si los cupones están prefijados.
+  Estos activos se consideran "seguros".
+- bonos de renta variable: si los cupones dependen un _benchmark_ que se determinará en el futuro. Por ejemplo el LIBOR o el euribor.
 - fondo índices: es una colección de dinero cuyo objetivo es seguir unas normas prefijadas para intentar reproducir el rendimiento de alguna parte del mercado. Por ejemplo, el S&P500, IBEX35.
 
 También hay activos no-financieros: tanto tangibles (también llamados reales) como tierra o cereales, e intangibles como patentes y propiedad intelectual.
@@ -30,7 +35,9 @@ Sobre estos activos se construyen a veces otros contratos, llamados *derivados*,
 - un acto futuro
 - un precio al que ocurrirá la transacción futura
 - una fecha futura en que ocurrirá el acto
-Estos compromisos futuros habitualmente pueden ser comprados o vendidos en cualquier momento, a cualquier persona o entidad. Establecer el precio actual de estos contratos es precisamente el objetivo de esta asignatura.
+
+Veremos ejemplos al final del capítulo.
+Estos compromisos futuros habitualmente pueden ser comprados o vendidos en cualquier momento, a cualquier persona o entidad. Establecer el precio actual y otras posibles cantidades involucradas (como el precio de compra-venta un contrato a plazo) de estos contratos es precisamente el objetivo de esta asignatura.
 
 === Beneficio o retorno de una inversión.
 
@@ -79,7 +86,9 @@ Hay algunas otras simplificaciones naturales, que utilizaremos más adelante
 ]
 
 
-=== Mercados #footnote[Adaptado de @Hull2015]
+=== Mercados#footnote[Adaptado de @Hull2015]
+
+Vamos a hablar ahora de dónde se compran y se venden estos activos y derivados. Principalmente podemos agruparlos en dos categorías.
 
 ==== Bolsa de valores (_Exchange_)
 
@@ -179,6 +188,7 @@ $
 )<fig:binomial>
 
 Esto nos permitirá hacer algunas interesantes y pasar al límite hacia un modelo más realista, donde $S_(t+Delta t)/S_t$ viene dada por una log-normal.
+Este es el modelo más sencillo que se remonta a Bachelier.
 
 #figure(
   image("../figures/lognormality.pdf", width: 75%),
