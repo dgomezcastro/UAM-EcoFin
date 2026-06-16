@@ -208,7 +208,7 @@ $
 $
 Según el momento trabajaremos con tiempo $t$ discreto o continuo.
 
-=== El tiempo
+=== El tiempo en finanzas
 En finanzas, la unidad de tiempo es el año.
 Sin embargo si no se precisa más, esto resulta ambiguo:
 - ¿Cuántos días tiene un año?
@@ -227,3 +227,9 @@ El resultado, natural, queda expresado en años.
 #exercise[
   ¿Cuantos años hay entre el 30/11/06 y el 01/03/08?
 ]<ex-años>
+
+==== Almacenar tiempo en ordenadores
+
+El tiempo en el ordenador se almacena habitualmente en el llamado `UNIX time`, que consiste en el número de segundo pasados desde el *1 de enero de 1970 00:00:00 UT* (llamado _epoch_), a excepción de los segundos intercalares (_lead seconds_).
+De esta manera el tiempo se puede almacenar como un número entero.
+Un problema curioso es que habitualmente se utilizan `signed 32-bit integers`. Esto generará un problema el 19 de enero de 2038 a las 03:14:07UTC, cuando se alcanza el máximo de estos números. Es el llamado problema del año 2038, Y2038, o _epochalyse_.

@@ -90,15 +90,34 @@ $
   node[math=true, xmath=true]
   edge[lmath=true]
   // s[label="sum_(n=0)^3 n"]
-  s[label="theta^((1)) S_0 + theta^((2)) 1"]
+  s[label="theta^((1)) S_0 + theta^((2)) "]
   s -> s1[label="p"]
   s -> s2[label="1-p"]
-  s1[label="theta^((1)) u S_0 + theta^((2)) e^(r T) 1"]
-  s2[label="theta^((1)) d S_0 + theta^((2)) e^(r T) 1"]
+  s1[label="theta^((1)) u S_0 + theta^((2)) e^(r T) "]
+  s2[label="theta^((1)) d S_0 + theta^((2)) e^(r T) "]
   }
   ```),
   caption: "Evolución de una cartera",
 )<fig:binomial_cartera>
+
+#exercise(breakable: true)[Volatilidad de una cartera][
+  Hemos visto que
+  $ EE [V_T] = theta^((1)) EE [S_T] + theta^((2)) e^(r T) = theta^((1)) (p u S_0 + (1-p) d S_0) + theta^((2)) e^(r T). $
+  Comprobar que
+  $
+    var (V_T)
+    //= EE [(V_T - overline(V)_T)^2] = EE [(theta^((1)) (S_t - overline(S)_t))^2]
+    = (theta^((1)))^2 var (S_t).
+  $
+  Con la misma inversión inicial $V_0 = theta^((1)) S_0 + theta^((2))$, podemos controlar el "riesgo" deciendo cuanto invertimos en el "activo de riesgo" y cuanto en el activo seguro.
+
+  Pensemos en el ejemplo más sencillo, donde $p=1/2$, $S_0 = 1$, $u = 2$, $d=1/2$ y $r = 0$.
+  Supongamos que tenemos una cantidad inicial para invertir en una cartera de $V_0 = 1$. Escribir $theta^((2))$ en función de $theta^((1))$. Representar la $EE[V_T]$ y $sqrt(var(V_T))$ en función de $theta^((1))$. Representar también los valores de la $V_T$.
+
+  ¿Qué sugiere esta gráfica?
+]
+
+
 === Arbitraje
 
 Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversión inicial
@@ -120,10 +139,13 @@ $
 
 - Si $e^(r T) <= d < u$ entonces tomando $theta^((1)) > 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
 - Si $d < u <= e^(r T)$ entonces tomando $theta^((1)) < 0$ tenemos que $V_T >= 0$ siempre, y $V_T > 0$ cuando $S_T = u S_0$.
-De tal manera que la condición de no arbitraje resulta
-$
-  d < e^(r T) < u.
-$<eq-binomial-condicion-no-arbitraje>
+#theorem[Condición de no arbitraje][
+  El mercado descrito en @fig-arbol es libre de arbitraje si y sólo si
+  $
+    d < e^(r T) < u.
+  $<eq-binomial-condicion-no-arbitraje>
+]
+
 
 === Valor de un contrato a plazo fijo
 
@@ -145,7 +167,7 @@ Veamos cuál debe ser el valor $F_0$.
   $
 ]
 #proof[
-  Supongamos que $F_0 > S_0 e^(r T)$. Entonces construimos la cartera
+  Supongamos que $F_0 > S_0 e^(r T)$. Entonces, en mercado de activos $(S_t, B_t, H_t)$, podemos construimos la cartera de valor
   $
     V_t = underbrace(-H_t, "vender contrato") + underbrace(S_t, "comprar el activo") - underbrace(S_0 B_t, "financiarlo con deuda").
   $
@@ -237,6 +259,7 @@ $
 #definition[Mercado completo][
   Decimos que un mercado es completo si cada _contingent claim_ tiene una cartera de cobertura.
 ]
+Este mercado es completo.
 
 === Valoración por replicación
 
@@ -303,15 +326,33 @@ podemos despejar
 $
   q:= (e^(r T) - d )/(u - d)
 $
-que está en $[0,1]$ si $d <= e^(r T) <= u$. De modo que
-#proposition[Existencia de la medida libre de riesgo][
-  Si
+que está en $[0,1]$ si $d <= e^(r T) <= u$.
+Normalmente se pide a la medida que sea equivalente con la medida ambiente $PP$.
+#definition[Equivalencia de medidas][
+  Dos medidas de probabilidad $PP$ y $QQ$ sobre el mismo espacio de medida son equivalentes, y se denota $PP ~ QQ$ si para todo conjunto $A$ medible
   $
-    d <= e^(r T) <= u
+    PP(A) = 0 <=> QQ(A) = 0
   $
-  entonces existe $QQ$.
-  Además, si se da @eq-binomial-condicion-no-arbitraje entonces $QQ$ es no determinista.
 ]
+
+De modo que, como $p in (0,1)$ tenemos
+#proposition[Existencia de la medida libre de riesgo][
+  Existe medida libre de riesgo $QQ ~ PP$ si y sólo si se da la condición de no-arbitraje @eq-binomial-condicion-no-arbitraje.
+  En tal caso, es única.
+]<prop-arbol-existenciaQ>
+
+#remark[][
+  Hay dos "principios" que se cumplen habitualmente tanto en los modelos de mercado tanto continuos como discretos.
+  @prop-arbol-existenciaQ es un ejemplo del llamado *primer teorema fundamental de valoración de activos*, que dice:
+  $
+    exists QQ <=> "no-arbitraje".
+  $
+  Por su parte, el *segundo teorema fundamental de valoración* dice
+  $
+    QQ "es única" <=> "mercado completo".
+  $
+]
+
 Ahora calculamos el valor de la cartera descontada
 $
   EE^QQ [tilde(V)_t] = theta^((1)) EE^QQ [tilde(S)_t] + theta^((2)) EE^QQ [tilde(B)_t] = theta^((1)) S_0 + theta^((2)) = V_0.
@@ -349,16 +390,6 @@ $
 $
 de modo que siempre se puede asumir que $S_0 = 1$, y reescalar $K$. Trabajando con los precios descontados podemos suponer que $r = 1$, lo que puede simplificar operaciones.
 
-=== Volatilidad de una cartera
-
-Hemos visto que
-$ EE [V_t] = theta^((1)) EE [S_t] + theta^((2)) e^(r T) = theta^((1)) (p u S_0 + (1-p) d S_0) + theta^((2)) e^(r T). $
-Observamos que
-$
-  var (V_t) = EE [(V_t - overline(V)_t)^2] = EE [(theta^((1)) (S_t - overline(S)_t))^2] = (theta^((1)))^2 var (S_t).
-$
-Y lo mismo es cierto para el precio descontado.
-Con la misma inversión inicial $theta^((1)) S_0 + theta^((2))$, podemos controlar el "riesgo" deciendo cuanto invertimos en el "activo de riesgo" y cuanto en el activo seguro.
 
 == Modelo trinomial: un sólo activo con 3 estados
 

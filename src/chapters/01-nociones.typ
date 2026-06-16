@@ -364,19 +364,33 @@ $
   sigma_(X+Y) = sqrt(sigma_X^2 + sigma_Y^2 + 2 rho sigma_X sigma_Y).
 $
 donde $rho$ es la correlación entre ambos productos.
-
 Y de hecho,
 $
-  var(sum_i a_i X_i) =
-  underbrace((a_1, dots, a_N), a^trans)
+  var(sum_i a_i X_i) & =
+                       underbrace((a_1, dots, a_N), a^trans)
+                       underbrace(
+                         mat(
+                           var(X_1), cov(X_1, X_2), dots, cov(X_1, X_N); cov(X_2, X_1), var(X_2);
+                           dots.down, , dots.down;
+                           cov(X_N, X_1), , , var(X_N)
+                         ),
+                         cov(X, X)
+                       )
+                       underbrace(vec(a_1, dots.v, a_N), a).
+$
+Esta matriz es simétrica. La matriz de covarianzas se puede escribir en térmions de la matriz de correlaciones
+$
+  cov(X, X) = var(X)^trans
   underbrace(
     mat(
-      V(X_1), cov(X_1, X_2), dots, cov(X_1, X_N); cov(X_2, X_1), var(X_2);
-      , , dots.down;
-      , , , V(X_N)
+      1, corr(X_1, X_2), dots, corr(X_1, X_N);
+      corr(X_2, X_1), 1;
+      dots.down, , dots.down;
+      corr(X_N, X_1), , , 1
     ),
-    cov(X, X)
+    corr(X, X)
   )
-  underbrace(vec(a_1, dots.v, a_N), a),
+  var(X)
 $
+donde $var(X) = (var(X_1), dots.c, var(X_N))^trans$.
 

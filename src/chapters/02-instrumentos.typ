@@ -135,6 +135,7 @@ Esta ecuación no admite una solución sencilla, pero claramente el lado derecho
   Despejando obtenemos $R(1.5)=10.681%$.
 
   #figure(
+    placement: auto,
     table(
       columns: (auto, auto, auto, auto),
       table.header([Principal\ (\$)], [Duración \ (años)], [Cupón anual \ (\$)], [Precio del bono\ (\$)]),
