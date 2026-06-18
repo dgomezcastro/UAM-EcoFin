@@ -114,12 +114,15 @@ $
 $
 donde $W_t$ es un movimiento Browniano.
 
+#figure(
+  image("../figures/random-walk-limit.pdf"),
+  caption: [Algunas muestras de paseos aleatorios re-escalados $h X_(h^2 t)$. Nótese que $W_t^((n))$ son constantes a trozos.],
+)
+
 == Modelo de Black-Scholes. Límite de Cox-Ross-Rubinstein
 
-modelo de árbol binomial está definido en tiempo $0$, $Delta t$, ...
-Definamos el proceso discreto
 $$
-#theorem[
+#theorem(breakable: true)[
   Sea $S^((Delta t))$ el proceso construido por el árbol binomial.
   Definimos la interpolación constante a trozos
   $

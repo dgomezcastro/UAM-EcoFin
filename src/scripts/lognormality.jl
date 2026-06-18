@@ -43,4 +43,4 @@ plot!(p4, f, label="Normal fit", linewidth=3)
 
 plot(p1, p2, p3, p4, plot_title=latexstring("SPX, \$\\Delta t = 1\$ week"))
 
-savefig("../figures/lognormality.pdf")
+savefig("src/figures/lognormality.pdf")
