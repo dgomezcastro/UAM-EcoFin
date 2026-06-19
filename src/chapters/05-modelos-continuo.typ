@@ -4,28 +4,6 @@
 
 = Modelo en tiempo continuo: Black-Scholes
 
-Recordamos
-#theorem[Teorema central del límite][
-  Sean $X_1, X_2, ...$ una sucesión de proceso aleatorios independientes e idénticamente distribuidos como una variable aleatoria $X$,
-  de media $mu_X$ y varianza $sigma_X^2$
-  Entonces, las media muestrales
-  $
-    overline(X)_n := 1/n sum_(k=1)^n X_k
-  $
-  convergence en distribución a una normal
-  $
-    overline(X)_n ->^d N(mu_X, sigma_X^2).
-  $
-]
-Equivalentemente, este teorema pueda rescribirse como
-$
-  (overline(X)_n - mu_X)/(sigma_X) ->^d N(0,1).
-$
-Escalando, también deducimos el comportamiento de las sumas
-$
-  (n overline(X)_n - n mu_Z)/(sigma_Z sqrt(n)) ->^d Y ~ N(0,1) " cuando " n -> oo.
-$
-
 == Paseos aleatorios y movimiento Browniano
 
 Consideremos el proceso aleatorio dado por la siguiente distribución de Bernouilli
@@ -35,18 +13,47 @@ $
     -1 & "con probabilidad " 1/2.
   )
 $
-Lo llamaremos un _paso aleatorio_.
+Consideremos $Z_1, Z_2, ...$ independientes e idénticamente distribuidas.
+Llamamos _paseo aleatorio_ a la variable aleatoria
+$
+  X_0 := 0, quad X_n := sum_(i=1)^n Z_i
+$
+Dado que $Z$ es esencialmente un lanzamiento de moneda, podemos contar el número de veces que ha salido $+1$. Si tenemos $k$ movimientos a la derecha y $n-k$ movimientos a la izquierda estaremos en la posición $k - (n-k) = 2k - n$. De modo que
+$
+  PP(X_n = 2k - n) = PP("B"(n,1/2) = k)= binom(n, k) (1/2)^n.
+$
+#exercise[Representar la función de masa de $"B"(n,1/2)$ para diferentes valores de $n$. Comparar con una distribución normal. ¿Qué relación encuentras? Lee la entrada de Wikipedia sobre el tablero de Galton, y en particular mira el video:
+
+  https://en.wikipedia.org/wiki/Galton_board
+
+]
+// TODO Añadir alguna figura. Hacer un pluto notebook.
+
+Recordamos el teorema central del límite
+#theorem[Teorema central del límite][
+  Sean $Z_1, Z_2, ...$ una sucesión de proceso aleatorios independientes e idénticamente distribuidos como una variable aleatoria $Z$,
+  de media $mu_Z$ y varianza $sigma_Z^2$.
+  Entonces, las medias muestrales dadas por
+  $
+    overline(Z)_n := 1/n sum_(k=1)^n Z_k
+  $
+  convergence en distribución a una normal
+  $
+    overline(Z)_n ->^d N(mu_Z, sigma_Z^2).
+  $
+]
+Equivalentemente, este teorema pueda rescribirse como
+$
+  (overline(Z)_n - mu_Z)/(sigma_Z) ->^d N(0,1).
+$
+Escalando, también deducimos el comportamiento de las sumas
+$
+  (n overline(Z)_n - n mu_Z)/(sigma_Z sqrt(n)) ->^d Y ~ N(0,1) " cuando " n -> oo.
+$
 Nótese que
 $
   mu_Z := EE[Z] = 0, quad sigma_Z := sqrt(V(Z)) = EE[(Z-0)^2]^(1/2) = 1.
 $
-
-Consideremos $Z_1, Z_2, ...$ independientes e idénticamente distribuidas.
-Llamamos paseo aleatorio a la variable aleatoria
-$
-  X_0 := 0, quad X_n := sum_(i=1)^n Z_i
-$
-A este proceso se lo conoce como _paseo aleatorio_.
 El teorema central del límite asegura que
 $
   X_n approx n mu_Z + sigma_Z sqrt(n) Y = sqrt(n) Y

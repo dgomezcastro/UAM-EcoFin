@@ -81,10 +81,11 @@ Según las hipótesis la elección de $u$ y $d$ se habla de modelo de Cox-Ross-R
 Muchas de las construcciones que vamos a hacer son completamente generales, pero este elección simple basta para la mayoría de ejemplos.
 
 #exercise[
-  Comprobar que si $t = n Delta t$ entonces
+  Comprobar que si $t = n Delta t$ entonces las probabilidades de alcanzar un estado concreto vienen dadas por
   $
     PP(S_t = S_0 u^k d^(n-k)) = binom(n, k) p^k (1-p)^(n-k).
   $
+  Relacionar este resultado con la distribución binomial.
 ]
 
 
