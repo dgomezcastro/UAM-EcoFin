@@ -416,8 +416,7 @@ Como el lógico, si el valor del subyacente a vencimiento $S_T > K$ entonces pue
 Si el valor es menor o igual $S_T <= K$, entonces no la ejerzo, y no ganaré nada. Esto puede escribir como que el beneficio es el valor de la call a vencimiento $C_T = (S_T - K)_+$.
 Su valor hoy, que es lo que queremos fijar, es $C_0$.
 
-== Ejercicios
-
+Concluimos la sección con dos ejercicios sobre la TAE.
 #exercise[La tasa anual equivalente#footnote[Tomado de "https://www.bbva.com/es/salud-financiera/tin-que-es-diferencias-tae/"]][
   En @sec-TAE se detalla el cálculo de la tasa anual equivalente, que incluye los gastos equiparando los _cash flows_.
 
