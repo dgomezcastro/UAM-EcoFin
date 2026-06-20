@@ -20,7 +20,7 @@ jobs:
 
             - name: Compile Typst document
               run: |
-                  typst compile ecofin.typ ecofin.pdf
+                  typst compile src/ecofin.typ ecofin.pdf
 
             - name: Set release date variable
               id: vars
