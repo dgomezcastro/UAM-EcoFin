@@ -70,10 +70,11 @@
   set figure(numbering: dependent-numbering("1.1"))
   show heading: reset-counter(counter(figure.where(kind: image)))
 
-  set math.equation(numbering: dependent-numbering("(1.1)"))
+  // 1. Setup equation numbering and remove the "Equation" prefix
+  set math.equation(numbering: dependent-numbering("(1.1)"), supplement: none)
   show heading: reset-counter(counter(math.equation))
-  // Number only labeled equations
-  // https://forum.typst.app/t/how-to-conditionally-enable-equation-numbering-for-labeled-equations/977/17
+
+  // 2. Hide numbering for unlabeled equations
   show math.equation: it => {
     if it.block and not it.has("label") and it.numbering != none [
       #counter(math.equation).update(v => v - 1)
@@ -83,17 +84,13 @@
     }
   }
 
+  // 3. (Optional) Enclose references in parentheses if your template doesn't do it
   show ref: it => {
-    let eq = math.equation
     let el = it.element
-    if el != none and el.func() == eq {
-      // Override equation references.
-      numbering(
-        el.numbering,
-        ..counter(eq).at(el.location()),
-      )
+    if el != none and el.func() == math.equation {
+      // This retains the correct context and makes it clickable!
+      link(el.location(), [#it])
     } else {
-      // Other references as usual.
       it
     }
   }
