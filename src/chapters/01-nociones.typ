@@ -163,12 +163,13 @@ Además, este producto es un tipo muy sencillo de «bono», que hace pagos inter
     p(t, T) := "precio a tiempo "t" de un bono de principal "K = 1" y maduración" T.
   $
   Asumimos que:
+  - Siempre podemos comprar a tiempo $t$ un producto (que llamaremos _bono cupón cero_) a precio $p(t,T)$ que garantiza $1$\$ a tiempo $T$.
   - Se puede comprar o vender sin coste
   - A vencimiento instantáneo el precio es el principal, es decir
   $
     p(t,t) = 1 "para todo "t.
   $
-]
+]<def-bonocuponcero>
 Así, el valor a tiempo $t$ de un bono de cupón cero y principal $K$ es $K p(t,T)$.
 
 Una de las tareas difíciles de la Matemática Financiera es aproximar este valor. Nótese que su existencia depende fuertemente de la hipótesis de no-arbitraje (que podría no cumplirse).

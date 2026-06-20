@@ -75,7 +75,7 @@ $
 $<eq-bonocuponfijo>
 
 #exercise[
-  Supongamos que encontramos en el mercado un bono con $T_1 = 0.5$ y vencimiento $T_2 = 1$ cupón fijo $c_1 > 0$ y que no satisface la fórmula @eq-bonocuponfijo. Construir una estrategia de arbitraje.
+  Supongamos que encontramos en el mercado un bono con $T_1 = 0.5$ y vencimiento $T_2 = 1$ cupón fijo $c_1 > 0$ y que no satisface la fórmula @eq-bonocuponfijo. Utilizar bonos cupón cero (ver @def-bonocuponcero) para crear una estrategia de arbitraje.
 ]
 
 #example[Valoración de bono de cupón fijo][
