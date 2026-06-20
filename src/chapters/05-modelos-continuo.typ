@@ -366,7 +366,7 @@ En la práctica, lo que se estudia es la superficie de volatilidad implícita, q
   caption: [Tomado de @gatheralVolatilitySurfacePractitioners2006],
 )<fig-BlackScholes-surface>
 
-== Sistemas de actividades. Correlación.
+== Sistemas de activos. Correlación.
 
 Al igual que en el mercado discreto en tiempo, podemos tener sistemas de activos en cuyo caso el límite satisface ecuaciones
 $
