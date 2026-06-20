@@ -183,6 +183,8 @@ Con un poco de trabajo, de manera similar se prueba
   $
 ]<thm-Itochainrule>
 
+La demostración de este resultado y todos los detalles de esta construcción pueden verse in @Evans2013.
+
 == Límite de árboles binomiales
 
 === Condiciones suficientes de convergencia
