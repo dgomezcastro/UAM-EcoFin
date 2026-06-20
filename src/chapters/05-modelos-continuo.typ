@@ -128,18 +128,21 @@ donde $W_t$ es un movimiento Browniano.
 
 == Cálculo de Itô
 
+=== Integral de Itô
 En tiempo descrito vamos a escribir incrementos de la forma
 $
-  X_(t + Delta t) - X_t = a(t, X_t) Delta t + b(t, X_t) (W_(t + Delta t) - W_t).
+  X_(t + Delta t) - X_t = A_t Delta t + B_t (W_(t + Delta t) - W_t),
 $
+donde típicamente $A_t = a(t, X_t)$ y $B_t = b(t, X_t)$.
 Cuando $Delta t -> 0$ formalmente querríamos escribir algo de la forma
 $
-  d X_t = a(t, X_t) dif t + b(t, X_t) dif W_t.
+  d X_t = A_t dif t + B_t dif W_t.
 $<eq-SDE>
 La forma de justificar esta "fórmula" es en términos de formas diferenciales. De manera rigurosa, diremos que se cumple @eq-SDE si se cumple para todo $t$ la fórmula integral
 $
-  X_t = X_0 + integral_0^t a(s, X_s) dif s + integral_0^t b(s, X_s) dif W_s.
+  X_t = X_0 + integral_0^t A_s dif s + integral_0^t B_s dif W_s.
 $<eq-SDE-integral>
+Por las propiedades de la integral esto nos permite escribir $X_(t + Delta t) - X_t$ como integrales en $[t, t + Delta t]$.
 Ahora debemos construir estas integrales estocásticas.
 
 
@@ -152,38 +155,75 @@ Las funciones de este espacio pueden ser aproximar en $LL^2$ por funciones const
 Construimos ahora la integral respecto del movimiento Browniano.
 Recordamos que si $X_t$ es constante a trozos $(t_i, t_(i+1))$ donde $t_N = T$, entonces sabemos que
 $
-  integral_0^T a(s, X_t) dif s & = sum_(i=0)^N a(s, X_(t_i)) (t_(i+1) - t_i).
+  integral_0^T A_s dif s & = sum_(i=0)^N A_(t_i) (t_(i+1) - t_i).
 $
 Definimos la integral
 $
-  integral_0^T a(s, X_t) dif W_t & := sum_(i=0)^N a(s, X_(t_i)) (W_(t_(i+1)) - W_(t_i)).
+  integral_0^T A_s dif W_t & := sum_(i=0)^N A_(t_i) (W_(t_(i+1)) - W_(t_i)).
 $
-Y esta construcción puede extenderse por continuidad a todo $L^2(0,T)$
-
+Y esta construcción puede extenderse por continuidad a todo $L^2(0,T)$.
 
 #exercise[][
   Sean $a,b in RR$ y $G, H in LL^2(0,T)$. Demostrar que
 
   + $integral_0^T (a G_t + b H_t ) dif W_t = a integral_0^T G_t dif W_t + b integral_0^T H_t dif W_t$
   + $EE[integral_0^T G_t dif W_t] = 0$
+]
+
+=== El cuadrado del ruido
+
+De manera intuitiva, podemos pensar que
+$
+  (dif W_t)^2 = dif t.
+$
+La manera de justificar esta intuición es que, por las propiedades de la normal
+$
+  EE[ (W_(t + Delta t) - W_(t))^2] = Delta t quad
+  "y"
+  quad
+  EE[ (W_(t + Delta t) - W_(t))^4] = 3 (Delta t)^2
+$
+De esta forma, obtenemos la relación determinista $(W_(t + Delta t) - W_(t))^2 approx Delta t$.
+
+#exercise[][
+  Sean $a,b in RR$ y $G, H in LL^2(0,T)$. Demostrar rigurosamente que
+
   + $EE [(integral_0^T G_t d W_t)^2] = EE[integral_0^T G_t^2 dif s]$
   + $EE[integral_0^T G_t dif W_t integral_0^T H_t dif W_t] = EE[integral_0^T G_t H_t dif W_t]$
   + $integral_0^T W_t dif W_t = W_T^2 / 2 - T/2$
 ]
+=== Regla de la cadena
+
+Sea $X_t$ solución de @eq-SDE y $u : [0,T] times R -> R$ regular. Queremos ver qué ecuación satisface $Y_t = u(t, X_t)$. Usando desarrollos de Taylor escribimos
+$
+  Y_(t + Delta t) &= Y_t + (partial u)/(partial t)(t, X_t) (Delta t) + (partial u)/(partial x) (X_(t + Delta t) - X_t) + 1/2 (partial^2 u)/(partial x^2) (X_(t + Delta t) - X_t)^2 + O((Delta t)^2)
+$
+Ahora escribimos
+$
+  X_(t + Delta t) - X_t & = integral_t^(t + Delta t) A_s dif s + integral_t^(t + Delta t) B_s dif W_s \
+                        & approx A_t Delta t + B_t Delta W_t
+$
+De esta forma calculamos
+$
+  (X_(t + Delta t) - X_t)^2 & approx A_t^2 (Delta t)^2 + 2 A_t B_t (Delta t) (Delta W_t) + B_t^2 (Delta W_t)^2 \
+                            & = B_t^2 (Delta W_t)^2 + O((Delta t)^(3/2)) \
+                            & approx B_t^2 (Delta t)^2 + + O((Delta t)^(3/2)).
+$
+Así, deducimos que
+$
+  Y_(t + Delta t) - Y_t &approx ((partial u)/(partial t) + A_t (partial u)/(partial x) + 1/2 B_t (partial^2 u)/(partial x^2) )(Delta t) + B_t (partial u)/(partial x) (Delta W_t) + O((Delta t)^(3/2))
+$
 
 Con un poco de trabajo, de manera similar se prueba
 #theorem[Regla de cadena de Itô][
-  Sea $X_t$ solución de la ecuación
+  Sea $X_t$ solución de @eq-SDE
+  y sea $u$ dos veces diferenciable en $x$ y una vez en $t$ con derivada continua. Sea $Y_t = u(t, X_t)$ entonces
   $
-    d X_t = a(t, X_t) dif t + b(t, X_t) dif W_t
-  $
-  y sea $u$ dos veces diferenciable en $x$ y $1$ vez en $t$ con derivada continua. Sea $Y_t = u(t, X_t)$ entonces
-  $
-    d Y_t = (a (partial u)/(partial t) + b^2 /2 (partial^2 u)/(partial x^2) ) dif t + b (partial u)/(partial x) dif W_t
+    d Y_t = ((partial u)/(partial t) + A (partial u)/(partial x) + B^2 /2 (partial^2 u)/(partial x^2) ) dif t + B (partial u)/(partial x) dif W_t
   $
 ]<thm-Itochainrule>
 
-La demostración de este resultado y todos los detalles de esta construcción pueden verse in @Evans2013.
+La demostración rigurosa de este resultado y todos los detalles de esta construcción pueden verse in @Evans2013.
 
 == Límite de árboles binomiales
 
@@ -206,13 +246,12 @@ $$
     nu := lim_(Delta t -> 0) nu^((Delta t)) / (Delta t) quad "y" quad sigma := lim_(Delta t -> 0) sigma^((Delta t)) / sqrt(Delta t).
   $<eq-BlackScholes-condicionud2>
   Entonces se tiene que
+  $S_t^((Delta t)) ->^d S_t$
+  donde
   $
-    S_t^((Delta t)) ->^d S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t)
-  $
-  donde $W_t$ es un movimiento Browniano y $mu$ depende sólo de $nu$ y $p$. Es decir, $S_t$ es la solución de
-  $
-    dif S_t = mu S_t dif t + sigma S_t dif W_t
-  $<eq-BlackScholes-SDE>
+    S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t).
+  $<eq-BlackScholes-St-P>
+  donde $W_t$ es un movimiento Browniano y $mu$ depende sólo de $nu$ y $p$.
 ]
 #proof[
   Para $t in (Delta t) NN$ tenemos que
@@ -244,8 +283,20 @@ $$
   $
     S_t = S_0 exp(kappa t + sigma W_t)
   $
-  <eq-BlackScholes-St-P>
-  La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
+  Tomamos la convención $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
+]
+
+#exercise[Movimiento Browniano geométrico][
+  Se llama movimiento Browniano geométrico a la solución de
+  $
+    dif S_t = S_t (mu dif t + sigma d W_t).
+  $<eq-BlackScholes-SDE>
+  Utilizar la regla de la cadena de Itô para demostrar que
+  $
+    dif log S_t = (mu - sigma^2/2) dif t + sigma dif W_t.
+  $
+  Comparar esta ecuación con @eq-BlackScholes-incremento-log.
+  Integrar la ecuación de $log S_t$ para deducir que @eq-BlackScholes-St-P es la única solución de @eq-BlackScholes-SDE.
 ]
 
 === Los modelos Cox-Ross-Rubinstein y Jarrow-Rudd
