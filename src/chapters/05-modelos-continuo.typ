@@ -214,8 +214,8 @@ Estudiar con el siguiente código de `julia`, cuyo resultado es @fig-BlackSchole
 == Un comentario sobre el cálculo de Itô
 Cálculo de Itô permite construir una teoría de ecuaciones diferenciales ordinarias de la forma
 $
-  d theta_t = a(t,theta_t) dif t + b(t, theta_t) dif W_t .
-$
+  d X_t = a(t,X_t) dif t + b(t, X_t) dif W_t .
+$<eq-SDE>
 En este marco, $S_t$ es la solución de la ecuación diferencial
 $
   d S_t = mu S_t dif t + sigma S_t d W_t .
@@ -258,16 +258,21 @@ $<eq-BlackScholes-call-expectvalue>
 
 De hecho, para construir $QQ$ el procedimiento consiste en observar que dado @eq-BlackScholes-St-P y @eq-BlackScholes-St-Q entonces
 $
-  W_t^QQ = (r/sigma-sigma/2)t + W_t .
+  W_t^QQ = (mu - r)/sigma t + W_t .
 $
 La existencia de $QQ$ con esta propiedad se sigue del teorema de Girsanov, que no estudiaremos en este curso.
 
-Usando cálculo de Itô, estas condiciones son equivalentes a
-$
-  d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
-$<eq-BlackScholes-SDEriskfree>
+#remark[
+  + Usando cálculo de Itô, @eq-BlackScholes-St-Q es equivalente a que
+    $
+      d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
+    $<eq-BlackScholes-SDEriskfree>
+    Si $X_t$ es solución de @eq-SDE donde $W_t$ es un movimiento Browniano respecto a $PP$, entonces $X$ es una martingala respecto a $PP$ si y sólo si $a(t, X_t) = 0$.
 
-Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree no involucran a $mu$.
+  + Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree no involucran a $mu$, al igual que pasaba en el caso de árboles.
+]
+
+
 
 == Precio de una opción europea
 

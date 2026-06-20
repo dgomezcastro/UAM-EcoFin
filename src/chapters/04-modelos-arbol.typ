@@ -348,6 +348,14 @@ es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouill
   Lo que concluye la demostración.
 ]
 
+#exercise[][
+  + Valorar una opción _call_ europea donde
+    $
+      S_0 = 1, u=1.2, d=0.9, K=1, r=0, T=1, N = 2
+    $
+  + Escribir un programa que permita valorar opciones europeas de manera automática.
+]
+
 == Opciones americanas
 
 Sea $phi.alt(s) = (s - K)_+$. Para una opción americana debe tenerse que
@@ -379,9 +387,13 @@ $
 $
 
 #exercise[
-  Escribir un programa que permita calcular el valor de una opción americana en función de $(K, r, N, u, d)$.
-  Además, dibujar el árbol y señalar en rojo en qué estados la opción se ha ejercido, es decir cuando $V_t = phi.alt(S_t)$.
-  A este valor se le llama a veces "frontera libre".
+  + Valorar una opción _call_ americana donde
+    $
+      S_0 = 1, u=1.2, d=0.9, K=1, r=0, T=1, N = 2
+    $
+  + Escribir un programa que permita calcular el valor de una opción americana en función de $(K, r, N, u, d)$.
+  + Además, dibujar el árbol y señalar en rojo en qué estados la opción se ha ejercido, es decir cuando $V_t = phi.alt(S_t)$.
+    A este valor se le llama a veces "frontera libre".
 ]
 
 
