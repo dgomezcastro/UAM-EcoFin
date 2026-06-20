@@ -126,19 +126,78 @@ donde $W_t$ es un movimiento Browniano.
   caption: [Algunas muestras de paseos aleatorios re-escalados $h X_(h^2 t)$. Nótese que $W_t^((n))$ son constantes a trozos.],
 )
 
-== Modelo de Black-Scholes. Límite de Cox-Ross-Rubinstein
+== Cálculo de Itô
 
+En tiempo descrito vamos a escribir incrementos de la forma
+$
+  X_(t + Delta t) - X_t = a(t, X_t) Delta t + b(t, X_t) (W_(t + Delta t) - W_t).
+$
+Cuando $Delta t -> 0$ formalmente querríamos escribir algo de la forma
+$
+  d X_t = a(t, X_t) dif t + b(t, X_t) dif W_t.
+$<eq-SDE>
+La forma de justificar esta "fórmula" es en términos de formas diferenciales. De manera rigurosa, diremos que se cumple @eq-SDE si se cumple para todo $t$ la fórmula integral
+$
+  X_t = X_0 + integral_0^t a(s, X_s) dif s + integral_0^t b(s, X_s) dif W_s.
+$<eq-SDE-integral>
+Ahora debemos construir estas integrales estocásticas.
+
+
+Como $X_t : Omega -> RR$ y $(Omega, cal(F), PP)$ es un espacio de probabilidad, daremos por conocida la integral de Lebesgue (o Bochner), que nos permite controlar la primera integral. Llamaremos
+$
+  LL^2(0,T) = { (X_t)_t | integral_0^T X_t^2 dif t < oo}
+$
+Las funciones de este espacio pueden ser aproximar en $LL^2$ por funciones constantes a trozos.
+
+Construimos ahora la integral respecto del movimiento Browniano.
+Recordamos que si $X_t$ es constante a trozos $(t_i, t_(i+1))$ donde $t_N = T$, entonces sabemos que
+$
+  integral_0^T a(s, X_t) dif s & = sum_(i=0)^N a(s, X_(t_i)) (t_(i+1) - t_i).
+$
+Definimos la integral
+$
+  integral_0^T a(s, X_t) dif W_t & := sum_(i=0)^N a(s, X_(t_i)) (W_(t_(i+1)) - W_(t_i)).
+$
+Y esta construcción puede extenderse por continuidad a todo $L^2(0,T)$
+
+
+#exercise[][
+  Sean $a,b in RR$ y $G, H in LL^2(0,T)$. Demostrar que
+
+  + $integral_0^T (a G_t + b H_t ) dif W_t = a integral_0^T G_t dif W_t + b integral_0^T H_t dif W_t$
+  + $EE[integral_0^T G_t dif W_t] = 0$
+  + $EE [(integral_0^T G_t d W_t)^2] = EE[integral_0^T G_t^2 dif s]$
+  + $EE[integral_0^T G_t dif W_t integral_0^T H_t dif W_t] = EE[integral_0^T G_t H_t dif W_t]$
+  + $integral_0^T W_t dif W_t = W_T^2 / 2 - T/2$
+]
+
+Con un poco de trabajo, de manera similar se prueba
+#theorem[Regla de cadena de Itô][
+  Sea $X_t$ solución de la ecuación
+  $
+    d X_t = a(t, X_t) dif t + b(t, X_t) dif W_t
+  $
+  y sea $u$ dos veces diferenciable en $x$ y $1$ vez en $t$ con derivada continua. Sea $Y_t = u(t, X_t)$ entonces
+  $
+    d Y_t = (a (partial u)/(partial t) + b^2 /2 (partial^2 u)/(partial x^2) ) dif t + b (partial u)/(partial x) dif W_t
+  $
+]<thm-Itochainrule>
+
+== Límite de árboles binomiales
+
+=== Condiciones suficientes de convergencia
+Vamos a empezar esta sección con el siguiente resultado
 $$
-#theorem(breakable: true)[
-  Sea $S^((Delta t))$ el proceso construido por el árbol binomial @eq-arbol.
+#theorem(breakable: true)[Límite de árboles binomiales cuando $Delta t -> 0$][
+  Sea $S^((Delta t))$ el proceso construido por el árbol binomial @eq-arbol, añadiendo la dependencia en tiempo como $(Delta t)$.
   Definimos la interpolación constante a trozos
   $
     S_t^((Delta t)) := S_(n Delta t)^((Delta t)) quad "si " n Delta t <= t < (n+1) Delta t.
   $
   Supongamos que se puede descomponer
   $
-    log u = nu^((Delta t)) + sigma^((Delta t)),
-    quad log d = nu^((Delta t)) - sigma^((Delta t))
+    log u^((Delta t)) = nu^((Delta t)) + sigma^((Delta t)),
+    quad log d^((Delta t)) = nu^((Delta t)) - sigma^((Delta t))
   $
   de tal modo que existen los límite
   $
@@ -148,7 +207,10 @@ $$
   $
     S_t^((Delta t)) ->^d S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t)
   $
-  donde $W_t$ es un movimiento Browniano y $mu$ depende sólo de $nu$ y $p$.
+  donde $W_t$ es un movimiento Browniano y $mu$ depende sólo de $nu$ y $p$. Es decir, $S_t$ es la solución de
+  $
+    dif S_t = mu S_t dif t + sigma S_t dif W_t
+  $<eq-BlackScholes-SDE>
 ]
 #proof[
   Para $t in (Delta t) NN$ tenemos que
@@ -184,7 +246,7 @@ $$
   La convención es escribir $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
 ]
 
-== Los modelos Cox-Ross-Rubinstein y Jarrow-Rudd
+=== Los modelos Cox-Ross-Rubinstein y Jarrow-Rudd
 
 Hay dos aproximaciones clásicas para obtener @eq-BlackScholes-condicionud1 y @eq-BlackScholes-condicionud2. La más sencilla consiste es $nu_(Delta t) = 0$ y $sigma_(Delta t) = sigma sqrt(Delta t)$, que corresponde con
 $
@@ -211,69 +273,6 @@ Estudiar con el siguiente código de `julia`, cuyo resultado es @fig-BlackSchole
 #raw(read("../scripts/lognormality.jl"), lang: "julia", block: true)//,
 // )
 
-== Un comentario sobre el cálculo de Itô
-Cálculo de Itô permite construir una teoría de ecuaciones diferenciales ordinarias de la forma
-$
-  d X_t = a(t,X_t) dif t + b(t, X_t) dif W_t .
-$<eq-SDE>
-En este marco, $S_t$ es la solución de la ecuación diferencial
-$
-  d S_t = mu S_t dif t + sigma S_t d W_t .
-$
-En este contexto, $W_t$ es un movimiento Browniano con la medida ambiente $PP$ que es el límite natural de la medida ambiente discreta.
-Esta teoría permite escribir una versión continua de carteras reproductores, que permite escribir el precio de una opción _call_ europea a partir de una Ecuación en Derivadas Parciales (EDP), donde el precio de la opción es
-$
-  C_t = u(t, S_t)
-$
-donde $u$ es la solución de la famosa ecuación de Black-Scholes
-$
-  cases(
-    display((partial u)/(partial t) + 1/2 sigma^2 s^2 (partial u)/(partial s^2) + r s (partial u)/(partial s)- r u = 0)
-    & "for " t in [0,T] "and" s > 0,
-    u(T,s) = e^(-r T)(s - K)_+
-  )
-$<eq-BlackScholes-PDE>
-
-== Medida libre de riesgo
-
-Siguiendo la idea del caso discreto, busquemos escribir para algún valor $nu$
-$
-  S_t = S_0 exp(nu t + sigma W^QQ_t)
-$
-con una nueva medida $QQ$.
-Si intentamos buscar una versión continua de @eq-arbol-martingala, utilizando la fórmula de la esperanza de una log-normal
-$
-  S_0 & = EE^QQ [tilde(S)_t] = EE^QQ [ S_0 exp(-r t + nu t + sigma W^QQ_t) ] \
-      & = S_0 exp(-r t + nu t + sigma^2/2 t)
-$
-De modo que despejamos $nu$ y tenemos precisamente que
-$
-  S_t = S_0 exp((r-sigma^2/2)t + sigma W_t^QQ).
-$<eq-BlackScholes-St-Q>
-De nuevo, en medida libre de riesgo $QQ$, la ecuación sólo depende de $sigma$ y $r$.
-Al igual que para árboles, de la versión continua de @eq-arbol-martingala se deduce que
-$
-  C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
-$<eq-BlackScholes-call-expectvalue>
-
-De hecho, para construir $QQ$ el procedimiento consiste en observar que dado @eq-BlackScholes-St-P y @eq-BlackScholes-St-Q entonces
-$
-  W_t^QQ = (mu - r)/sigma t + W_t .
-$
-La existencia de $QQ$ con esta propiedad se sigue del teorema de Girsanov, que no estudiaremos en este curso.
-
-#remark[
-  + Usando cálculo de Itô, @eq-BlackScholes-St-Q es equivalente a que
-    $
-      d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
-    $<eq-BlackScholes-SDEriskfree>
-    Si $X_t$ es solución de @eq-SDE donde $W_t$ es un movimiento Browniano respecto a $PP$, entonces $X$ es una martingala respecto a $PP$ si y sólo si $a(t, X_t) = 0$.
-
-  + Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree no involucran a $mu$, al igual que pasaba en el caso de árboles.
-]
-
-
-
 == Precio de una opción europea
 
 Podemos calcular el precio de una call europea utilizando @eq-BlackScholes-St-Q -- @eq-BlackScholes-call-expectvalue de forma equivalente a como demostramos @eq-arbol-call a partir de binomiales.
@@ -296,6 +295,36 @@ Sin embargo, en estas notas deduciremos el precio de una _call_ europea como lí
 ]
 Nótese que @eq-BlackScholes-call no involucra a $mu$.
 
+Otra opción para deducir esta fórmula consiste en
+que permite escribir el precio de una opción _call_ europea a partir de una Ecuación en Derivadas Parciales (EDP).
+
+#exercise(breakable: true)[
+  Consideremos una cartera autofinanciada de la forma $C_t = theta_t^((1)) S_t + theta_t^((2)) B_t$. Supongamos además que su precio viene descrito como
+  $
+    C_t = u(t, S_t).
+  $
+
+  + Para al límite en @eq:arbol-autofinanciacion para deducir que la condición de auto-financiación se escribe
+    $
+      dif C_t = theta_t^((1)) dif S_t + theta_t^((2)) dif B_t.
+    $
+
+  + Usar la regla de la cadena de Itô para deducir que si $u$ es la solución de la famosa ecuación de Black-Scholes
+    $
+      cases(
+        display((partial u)/(partial t) + 1/2 sigma^2 s^2 (partial u)/(partial s^2) + r s (partial u)/(partial s)- r u = 0)
+        & "for " t in [0,T] "and" s > 0,
+        u(T,s) = e^(-r T)(s - K)_+
+      )
+    $<eq-BlackScholes-PDE>
+
+  + Buscar una cambio de variable que permita escribir $u$ en función de la solución de la ecuación de calor con dato inicial.
+
+  + Deducir @eq-BlackScholes-call.
+]
+
+
+
 == Volatilidad implícita
 
 Es habitual denotar a @eq-BlackScholes-call mediante un nombre distinguido
@@ -313,7 +342,6 @@ En esta función $S_0, K, r, T$ son conocidos a la hora de hacer el contrato, pe
   $ partial / (partial sigma) "Call"_"BS" (sigma,S_0, K,r,T) = S_0 sqrt(T) op("N")'(d_1) < 0. $
   Esta valor es habitualmente conocido como _vega_ (que no es una letra griega) y se denota $nu$ (nu sí es una letra griega). En algunos contextos se utiliza el nombre kappa: $kappa$.
 ]
-$$
 
 Además, es fácil ver que
 $
@@ -370,6 +398,47 @@ En la práctica, lo que se estudia es la superficie de volatilidad implícita, q
   image("../figures/gatheral-surface.pdf"),
   caption: [Tomado de @gatheralVolatilitySurfacePractitioners2006],
 )<fig-BlackScholes-surface>
+
+== Medida libre de riesgo
+
+Siguiendo la idea del caso discreto, busquemos escribir para algún valor $nu$
+$
+  S_t = S_0 exp(nu t + sigma W^QQ_t)
+$
+con una nueva medida $QQ$.
+Si intentamos buscar una versión continua de @eq-arbol-martingala, utilizando la fórmula de la esperanza de una log-normal
+$
+  S_0 & = EE^QQ [tilde(S)_t] = EE^QQ [ S_0 exp(-r t + nu t + sigma W^QQ_t) ] \
+      & = S_0 exp(-r t + nu t + sigma^2/2 t)
+$
+De modo que despejamos $nu$ y tenemos precisamente que
+$
+  S_t = S_0 exp((r-sigma^2/2)t + sigma W_t^QQ).
+$<eq-BlackScholes-St-Q>
+
+Para construir $QQ$ el procedimiento consiste en observar que dado @eq-BlackScholes-St-P y @eq-BlackScholes-St-Q entonces
+$
+  W_t^QQ = (mu - r)/sigma t + W_t .
+$
+La existencia de $QQ$ con esta propiedad se sigue del teorema de Girsanov, que no estudiaremos en este curso.
+
+De nuevo, en medida libre de riesgo $QQ$, la ecuación sólo depende de $sigma$ y $r$.
+Al igual que para árboles, de la versión continua de @eq-arbol-martingala se deduce que
+$
+  C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
+$<eq-BlackScholes-call-expectvalue>
+
+#remark[
+  + Usando cálculo de Itô, @eq-BlackScholes-St-Q es equivalente a que
+    $
+      d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
+    $<eq-BlackScholes-SDEriskfree>
+    Si $X_t$ es solución de @eq-SDE donde $W_t$ es un movimiento Browniano respecto a $PP$, entonces $X$ es una martingala respecto a $PP$ si y sólo si $a(t, X_t) = 0$.
+
+  + Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree no involucran a $mu$, al igual que pasaba en el caso de árboles.
+]
+
+
 
 == Sistemas de activos. Correlación.
 
