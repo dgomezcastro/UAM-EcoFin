@@ -4,19 +4,40 @@
 Estas notas corresponde al curso impartido en 2026-2027 por David Gómez-Castro.
 
 El curso consta de 16 semanas:
-1. Introducción. El mercado financiero
+1. Introducción. El mercado financiero. [Notebook](pluto-notebooks/log-normality.jl)
 1. Tipos de interés: interés compuesto, interés continuo, bono cupón-cero, fórmulas de amortización, TAE
 1. Activos y derivados: presentación
 1. Bonos, curva cupón-cero
 1. Derivados: contrato a plazo, _swap_, opciones
-1. El modelo binomial: carteras, arbitraje, opciones europeas
+1. El modelo binomial: carteras, arbitraje, opciones europeas. [Notebook](pluto-notebooks/oneperiod-portfolio.jl) 
 1. El modelo binomial: la medida de riesgo neutro
 1. El modelo matricial para un periodo de tiempo
-1. Árboles binomiales:   Carteras y arbitraje.
+1. Árboles binomiales: Carteras y arbitraje.
 1. Árboles binomiales: medida libre de riesgo y opciones europeas
 1. Árboles binomiales: opciones americanas
-1. Paseos aleatorios y movimiento Browniano
+1. Paseos aleatorios y movimiento Browniano. [Notebook 1](pluto-notebooks/random-walk-density.jl) y [Notebook 2](pluto-notebooks/random-walk-limit.jl)
 1. Cálculo de Itô
 1. Límite de árboles al continuo: Black-Scholes
-1. Black-Scholes: opción europea
-1. Volatilidad implícita
+1. Black-Scholes: opción europea. Volatilidad implícita
+1. Carteras en tiempo continuo. [Notebook](pluto-notebooks/stock-correlation.jl)
+
+### Uso de los notebooks
+
+Los notebooks del curso sirven para ilustrar algunos de los conceptos presentados. Están creados con `julia` y `Pluto.jl`. 
+Cada notebook es un sólo archivo `.jl` (autocontenido) que puede descargar haciendo click en el link correspondiente y luego en el botón "Download raw".
+
+Los notebooks se presentarán y explicarán en clase, pero es fácil descargarlos para experimentar en casa.
+
+Para instalar `julia` y `Pluto.jl` (sólo es necesario hacerlo una vez):
+- Instalar `julia`: https://julialang.org/downloads/
+- Instalar `Pluto.jl`. En una terminal escribir
+    ```
+    julia -e "using Pkg; Pkg.add(\"Pluto\")"
+    ```
+
+Una vez instalado, podemos ejecutar `Pluto.jl` tantas veces como queramos para 
+- Ejecutar `Pluto.jl`: En una terminal escribir
+    ```
+    julia -e "using Pluto; Pluto.run()"
+    ```
+    Esto abrirá un navegador con la interfaz gráfica de Pluto. Ahí podemos seleccionar el notebook que queramos de los que tenemos descargados.
