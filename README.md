@@ -1,6 +1,12 @@
 # Economía y Finanzas Matemáticas
 ## Universidad Autónoma de Madrid
 
+### [Descargar PDF de las notas](https://github.com/dgomezcastro/UAM-EcoFin/releases/latest/download/ecofin.pdf)
+
+Las notas del curso están creadas con `typst` y las fuentes del documento y las figuras se encuentran en la carpeta [src](src).
+
+### Distribución horaria del curso
+
 Estas notas corresponde al curso impartido en 2026-2027 por David Gómez-Castro.
 
 El curso consta de 16 semanas:
