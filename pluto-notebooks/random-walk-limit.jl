@@ -40,14 +40,14 @@ end;
 
 # ╔═╡ e6c07d5b-d1fb-48b9-83dd-d7a67f274726
 begin 
-    runs = 1000
+    runs = 5
     steps= 500
     X = zeros(steps+1,runs)
     for r=1:runs
         X[:,r] = randomwalk(steps)
     end
     p = plot()
-    for r=1:50
+    for r=1:runs
         p = plot!(X[:,r],label="",xlabel=L"n",ylabel=L"x")
     end
     plot(p)

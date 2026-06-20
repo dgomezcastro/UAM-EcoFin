@@ -19,14 +19,28 @@ end
 # ╔═╡ b8025dcc-5558-42ce-be54-dcc50deb2288
 using PlutoUI, Plots, LaTeXStrings
 
+# ╔═╡ edd33875-6a90-4c2a-9c1a-b3a658d994a2
+md"""
+# Función de densidad de paseos aleatorios
+
+A continuación vamos a estudiar la función de densidad paseo aleatorio
+```math
+X_{n+1} = X_n + Z_n \quad \mathbb{P}(Z_n = \pm 1) = \frac 1 2
+```
+Con que $Z_n$ sea $k$ veces positivo de $n$, entonces estaremos en $X_n = k - (n-k) = 2k - n$. Así, tenemos
+```math
+\mathbb{P}(X_n = 2k - n) = \binom{n}{k} (1/2)^n
+```
+"""
+
 # ╔═╡ 02b8a0e8-6c66-11f1-bd08-4b9830b5e663
-@bind n Slider(1:60)
+@bind n Slider(1:60, default=1)
 
 # ╔═╡ 564f7924-8671-43c3-97bf-ca1b29f28111
 begin
 	x = [2*k - n for k = 0:n]
 	p = [binomial(n,k)*(1/2)^n for k=0:n]
-	scatter(x,p, label="n=$n", xlabel=L"x", ylabel=L"\mathbb{P}(X_n = x)")
+	scatter(x,p, label="n=$n", xlabel=L"x", ylabel=L"\mathbb{P}(X_n = x)", ylims=(0,1))
 end
 
 # ╔═╡ 2766ca27-f019-459a-be60-c7736b8d48af
@@ -1213,8 +1227,9 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─edd33875-6a90-4c2a-9c1a-b3a658d994a2
+# ╟─02b8a0e8-6c66-11f1-bd08-4b9830b5e663
 # ╠═b8025dcc-5558-42ce-be54-dcc50deb2288
-# ╠═02b8a0e8-6c66-11f1-bd08-4b9830b5e663
 # ╠═564f7924-8671-43c3-97bf-ca1b29f28111
 # ╠═2766ca27-f019-459a-be60-c7736b8d48af
 # ╟─00000000-0000-0000-0000-000000000001
