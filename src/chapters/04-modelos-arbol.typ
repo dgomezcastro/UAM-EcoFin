@@ -195,14 +195,12 @@ $
   $
     EE^PP [X | Y=y] := sum_(x:PP(X=x) > 0) x PP(X = x|Y=y) = sum_(x:PP(X=x) > 0) x (PP(X = x inter Y=y))/(PP(Y=y)).
   $
-  Se dice define la esperanza condicionada como
+  Se define la esperanza condicionada como $g(Y) := EE^PP [X|Y]$ la variable aleatoria tal que
   $
-    EE^PP [X|Y] := & "la única variable aleatoria" Z "tal que" \
-                   & PP lr((Z = EE^PP [X | Y = y]), size: #200%) = PP(Y = y) \
-                   & "para todo" y "tal que" PP(Y=y) >0.
+    g(y) := EE^PP [X|Y = y].
   $
 
-  De manera similar se puede definir $EE^PP [X|cal(F)]$ donde $cal(F)$ es una $sigma$-álgebra.
+  De manera similar se puede definir $EE^PP [X|cal(F)]$ donde $cal(F)$ es una $sigma$-álgebra. Ocurre que $EE^PP [X | Y] = EE^PP [X | sigma(Y)]$.
 ]
 Diremos que $QQ << PP$ si $PP(A) = 0$ implica $QQ(A) = 0$.
 Diremos que $QQ ~ PP$ si $PP(A) = 0$ si y sólo si $QQ(A) = 0$.
@@ -214,7 +212,7 @@ Diremos que $QQ ~ PP$ si $PP(A) = 0$ si y sólo si $QQ(A) = 0$.
   $<eq-arbol-medida-libre-de-riesgo>
   Puede escribirse @eq-arbol-medida-libre-de-riesgo equivalentemente como
   $
-    EE^QQ lr([tilde(S)_(t+Delta t) | tilde(S_t) = s], size: #200%) = s "para todo" s "tal que" QQ(tilde(S_t) = s) > 0
+    EE^QQ lr([tilde(S)_(t+Delta t) | tilde(S_t) = s], size: #200%) = s "para todo" s "tal que" PP(tilde(S_t) = s) > 0
   $
 ]
 

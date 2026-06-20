@@ -22,7 +22,7 @@ Dado que $Z$ es esencialmente un lanzamiento de moneda, podemos contar el númer
 $
   PP(X_n = 2k - n) = PP("B"(n,1/2) = k)= binom(n, k) (1/2)^n.
 $
-#exercise[Representar la función de masa de $"B"(n,1/2)$ para diferentes valores de $n$. Comparar con una distribución normal. ¿Qué relación encuentras? Lee la entrada de Wikipedia sobre el tablero de Galton, y en particular mira el video:
+#exercise[Representar la función de masa del paseo aleatorio para diferentes valores de $n$. Comparar con una distribución normal. ¿Qué relación encuentras? Lee la entrada de Wikipedia sobre el tablero de Galton, y en particular mira el video:
 
   https://en.wikipedia.org/wiki/Galton_board
 

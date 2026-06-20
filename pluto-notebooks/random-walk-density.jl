@@ -16,94 +16,41 @@ macro bind(def, element)
     #! format: on
 end
 
-# ╔═╡ d041d108-75d3-41b9-b345-1a8f59eb6c47
-using YFinance, DataFrames, Plots, LaTeXStrings, PlutoUI
+# ╔═╡ b8025dcc-5558-42ce-be54-dcc50deb2288
+using PlutoUI, Plots, LaTeXStrings
 
-# ╔═╡ b601da01-cd3c-4fe4-850a-3e8b8d5a9642
-stocks = [
-	"^SPX" #S&P500
-	"AAPL" #Apple Computers
-	"NVDA" #NVIDIA
-	"MSFT" #Microsoft
-	"KO" #Cocacola
-	"F" #Ford Motor Company (negatively correlated to APPLE)
-	"NEE" # NextEra Energy, Inc.
-	"BLK" #BlackRock, Inc.
-];
+# ╔═╡ 02b8a0e8-6c66-11f1-bd08-4b9830b5e663
+@bind n Slider(1:60)
 
-# ╔═╡ 557caa23-cabf-47c0-87bd-f8c847ed74c5
-md"""
-Select to tickers:
-"""
-
-# ╔═╡ 432db68c-9586-4768-9211-5eff4d0d2390
-@bind ticker1 Select(stocks; default="AAPL")
-
-# ╔═╡ 9cf68c7c-6655-11f1-a12f-8b4d9411788c
-@bind ticker2 Select(stocks; default="F")
-
-# ╔═╡ 4afc158d-64f8-4c7b-b218-e2797e6bc269
-md"""
-Select $\Delta t$
-"""
-
-# ╔═╡ 0f2f4b3b-e50b-4642-9974-5df2b42850be
-@bind Δt Slider(["1d", "1wk", "1mo", "3mo"]; default="1d", show_value=true)
-
-# ╔═╡ afb64ce1-de77-4d90-ae04-afad0b9e08aa
-begin 
-	prices1 = get_prices(ticker1, range="max", interval=Δt);
-    prices2 = get_prices(ticker2, range="max", interval=Δt);
-
-    t1 = prices1["timestamp"]
-    S1t = prices1["close"]
-    t2 = prices2["timestamp"]
-    S2t = prices2["close"]
-    p1 = plot(t1, log.(S1t),
-        title="Price",
-        ylabel=L"\log S_t",
-        xtickfont=font(6),
-        color=:blue,
-        label=ticker1
-    )
-    plot!(p1, t2, log.(S2t), label=ticker2)
+# ╔═╡ 564f7924-8671-43c3-97bf-ca1b29f28111
+begin
+	x = [2*k - n for k = 0:n]
+	p = [binomial(n,k)*(1/2)^n for k=0:n]
+	scatter(x,p, label="n=$n", xlabel=L"x", ylabel=L"\mathbb{P}(X_n = x)")
 end
 
-# ╔═╡ fa4b4a9d-4ba6-42b0-93db-908b8e6bee77
-begin 
-	using Dates, Statistics
-	day_start = max(t1[1],t2[1])
-	index1 = t1 .> day_start
-	S1 = S1t[index1]
-	index2 = t2 .> day_start
-	S2 = S2t[index2]
-	length(S1) == length(S2) 
-	
-	cor(S1,S2)
+# ╔═╡ 2766ca27-f019-459a-be60-c7736b8d48af
+begin
+	plot(xlabel=L"x", ylabel=L"\mathbb{P}(X_n = x)")
+	for n=10:10:60
+	x = [2*k - n for k = 0:n]
+	p = [binomial(n,k)*(1/2)^n for k=0:n]
+	plot!(x,p, label="n=$n")
+	end
+	plot!()
 end
-
-# ╔═╡ faaa86c8-15e1-4faa-bd57-7cd2b14d055c
-md"""
-Tomamos la parte común de los datos y calculamos la correlación
-"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-YFinance = "e4b3b0a2-f9a3-42f3-aabb-32142cceaf77"
 
 [compat]
-DataFrames = "~1.8.2"
 LaTeXStrings = "~1.4.0"
 Plots = "~1.41.6"
 PlutoUI = "~0.7.83"
-YFinance = "~0.1.12"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -112,7 +59,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.6"
 manifest_format = "2.0"
-project_hash = "5465c78ed411eb6b179fd1d0d7f77acc8a06b40d"
+project_hash = "c4f704049b9848f44617ca7d7884c95290710e4c"
 
 [[deps.AbstractPlutoDingetjes]]
 git-tree-sha1 = "6c3913f4e9bdf6ba3c08041a446fb1332716cbc2"
@@ -194,16 +141,6 @@ git-tree-sha1 = "37ea44092930b1811e666c3bc38065d7d87fcc74"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.13.1"
 
-[[deps.Compat]]
-deps = ["TOML", "UUIDs"]
-git-tree-sha1 = "9d8a54ce4b17aa5bdce0ea5c34bc5e7c340d16ad"
-uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
-version = "4.18.1"
-weakdeps = ["Dates", "LinearAlgebra"]
-
-    [deps.Compat.extensions]
-    CompatLinearAlgebraExt = "LinearAlgebra"
-
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
@@ -220,32 +157,16 @@ git-tree-sha1 = "439e35b0b36e2e5881738abc8857bd92ad6ff9a8"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.3"
 
-[[deps.Crayons]]
-git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
-uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
-version = "4.1.1"
-
 [[deps.DataAPI]]
 git-tree-sha1 = "abe83f3a2f1b857aac70ef8b269080af17764bbe"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.16.0"
-
-[[deps.DataFrames]]
-deps = ["Compat", "DataAPI", "DataStructures", "Future", "InlineStrings", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrecompileTools", "PrettyTables", "Printf", "Random", "Reexport", "SentinelArrays", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
-git-tree-sha1 = "5fab31e2e01e70ad66e3e24c968c264d1cf166d6"
-uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-version = "1.8.2"
 
 [[deps.DataStructures]]
 deps = ["OrderedCollections"]
 git-tree-sha1 = "6fb53a69613a0b2b68a0d12671717d307ab8b24e"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
 version = "0.19.5"
-
-[[deps.DataValueInterfaces]]
-git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
-uuid = "e2d170a0-9d28-54be-80f0-106bbe20a464"
-version = "1.0.0"
 
 [[deps.Dates]]
 deps = ["Printf"]
@@ -337,11 +258,6 @@ git-tree-sha1 = "7a214fdac5ed5f59a22c2d9a885a16da1c74bbc7"
 uuid = "559328eb-81f9-559d-9380-de523a88c83c"
 version = "1.0.17+0"
 
-[[deps.Future]]
-deps = ["Random"]
-uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
-version = "1.11.0"
-
 [[deps.GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll", "libdecor_jll", "xkbcommon_jll"]
 git-tree-sha1 = "9e0fb9e54594c47f278d75063980e43066e26e20"
@@ -386,9 +302,9 @@ version = "2.86.3+0"
 
 [[deps.Graphite2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "8a6dbda1fd736d60cc477d99f2e7a042acfa46e8"
+git-tree-sha1 = "69ffb934a5c5b7e086a0b4fee3427db2556fba6e"
 uuid = "3b182d85-2403-5c21-9c21-1e1f0cc25472"
-version = "1.3.15+0"
+version = "1.3.16+0"
 
 [[deps.Grisu]]
 git-tree-sha1 = "53bb909d1151e57e2484c3d1b53e19552b887fb2"
@@ -425,38 +341,15 @@ git-tree-sha1 = "0ee181ec08df7d7c911901ea38baf16f755114dc"
 uuid = "b5f81e59-6552-4d32-b1f0-c071b021bf89"
 version = "1.0.0"
 
-[[deps.InlineStrings]]
-git-tree-sha1 = "8f3d257792a522b4601c24a577954b0a8cd7334d"
-uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
-version = "1.4.5"
-
-    [deps.InlineStrings.extensions]
-    ArrowTypesExt = "ArrowTypes"
-    ParsersExt = "Parsers"
-
-    [deps.InlineStrings.weakdeps]
-    ArrowTypes = "31f734f8-188a-4ce0-8406-c8a06bd891cd"
-    Parsers = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-
 [[deps.InteractiveUtils]]
 deps = ["Markdown"]
 uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 version = "1.11.0"
 
-[[deps.InvertedIndices]]
-git-tree-sha1 = "6da3c4316095de0f5ee2ebd875df8721e7e0bdbe"
-uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
-version = "1.3.1"
-
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "b2d91fe939cae05960e760110b328288867b5758"
 uuid = "92d709cd-6900-40b7-9082-c6be49f344b6"
 version = "0.2.6"
-
-[[deps.IteratorInterfaceExtensions]]
-git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
-uuid = "82899510-4779-5014-852e-03e436cf321d"
-version = "1.0.0"
 
 [[deps.JLFzf]]
 deps = ["REPL", "Random", "fzf_jll"]
@@ -480,18 +373,6 @@ version = "1.6.1"
     JSONArrowExt = ["ArrowTypes"]
 
     [deps.JSON.weakdeps]
-    ArrowTypes = "31f734f8-188a-4ce0-8406-c8a06bd891cd"
-
-[[deps.JSON3]]
-deps = ["Dates", "Mmap", "Parsers", "PrecompileTools", "StructTypes", "UUIDs"]
-git-tree-sha1 = "411eccfe8aba0814ffa0fdf4860913ed09c34975"
-uuid = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
-version = "1.14.3"
-
-    [deps.JSON3.extensions]
-    JSON3ArrowExt = ["ArrowTypes"]
-
-    [deps.JSON3.weakdeps]
     ArrowTypes = "31f734f8-188a-4ce0-8406-c8a06bd891cd"
 
 [[deps.JpegTurbo_jll]]
@@ -690,9 +571,9 @@ version = "2025.11.4"
 
 [[deps.NaNMath]]
 deps = ["OpenLibm_jll"]
-git-tree-sha1 = "9b8215b1ee9e78a293f99797cd31375471b2bcae"
+git-tree-sha1 = "dbd2e8cd2c1c27f0b584f6661b4309609c5a685e"
 uuid = "77ba4419-2d1f-58cd-9bb1-8ffee604a2e3"
-version = "1.1.3"
+version = "1.1.4"
 
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
@@ -749,9 +630,9 @@ version = "1.57.1+0"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
-git-tree-sha1 = "468dbe2b510c876dc091b2c74ed52c7c34f48b9b"
+git-tree-sha1 = "32a4e09c5f29402573d673901778a0e03b0807b9"
 uuid = "69de0a69-1ddd-5017-9359-2bf0b02dc9f0"
-version = "2.8.5"
+version = "2.8.6"
 
 [[deps.Pixman_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LLVMOpenMP_jll", "Libdl"]
@@ -806,12 +687,6 @@ git-tree-sha1 = "e189d0623e7ce9c37389bac17e80aac3b0302e75"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 version = "0.7.83"
 
-[[deps.PooledArrays]]
-deps = ["DataAPI", "Future"]
-git-tree-sha1 = "36d8b4b899628fb92c2749eb488d884a926614d3"
-uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
-version = "1.4.3"
-
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
 git-tree-sha1 = "edbeefc7a4889f528644251bdb5fc9ab5348bc2c"
@@ -823,18 +698,6 @@ deps = ["TOML"]
 git-tree-sha1 = "8b770b60760d4451834fe79dd483e318eee709c4"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
 version = "1.5.2"
-
-[[deps.PrettyTables]]
-deps = ["Crayons", "LaTeXStrings", "Markdown", "PrecompileTools", "Printf", "REPL", "Reexport", "StringManipulation", "Tables"]
-git-tree-sha1 = "624de6279ab7d94fc9f672f0068107eb6619732c"
-uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
-version = "3.3.2"
-
-    [deps.PrettyTables.extensions]
-    PrettyTablesTypstryExt = "Typstry"
-
-    [deps.PrettyTables.weakdeps]
-    Typstry = "f0ed7684-a786-439e-b1e3-3b82803b501e"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -925,12 +788,6 @@ git-tree-sha1 = "9b81b8393e50b7d4e6d0a9f14e192294d3b7c109"
 uuid = "6c6a2e73-6563-6170-7368-637461726353"
 version = "1.3.0"
 
-[[deps.SentinelArrays]]
-deps = ["Dates", "Random"]
-git-tree-sha1 = "084c47c7c5ce5cfecefa0a98dff69eb3646b5a80"
-uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
-version = "1.4.10"
-
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 version = "1.11.0"
@@ -985,21 +842,9 @@ version = "1.8.0"
 
 [[deps.StatsBase]]
 deps = ["AliasTables", "DataAPI", "DataStructures", "IrrationalConstants", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "c6f18e5a52a176a383f6f6c635e0f81feed1d6d4"
+git-tree-sha1 = "e4d7a1a0edc20af42689ea6f4f3587a2175d50ee"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.34.11"
-
-[[deps.StringManipulation]]
-deps = ["PrecompileTools"]
-git-tree-sha1 = "d05693d339e37d6ab134c5ab53c29fce5ee5d7d5"
-uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
-version = "0.4.4"
-
-[[deps.StructTypes]]
-deps = ["Dates", "UUIDs"]
-git-tree-sha1 = "159331b30e94d7b11379037feeb9b690950cace8"
-uuid = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
-version = "1.11.0"
+version = "0.34.12"
 
 [[deps.StructUtils]]
 deps = ["Dates", "UUIDs"]
@@ -1030,18 +875,6 @@ version = "7.8.3+2"
 deps = ["Dates"]
 uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 version = "1.0.3"
-
-[[deps.TableTraits]]
-deps = ["IteratorInterfaceExtensions"]
-git-tree-sha1 = "c06b2f539df1c6efa794486abfb6ed2022561a39"
-uuid = "3783bdb8-4a98-5b6b-af9a-565f29a5fe9c"
-version = "1.0.1"
-
-[[deps.Tables]]
-deps = ["DataAPI", "DataValueInterfaces", "IteratorInterfaceExtensions", "OrderedCollections", "TableTraits"]
-git-tree-sha1 = "f2c1efbc8f3a609aadf318094f8fc5204bdaf344"
-uuid = "bd369af6-aec1-5ad0-b16a-f7cc5008161c"
-version = "1.12.1"
 
 [[deps.Tar]]
 deps = ["ArgTools", "SHA"]
@@ -1256,20 +1089,6 @@ git-tree-sha1 = "a63799ff68005991f9d9491b6e95bd3478d783cb"
 uuid = "c5fb5394-a638-5e4d-96e5-b29de1b5cf10"
 version = "1.6.0+0"
 
-[[deps.YFinance]]
-deps = ["Base64", "Dates", "HTTP", "JSON3", "OrderedCollections", "PrecompileTools", "Random"]
-git-tree-sha1 = "0271116c690257164b7dcbf353a87f0d179ef9b9"
-uuid = "e4b3b0a2-f9a3-42f3-aabb-32142cceaf77"
-version = "0.1.12"
-
-    [deps.YFinance.extensions]
-    YFinance_TSFrames = "TSFrames"
-    YFinance_TimeSeries = "TimeSeries"
-
-    [deps.YFinance.weakdeps]
-    TSFrames = "9f90e835-9451-4aaa-bcb1-743a1b8d2f84"
-    TimeSeries = "9e3dc215-6440-5c97-bce1-76c03772f85e"
-
 [[deps.Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
@@ -1394,15 +1213,9 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═d041d108-75d3-41b9-b345-1a8f59eb6c47
-# ╠═b601da01-cd3c-4fe4-850a-3e8b8d5a9642
-# ╟─557caa23-cabf-47c0-87bd-f8c847ed74c5
-# ╟─432db68c-9586-4768-9211-5eff4d0d2390
-# ╟─9cf68c7c-6655-11f1-a12f-8b4d9411788c
-# ╠═4afc158d-64f8-4c7b-b218-e2797e6bc269
-# ╟─0f2f4b3b-e50b-4642-9974-5df2b42850be
-# ╟─afb64ce1-de77-4d90-ae04-afad0b9e08aa
-# ╟─faaa86c8-15e1-4faa-bd57-7cd2b14d055c
-# ╠═fa4b4a9d-4ba6-42b0-93db-908b8e6bee77
+# ╠═b8025dcc-5558-42ce-be54-dcc50deb2288
+# ╠═02b8a0e8-6c66-11f1-bd08-4b9830b5e663
+# ╠═564f7924-8671-43c3-97bf-ca1b29f28111
+# ╠═2766ca27-f019-459a-be60-c7736b8d48af
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
