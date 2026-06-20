@@ -69,38 +69,41 @@ En España: Letras y bonos del Tesoro.
 
 ==== Valoración de un bono de cupón fijo #footnote[Los ejemplos de esta sección están tomados de @Hull2015]
 
-Al igual que pasa con los contratos a plazo, el precio de un bono con cupón fijo debe ser
+Al igual que pasa con los contratos a plazo, el precio de un bono con cupón fijo debe ser, si $t < T_1$
 $
-  p_"fijo"(t) = sum_(i=1)^(n) c_i p(t, T_i) + K p(t, T_n).
-$
+  p_"fijo" (t) = sum_(i=1)^(n) c_i p(t, T_i) + K p(t, T_n).
+$<eq-bonocuponfijo>
 
+#exercise[
+  Supongamos que encontramos en el mercado un bono con $T_1 = 0.5$ y vencimiento $T_2 = 1$ cupón fijo $c_1 > 0$ y que no satisface la fórmula @eq-bonocuponfijo. Construir una estrategia de arbitraje.
+]
 
-
-Supongamos que sabemos las tasas cero para composición continua como en @table-interes-tiposzerotesoro (que más adelante veremos cómo calcular)
-#figure(
-  table(
-    columns: (auto, auto),
-    table.header([*Maduración \ (años)*], [*Rendimiento cupón-cero \ con composición continua* $R(0, T)$\ (%)]),
-    [0.5], [5.0],
-    [1.0], [5.8],
-    [1.5], [6.4],
-    [2.0], [6.8],
-  ),
-  caption: "Tipos cero del Tesoro",
-)<table-interes-tiposzerotesoro>
-Supongamos un bono cuyo principal es de $100$\$ con un cupón del 6% semi-anual (es decir $r_i = 6%$ y $T_i - T_(i-1) = 0.5$). Es decir, cada 6 meses recibimos un cupón de 3\$.
-El precio actual del bono es
-$
-  p(t) & = underbrace(3, "primer cupón") underbrace(e^(-underbrace(0.5, "tipo") times underbrace(0.5, "6 meses")), "descontando") + 3 e^(-0.058 times 1.0) + 3 e^(-0.064 times 1.5)
-         + (underbrace(100, "principal") + 3) e^(-0.068 times 2.0) \
-       & = 98.39
-$
+#example[Valoración de bono de cupón fijo][
+  Supongamos que sabemos las tasas cero para composición continua como en @table-interes-tiposzerotesoro (que más adelante veremos cómo calcular)
+  #figure(
+    table(
+      columns: (auto, auto),
+      table.header([*Maduración \ (años)*], [*Rendimiento cupón-cero \ con composición continua* $R(0, T)$\ (%)]),
+      [0.5], [5.0],
+      [1.0], [5.8],
+      [1.5], [6.4],
+      [2.0], [6.8],
+    ),
+    caption: "Tipos cero del Tesoro",
+  )<table-interes-tiposzerotesoro>
+  Supongamos un bono cuyo principal es de $100$\$ con un cupón del 6% semi-anual (es decir $r_i = 6%$ y $T_i - T_(i-1) = 0.5$). Es decir, cada 6 meses recibimos un cupón de 3\$.
+  El precio actual del bono es
+  $
+    p(t) & = underbrace(3, "primer cupón") underbrace(e^(-underbrace(0.5, "tipo") times underbrace(0.5, "6 meses")), "descontando") + 3 e^(-0.058 times 1.0) + 3 e^(-0.064 times 1.5)
+           + (underbrace(100, "principal") + 3) e^(-0.068 times 2.0) \
+         & = 98.39
+  $]
 
 ==== Rendimiento del bono hasta la maduración
 
 El rendimiento de un bono es el tipo de descuento que da el mismo valor. Es decir, $y$ tal que
 $
-  p_"fijo"(t) = sum_(i=1)^n c_i e^(-y (T_i - t)).
+  p_"fijo" (t) = sum_(i=1)^n c_i e^(-y (T_i - t)).
 $
 En el ejemplo
 $
@@ -167,7 +170,7 @@ Esta ecuación no admite una solución sencilla, pero claramente el lado derecho
 Hay diferentes tipos de bonos en los que el tipo de interés no se fija cuando se emite el bono, si no que se fija en cada periodo de cupón. Habitualmente esto se hace a través de algún _benchmark_ financiero, como el LIBOR o el EURIBOR.
 
 
-#proposition[Valor de un cupón LIBOR][
+#proposition(breakable: true)[Valor de un cupón LIBOR][
   El cupón $i$-ésimo se fija a tiempo $T_i$ como
   $
     c_i = (T_i - T_(i-1)) L(T_(i-1), T_i) K
@@ -199,12 +202,12 @@ Hay diferentes tipos de bonos en los que el tipo de interés no se fija cuando s
 Así deducimos que el valor a tiempo $t$ del bono con tipo variable LIBOR es
 $
   p_"var" (t) = p(t, T_n) + sum_(i=1)^n [p(t, T_(i-1)) - p(t, T_i)] = p(t, T_0).
-$
+$<eq-bonolibor>
 Es decir $p_"var" (0) = 1$.
 
 #exercise[][
-  Deducir esta fórmula directamente,
-  construir una cartera autofinanciada que reproduzca el precio de bono de tipo variable.
+  Deducir @eq-bonolibor directamente
+  construyendo una cartera autofinanciada que reproduzca el precio de bono de tipo variable.
 ]
 
 == Derivados
@@ -283,7 +286,7 @@ Si $r$ es constante entonces el precio de un _future_ es el mismo que el de un _
 
 Una permuta financiera o swap es un contrato por el cual dos partes se comprometen a intercambiar una serie de cantidades de dinero en fechas futuras, y cómo se calcularán.
 
-The most popular (plain vanilla) interest rate swap is one where LIBOR is exchanged for a fixed rate of interest.
+El producto más popular es el _swap_ de tipos de interés es uno donde el LIBOR se intercambia por un tipo fijo.
 Vamos a considerar el caso en el que el interés se paga con atraso.
 
 #proposition[
