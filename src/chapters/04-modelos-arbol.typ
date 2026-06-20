@@ -144,9 +144,20 @@ La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nue
   $
 ]
 
+#exercise[Condición de no-arbitraje][
+  Comprobar que si falla la condición
+  $
+    d < e^(r Delta t) < u,
+  $<eq-arbol-noarbitraje>
+  entonces existen oportunidades de arbitraje en el mercado ${S, B}.$
+]
+
+== Valoración por replicación
+
+Veamos ahora que las carteras autofinanciadas son las única que
 
 #theorem[Valoración por replicación][
-  Si $V_t$ y $H_t$ son dos productos tales que $H_T = V_T != 0$, entonces $H_t = V_t$ para todo $t in [0,T]$.
+  Si $V_t$ y $H_t$ son dos productos tales que $H_T = V_T != 0$, entonces $H_t = V_t$ para todo $t in [0,T]$ o el mercado ${S, B, H}$ admite arbitrajes.
 ]
 #proof[
   Veamos que si $V_t != H_t$ para algún $t$ entonces el mercado admite una oportunidad de arbitraje.
@@ -184,10 +195,8 @@ La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nue
 ]
 
 == Medida libre de riesgo
-Construímos el precio descontado
-$
-  tilde(S_t) = e^(-r t) S_t
-$
+
+Recordamos un par de una definición de estadística.
 #definition(breakable: true)[Valor esperado condicionado][
   Sean $X, Y$ variables aleatorias discretas
 
@@ -202,8 +211,11 @@ $
 
   De manera similar se puede definir $EE^PP [X|cal(F)]$ donde $cal(F)$ es una $sigma$-álgebra. Ocurre que $EE^PP [X | Y] = EE^PP [X | sigma(Y)]$.
 ]
-Diremos que $QQ << PP$ si $PP(A) = 0$ implica $QQ(A) = 0$.
-Diremos que $QQ ~ PP$ si $PP(A) = 0$ si y sólo si $QQ(A) = 0$.
+
+Ahora vamos a introducir la medida de riesgo neutro, utilizando el precio descontado
+$
+  tilde(S)_t := S_t / B_t.
+$
 
 #definition[Medida de riesgo neutro para un árbol binomial][
   Medida de probabilidad $QQ ~ PP$ tal que
@@ -215,28 +227,30 @@ Diremos que $QQ ~ PP$ si $PP(A) = 0$ si y sólo si $QQ(A) = 0$.
     EE^QQ lr([tilde(S)_(t+Delta t) | tilde(S_t) = s], size: #200%) = s "para todo" s "tal que" PP(tilde(S_t) = s) > 0
   $
 ]
-
-Aplicamos la definición para calcular $q$ la probabilidad de subida
-$
-  s = EE^QQ [tilde(S)_(t + Delta t) | tilde(S)_t = s] = q e^(-r Delta t) u s + (1-q)e^(-r Delta t) d s
-$
-y deducimos
-$
-  q = (e^(r Delta t) - d)/(u - d)
-$
-#proposition[
-  Existe una medida de riego neutro para el árbol binomial si y sólo si
-  $
-    d <= e^(-r Delta t) <= u.
-  $
-]
-
-Por inducción, es claro que
-#proposition[
-  Si $t > s$ entonces
+#exercise[
+  Demostrar por inducción que si $t > s$ entonces
   $
     EE^QQ [tilde(S_t) | tilde(S)_s] = tilde(S)_s.
   $ <eq-arbol-martingala>
+]
+
+
+Deducimos de nuevo que
+
+#theorem[Existencia de la medida de no arbitraje][
+  Existe una medida de riego neutro para el árbol binomial si y sólo si se da la condición de no arbitraje @eq-arbol-noarbitraje.
+  Comprobar que, en tal caso
+  $
+    QQ(S_(t + Delta t) = u S_t) = (e^(r Delta t) - d)/(u - d)
+  $
+  Es habitual denotar este valor por $q$.
+]
+#proof[
+  Aplicamos la definición para calcular $q$ la probabilidad de subida
+  $
+    s = EE^QQ [tilde(S)_(t + Delta t) | tilde(S)_t = s] = q e^(-r Delta t) u s + (1-q)e^(-r Delta t) d s.
+  $
+  Dado que $QQ ~ PP$ debemos imponer que $0 < q < 1$.
 ]
 
 Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noción detallada, vamos simplemente a demostrar la siguiente propiedad que nos permitirá valor activos a tiempo $t = 0$.
@@ -334,7 +348,44 @@ es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouill
   Lo que concluye la demostración.
 ]
 
-=== Filtraciones y valor de una call en tiempo $t$
+== Opciones americanas
+
+Sea $phi.alt(s) = (s - K)_+$. Para una opción americana debe tenerse que
+$
+  V_t = max lr(
+    (
+      underbrace(phi.alt(S_t), "valor de ejercer \n la opción"), quad
+      underbrace(e^(-r Delta t) EE^QQ [ V_(t + Delta t) | S_t], "valor de mantener la opción \n una unidad de tiempo")
+    )
+    , size: #50%
+  )
+$
+Dado que $V_t$ depende sólo del valor "futuro", podemos resolver este sistema a tiempo $t = T - Delta t, T - 2 Delta t, dots.c$
+
+Si escribimos
+$
+  V_j^((i)) := lr(["value at" t = j Delta t "of" V_(t) "provided that" S_(t) = S_0 u^(i) d^(j - i)], size: #150%)
+$
+para $T = N Delta t$ entonces $V_N^((i)) = phi.alt(S_0 u^i d^(N - i))$ y si tomamos $j < N$ entonces
+$
+  V_j^((i)) = max lr(
+    (
+      phi.alt(S_0 u^i d^(j-i))
+      quad , quad
+      e^(-r Delta t) (q V_(j+1)^((i+1))+ (1-q) V_(j+1)^((i)))
+    )
+    , size: #150%
+  )
+$
+
+#exercise[
+  Escribir un programa que permita calcular el valor de una opción americana en función de $(K, r, N, u, d)$.
+  Además, dibujar el árbol y señalar en rojo en qué estados la opción se ha ejercido, es decir cuando $V_t = phi.alt(S_t)$.
+  A este valor se le llama a veces "frontera libre".
+]
+
+
+== Filtraciones y valor de una call en tiempo $t$
 
 Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por que cada periodo depende sólo del anterior, a esto se lo conoce como Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
 
@@ -379,10 +430,6 @@ De este modo, razonando como lo hicimos a tiempo $t = 0$ para tiempos generales,
 $
   C_t = e^(-r(T-t)) EE^QQ [(S_T - K)_+ | cal(F)_t].
 $<eq-arbol-call-tiempot>
-
-== Opciones americanas
-
-// TODO
 
 == VaR
 

@@ -157,7 +157,7 @@ Existen esencilamente tres tipos de _traders_: hedgers, especuladores y arbitrag
 Ver #cite(<Hull2015>, supplement: "Secciones 1.6-1.10"), donde se describen estos actores, se explica qué es un _hedge fund_ y se dan ejemplos de los peligros involucrados en este tipo de actividades con ejemplos concretos.
 
 
-== Modelización el precio de activos: procesos estocásticos
+== Modelizando el precio de activos: procesos estocásticos
 
 El mercado contiene una serie de activos de diferentes tipos que ya hemos presentado: acciones, bonos, opciones, ...
 Habitualmente denotamos por $S_t$ al valor de un activo a tiempo $t$.

@@ -74,6 +74,10 @@ $
 $
 Por salud mental, en adelante no volveremos a mencionar esta construcción tan complicada y tan poco descriptiva. Pero las matemáticas sustentas nuestros cálculos.
 
+#exercise[
+  Calcular $EE[S_T]$ y cuál es la probabilidad de que $S_T > B_T$.
+]
+
 // TODO FINISH
 
 === Cartera
@@ -146,39 +150,47 @@ $
   $<eq-binomial-condicion-no-arbitraje>
 ]
 
+#exercise[Contrato a plazo][
+  Vamos a volver sobre el @example-arbitrage-forward, estudiada en el mercado @eq-unperiodo-2states.
+  Un contrato a plazo es el derecho y la obligación de comprar un bien a un valor fijado $F_0$ a un tiempo fijado $T$.
+  Sea $H_T$ el valor de este contrato.
+  Como en el contrato a futuro no se intercambia dinero a tiempo $0$ se establece que $H_0 = 0$.
+  A tiempo $T$ ejecuto el contrato, como el bien por $F_0$€, y luego puedo venderlo inmediatamente por $S_T$€.
+  De modo que el beneficio es
+  $
+    H_T = S_T - F_0.
+  $
+  Cuando introducimos un nuevo producto, por ejemplo $H_t$, en el mercado, estamos extendiendo el mercado de tal modo que ahora tiene tres activos con los que construir carteras: ${S, B, H}$.
 
-=== Valor de un contrato a plazo fijo
+  + Suponer que $F_0 > S_0 e^(r T)$ y construir una cartera en el mercado ${S, B, H}$ que sea una oportunidad de arbitraje.
 
-Vamos a volver sobre el @example-arbitrage-forward.
-Un contrato a plazo es el derecho y la obligación de comprar un bien a un valor fijado $F_0$ a un tiempo fijado $T$.
-Sea $H_T$ el valor de este contrato.
-Como en el contrato a futuro no se intercambia dinero a tiempo $0$ se establece que $H_0 = 0$.
-A tiempo $T$ ejecuto el contrato, como el bien por $F_0$€, y luego puedo venderlo inmediatamente por $S_T$€.
-De modo que el beneficio es
-$
-  H_T = S_T - F_0.
-$
-Cuando introducimos un nuevo producto, por ejemplo $H_t$, en el mercado, estamos extendiendo el mercado de tal modo que ahora tiene tres activos con los que construir carteras: ${S, B, H}$.
-Veamos cuál debe ser el valor $F_0$.
-#proposition[Precio de un contrato forward][
-  En el mercado @eq-unperiodo-2states el precio de no arbitraje de un contrato forward es
-  $
-    F_0 = S_0 e^(r T)
-  $
-]
-#proof[
-  Supongamos que $F_0 > S_0 e^(r T)$. Entonces, en mercado de activos $(S_t, B_t, H_t)$, podemos construimos la cartera de valor
-  $
-    V_t = underbrace(-H_t, "vender contrato") + underbrace(S_t, "comprar el activo") - underbrace(S_0 B_t, "financiarlo con deuda").
-  $
-  Esta cartera tiene $V_0 = 0 + S_0 - S_0 = 0$, y $V_T = -(S_T - F_0) + S_T - e^(r T) S_0 = F_0 - e^(r T) S_0 > 0$. Esta es una oportunidad de arbitraje.
+  + Adaptar la cartera en el caso $F_0 < S_0 e^(r T)$
 
-  Si $F_0 < S_0 e^(r T)$ entonces construimos la cartera al revés.
-]
-En la demostración anterior, podríamos haber construído ambos casos con la cartera
-$
-  V_t = sign(F_0 - e^(r T) S_0) (-H_t + S_t - S_0 B_t ).
-$
+  + Escribir una cartera que sirva en ambos casos, utilizando la función signo
+    $
+      sign(s) = cases(
+        1 & "si" s > 0,
+        0 & "si" s = 0,
+        -1 & "si" s < 0
+      )
+    $
+
+  + ¿Qué ocurre con estas carteras si $F_0 = S_0 e^(r T)$?
+]<ex-unperiodo-2states-forward>
+
+// #proof[
+//   Supongamos que $F_0 > S_0 e^(r T)$. Entonces, en mercado de activos $(S_t, B_t, H_t)$, podemos construimos la cartera de valor
+//   $
+//     V_t = underbrace(-H_t, "vender contrato") + underbrace(S_t, "comprar el activo") - underbrace(S_0 B_t, "financiarlo con deuda").
+//   $
+//   Esta cartera tiene $V_0 = 0 + S_0 - S_0 = 0$, y $V_T = -(S_T - F_0) + S_T - e^(r T) S_0 = F_0 - e^(r T) S_0 > 0$. Esta es una oportunidad de arbitraje.
+
+//   Si $F_0 < S_0 e^(r T)$ entonces construimos la cartera al revés.
+// En la demostración anterior, podríamos haber construído ambos casos con la cartera
+// $
+//   V_t = sign(F_0 - e^(r T) S_0) (-H_t + S_t - S_0 B_t ).
+// $
+// ]
 
 
 === Opción europea
@@ -368,21 +380,26 @@ Enunciemos el siguiente resultado como teorema, porque nos será de gran utilida
     H_0 = e^(-r T) EE^QQ [H_T].
   $
 ]
-De manera similar, para una _call_ y _put_ europeas, se tiene
-$
-  C_0 = e^(-r T) EE^QQ [(S_T - K)_+]
-  quad "y" quad
-  P_0 = e^(-r T) EE^QQ [(K - S_T)_+].
-$
-Restando obtenemos
-$
-  C_0 - P_0 & = e^(-r T) EE^QQ [S_T - K] = EE^QQ [tilde(S)_t ] - e^(-r T) K
-$
-donde concluímos que
-$
-  C_0 - P_0 & = S_0 - e^(-r T) K.
-$<eq-unperiodo-putcall>
-Se llama a esta relación _paridad put-call_.
+
+
+
+#exercise[Paridad _put-call_][
+  Una opción de venta, o _put_, europea tiene pay-off $P_T = (K - S_T)_+$. Utilizar la medida de riesgo neutro $QQ$ para demostrar la siguiente relación, conocida como _paridad put-call_
+  $
+    C_0 - P_0 & = S_0 - e^(-r T) K.
+  $<eq-unperiodo-putcall>
+]<ex-unperiodo-putcall>
+
+// De manera similar, para una _call_ y _put_ europeas, se tiene
+// $
+//   C_0 = e^(-r T) EE^QQ [(S_T - K)_+]
+//   quad "y" quad
+//   P_0 = e^(-r T) EE^QQ [(K - S_T)_+].
+// $
+// Restando obtenemos
+// $
+//   C_0 - P_0 & = e^(-r T) EE^QQ [S_T - K] = EE^QQ [tilde(S)_t ] - e^(-r T) K
+// $
 
 Observamos en @eq-arbol-call se tiene que
 $
@@ -434,7 +451,9 @@ $
   theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) >= (theta^((1)) + theta^((2))) (alpha_i S_0 - K)_+ .
 $
 Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vacío, en su interior cualquier $(theta^((1)), theta^((2)))$ da un punto donde se gana dinero con probabilidad 1.
-
+#exercise[][
+  Elegir valores particulares de $alpha_1, dots, alpha_3$ y $r T$ de modo este mercado tenga oportunidades de arbitraje.
+]
 
 == Modelo matricial: $N$ activos y $M$ estados
 

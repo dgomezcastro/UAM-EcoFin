@@ -130,7 +130,7 @@ donde $W_t$ es un movimiento Browniano.
 
 $$
 #theorem(breakable: true)[
-  Sea $S^((Delta t))$ el proceso construido por el árbol binomial.
+  Sea $S^((Delta t))$ el proceso construido por el árbol binomial @eq-arbol.
   Definimos la interpolación constante a trozos
   $
     S_t^((Delta t)) := S_(n Delta t)^((Delta t)) quad "si " n Delta t <= t < (n+1) Delta t.
