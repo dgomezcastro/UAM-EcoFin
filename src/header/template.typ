@@ -57,6 +57,7 @@
     listing-index: (enabled: false),
     footer: "page-number-center",
     table-of-contents: outline(depth: 2),
+    raw-text: (font: "FiraCode Nerd Font", size: 9pt),
   )
 
   set text(lang: lang)
