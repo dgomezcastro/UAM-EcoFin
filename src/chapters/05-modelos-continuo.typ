@@ -185,7 +185,7 @@ $
   quad
   EE[ (W_(t + Delta t) - W_(t))^4] = 3 (Delta t)^2
 $
-De esta forma, obtenemos la relación determinista $(W_(t + Delta t) - W_(t))^2 approx Delta t$.
+De esta forma, obtenemos que asintóticamente $(W_(t + Delta t) - W_(t))^2 approx Delta t$ es una cantidad determinista.
 
 #exercise[][
   Sean $a,b in RR$ y $G, H in LL^2(0,T)$. Demostrar rigurosamente que
