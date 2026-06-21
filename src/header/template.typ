@@ -14,6 +14,9 @@
 
 #import "@preview/headcount:0.1.0": *
 
+#import "@preview/codly:1.3.0": *
+#import "@preview/codly-languages:0.1.1": *
+
 #let (example-counter, example-box, example, show-example) = make-frame(
   "example",
   theorion-i18n-map.at("example"),
@@ -95,16 +98,13 @@
       it
     }
   }
+  show: codly-init.with()
+  codly(languages: codly-languages)
 
   doc
 }
 
-#import "@preview/codly:1.3.0": *
-#import "@preview/codly-languages:0.1.1": *
-
 #let code-block(body, caption: none) = {
-  show: codly-init.with()
-  codly(languages: codly-languages)
   figure(
     body,
     supplement: "Código",
