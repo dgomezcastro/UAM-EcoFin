@@ -233,3 +233,38 @@ El resultado, natural, queda expresado en años.
 El tiempo en el ordenador se almacena habitualmente en el llamado `UNIX time`, que consiste en el número de segundo pasados desde el *1 de enero de 1970 00:00:00 UT* (llamado _epoch_), a excepción de los segundos intercalares (_lead seconds_).
 De esta manera el tiempo se puede almacenar como un número entero.
 Un problema curioso es que habitualmente se utilizan `signed 32-bit integers`. Esto generará un problema el 19 de enero de 2038 a las 03:14:07UTC, cuando se alcanza el máximo de estos números. Es el llamado problema del año 2038, Y2038, o _epochalyse_.
+
+=== Simulación de procesos estocásticos
+
+*Lanzamiento de moneda*. Los ordenadores permiten generar un bit de manera pseudo-aleatoria, que es "suficientemente aleatorios" para los propósitos de nuestras simulaciones.
+Esto quiere decir que podemos obtener muestras independientes e idénticamente distribuidas de un lanzamiento de moneda balanceado, o una binomial $"B"(n=1,p=1/2)$.
+
+*Simulación de una distribución uniforme*. A partir de estas binomiales podemos construir binomiales de manera sencilla. Y colocándolas como decimales podemos construir uniformes $"U"(0,1)$.
+
+*Variables aleatorias continuas*. Sea $F : RR -> [0,1]$ estrictamente creciente.
+Entonces $X ~ "U"(0,1)$ entonces $Y = F^(-1) (X)$ tiene por función de distribución $F$. Esto ocurre porque
+$
+  PP(Y in [a,b]) & = PP(F^(-1)(X) in [a,b]) = PP(X in [F(a), F(b)]) \
+                 & = F(b) - F(a).
+$
+Esto nos permite de manera "aceptable" simular variables aleatorias continuas.
+
+*Uso de librerías* La mayor parte de lenguajes modernos tienen estas funcionalidades ya programadas. Un ejemplo en julia viene dado por @code-rand y @code-sampledistrib.
+
+#code-block(caption: "Muestreo de una uniform en julia. No requiere ninguna librería.")[
+  ```julia
+  rand() # Muestra de una uniforme (0,1).
+  ```
+]<code-rand>
+
+#code-block(caption: [Muestreo de algunas variables aleatorias en julia usando el paquete `Distributions.jl`])[
+  ```julia
+  using Distributions
+
+  X = Binomial(5,0.5) # Binomial{Float64}(n=5, p=0.5)
+  rand(X) # Muestra de un binomial
+
+  X = Normal(0.0, 1.0) # Normal{Float64}(μ=0.0, σ=1.0)
+  rand(X) # Muestra de la normal
+  ```
+]<code-sampledistrib>

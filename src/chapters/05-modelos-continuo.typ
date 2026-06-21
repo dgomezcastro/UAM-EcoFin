@@ -99,6 +99,8 @@ son independientes
     W_t - W_s " y " W_r - W_u " son independientes".
   $<eq-browniano-incrementos-independientes>
 ]
+En algunos contextos se habla de _proceso de Wiener_, de donde surge la notación $W$.
+
 Hemos hecho la construcción de manera formal. Para una construcción analítica con funciones de Haar ver @Evans2013.
 Es interesante también la presentación hecha en @bjorkArbitrageTheoryContinuous2019, donde se justifica con más detalle el paso el límite $Delta t -> 0$.
 
@@ -137,11 +139,11 @@ donde típicamente $A_t = a(t, X_t)$ y $B_t = b(t, X_t)$.
 Cuando $Delta t -> 0$ formalmente querríamos escribir algo de la forma
 $
   d X_t = A_t dif t + B_t dif W_t.
-$<eq-SDE>
-La forma de justificar esta "fórmula" es en términos de formas diferenciales. De manera rigurosa, diremos que se cumple @eq-SDE si se cumple para todo $t$ la fórmula integral
+$<eq-Itodifferential>
+La forma de justificar esta "fórmula" es en términos de formas diferenciales. De manera rigurosa, diremos que se cumple @eq-Itodifferential si se cumple para todo $t$ la fórmula integral
 $
   X_t = X_0 + integral_0^t A_s dif s + integral_0^t B_s dif W_s.
-$<eq-SDE-integral>
+$<eq-Itodifferential-integral>
 Por las propiedades de la integral esto nos permite escribir $X_(t + Delta t) - X_t$ como integrales en $[t, t + Delta t]$.
 Ahora debemos construir estas integrales estocásticas.
 
@@ -194,7 +196,7 @@ De esta forma, obtenemos la relación determinista $(W_(t + Delta t) - W_(t))^2 
 ]
 === Regla de la cadena
 
-Sea $X_t$ solución de @eq-SDE y $u : [0,T] times R -> R$ regular. Queremos ver qué ecuación satisface $Y_t = u(t, X_t)$. Usando desarrollos de Taylor escribimos
+Sea $X_t$ solución de @eq-Itodifferential y $u : [0,T] times R -> R$ regular. Queremos ver qué ecuación satisface $Y_t = u(t, X_t)$. Usando desarrollos de Taylor escribimos
 $
   Y_(t + Delta t) &= Y_t + (partial u)/(partial t)(t, X_t) (Delta t) + (partial u)/(partial x) (X_(t + Delta t) - X_t) + 1/2 (partial^2 u)/(partial x^2) (X_(t + Delta t) - X_t)^2 + O((Delta t)^2)
 $
@@ -216,14 +218,84 @@ $
 
 Con un poco de trabajo, de manera similar se prueba
 #theorem[Regla de cadena de Itô][
-  Sea $X_t$ solución de @eq-SDE
+  Sea $X_t$ solución de @eq-Itodifferential
   y sea $u$ dos veces diferenciable en $x$ y una vez en $t$ con derivada continua. Sea $Y_t = u(t, X_t)$ entonces
   $
-    d Y_t = ((partial u)/(partial t) + A (partial u)/(partial x) + B^2 /2 (partial^2 u)/(partial x^2) ) dif t + B (partial u)/(partial x) dif W_t
+    d Y_t = ((partial u)/(partial t) + A_t (partial u)/(partial x) + B_t^2 /2 (partial^2 u)/(partial x^2) ) dif t + B (partial u)/(partial x) dif W_t
   $
 ]<thm-Itochainrule>
 
 La demostración rigurosa de este resultado y todos los detalles de esta construcción pueden verse in @Evans2013.
+
+=== Ecuaciones diferenciales estocásticas
+
+Ahora es el momento de utilizar la regla de la cadena para resolver algunas ecuaciones diferenciales estocásticas de la forma
+Se puede escribir una teoría existencia y unicidad para ecuaciones de la forma
+$
+  dif X_t = a(t, X_t) dif t + b(t, X_t) dif W_t
+$<eq-SDE>
+bajo la condición de que $a$ y $b$ sean Lipschitzianas. Ver @Evans2013.
+Algunas de ellas admiten resolución analítica.
+
+#exercise[Ecuación sin _drift_][
+  Consider el problema de valor inicial
+  $
+    dif X_t = g(t) X_t dif W_t "para" t>0, quad X_0 = 1.
+  $
+  Se pide
+
+  + Utilizar cálculo de Itô para escribir la ecuación de $log X_t$.
+
+  + Deducir que la solución viene dada por
+  $
+    X_t = exp(-1/2 integral_0^t g(s)^2 dif s + integral_0^t g(s) dif W_s)
+  $
+]
+
+#exercise(breakable: true)[Movimiento Browniano geométrico][
+  Se llama movimiento Browniano geométrico a la solución de
+  $
+    dif S_t = S_t (mu dif t + sigma d W_t).
+  $<eq-BlackScholes-SDE>
+  Se pide
+
+  + Utilizar la regla de la cadena de Itô para demostrar que
+    $
+      dif log S_t = (mu - sigma^2/2) dif t + sigma dif W_t.
+    $
+
+  + Integrar la ecuación de $log S_t$ para deducir que
+    $
+      S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t).
+    $<eq-BlackScholes-St-P>
+    es la única solución de @eq-BlackScholes-SDE.
+]<ex-brownianogeometrico>
+
+#exercise[Puente Browniano][
+  Un puente Browniano es un ejemplo de proceso estocástico con los valores $B_0 = B_1 = 0$. Se puede obtener resolviendo la ecuación
+  $
+    dif B_t = - B / (1 -t) dif t + dif W_t, quad B_0 = 0.
+  $
+  Usar la regla de la cadena de Itô para deducir que
+  $
+    B_t = (1-t) integral_0^t 1/(1-s) dif W_s.
+  $
+]
+
+=== Resolución numérica
+
+Los paseos aleatorios pueden "representarse" de manera "rigurosa", dado que los incrementos son normales.
+De manera que si tomamos $xi_1, xi_2, dots.c$ muestras de una normal $N(0, 1)$ entonces
+$
+  w_k = sqrt(Delta t) sum_(i=1)^k xi_k
+$
+forman una muestra de $W_(k Delta t)$. Notése que $sqrt(Delta t) xi_k ~ N(0,Delta t) ~ Delta W_t = W_(t + Delta t) - W_t$
+
+Existen múltiples métodos numéricos para la resolución de ecuaciones diferenciales de la forma @eq-SDE. Un método sencillo es el método de Euler-Maruyama, dado por
+$
+  X_(t + Delta t) = X_t + a(t, X_t) Delta t + b(t, X_t) xi_t sqrt(Delta t)
+$
+donde $xi_t$ son variables i.i.d como $N(0, 1)$.
 
 == Límite de árboles binomiales
 
@@ -238,8 +310,9 @@ $$
   $
   Supongamos que se puede descomponer
   $
-    log u^((Delta t)) = nu^((Delta t)) + sigma^((Delta t)),
-    quad log d^((Delta t)) = nu^((Delta t)) - sigma^((Delta t))
+    log u^((Delta t)) = nu^((Delta t)) + sigma^((Delta t))
+    quad "y" quad
+    log d^((Delta t)) = nu^((Delta t)) - sigma^((Delta t))
   $
   de tal modo que existen los límite
   $
@@ -247,11 +320,7 @@ $$
   $<eq-BlackScholes-condicionud2>
   Entonces se tiene que
   $S_t^((Delta t)) ->^d S_t$
-  donde
-  $
-    S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t).
-  $<eq-BlackScholes-St-P>
-  donde $W_t$ es un movimiento Browniano y $mu$ depende sólo de $nu$ y $p$.
+  donde $S_t$ viene dada por @eq-BlackScholes-St-P y $W_t$ es un movimiento Browniano
 ]
 #proof[
   Para $t in (Delta t) NN$ tenemos que
@@ -283,20 +352,7 @@ $$
   $
     S_t = S_0 exp(kappa t + sigma W_t)
   $
-  Tomamos la convención $kappa = mu - sigma^2 / 2$ por motivos que veremos a continuación.
-]
-
-#exercise[Movimiento Browniano geométrico][
-  Se llama movimiento Browniano geométrico a la solución de
-  $
-    dif S_t = S_t (mu dif t + sigma d W_t).
-  $<eq-BlackScholes-SDE>
-  Utilizar la regla de la cadena de Itô para demostrar que
-  $
-    dif log S_t = (mu - sigma^2/2) dif t + sigma dif W_t.
-  $
-  Comparar esta ecuación con @eq-BlackScholes-incremento-log.
-  Integrar la ecuación de $log S_t$ para deducir que @eq-BlackScholes-St-P es la única solución de @eq-BlackScholes-SDE.
+  Tomamos la convención $kappa = mu - sigma^2 / 2$ para coincidir con la notación del @ex-brownianogeometrico.
 ]
 
 === Los modelos Cox-Ross-Rubinstein y Jarrow-Rudd
@@ -486,7 +542,7 @@ $<eq-BlackScholes-call-expectvalue>
     $
       d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
     $<eq-BlackScholes-SDEriskfree>
-    Si $X_t$ es solución de @eq-SDE donde $W_t$ es un movimiento Browniano respecto a $PP$, entonces $X$ es una martingala respecto a $PP$ si y sólo si $a(t, X_t) = 0$.
+    Si $X_t$ es solución de @eq-Itodifferential donde $W_t$ es un movimiento Browniano respecto a $PP$, entonces $X$ es una martingala respecto a $PP$ si y sólo si $a(t, X_t) = 0$.
 
   + Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree no involucran a $mu$, al igual que pasaba en el caso de árboles.
 ]
