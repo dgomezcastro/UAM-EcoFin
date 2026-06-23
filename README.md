@@ -11,7 +11,7 @@ Estas notas corresponde al curso impartido en 2026-2027 por David Gómez-Castro.
 
 El curso consta de 16 semanas:
 1. Introducción. El mercado financiero. [Notebook](pluto-notebooks/log-normality.jl)
-1. Tipos de interés: interés compuesto, interés continuo, bono cupón-cero, fórmulas de amortización, TAE
+1. Tipos de interés: interés compuesto, interés continuo, bono cupón-cero, fórmulas de amortización, TAE. [Notebook](pluto-notebooks/mortgage.jl)
 1. Activos y derivados: presentación
 1. Bonos, curva cupón-cero
 1. Derivados: contrato a plazo, _swap_, opciones

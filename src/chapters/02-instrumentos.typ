@@ -112,7 +112,9 @@ $
 $
 Esta ecuación no admite una solución sencilla, pero claramente el lado derecho es monónoto con $y$. Puede resolver con algún método numérico por ejemplo bisección. En este caso $y = 6.76%$.
 
-// === _Yield curve_
+=== Cálculo de la curva cupón-cero o _yield curve_
+
+Lo habitual es "deducir" la fórmula de cupón-cero a partir de los valores de distintos productos. Hay diferentes métodos para hacer este cálculo. A continuación presentamos un ejemplo sencillo.
 
 #example(
   breakable: true,
