@@ -121,11 +121,11 @@ Lo habitual es "deducir" la fórmula de cupón-cero a partir de los valores de d
 )[Cálculo del rendimiento de cupón-cero a partir de bonos de cupón fijo#footnote[El ejemplo de esta sección están tomados de @Hull2015]][
   Para construir los valores de la tabla @table-interes-tiposzerotesoro se utilizan los pagos que hacen distintos tipos de bonos.
   Hay diferentes formas de hacer este cálculo, pero vamos a  hablar del método _bootstrap_. La idea es ir utilizando bonos de menor duración para ir fijando $R(T) := R(0, T)$ a cada periodo $T$.
-  Por ejemplo, pensemos que tenemos los bonos de @table-interes-bootstrap.
+  Por ejemplo, pensemos que tenemos los bonos de @table-interes-bootstrap. En cada caso, igualamos el valor actual del bono al valor actual (o valor descontado) de todos los pagos recibidos.
 
   Para el bono de 3 meses (0.25 años), calculamos
   $
-    100 = 97.5 e^(R(0.25) times 0.25).
+    100 times e^(- R(0.25) times 0.25) = 97.5.
   $
   De donde $R(0.25) = 10.127%$. Los de 6 meses y un año nos dan $R(0.5) = 10.469%$ y $R(1.0) = 10.536%$.
 
