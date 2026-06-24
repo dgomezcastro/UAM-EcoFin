@@ -536,13 +536,24 @@ Al igual que para árboles, de la versión continua de @eq-arbol-martingala se d
 $
   C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
 $<eq-BlackScholes-call-expectvalue>
+No lo demostraremos rigurosamente.
 
 #remark[
+  + En el caso continuo se dice que $X_t$ es una martingala respecto a $PP$ si
+    para todo $T>=t$ se tiene
+    $
+      X_t = EE^PP [X_T | cal(F)_t]
+    $
+
+  + Si $X_t$ es solución de @eq-Itodifferential donde $W_t$ es un movimiento  Browniano respecto a $PP$
+    entonces $X$ es una martingala respecto a $PP$ si y sólo si $A_t = 0$.
+
   + Usando cálculo de Itô, @eq-BlackScholes-St-Q es equivalente a que
     $
       d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
     $<eq-BlackScholes-SDEriskfree>
-    Si $X_t$ es solución de @eq-Itodifferential donde $W_t$ es un movimiento Browniano respecto a $PP$, entonces $X$ es una martingala respecto a $PP$ si y sólo si $a(t, X_t) = 0$.
+    Es decir que $QQ$ es una medida que hace a $tilde(S)_t$ una $QQ$-martingala. Por eso en ocasiones se la llama _medida martingala_.
+
 
   + Es interesante observar que @eq-BlackScholes-PDE y @eq-BlackScholes-SDEriskfree no involucran a $mu$, al igual que pasaba en el caso de árboles.
 ]
