@@ -239,12 +239,16 @@ Deducimos de nuevo que
 
 #theorem[Existencia de la medida de no arbitraje][
   Existe una medida de riego neutro para el árbol binomial si y sólo si se da la condición de no arbitraje @eq-arbol-noarbitraje.
-  Comprobar que, en tal caso
+  En tal caso se tiene
   $
     QQ(S_(t + Delta t) = u S_t) = (e^(r Delta t) - d)/(u - d)
   $
   Es habitual denotar este valor por $q$.
 ]
+Nótese que
+$
+  QQ(S_(t + Delta t) = d S_t) = (u - e^(r Delta t))/(u - d).
+$
 #proof[
   Aplicamos la definición para calcular $q$ la probabilidad de subida
   $
@@ -300,22 +304,21 @@ De manera similar al caso de un periodo, las opciones _call europeas_ se puede r
   $<eq-arbol-call>
   donde $T = N Delta t$ y
   $
-      a & := min {x in [0, N) inter ZZ : u^x d^(N-x) S_0 >= 0} \
-      q & := (e^(-r Delta t) - d)/(u-d) \
-    rho & := e^(-r Delta t) u q.
+                  a & := min {x in [0, N) inter ZZ : u^x d^(N-x) S_0 - K >= 0} \
+                  q & := (e^(r Delta t) - d)/(u-d) \
+                rho & := e^(-r Delta t) u q \
+    op("B")(a; N,p) & := sum_(j=a)^N binom(N, j) p^j (1-p)^(N-j)
   $
 ]
-
-En la fórmula anterior,
+Nótese que
 $
-  op("B")(a; N,p) = sum_(j=a)^N binom(N, j) p^j (1-p)^(N-j)
+  op("B")(a; N,p) = 1 - F_(op("B")(N,p)) (a-1).
 $
-es la probabilidad de extraer $a$ positivos en $N$ lanzamientos de una Bernouilli $p$.
 
 #proof[
   Así, tenemos que
   $
-    EE^QQ [C_T] & = EE^QQ [(S_T - K)_+] = sum_(j=0)^N (u^j d^(N-j) S_0 - K)_+ QQ(S_T = u^j d^(N-j)).
+    EE^QQ [C_T] & = EE^QQ [(S_T - K)_+] = sum_(j=0)^N (u^j d^(N-j) S_0 - K)_+ QQ(S_T = u^j d^(N-j)S_0).
   $
   Observando el árbol es fácil basta contar caminos para ver que
   $
