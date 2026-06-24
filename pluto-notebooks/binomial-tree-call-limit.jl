@@ -4,83 +4,50 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 63bef3e7-6965-4df3-ab75-fac09a5d3248
-using PlutoUI, Distributions, SpecialFunctions, Plots
-
-# ╔═╡ d8b123c6-6fd3-11f1-89df-c122336820d2
-S₀ = 1.0;
-
-# ╔═╡ 101f05c7-b769-4a4d-bd98-55072eabdb59
-B(a, N, p) = 1 - cdf(Binomial(N,p), a-1); 
-
-# ╔═╡ f75e5026-2ab4-4b2f-8104-20da1a5c74a4
-md"""
-Verificamos que hemos bien el cálculo de la cdf
-"""
-
-# ╔═╡ 4fcc559d-fe44-471f-89fe-95900c595765
-begin 
-	B2(a,N,p) = sum(binomial(N,j) * p^j * (1-p)^(N-j) for j=a:N)
-	for N in 1:10, a in 0:N, p in 0.1:0.1:0.9
-		if B2(a,N,p) ≉ B(a,N,p) 
-			println("N=$N, a=$a, p=$p")
-		end
-	end
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+    #! format: on
 end
 
-# ╔═╡ 5b566edf-0f46-4c41-a278-662b6262ef75
-md"""
-*Ejercicio.* Explicar estos errores
-"""
+# ╔═╡ a7336b48-7004-11f1-bf22-ddebab330f56
+using PlutoUI, Distributions, SpecialFunctions, Plots
 
-# ╔═╡ 66bdf5a0-4535-4a9c-b3a4-c5463fdc3451
-md"""
-Ahora vamos a ver cuál es el principal problema de `B2`
-"""
-
-# ╔═╡ 8e8228a5-ae57-4c02-af71-8f5732cf756d
+# ╔═╡ 2610e6c4-b2f8-4329-b440-1faf1558f8fb
 begin 
-	try
-		B2(25,100,0.1) 
-	catch e
-		println("B2(25,100,0.1) gives error:")
-		println(e)
-	end
-	println("whereas the Distributions library is able to approximate")
-	@show B(25,100,0.1)
-end;
+	S₀ = 1.0;
+	B(a, N, p) = 1 - cdf(Binomial(N,p), a-1);
+	function binomial_tree_european_call(;K,r,Δt,N,u,d)
+		T = N*Δt
+		if u^(N) * S₀ <= K 
+			return 0.0 
+		end
+		q = (exp(r*Δt) - d)/(u-d)
+		ρ = exp(-r*Δt)*u*q
+		a = 0
+		while u^a*d^(N-a)*S₀ < K 
+			a += 1
+		end
+		return S₀*B(a, N, ρ) - K*exp(-r*T)*B(a, N, q)
+	end;
+end
 
-# ╔═╡ 46228c59-416a-48a9-a22d-c977d17c2493
+# ╔═╡ fd99225c-e272-488f-95ec-eba5312e616d
 md"""
-## Precio de la call europea
+# Límite en N
 """
 
-# ╔═╡ 44562b57-a6cf-403e-a75d-b5114c76cf30
-function binomial_tree_european_call(;K,r,Δt,N,u,d)
-	T = N*Δt
-	if u^(N) * S₀ <= K 
-		return 0.0 
-	end
-	q = (exp(r*Δt) - d)/(u-d)
-	ρ = exp(-r*Δt)*u*q
-	a = 0
-	while u^a*d^(N-a)*S₀ < K 
-		a += 1
-	end
-	return S₀*B(a, N, ρ) - K*exp(-r*T)*B(a, N, q)
-end;
+# ╔═╡ f995f44f-b2ad-493a-8f09-b27e4005cec2
+@bind N Slider(1:200, default=10)
 
-# ╔═╡ 4f8b04cb-d307-4a42-b61b-de9e44e58fec
-binomial_tree_european_call(N=10, Δt=0.1, r=0., K=S₀, u=2.0, d=0.5)
-
-# ╔═╡ e4046f87-f2d5-4725-89f6-f4e501a93c04
-md"""
-## Curva de precios en función de $K$
-"""
-
-# ╔═╡ 7135949c-1efe-4a00-ac5a-44b9f8b0f8a8
+# ╔═╡ 5869bd1c-faea-4658-ae45-957389fa1e9f
 begin 
-	N = 5
 	σ = 0.5
 	Δt=1.0/N
 	Ks = S₀*(0.0:0.01:1.7)
@@ -1374,18 +1341,10 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╠═63bef3e7-6965-4df3-ab75-fac09a5d3248
-# ╠═d8b123c6-6fd3-11f1-89df-c122336820d2
-# ╠═101f05c7-b769-4a4d-bd98-55072eabdb59
-# ╟─f75e5026-2ab4-4b2f-8104-20da1a5c74a4
-# ╠═4fcc559d-fe44-471f-89fe-95900c595765
-# ╟─5b566edf-0f46-4c41-a278-662b6262ef75
-# ╟─66bdf5a0-4535-4a9c-b3a4-c5463fdc3451
-# ╠═8e8228a5-ae57-4c02-af71-8f5732cf756d
-# ╟─46228c59-416a-48a9-a22d-c977d17c2493
-# ╠═44562b57-a6cf-403e-a75d-b5114c76cf30
-# ╠═4f8b04cb-d307-4a42-b61b-de9e44e58fec
-# ╟─e4046f87-f2d5-4725-89f6-f4e501a93c04
-# ╠═7135949c-1efe-4a00-ac5a-44b9f8b0f8a8
+# ╠═a7336b48-7004-11f1-bf22-ddebab330f56
+# ╠═2610e6c4-b2f8-4329-b440-1faf1558f8fb
+# ╟─fd99225c-e272-488f-95ec-eba5312e616d
+# ╠═f995f44f-b2ad-493a-8f09-b27e4005cec2
+# ╠═5869bd1c-faea-4658-ae45-957389fa1e9f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

@@ -300,9 +300,13 @@ De manera similar al caso de un periodo, las opciones _call europeas_ se puede r
 #theorem[
   El precio de no arbitraje de una opción _call_ europea viene dado por
   $
-    C_0 & = S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q) .
+    C_0 & =
+          cases(
+            0 & "si" u^N S_0 <= K,
+            S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q) & "si" u^N S_0 > K.
+          )
   $<eq-arbol-call>
-  donde $T = N Delta t$ y
+  donde $T = N Delta t$ y, si $u^N S_0 > K$ entonces definimos
   $
                   a & := min {x in [0, N) inter ZZ : u^x d^(N-x) S_0 - K >= 0} \
                   q & := (e^(r Delta t) - d)/(u-d) \
