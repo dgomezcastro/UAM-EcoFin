@@ -58,7 +58,7 @@ md"""
 # ╔═╡ 44562b57-a6cf-403e-a75d-b5114c76cf30
 function binomial_tree_european_call(;K,r,Δt,N,u,d)
 	T = N*Δt
-	if u^(N) * S₀ <= K 
+	if u^N * S₀ <= K 
 		return 0.0 
 	end
 	q = (exp(r*Δt) - d)/(u-d)
