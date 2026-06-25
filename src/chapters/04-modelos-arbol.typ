@@ -158,7 +158,7 @@ Veamos ahora que las carteras autofinanciadas son las única que
 
 #theorem[Valoración por replicación][
   Si $V_t$ y $H_t$ son dos productos tales que $H_T = V_T != 0$, entonces $H_t = V_t$ para todo $t in [0,T]$ o el mercado ${S, B, H}$ admite arbitrajes.
-]
+]<thm-arbol-valor-replicacion>
 #proof[
   Veamos que si $V_t != H_t$ para algún $t$ entonces el mercado admite una oportunidad de arbitraje.
   Sea $t_0$ cualquier tiempo donde.
@@ -278,8 +278,8 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 ]
 
 
-#corollary[Valor de un derivado con vencimiento a tiempo fijo][
-  En el modelo @eq-arbol, consideremos un derivado de valor $H$ del que conocemos su valor a vencimiento $T$ con $H_T >= 0$. El precio libre de arbitraje viene dado por
+#corollary[Valor de un producto mediante medida de riesgo neutro][
+  En el modelo @eq-arbol, consideremos un producto $H$. Entonces el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
   $
     H_0 = e^(-r T) EE^QQ [H_T].
   $
@@ -287,9 +287,9 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 
 #proof[
   Siguiendo la idea del modelo de un periodo, es fácil construir una cartera autofinanciada $V_t$ tal que $V_T = H_T$.
-  De modo que $V_t = H_t$ en cada tiempo (o es posible construir una cartera con arbitraje), y por tanto también $tilde(H)_t = tilde(V)_t$. Concluímos que
+  De modo que usando @thm-arbol-valor-replicacion, o bien $V_t = H_t$ en cada tiempo, o es posible construir una cartera con arbitraje en el mercado ${S, B, H}$. Por tanto, también se tiene $tilde(H)_t = tilde(V)_t$. Concluimos que
   $
-    H_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ [tilde(H)_T] = EE^QQ [e^(-r T) C_T].
+    H_0 = V_0 = EE^QQ [tilde(V)_T] = EE^QQ [tilde(H)_T] = EE^QQ [e^(-r T) H_T].
   $
   Esto concluye la demostración.
 ]
@@ -320,7 +320,8 @@ $
 $
 
 #proof[
-  Así, tenemos que
+  Primero observamos que si $K >= u^N S_0$ entonces $S_T <= K$. De modo que $(S_T - K)_+ = 0$ y $C = 0$.
+  Si $K < u^N S_0$ entonces escribimos
   $
     EE^QQ [C_T] & = EE^QQ [(S_T - K)_+] = sum_(j=0)^N (u^j d^(N-j) S_0 - K)_+ QQ(S_T = u^j d^(N-j)S_0).
   $
@@ -348,7 +349,7 @@ $
   $
     x log x + (N-x) log d >= log K / S_0.
   $
-  Despejando obtenemos la fórmula del enunciado.
+  Despejando obtenemos el valor de $a$ del enunciado.
   Así, reescribimos
   $
     C_0 & = e^(-r T) sum_(j=a)^N binom(N, j) q^j (1-q)^(N-j) (u^j d^(n-j) S_0 - K) \

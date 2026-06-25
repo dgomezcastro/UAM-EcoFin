@@ -73,11 +73,19 @@ $
   PP(S_T = S_0 u) := PP(S^(-1) lr(({S_T = S_0 u}), size: #200%)) = PP({"sube"}) = p.
 $
 Por salud mental, en adelante no volveremos a mencionar esta construcción tan complicada y tan poco descriptiva. Pero las matemáticas sustentas nuestros cálculos.
+#remark[
+  Habitualmente al presentar un modelo como @eq-unperiodo-2states normalmente quedará implícito cuál es el espacio de probabilidad subyacente.
+]
 
-#definition[Producto o _contingent claim_ en el modelo @eq-unperiodo-2states][
+Los derivados de los que hablaremos (por ejemplo las opciones) puede escribirse dentro de estos modelos como productos en el siguiente sentido
+
+#definition[Producto en el modelo @eq-unperiodo-2states][
   Cualquier $H = (H_0, H_T)$ donde $H_0 in RR$ y $H_T : Omega -> RR$.
 ]
 Nótese que como $cal(F)$ es la $sigma$-álgebra discreta, $H_T$ es medible.
+
+Lo más habitual es el que valor de estos productos a tiempo $T$ se escriba en función de $S_T$, en lugar de $Omega$. Por esto, es frecuente hablar de _contingent claims_.
+
 
 #exercise[
   Calcular $EE[S_T]$ y cuál es la probabilidad de que $S_T > B_T$.
@@ -87,7 +95,7 @@ Nótese que como $cal(F)$ es la $sigma$-álgebra discreta, $H_T$ es medible.
 
 === Cartera
 
-Dado que suponemos que hay un bono, una _cartera_ consiste en tener $theta^((1))$ unidades de la acción, y $theta^((2))$ unidades del bono. El valor de esta cartera es
+Si pensamos en el modelo @eq-unperiodo-2states con un activo subyacente de valor $S_t$ y un bono de valor $B_t$, una _cartera_ consiste en tener $theta^((1)) in RR$ unidades de la activo, y $theta^((2)) in RR$ unidades del bono. El valor de esta cartera es
 $
   V_t = theta^((1)) S_t + theta^((2)) B_t " donde " t in {0, T}.
 $
@@ -164,7 +172,7 @@ $
   $<eq-binomial-condicion-no-arbitraje>
 ]
 
-#exercise[Contrato a plazo][
+#exercise(breakable: true)[Contrato a plazo][
   Vamos a volver sobre el @example-arbitrage-forward, estudiada en el mercado @eq-unperiodo-2states.
   Un contrato a plazo es el derecho y la obligación de comprar un bien a un valor fijado $F_0$ a un tiempo fijado $T$.
   Sea $H_T$ el valor de este contrato.
@@ -395,7 +403,7 @@ De modo que, como $p in (0,1)$ tenemos
   Hay dos "principios" que se cumplen habitualmente tanto en los modelos de mercado tanto continuos como discretos.
   @prop-arbol-existenciaQ es un ejemplo del llamado *primer teorema fundamental de valoración de activos*, que dice:
   $
-    exists QQ <=> "no-arbitraje".
+    QQ "existe" <=> "mercado libre de arbitraje".
   $
   Por su parte, el *segundo teorema fundamental de valoración* dice
   $
