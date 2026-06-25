@@ -302,18 +302,18 @@ De manera similar al caso de un periodo, las opciones _call europeas_ se puede r
   $
     C_0 & =
           cases(
-            0 & "si" u^N S_0 <= K,
-            S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q) & "si" u^N S_0 > K.
+            S_0 op("B")(a; N, rho) - K e^(-r T) op("B")(a; N, q) & "si" u^N S_0 > K,
+            0 & "si" u^N S_0 <= K.
           )
   $<eq-arbol-call>
   donde $T = N Delta t$ y, si $u^N S_0 > K$ entonces definimos
   $
-                  a & := min {x in [0, N) inter ZZ : u^x d^(N-x) S_0 - K >= 0} \
+                  a & := ceil((log K/S_0 - N log d)/(log u - log d)) \
                   q & := (e^(r Delta t) - d)/(u-d) \
                 rho & := e^(-r Delta t) u q \
     op("B")(a; N,p) & := sum_(j=a)^N binom(N, j) p^j (1-p)^(N-j)
   $
-]
+]<thm-arbol-call>
 Nótese que
 $
   op("B")(a; N,p) = 1 - F_(op("B")(N,p)) (a-1).
@@ -332,7 +332,11 @@ $
   $
     C_0 = e^(-r T) sum_(j=0)^N binom(N, j) q^j (1-q)^(N-j) (u^j d^(N-j) S_0 - K)_+.
   $
-  Ahora descomponemos la parte positiva
+  Ahora descomponemos la parte positiva tomando
+  $
+    a & := min {x in [0, N) inter ZZ : u^x d^(N-x) S_0 - K >= 0}
+  $
+  de forma que tenemos
   $
     (u^j d^(n-j) S_0 - K)_+
     = cases(
@@ -340,6 +344,11 @@ $
       0 & "si " j < a.
     )
   $
+  Tomando logaritmos deducimos que en la definición de $a$
+  $
+    x log x + (N-x) log d >= log K / S_0.
+  $
+  Despejando obtenemos la fórmula del enunciado.
   Así, reescribimos
   $
     C_0 & = e^(-r T) sum_(j=a)^N binom(N, j) q^j (1-q)^(N-j) (u^j d^(n-j) S_0 - K) \

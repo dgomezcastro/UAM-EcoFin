@@ -63,10 +63,7 @@ function binomial_tree_european_call(;K,r,Δt,N,u,d)
 	end
 	q = (exp(r*Δt) - d)/(u-d)
 	ρ = exp(-r*Δt)*u*q
-	a = 0
-	while u^a*d^(N-a)*S₀ < K 
-		a += 1
-	end
+	a = ceil((log(K/S₀)-N*log(d))/(log(u) - log(d)))
 	return S₀*B(a, N, ρ) - K*exp(-r*T)*B(a, N, q)
 end;
 

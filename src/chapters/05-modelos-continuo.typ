@@ -384,9 +384,7 @@ Estudiar con el siguiente código de `julia`, cuyo resultado es @fig-BlackSchole
 
 == Precio de una opción europea
 
-Podemos calcular el precio de una call europea utilizando @eq-BlackScholes-St-Q -- @eq-BlackScholes-call-expectvalue de forma equivalente a como demostramos @eq-arbol-call a partir de binomiales.
-Sin embargo, en estas notas deduciremos el precio de una _call_ europea como límite de @eq-arbol-call siguiendo @hsiaBINOMIALOPTIONPRICING1983.
-//#link("https://gregorygundersen.com/blog/2023/06/03/hsia-proof-black-scholes/")
+Vamos a demostrar la siguiente fórmula de valoración de varias formas distintas
 #theorem[Precio de una _call_ europea en el modelo de Black-Scholes][
   Se tiene que
   $
@@ -404,10 +402,44 @@ Sin embargo, en estas notas deduciremos el precio de una _call_ europea como lí
 ]
 Nótese que @eq-BlackScholes-call no involucra a $mu$.
 
+#exercise[Precio de una _call_ europea a través de la medida libre de riesgo][
+  Sea $X_T := log S_T / S_0 = (r - sigma^2/2)T + sigma W_T^QQ$
+  + Comprobar que $X_T$ que se distrubuye respecto de $QQ$ es una normal $op("N")(mu_T, sigma_T)$ donde $mu_T = (r - sigma^2/2)T$ y $sigma_T = sigma sqrt(T)$.
+  + Deducir que
+    $
+      C_0
+      //&= e^(-r T) EE^QQ [ (S_T - K)_+ ]
+      // = e^(-r T) EE^QQ [(S_0 e^(X_t)- K)_+]
+      //\
+        & = e^(-r T) integral_(-oo)^(oo) (S_0 e^(x)-K)_+ phi(x; mu_T, sigma_T) dif x.
+    $
+    donde $phi(x; mu, sigma) = 1/sqrt(2 pi sigma^2) e^(-1/2 ((x-mu)/sigma)^2)$ es la función de densidad de una normal.
+
+  + Sea $y = log K / S_0$. Descomponer esta integral en $[-oo,y]$ e $[y,+oo]$.
+
+  + Reordenar términos para deducir @eq-BlackScholes-call.
+]<ex-blackscholes-call-riskfreemeasure>
+
+#exercise[Precio de una _call_ europea como límite del modelo binomial][
+  Vamos a deducir @eq-BlackScholes-call como límite de @eq-arbol-call siguiendo @hsiaBINOMIALOPTIONPRICING1983.
+
+  + Sea $J ~ "Binomial"(N,p)$. Observar que
+    $
+      op("B")(a; N, p) = PP(J >= a) = PP((J - mu_J) / sigma_J >= (a - mu_J)/sigma_J)
+    $
+    Nótese que $mu_J = p N$ y $sigma_J = N p (1-p)$.
+
+  + Tomar $u=e^(sigma sqrt(Delta t))$ y $d=e^(-sigma sqrt(Delta t))$. Usar el teorema central del límite para deducir que si $a^((N)), q^((N)), rho^((N))$ vienen dadas por el @thm-arbol-call entonces
+  $
+    op("B")(a^((N)); N, q^((N))) -> N(d_1) quad "y" quad op("B")(a^((N)); N, rho^((N))) -> N(d_2)
+  $
+  //#link("https://gregorygundersen.com/blog/2023/06/03/hsia-proof-black-scholes/")
+]
+
 Otra opción para deducir esta fórmula consiste en
 que permite escribir el precio de una opción _call_ europea a partir de una Ecuación en Derivadas Parciales (EDP).
 
-#exercise(breakable: true)[
+#exercise(breakable: true)[Precio de una _call_ europea mediante EDPs][
   Consideremos una cartera autofinanciada de la forma $C_t = theta_t^((1)) S_t + theta_t^((2)) B_t$. Supongamos además que su precio viene descrito como
   $
     C_t = u(t, S_t).
@@ -427,9 +459,9 @@ que permite escribir el precio de una opción _call_ europea a partir de una Ecu
       )
     $<eq-BlackScholes-PDE>
 
-  + Buscar una cambio de variable que permita escribir $u$ en función de la solución de la ecuación de calor con dato inicial.
+  + Buscar una cambio de variable que permita escribir $u$ en función de la solución de la ecuación de calor con dato inicial, y utilizar la solución fundamental de la ecuación del calor para resolver la ecuación para obtener una expresión integral.
 
-  + Deducir @eq-BlackScholes-call.
+  + Comparar con el @ex-blackscholes-call-riskfreemeasure.
 ]
 
 

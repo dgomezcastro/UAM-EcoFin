@@ -40,10 +40,7 @@ begin
 		end
 		q = (exp(r*Δt) - d)/(u-d)
 		ρ = exp(-r*Δt)*u*q
-		a = 0
-		while u^a*d^(N-a)*S₀ < K 
-			a += 1
-		end
+		a = ceil((log(K/S₀)-N*log(d))/(log(u) - log(d)))
 		return S₀*B(a, N, ρ) - K*exp(-r*T)*B(a, N, q)
 	end;
 end
@@ -62,8 +59,10 @@ begin
 	T = 1.0
 	Δt= T/N
 	Ks = S₀*(0.0:0.01:5.0)
-	binomial_calls = [binomial_tree_european_call(N=N, Δt=Δt, r=0., K=K, u=exp(σ*sqrt(Δt)), d=exp(-σ*sqrt(Δt))) for K in Ks]
-	plot(Ks,binomial_calls, label="", title="N=$N",
+	binomial_calls = [
+		binomial_tree_european_call(N=N, Δt=Δt, r=0., K=K, u=exp(σ*sqrt(Δt)), d=exp(-σ*sqrt(Δt))) for K in Ks
+	]
+	plot(Ks, binomial_calls, label="", title="N=$N",
 		 xlabel="K", ylabel="C₀", ylims = (0,S₀))
 end
 
@@ -1381,7 +1380,7 @@ version = "1.13.0+0"
 # ╠═a7336b48-7004-11f1-bf22-ddebab330f56
 # ╟─206f9637-7c1e-4b58-abbe-4e0b964e3dde
 # ╠═2610e6c4-b2f8-4329-b440-1faf1558f8fb
-# ╠═fd99225c-e272-488f-95ec-eba5312e616d
+# ╟─fd99225c-e272-488f-95ec-eba5312e616d
 # ╠═f995f44f-b2ad-493a-8f09-b27e4005cec2
 # ╠═5869bd1c-faea-4658-ae45-957389fa1e9f
 # ╟─b2c9cf7e-eec3-4e07-be38-4c9ed31adff4
