@@ -298,17 +298,43 @@ Si no queremos tomar fracciones de la opción, entonces distinguimos dos casos
 
 === La medida riesgo neutro
 
+Empezamos recordando una definición
+#definition[Equivalencia de medidas][
+  Dos medidas de probabilidad $PP$ y $QQ$ sobre el mismo espacio de medida son equivalentes, y se denota $PP ~ QQ$ si para todo conjunto $A$ medible
+  $
+    PP(A) = 0 <=> QQ(A) = 0
+  $
+]
+El motivo por el que se pide la equivalencia es
+La propiedad más importante de la medida martingala es que
+
+#lemma[Valor esperado de una oportunidad de arbitraje][
+  Si $V$ es una oportunidad de arbitraje y $QQ ~ PP$ entonces
+  $
+    EE^QQ [V_T] > 0.
+  $
+]
+#proof[
+  Existe un evento $omega_0 in Omega$ con $PP({omega_0}) > 0$ y $V_T(omega_0) > 0$. Dado que $QQ ~ PP$ entonces $QQ(V_T in A) > 0$.
+  Así, dado que $V_T >= 0$ tenemos
+  $
+    EE^QQ [V_T] = sum_(omega in Omega) PP({omega}) V_T (omega) >= PP({omega_0}) V_T(omega_0) > 0. #qedhere
+  $
+]
+
 Podemos hacer el cálculo anterior de valor esperado. Para ello introducimos el precio descontado
 $
   tilde(S)_t = e^(-r t) S_t
 $
 #definition[Medida libre de riesgo para el modelo de un periodo temporal][
-  Medida de probabilidad $QQ$ tal que
+  Medida de probabilidad $QQ ~ PP$ tal que
   $
     EE^QQ [tilde(S)_T] = S_0
   $
 ]
 Se dice que $tilde(S)_T$ es una martingala respecto de $QQ$. Volveremos sobre este concepto.
+
+
 Dado que sólo hay posibilidades, si llamemos
 $
   q := QQ(tilde(S)_T = u e^(-r T) S_0)
@@ -340,12 +366,7 @@ $
 $
 que está en $[0,1]$ si $d <= e^(r T) <= u$.
 Normalmente se pide a la medida que sea equivalente con la medida ambiente $PP$.
-#definition[Equivalencia de medidas][
-  Dos medidas de probabilidad $PP$ y $QQ$ sobre el mismo espacio de medida son equivalentes, y se denota $PP ~ QQ$ si para todo conjunto $A$ medible
-  $
-    PP(A) = 0 <=> QQ(A) = 0
-  $
-]
+
 
 De modo que, como $p in (0,1)$ tenemos
 #proposition[Existencia de la medida libre de riesgo][
@@ -410,7 +431,7 @@ de modo que siempre se puede asumir que $S_0 = 1$, y reescalar $K$. Trabajando c
 
 == Modelo trinomial: un sólo activo con 3 estados
 
-Consideremos como caso académico
+Consideremos como caso académico como $u > m > d$ y el sistema
 #figure(
   raw-render(```
   digraph {
@@ -419,47 +440,117 @@ Consideremos como caso académico
   edge[lmath=true]
   // s[label="sum_(n=0)^3 n"]
   s[label="S_0"]
-  s -> s1[label="p_1"]
-  s -> s2[label="p_2"]
-  s -> s3[label="1-p_1-p_2"]
-  s1[label="alpha_1 S_0"]
-  s2[label="alpha_2 S_0"]
-  s3[label="alpha_3 S_0"]
+  s -> s1[label="p_u"]
+  s -> s2[label="p_m"]
+  s -> s3[label="p_d"]
+  s1[label="u S_0"]
+  s2[label="m S_0"]
+  s3[label="d S_0"]
   }
   ```),
   caption: "Modelo discreto con un periodo de tiempo",
-)<fig:trinomial>
+)<fig-trinomial>
+
+=== Condición de no arbitraje en el mercado ${S,B}$
+
+Veamos si el mercado ${S, B}$ admite arbitraje.
+Construyamos, por el contrario, una cartera con arbitraje
+$
+  hat(V)_t = theta^((1)) S_t + theta^((2)) B_t.
+$
+Habría arbitraje si existe $theta$ tal que
+- La primera condición es que no me cueste nada
+  $
+    theta^((1))S_0 + theta^((2)) = 0
+  $
+- La segunda es que gane dinero de forma segura
+  $
+    cases(
+      theta^((1)) u S_0 & + theta^((2)) e^(r T) & >= 0,
+      theta^((1)) m S_0 & + theta^((2)) e^(r T) & >= 0,
+      theta^((1)) d S_0 & + theta^((2)) e^(r T) & >= 0,
+    )
+  $
+Simplificamos el sistema y deducimos
+$
+  cases(
+    theta^((1)) S_0 (u - e^(r T)) & >= 0,
+    theta^((1)) S_0 (m - e^(r T)) & >= 0,
+    theta^((1)) S_0 (d - e^(r T)) & >= 0,
+  )
+$
+Es decir que existe arbitraje si $u <= e^(r T)$ o $d <= e^(r T)$ (y tomamos $theta^((1)) = plus.minus 1$). La condición de no arbitraje es precisamente
+$
+  d < e^(r T) < u.
+$
+
+
+=== Medida de riesgo neutro
+
+Vamos a intentar construir esta medida. Tenemos que pedir que el precio descontado sea una martingala, es decir que
+$
+  S_0 = e^(-r T) EE^QQ [S_T] = e^(-r T) (q_u u S_0 + q_m m S_0 + q_d d S_0).
+$
+donde $q_i = QQ(S_T = i S_0)$. Escribiendo $q_m = 1 - q_u - q_d$ deducimos que
+$
+  e^(r T) = q_u (u -m) + m - q_d (m - d).
+$
+// En el plano $(q_u,q_d)$ esto es una recta que pasa por los puntos $((e^(r T) - m)/(m-d), 0)$ y $(0, (m-e^(r T))/(m-d))$.
+que reescribimos como
+$
+  q_d = (m - e^(r T) )/(m-d) + q_u (u-m)/(m-d).
+$
+Además debemos pedir que $q_i > 0$ con lo que basta pedir $q_u + q_d in (0,1)$. Cuando $q_u in (0,1)$ entonces $q_d in ((m - e^(r T) )/(m-d), (u - e^(r T) )/(m-d) )$. La pregunta es si este intervalo interseca $(0,1)$.
+
+Hay tres opciones:
+- Si $m >= e^(r T)$ entonces, si además tenemos la condición de no arbitraje $d < e^(r T)$ deducimos $(m-e^(r T))/(m-d) in [0,1)$ y existen soluciones
+- Si $m <= e^(r T)$ entonces $(m - e^(r T) )/(m-d) <=0$, pero con la condición $u > e^(r T)$ deducimos que $(u - e^(r T) )/(m-d) > 0$ y, por tanto, hay soluciones.
+
+De hecho, la intersección es siempre un intervalo y, por tanto,
+#proposition[
+  En el mercado @fig-trinomial, bajo la hipótesis $d < e^(r T) < u$ existen infinitas medidas de riesgo neutro.
+]
+
+=== Valoración de derivados
 
 Ahora ocurre que con un sólo activo de riesgo y el bono, las carteras no permite replicar todos los estados, porque el sistema tiene 2 incógnitas y 3 ecuaciones.
 Se dice que el mercado es *incompleto*.
 
-Construyamos, por el contrario, una cartera con arbitraje
+Veamos el siguiente resultado:
+#proposition[
+  Consideremos un derivado $C_T = F(S_T)$ y
+  $
+    C_0 = e^(-r T) EE^QQ [C_T] "para alguna" QQ "medida de riesgo neutro".
+  $
+  Entonces el mercado ${S, B, C}$ no admite arbitraje.
+]
+
+#proof[
+  Por ejemplo, sea $C_t$ una _call_ europea. No hay una forma de dar un precio por replicación a $C_0$. Supongamos que existe un arbitraje
+  $
+    hat(V)_t = theta^((1)) S_t + theta^((2)) B_t + theta^((3)) C_t.
+  $
+  Pero entonces calculando el valor esperado
+  $
+    0 < e^(-r T) EE^QQ [hat(V)_T] &= theta^((1)) e^(-r T) EE^QQ [S_t] + theta^((2)) e^(-r T) EE^QQ [B_t] + theta^((3)) e^(-r T) EE^QQ [C_T] \
+    &= theta^((1)) S_0 + theta^((2)) + theta^((3)) C_0 = V_0 <= 0.
+  $
+  Esto es una contradicción.
+]
+Esto nos permite definir el conjunto de precios de no arbitraje
 $
-  tilde(V)_t = theta^((1)) S_t + theta^((2)) B_t + theta^((3)) C_t.
+  cal(C)_0 := lr({e^(-r T) EE^QQ [C_T] : QQ "es medida de riesgo neutro para" {S,B}}, size: #150%)
 $
-La primera condición es que no me cueste nada
-$
-  theta^((1)) + theta^((2)) + theta^((3)) = 0
-$
-Pongamos que al final no pierda dinero
-$
-  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) + theta^((3)) (alpha_i S_0 - K)_+ >= 0 "para todo" i=1,2,3.
-$
-Y que gana dinero con probabilidad positiva, basta con una de estas tres desigualdades sea estricta.
-Tenemos el sistema de 3 desigualdades
-$
-  theta^((1)) alpha_i S_0 + theta^((2)) e^(r T) >= (theta^((1)) + theta^((2))) (alpha_i S_0 - K)_+ .
-$
-Esta es la región del plano delimitada por 3 rectas. Si el triángulo no es vacío, en su interior cualquier $(theta^((1)), theta^((2)))$ da un punto donde se gana dinero con probabilidad 1.
+
 #exercise[][
-  Elegir valores particulares de $alpha_1, dots, alpha_3$ y $r T$ de modo este mercado tenga oportunidades de arbitraje.
+  Comprobar en un ejemplo que si $C_0 in.not cal(C)_0$ entonces el mercado ${S, B, C}$ admite arbitraje.
 ]
 
 == Modelo matricial: $N$ activos y $M$ estados
 
 Supongamos ahora que hay $N$ activos (incluyendo opciones y bonos). Denotaremos
 $
-  S_t = vec(S^1_t, dots.v, S_t^N) in RR^N
+  S_t = vec(S^((1))_t, dots.v, S_t^((N))) in RR^N
 $
 donde $S^i_t$ denota la cantidad del activo $i$-ésimo a tiempo $t$.
 Asumimos que $S_0$ es conocido y $S_T$ puede estar en $M$ estados.
@@ -478,13 +569,13 @@ $
 donde $trans$ denota la transposición de matrices.
 
 Introducimos la notación para $x in RR^N$ se dice que
-- $x >= 0$ (o $x in RR^N_+$) si $x^i >= 0$ para todo $i$
-- $x gt.neq 0$ o si $x>=0$ y $x != 0$ (es decir tiene alguna entrada positiva)
-- $x > 0$ (o $x in RR^N_(++)$) si $x^i > 0$ para todo $i$.
+- $x >= 0$ (o $x in RR^N_+$) si $x_i >= 0$ para todo $i$. Es decir, todas las entradas son no-negativas.
+- $x gt.neq 0$ o si $x>=0$ y $x != 0$. Es decir, tiene alguna entrada positiva.
+- $x > 0$ (o $x in RR^N_(++)$) si $x_i > 0$ para todo $i$. Es decir, tiene _todas_ las entradas positivas.
 
 Así, la condición de no-arbitraje se traduce en que existe $theta in RR^N$ tal que
 $
-  S_0 dot theta <= 0 & " y " D^t theta gt.neq 0.
+  S_0 dot theta <= 0 & " y " D^trans theta gt.neq 0.
 $
 #definition[Vector de estado][
   Vector $psi in RR^M_(++)$ tal que

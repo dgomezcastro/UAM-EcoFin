@@ -10,22 +10,30 @@ Las notas del curso están creadas con `typst` y las fuentes del documento y las
 Estas notas corresponde al curso impartido en 2026-2027 por David Gómez-Castro.
 
 El curso consta de 16 semanas:
-1. Introducción. El mercado financiero. <br> [Notebook](pluto-notebooks/log-normality.jl)
-1. Tipos de interés: interés compuesto, interés continuo, bono cupón-cero, fórmulas de amortización, TAE. <br> [Notebook](pluto-notebooks/mortgage.jl)
+1. Introducción. El mercado financiero. <br> [Notebook: comprobando la log-normalidad en datos de mercado](pluto-notebooks/log-normality.jl)
+1. Tipos de interés: interés compuesto, interés continuo, bono cupón-cero, fórmulas de amortización, TAE. 
+    <br> [Notebook: amortización de una hipoteca](pluto-notebooks/mortgage.jl)
 1. Activos y derivados, bonos, curva cupón-cero
 1. Derivados: contrato a plazo, _swap_, opciones
-1. El modelo binomial: carteras, arbitraje, opciones europeas. <br> [Notebook](pluto-notebooks/oneperiod-portfolio.jl) 
+1. El modelo binomial: carteras, arbitraje, opciones europeas. 
+    <br> [Notebook: valor de carteras](pluto-notebooks/oneperiod-portfolio.jl) 
 1. El modelo binomial: la medida de riesgo neutro
+    <br> [Notebook: medidas libres de riesgo en el modelo trinomial](pluto-notebooks/trinomial-riskfreemeasure.jl)
 1. El modelo matricial para un periodo de tiempo
 1. Árboles binomiales: Carteras y arbitraje.
-1. Árboles binomiales: medida libre de riesgo y opciones europeas. <br> [Notebook](pluto-notebooks/binomial-tree-call.jl)
+1. Árboles binomiales: medida libre de riesgo y opciones europeas. 
+    <br> [Notebook: el valor de una _call_ europea](pluto-notebooks/binomial-tree-call.jl)
 1. Árboles binomiales: opciones americanas
-1. Paseos aleatorios y movimiento Browniano. <br> [Notebook 1](pluto-notebooks/random-walk-density.jl) y [Notebook 2](pluto-notebooks/random-walk-limit.jl)
+1. Paseos aleatorios y movimiento Browniano. 
+    <br> [Notebook: estudio de paseos aleatorias](pluto-notebooks/random-walk-density.jl)
+    <br> [Notebook: de paseos aleatorios a movimiento Browniano](pluto-notebooks/random-walk-limit.jl)
 1. Cálculo de Itô I
 1. Cálculo de Itô II
-1. Límite de árboles al continuo: Black-Scholes. <br> [Notebook](pluto-notebooks/binomial-tree-call-limit.jl)
+1. Límite de árboles al continuo: Black-Scholes. 
+    <br> [Notebook: el precio de _calls_ europeas como límite del árbol binomial](pluto-notebooks/binomial-tree-call-limit.jl)
 1. Black-Scholes: opción europea. Volatilidad implícita
-1. Carteras en tiempo continuo. <br> [Notebook](pluto-notebooks/stock-correlation.jl)
+1. Carteras en tiempo continuo. 
+    <br> [Notebook: comprobando la correlación en el mercado](pluto-notebooks/stock-correlation.jl)
 
 ### Uso de los notebooks
 
