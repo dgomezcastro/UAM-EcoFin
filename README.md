@@ -31,6 +31,7 @@ El curso consta de 16 semanas:
     <br> [Notebook: justificación visual de $(d W_t)^2=dt$](pluto-notebooks/brownian-dW-squared.jl)
     <br> [Notebook: comparación de las integrales de Itô y Stratonovich al integral $W_t d W_t$](pluto-notebooks/ito-v-stratonovich.jl)
 1. Ecuaciones diferenciales estocásticas
+    <br> [Notebook: el método numérico de Euler-Maruyama](pluto-notebooks/euler-maruyama.jl)
 1. Límite de árboles al continuo: Black-Scholes. 
     <br> [Notebook: el precio de _calls_ europeas como límite del árbol binomial](pluto-notebooks/binomial-tree-call-limit.jl)
 1. Black-Scholes: opción europea. Volatilidad implícita
