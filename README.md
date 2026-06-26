@@ -58,3 +58,9 @@ Una vez instalado, podemos ejecutar `Pluto.jl` tantas veces como queramos para
     julia -e "using Pluto; Pluto.run()"
     ```
     Esto abrirá un navegador con la interfaz gráfica de Pluto. Ahí podemos seleccionar el notebook que queramos de los que tenemos descargados.
+
+
+Se puede crear una versión estática de los notebooks con 
+```
+julia -e "using PlutoSliderServer; PlutoSliderServer.export_directory(\".\", Export_output_dir=\"html/\")"
+````
