@@ -104,6 +104,7 @@ Una presentación introductoria de esta sección se puede encontrar en @etheridg
   $
     theta_t = F_t (S_0, S_(Delta t), S_(2 Delta t), dots.c, S_(t-Delta t)).
   $<eq-arbol-carteraadaptada>
+  Fijamos por convención $theta_0 = theta_(Delta t)$.
   El valor de la cartera se expresa
   $
     V_t := sum_(i=1)^M theta_t^((i)) S_t^((i)) = theta_t dot S_t.
@@ -177,9 +178,9 @@ Veamos ahora que las carteras autofinanciadas son las única que
   Tenemos que $theta_(t_0) = 0$.
   Por la elección de $t_0$ tenemos que $V_(t_0 + Delta t) = H_(t + Delta t_0)$ de modo que
   $
-    Delta hat(theta)_(t_0)^((1)) dot V_(t_0) + Delta hat(theta)_(t_0)^((2)) dot H_(t_0) &= hat(theta)_(t_0+Delta t)^((1)) dot V_(t_0) + hat(theta)_(t_0 )^((2)) dot H_(t_0)
+    Delta hat(theta)_(t_0)^((1)) dot V_(t_0) + Delta hat(theta)_(t_0)^((2)) dot H_(t_0) &= hat(theta)_(t_0+Delta t)^((1)) dot V_(t_0) + hat(theta)_(t_0 + Delta t )^((2)) dot H_(t_0)
     \
-    &= -sign(V_(t_0) - H_(t_0)) V_(t_0) H_(t_0) + sign(V_(t_0) - H_(t_0))H_(t_0) V(t_0)
+    &= -sign(V_(t_0) - H_(t_0)) V_(t_0) H_(t_0) + sign(V_(t_0) - H_(t_0))H_(t_0) V_(t_0)
     \
     &= 0.
   $
@@ -375,21 +376,35 @@ $
 
 == Opciones americanas
 
-Sea $phi.alt(s) = (s - K)_+$. Para una opción americana debe tenerse que
+Sea $phi.alt(s) = (s - K)_+$. En cada momento puedo:
+- Ejercer la opción, y ganar $phi.alt(S_t)$
+- Mantener la opción una unidad de tiempo, que siguiendo la teoría de opciones europeas, tiene valor $e^(-r Delta t) EE^QQ [V_(t + Delta t)|S_t]$
+
+Dado que estas son las dos cosas que podemos hacer deducimos que
 $
-  V_t = max lr(
-    (
-      underbrace(phi.alt(S_t), "valor de ejercer \n la opción"), quad
-      underbrace(e^(-r Delta t) EE^QQ [ V_(t + Delta t) | S_t], "valor de mantener la opción \n una unidad de tiempo")
-    )
-    , size: #50%
-  )
-$
+  V_T & = phi.alt(S_T), \
+  V_t & = max lr(
+          (
+            underbrace(phi.alt(S_t), "valor de ejercer \n la opción"), quad
+            underbrace(e^(-r Delta t) EE^QQ [ V_(t + Delta t) | S_t], "valor de mantener la opción \n una unidad de tiempo")
+          ) quad "para" t = 0, dots.c, T-Delta t
+          , size: #50%
+        ).
+$<eq-arbol-americana>
 Dado que $V_t$ depende sólo del valor "futuro", podemos resolver este sistema a tiempo $t = T - Delta t, T - 2 Delta t, dots.c$
 
-Si escribimos
+Hasta ahora hemos demostrado la valoración de productos a tiempo $T$, pero no de frontera libre. Se propone el siguiente ejercicio.
+#exercise[
+  Como el mercado ${S,B}$ en el modelo @eq-arbol es completo, cualquier _producto_ (en nuestro sentido riguroso) se puede escribir como un cartera autofinanciada
+  + Comprobar que @eq-arbol-americana es un _producto_ en nuestro sentido riguroso
+  + Suponer que la opción americana tiene valor $H_t$, y comprobar que si $V_t != H_t$ entonces el mercado ${S,B,H}$ admite arbitraje.
+    Sugerencia: considerar el máximo de los $t$ donde no coinciden.
+]
+
+
+Para construir estos valores a lo largo del árbol, vamos a considerar
 $
-  V_j^((i)) := lr(["value at" t = j Delta t "of" V_(t) "provided that" S_(t) = S_0 u^(i) d^(j - i)], size: #150%)
+  V_j^((i)) := lr([V_(t) "en" t = j Delta t "si el activo" S_(t) = S_0 u^(i) d^(j - i)], size: #150%)
 $
 para $T = N Delta t$ entonces $V_N^((i)) = phi.alt(S_0 u^i d^(N - i))$ y si tomamos $j < N$ entonces
 $
