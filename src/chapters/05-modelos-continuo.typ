@@ -159,7 +159,7 @@ Recordamos que si $X_t$ es constante a trozos $(t_i, t_(i+1))$ donde $t_N = T$, 
 $
   integral_0^T A_s dif s & = sum_(i=0)^N A_(t_i) (t_(i+1) - t_i).
 $
-Definimos la integral
+Definimos la integral de Itô
 $
   integral_0^T A_s dif W_t & := sum_(i=0)^N A_(t_i) (W_(t_(i+1)) - W_(t_i)).
 $
@@ -171,6 +171,12 @@ Y esta construcción puede extenderse por continuidad a todo $L^2(0,T)$.
   + $integral_0^T (a G_t + b H_t ) dif W_t = a integral_0^T G_t dif W_t + b integral_0^T H_t dif W_t$
   + $EE[integral_0^T G_t dif W_t] = 0$
 ]
+
+La elección del punto $A_(t_i)$ en la suma de Riemann es complemetamente intencional. También se puede construir la integral de Stratonovich
+$
+  integral_0^T A_s compose dif W_t & := sum_(i=0)^N (A_(t_(i+1)) + A_(t_i))/2 (W_(t_(i+1)) - W_(t_i)).
+$
+Veremos que son distintas
 
 === El cuadrado del ruido
 
@@ -191,8 +197,12 @@ De esta forma, obtenemos que asintóticamente $(W_(t + Delta t) - W_(t))^2 appro
   Sean $a,b in RR$ y $G, H in LL^2(0,T)$. Demostrar rigurosamente que
 
   + $EE [(integral_0^T G_t d W_t)^2] = EE[integral_0^T G_t^2 dif s]$
+
   + $EE[integral_0^T G_t dif W_t integral_0^T H_t dif W_t] = EE[integral_0^T G_t H_t dif W_t]$
+
   + $integral_0^T W_t dif W_t = W_T^2 / 2 - T/2$
+
+  + $integral_0^T W_t compose dif W_t = W_T^2/2$
 ]
 === Regla de la cadena
 
@@ -227,7 +237,7 @@ Con un poco de trabajo, de manera similar se prueba
 
 La demostración rigurosa de este resultado y todos los detalles de esta construcción pueden verse in @Evans2013.
 
-=== Ecuaciones diferenciales estocásticas
+== Ecuaciones diferenciales estocásticas
 
 Ahora es el momento de utilizar la regla de la cadena para resolver algunas ecuaciones diferenciales estocásticas de la forma
 Se puede escribir una teoría existencia y unicidad para ecuaciones de la forma
@@ -236,6 +246,8 @@ $
 $<eq-SDE>
 bajo la condición de que $a$ y $b$ sean Lipschitzianas. Ver @Evans2013.
 Algunas de ellas admiten resolución analítica.
+
+=== Resolución analítica
 
 #exercise[Ecuación sin _drift_][
   Consider el problema de valor inicial
