@@ -573,7 +573,16 @@ Para construir $QQ$ el procedimiento consiste en observar que dado @eq-BlackScho
 $
   W_t^QQ = (mu - r)/sigma t + W_t .
 $
+En términos diferenciales se tiene
+$
+  dif W_t^QQ = (mu - r)/sigma + dif W_t
+$
+
 La existencia de $QQ$ con esta propiedad se sigue del teorema de Girsanov, que no estudiaremos en este curso.
+
+#theorem[Existencia de $QQ$ en el mercado de Black-Scholes][
+  Existe una medida $QQ$ tal que @eq-BlackScholes-St-Q.
+]
 
 De nuevo, en medida libre de riesgo $QQ$, la ecuación sólo depende de $sigma$ y $r$.
 Al igual que para árboles, de la versión continua de @eq-arbol-martingala se deduce que
@@ -624,7 +633,7 @@ $
 Si seguimos una construcción como la de Cox-Ross-Rubinstein, llegaremos a que esta cantidad es constante en $h$, y la podemos llamar $rho^((i j))$.
 Para un Browniano multi-dimensional asumimos que este valor es constante, y en términos de cálculo de Itô se denota
 $
-  d W_t^((i)) dot.c d W_t^((j)) := rho_(i j).
+  dif W_t^((i)) dot.c dif W_t^((j)) := rho_(i j).
 $
 Dado que
 $

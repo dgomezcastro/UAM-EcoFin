@@ -129,7 +129,7 @@ $
 === ¿Quién fija los tipos de interés?
 
 Hay diferentes productos con tipos de interés públicos.
-Los bonos estatales tiene unos cupones fijados a través de los cuales se obtiene beneficio. Este producto nos permite valorar "la evolución del valor del dinero" si no queremos que exista arbitraje. Nos habla del valor del dinero en los momentos de vencimiento de estos cupones.
+Los bonos estatales tiene unos cupones fijados a través de los cuales se obtiene beneficio. Este derivadonos permite valorar "la evolución del valor del dinero" si no queremos que exista arbitraje. Nos habla del valor del dinero en los momentos de vencimiento de estos cupones.
 
 También existen tipos de interés a "corto plazo", con el que los bancos se prestan dinero entre sí.
 Esto también estable "restricciones".
@@ -147,14 +147,14 @@ Los dos ejemplo más relevantes en nuestro contexto son:
 
 === Bono de cupón cero
 
-La hipótesis de no-arbitraje hace que un producto consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
-Vamos a utilizar este producto como referencia para valorar el resto de productos, bajo la hipótesis de no arbitraje.
-El producto más habitual de esta naturaleza
+La hipótesis de no-arbitraje hace que un derivadoconsistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
+Vamos a utilizar este derivadocomo referencia para valorar el resto de productos, bajo la hipótesis de no arbitraje.
+El derivadomás habitual de esta naturaleza
 
-Lo expresión más habitual del contrato no es escribir así el producto un contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
-Asumiremos que quién vende el contrato (típicamente un estado o una entidad grande) es «de fiar» y pagará con total garantía, de modo que este producto no tiene riesgo.
-Este producto es un producto llamado «bono»
-Además, este producto es un tipo muy sencillo de «bono», que hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
+Lo expresión más habitual del contrato no es escribir así el derivadoun contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
+Asumiremos que quién vende el contrato (típicamente un estado o una entidad grande) es «de fiar» y pagará con total garantía, de modo que este derivadono tiene riesgo.
+Este derivadoes un derivadollamado «bono»
+Además, este derivadoes un tipo muy sencillo de «bono», que hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
 
 #definition[Bono de cupón cero bajo la hipótesis de no-arbitraje][
   Un bono de cupón cero con fecha de vencimiento $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ unidades monetarias (por ejemplo \$) pagada en la fecha $T$.
@@ -163,7 +163,7 @@ Además, este producto es un tipo muy sencillo de «bono», que hace pagos inter
     p(t, T) := "precio a tiempo "t" de un bono de principal "K = 1" y maduración" T.
   $
   Asumimos que:
-  - Siempre podemos comprar a tiempo $t$ un producto (que llamaremos _bono cupón cero_) a precio $p(t,T)$ que garantiza $1$\$ a tiempo $T$.
+  - Siempre podemos comprar a tiempo $t$ un derivado(que llamaremos _bono cupón cero_) a precio $p(t,T)$ que garantiza $1$\$ a tiempo $T$.
   - Se puede comprar o vender sin coste
   - A vencimiento instantáneo el precio es el principal, es decir
   $

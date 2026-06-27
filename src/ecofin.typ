@@ -21,6 +21,11 @@
 #include "chapters/03-modelos-un-paso.typ"
 #include "chapters/04-modelos-arbol.typ"
 #include "chapters/05-modelos-continuo.typ"
-#include "chapters/06-mas.typ"
+
+#set heading(numbering: "A.1", supplement: [Apéndice])
+#counter(heading).update(0)
+
+#include "chapters/06-repaso-estadistica.typ"
+#include "chapters/07-tae.typ"
 
 

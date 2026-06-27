@@ -29,17 +29,24 @@ $
   PP(B_T = e^(r T)) = 1.
 $<eq-unperiodo-2states>
 Se representa en @fig:binomial.
-Para este modelo no sea determinista, supongamos que $0 < d < u$.
-
-=== Planteamiento estocástico
-
-De esta manera, a lo largo supondremos que este un espacio de probabilidad $(Omega, cal(F), PP)$,
-donde $Omega$ es el conjunto de sucesos, $cal(F)$ (cuyos elementos son sub-conjuntos de $Omega$) es la $sigma$-álgebra de conjuntos medibles y $PP:cal(F) -> [0,1]$ es una medida de probabilidad.
-Así $S_t : Omega -> [0,oo)$ asumimos que para cualquier $A$ de la $sigma$-álgebra de Borel $S_t^(-1)(A) in cal(F)$ y, de esta manera damos sentido a
+Para este modelo no sea determinista, supongamos que
 $
-  PP(S_t in A) := PP(S_t^(-1)(A)).
+  0 < d < u.
 $
-Habitualmente hay más de un activo de riesgo, con lo que $S_t = (S_t^((1)), dots, S_t^((N)))$ donde cada $S_t^((i)) : Omega -> [0,oo)$.
+
+Llamamos a $S_t$ *activo subyacente*. Su valor determina el estado estocástico del sistema.
+
+Los derivados de los que hablaremos (por ejemplo las opciones) puede escribirse dentro de estos modelos como productos en el siguiente sentido
+
+#definition[Derivado o derecho contingente en el modelo @eq-unperiodo-2states][
+  Cualquier $H = (H_0, H_T)$ donde $H_0 in RR$ y $H_T = h (S_T)$.
+  Permitimos que $h$ dependa de los parámetros de @eq-unperiodo-2states.
+]<def-unpaso-derivado>
+
+=== $S_t$ como proceso estocástico
+
+De esta manera, a lo largo supondremos que este un espacio de probabilidad $(Omega, cal(F), PP)$ y $S_t : Omega -> RR$ es una variable aleatoria.
+Habitualmente hay más de un activo de riesgo, con lo que $bold(S)_t = (S_t^((1)), dots, S_t^((N)))$ donde cada $S_t^((i)) : Omega -> [0,oo)$.
 
 Vamos a construir rigurosamente @eq-unperiodo-2states. Esto quiere decir que $Omega$ es un conjunto de dos elementos (cualesquiera), por ejemplo
 $
@@ -77,14 +84,9 @@ Por salud mental, en adelante no volveremos a mencionar esta construcción tan c
   Habitualmente al presentar un modelo como @eq-unperiodo-2states normalmente quedará implícito cuál es el espacio de probabilidad subyacente.
 ]
 
-Los derivados de los que hablaremos (por ejemplo las opciones) puede escribirse dentro de estos modelos como productos en el siguiente sentido
+Nótese que como $cal(F)$ es la $sigma$-álgebra discreta, cualquier derivado cumple que $H_T : Omega -> RR$ es medible.
 
-#definition[Producto financiero en el modelo @eq-unperiodo-2states][
-  Cualquier $H = (H_0, H_T)$ donde $H_0 in RR$ y $H_T : Omega -> RR$.
-]<def-unpaso-producto>
-Nótese que como $cal(F)$ es la $sigma$-álgebra discreta, $H_T$ es medible.
-
-Lo más habitual es el que valor de estos productos a tiempo $T$ se escriba en función de $S_T$, en lugar de $Omega$. Por esto, es frecuente hablar de _contingent claims_.
+Lo más habitual es el que valor de estos derivados a tiempo $T$ se escriba en función de $S_T$, en lugar de $Omega$. Por esto, es frecuente hablar de _contingent claims_.
 
 
 #exercise[
@@ -96,11 +98,11 @@ Lo más habitual es el que valor de estos productos a tiempo $T$ se escriba en f
 === Cartera
 
 Si pensamos en el modelo @eq-unperiodo-2states con un activo subyacente de valor $S_t$ y un bono de valor $B_t$, una _cartera_ consiste en tener $theta^((1)) in RR$ unidades de la activo, y $theta^((2)) in RR$ unidades del bono.
-Así, una cartera en el mercado ${S,B}$ es un vector $theta in RR^2$. El valor de esta cartera es el proceso estocástico
+Así, una cartera en el mercado ${S,B}$ es un vector $bold(theta) in RR^2$. El valor de esta cartera es el proceso estocástico
 $
-  V_t^((theta)) = theta^((1)) S_t + theta^((2)) B_t " donde " t in {0, T}.
+  V_t^(bold(theta)) = theta^((1)) S_t + theta^((2)) B_t " donde " t in {0, T}.
 $
-Algunos autores la denotan $V^((theta))$ para especificar que lo importante es el vector $theta$.
+Algunos autores la denotan $V^(bold(theta))$ para especificar que lo importante es el vector $theta$.
 
 #figure(
   raw-render(```
@@ -122,7 +124,7 @@ Algunos autores la denotan $V^((theta))$ para especificar que lo importante es e
 #exercise(breakable: true)[Volatilidad de una cartera][
   Hemos visto que
   $
-    EE [V^((theta))_T] = theta^((1)) EE [S_T] + theta^((2)) e^(r T) = theta^((1)) (p u S_0 + (1-p) d S_0) + theta^((2)) e^(r T).
+    EE [V^(bold(theta))_T] = theta^((1)) EE [S_T] + theta^((2)) e^(r T) = theta^((1)) (p u S_0 + (1-p) d S_0) + theta^((2)) e^(r T).
   $
   Comprobar que
   $
@@ -139,22 +141,26 @@ Algunos autores la denotan $V^((theta))$ para especificar que lo importante es e
 ]
 
 #definition[Cartera en un mercado sobre el modelo @eq-unperiodo-2states][
-  Si en el modelo @eq-unperiodo-2states contamos productos de valor $S^((1)), dots.c, S^((N))$, una cartera en el mercado ${S^((1)), dots.c, S^((N))}$ consiste en una combinación de estos activos en cantidades $theta^((i)) in RR$.
+  Si en el modelo @eq-unperiodo-2states contamos derivados de valor $S^((1)), dots.c, S^((N))$, una cartera en el mercado ${S^((1)), dots.c, S^((N))}$ consiste en una combinación de estos activos en cantidades $theta^((i)) in RR$.
   Así, la cartera es un vector $theta in RR^N$.
   El valor de la cartera a tiempo $t$ es
   $
-    V^((theta))_t := sum_(i=1)^N theta^((i)) S_t^((i)).
+    V^(bold(theta))_t := sum_(i=1)^N theta^((i)) S_t^((i)) = bold(theta)_t dot bold(S)_t.
   $
   Habitual la denotaremos simplemente $V$.
-  Nótese que si $S^((i))$ son productos en el modelo @eq-unperiodo-2states entonces las carteras son también productos financieros.
+  Nótese que si $S^((i))$ son derivados en el modelo @eq-unperiodo-2states entonces las carteras son también derivados financieros.
 ]
+
+Utilizamos la siguiente convención:
+- si $theta_t^((i)) > 0$ decimos que estamos en una posición larga (hemos comprado el activo en el mercado), y
+- si $theta_t^((i)) < 0$ decimos que estamos en una posición corta (hemos pedido prestado a un broker el activo).
 
 
 === Arbitraje
 
 Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversión inicial
 #definition[Arbitraje en el modelo @eq-unperiodo-2states][
-  Un producto $H$ es una oportunidad de arbitraje si existe
+  Un derivado$H$ es una oportunidad de arbitraje si existe
   $
     H_0 <= 0,
     quad quad & H_T >= 0,
@@ -162,7 +168,7 @@ Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversi
   $
   Habitualmente podemos construirlo con $H_0 = 0.$
 
-  Dados productos $S^((1)), dots.c, S^((N))$ decimos que el mercado ${S^((1)), dots.c, S^((N))}$ admite arbitraje si existe una cartera que es una oportunidad de arbitraje. En caso contrario, diremos que el mercado está _libre de arbitraje_.
+  Dados derivados $S^((1)), dots.c, S^((N))$ decimos que el mercado ${S^((1)), dots.c, S^((N))}$ admite arbitraje si existe una cartera que es una oportunidad de arbitraje. En caso contrario, diremos que el mercado está _libre de arbitraje_.
 ]
 Si lo intentamos a través de una cartera tenemos que
 $0 = V_0 = theta^((1)) S_0 + theta^((2)) 1$
@@ -190,7 +196,7 @@ $
   $
     H_T = S_T - F_0.
   $
-  Cuando introducimos un nuevo producto, por ejemplo $H_t$, en el mercado, estamos extendiendo el mercado de tal modo que ahora tiene tres activos con los que construir carteras: ${S, B, H}$.
+  Cuando introducimos un nuevo derivado, por ejemplo $H_t$, en el mercado, estamos extendiendo el mercado de tal modo que ahora tiene tres activos con los que construir carteras: ${S, B, H}$.
 
   + Suponer que $F_0 > S_0 e^(r T)$ y construir una cartera en el mercado ${S, B, H}$ que sea una oportunidad de arbitraje.
 
@@ -284,7 +290,7 @@ donde $(theta^((1)),theta^((2)))$ es la solución de @eq:cobertura, es el llamad
 
 === Completitud del mercado
 
-Llamaremos _contingent claim_ a un producto cuyo valor futuro puede deducirse del valor del activo subyacente (_underlying asset_). En este modelo, este _claim_ es otro proceso estocástico ${H_t}_(t in cal(T))$.
+Llamaremos _contingent claim_ a un derivadocuyo valor futuro puede deducirse del valor del activo subyacente (_underlying asset_). En este modelo, este _claim_ es otro proceso estocástico ${H_t}_(t in cal(T))$.
 Llamamos cartera de cobertura a una cartera con valor $V_t = theta^((1)) S_t + theta^((2)) B_t$ y tal que $H_T = V_T$. Esto quiere decir que $H_T (omega) = V_T (omega)$ para todo $omega in Omega$.
 
 Como en el caso de la opción _call_ europea, esto nos lleva a un sistema compatible determinado
@@ -299,21 +305,21 @@ $
 $
 
 #definition[Mercado completo][
-  Decimos que un mercado es completo si para cada producto existe una cartera de cobertura.
+  Decimos que un mercado es completo si para cada derivadoexiste una cartera de cobertura.
 ]
 Este mercado es completo.
 
 === Valoración por replicación
 
-Vamos a hacer rigurosa la idea de que si hay dos productos que tienen el mismo _payoff_, entonces tienen el mismo valor en todo momento
+Vamos a hacer rigurosa la idea de que si hay dos derivados que tienen el mismo _payoff_, entonces tienen el mismo valor en todo momento
 
 #theorem[Unicidad del precio][
-  Sea $V, H$ dos productos en el modelo @eq-unperiodo-2states tales que $H_T = V_T$.
+  Sea $V, H$ dos derivados en el modelo @eq-unperiodo-2states tales que $H_T = V_T$.
   Si $V_0!=H_0$ entonces existe una oportunidad de arbitraje en el mercado ${V, H}$.
 ]<thm-binomial-unicidad-precio>
 #proof[
   Podemos pensar en la opción $H_t$, una vez se encuentra en el mercado, es otro activo con el que podemos hacer carteras.
-  Sea $V_t$ la cartera autofinanciada que reproduce la opción (es decir $H_T = V_T$), y
+  Sea $bold(theta)_t$ la cartera autofinanciada (en el mercado ${S,B}$) que reproduce la opción (es decir $H_T = V_T$), y
   supongamos que $H_0 != V_0$, para comprobar que hay una oportunidad de arbitraje.
 
   Consideramos en el mercado ${V, B}$ la cartera dada por
@@ -340,7 +346,7 @@ Empezamos recordando una definición
 El motivo por el que se pide la equivalencia es
 
 #lemma[Valor esperado de una oportunidad de arbitraje][
-  Si un producto $H$ es una oportunidad de arbitraje y $QQ ~ PP$ entonces
+  Si un derivado$H$ es una oportunidad de arbitraje y $QQ ~ PP$ entonces
   $
     EE^QQ [H_T] > 0.
   $
@@ -419,7 +425,7 @@ Una gran propiedad es la siguiente
 #theorem[Valoración de cartera por riesgo neutro][
   Si $theta$ es una cartera es una cartera en el mercado ${S, B}$ entonces para $t in {0,T}$
   $
-    e^(-r t) EE^QQ [V_t^((theta))] = V_0^((theta)).
+    e^(-r t) EE^QQ [V_t^(bold(theta))] = V_0^(bold(theta)).
   $
 ]<thm-binomial-valor-cartera-riesgo-neutro>
 #proof[
@@ -435,30 +441,30 @@ $
 Enunciemos el siguiente resultado como teorema, porque nos será de gran utilidad más adelante:
 #theorem[Valoración por riesgo neutro][
   Consideremos el modelo @eq-unperiodo-2states y la condición de no arbitraje @eq-binomial-condicion-no-arbitraje.
-  Para todo producto $H$ el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
+  Para todo derivado$H$ el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
   $
     H_0 = e^(-r T) EE^QQ [H_T].
   $
 ]
 Primero hacemos notar que cualquier otro precio produce una opción de arbitraje.
-Para demostrar esto existe una cartera de cobertura, el precio de la cartera de cobertura es el valor esperado (@thm-binomial-valor-cartera-riesgo-neutro), y el precio de dos productos con el mismo pay-off coincide o hay arbitraje (@thm-binomial-unicidad-precio).
+Para demostrar esto existe una cartera de cobertura, el precio de la cartera de cobertura es el valor esperado (@thm-binomial-valor-cartera-riesgo-neutro), y el precio de dos derivados con el mismo pay-off coincide o hay arbitraje (@thm-binomial-unicidad-precio).
 Veamos, por último, que este precio garantiza la ausencia de arbitraje.
 #proposition[
   Consideremos el modelo @eq-unperiodo-2states y la condición de no arbitraje @eq-binomial-condicion-no-arbitraje.
-  Para todo producto $H$ si
+  Para todo derivado$H$ si
   $
     H_0 = e^(-r T) EE^QQ [H_T].
   $
   entonces el mercado ${S, B, H}$ es libre de arbitraje.
 ]<prop-binomial-esperanza-implica-noarbitraje>
 #proof[
-  Sea $hat(V)$ una cartera en el mercado ${S,B,H}$.
+  Sea $hat(bold(theta))$ una cartera en el mercado ${S,B,H}$.
   Vamos a calcular valor de la cartera descontada
   $
-    e^(-r T) EE^QQ [hat(V)_t]
-    &= theta^((1)) e^(-r T)EE^QQ [S_t] + theta^((2)) e^(-r T) EE^QQ [B_t] + theta^((3)) EE^QQ [H_T]
+    e^(-r T) EE^QQ [V^(hat(bold(theta)))_t]
+    &= hat(theta)^((1)) e^(-r T)EE^QQ [S_t] + hat(theta)^((2)) e^(-r T) EE^QQ [B_t] + hat(theta)^((3)) EE^QQ [H_T]
     \
-    &= theta^((1)) S_0 + theta^((2)) + theta^((3)) H_0
+    &= hat(theta)^((1)) S_0 + hat(theta)^((2)) + hat(theta)^((3)) H_0
     = V_0.
   $
   con lo que, recordando @lem-binomial-esperanza-oportunidad-arbitraje, $hat(V)_t$ no puede ser una oportunidad de arbitraje.
@@ -517,9 +523,9 @@ Consideremos como caso académico como $u > m > d$ y el sistema
 === Condición de no arbitraje en el mercado ${S,B}$
 
 Veamos si el mercado ${S, B}$ admite arbitraje.
-Estudiamos una cartera $theta$
+Estudiamos una cartera $bold(theta)$
 $
-  V_t = theta^((1)) S_t + theta^((2)) B_t.
+  V_t^(bold(theta)) = theta^((1)) S_t + theta^((2)) B_t.
 $
 Habría arbitraje si existe $theta$ tal que
 - La primera condición es que no me cueste nada
@@ -621,21 +627,21 @@ $
 
 Supongamos ahora que hay $N$ activos (incluyendo opciones y bonos). Denotaremos
 $
-  S_t = vec(S^((1))_t, dots.v, S_t^((N))) in RR^N
+  bold(S)_t = vec(S^((1))_t, dots.v, S_t^((N))) in RR^N
 $
 donde $S^i_t$ denota la cantidad del activo $i$-ésimo a tiempo $t$.
 Asumimos que $S_0$ es conocido y $S_T$ puede estar en $M$ estados.
 Una cartera consiste en un vector $theta in RR^N$ donde $theta_i$ indica el número de acciones del activo $i$-ésimo.
 Denotamos $D_(i j)$ al valor del activo $i$-ésimo en el estado $j$-ésimo a tiempo $T$, de modo que
 $
-  S_T in { D_(bullet 1), dots, D_(bullet M) } "donde" D_(bullet j) = vec(D_(1j), dots.v, D_(N j))
+  bold(S)_T in { D_(bullet 1), dots, D_(bullet M) } "donde" D_(bullet j) = vec(D_(1j), dots.v, D_(N j))
 $
-y $PP(S_T = D_(bullet j)) > 0$ para todo $j$.
+y $PP(bold(S)_T = D_(bullet j)) > 0$ para todo $j$.
 
 === Carteras y vector de estado
 Así el valor de cartera a tiempo $t$
 $
-  V_0 = S_0 dot theta => V_T in { D_(bullet 1) dot theta, dots, D_(bullet M) dot theta } = op("elements") (D^trans theta).
+  V_0 = bold(S)_0 dot theta => V_T in { D_(bullet 1) dot theta, dots, D_(bullet M) dot theta } = op("elements") (D^trans theta).
 $
 donde $trans$ denota la transposición de matrices.
 
@@ -646,22 +652,21 @@ Introducimos la notación para $x in RR^N$ se dice que
 
 Así, la condición de no-arbitraje se traduce en que existe $theta in RR^N$ tal que
 $
-  S_0 dot theta <= 0 & " y " D^trans theta gt.neq 0.
+  bold(S)_0 dot bold(theta) <= 0 & " y " D^trans bold(theta) gt.neq 0.
 $
 #definition[Vector de estado][
   Vector $psi in RR^M_(++)$ tal que
   $
-    S_T = D psi.
+    bold(S)_T = D psi.
   $
 ]
-Llamamos vector de estado a
-Supogamos que podemos encontrar carteras $theta^((i))$ tales que
+Supongamos que podemos encontrar carteras $bold(theta)^([i])$ tales que
 $
-  D^trans theta^((i)) = e_i in RR^M "para todo" i in {1,dots,N}.
+  D^trans bold(theta)^([i]) = e_i in RR^M "para todo" i in {1,dots,N}.
 $
 se llaman valores de Arrow-Debreu. En tal caso tenemos
 $
-  S_0 dot theta^((i)) = (D psi) dot theta^((i)) = psi dot (D^trans theta^((i))) = psi dot e_i = psi_i.
+  bold(S)_0 dot bold(theta)^([i]) = (D psi) dot bold(theta)^([i]) = psi dot (D^trans bold(theta)^([i])) = psi dot e_i = psi_i.
 $
 
 #theorem[Teorema Fundamental de Valoración de Activos][
@@ -674,15 +679,15 @@ Ver #cite(<etheridgeCourseFinancialCalculus>, supplement: "Theorem 1.5.2").
 === Medida de riesgo neutro
 Este vector de estados, también nos da una forma de construir la medida de riesgo nulo
 $
-  QQ(S_T = D_(bullet j)) := psi_j / psi_0
+  QQ(bold(S)_T = D_(bullet j)) := psi_j / psi_0
   quad "y" quad
   psi_0 := sum_(j=1)^M psi_j.
 $
 Entonces observamos que
 $
-  EE^QQ [S_T] = S_0 / psi_0
+  EE^QQ [bold(S)_T] = bold(S)_0 / psi_0
 $
-Así, $psi_0$ resulta nuestro factor de descuento, y el precio descontado $tilde(S_t) = psi_0 S_t$ es una martingala respecto de $QQ$.
+Así, $psi_0$ resulta nuestro factor de descuento, y el precio descontado $tilde(bold(S)_t) = psi_0 bold(S)_t$ es una martingala respecto de $QQ$.
 
 #proposition[][
   Si existe vector de estados, y $C$ de un _contigent claim_ que puede reproducirse con una cartera, entonces su valor actual libre de arbitraje es
@@ -710,8 +715,8 @@ Como $psi_0$ es único, si el mercado es completo y libre de riesgo, entonces $Q
 
 Ahora estudiamos
 $
-  var(V_t) & = EE [(theta dot.c S_t - overline(theta dot.c S_t) )^2] = EE[ ( theta dot.c (S_t - overline(S)_t) )^2] \
-           & = sum_(i,j) theta_i theta_j cov(S_t^((i)), S_t^((j))) \
-           & = theta^trans Sigma(S_t) theta
+  var(V^(bold(theta))_t) & = EE [(bold(theta) dot.c bold(S)_t - overline(bold(theta) dot.c bold(S)_t) )^2] = EE[ ( bold(theta) dot.c (bold(S)_t - overline(bold(S))_t) )^2] \
+  & = sum_(i,j) theta_i theta_j cov(S_t^((i)), S_t^((j))) \
+  & = bold(theta)^trans Sigma(bold(S)_t) bold(theta)
 $
-donde $Sigma (S_t)$ es la matriz de covarianzas.
+donde $Sigma (bold(S)_t)$ es la matriz de covarianzas.

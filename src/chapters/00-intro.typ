@@ -55,7 +55,7 @@ En la teoría de interés con composición continua, que veremos más adelante, 
 Imaginemos que dos bancos ofrecen productos de inversión a un año, y por cada 1€ de inversión el primer banco devuelve $(1 + r_1) €$ y el segundo ofrecen $(1 + r_2)€$, donde $r_1 < r_2$.
 
 Entonces un inversor inteligente podría:
-- Buscar a los clientes del banco 1, y ofrecerles un producto de interés de un valor $r in (r_1, r_2)$. Supongamos que somos capaces de vender $X$€ de este producto.
+- Buscar a los clientes del banco 1, y ofrecerles un derivadode interés de un valor $r in (r_1, r_2)$. Supongamos que somos capaces de vender $X$€ de este producto.
 - Coger todo el dinero de estos inversores e invertirlo en el banco 2.
 - No hemos invertido nada de dinero.
 Pasado un año:
@@ -78,9 +78,9 @@ Además, para poder un precio único a los productos asumiremos
 Hay algunas otras simplificaciones naturales, que utilizaremos más adelante
 
 #definition(breakable: true)[Hipótesis del mercado financier][
-  - Se permite posiciones en corto (vender un producto que está en el mercado o pedir prestadas acciones), así como posiciones fraccionarias (es decir se pueden tener cualquiera cantidades reales de los productos).
+  - Se permite posiciones en corto (vender un derivadoque está en el mercado o pedir prestadas acciones), así como posiciones fraccionarias (es decir se pueden tener cualquiera cantidades reales de los productos).
   - No existe _bid-ask_ spread, es decir que el precio de compra de un activo es el mismo que su precio de venta.
-  - Para cada producto en venta a un cierto precio, hay alguien dispuesto a comprar al mismo precio
+  - Para cada derivadoen venta a un cierto precio, hay alguien dispuesto a comprar al mismo precio
   - La compra o venta de productos se realiza sin coste
   - El mercado es completamente líquido, es decir podemos comprar o vender cantidades ilimitadas de los productos. También podemos pedir cantidades ilimitadas de dinero prestadas.
 ]
@@ -253,7 +253,8 @@ Esto nos permite de manera "aceptable" simular variables aleatorias continuas.
 
 #code-block(caption: "Muestreo de una uniform en julia. No requiere ninguna librería.")[
   ```julia
-  rand() # Muestra de una uniforme (0,1).
+  rand()  # Muestra de una uniforme (0,1).
+  randn() # Muestra de una normal (0,1).
   ```
 ]<code-rand>
 

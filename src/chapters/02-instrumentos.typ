@@ -288,7 +288,7 @@ Si $r$ es constante entonces el precio de un _future_ es el mismo que el de un _
 
 Una permuta financiera o swap es un contrato por el cual dos partes se comprometen a intercambiar una serie de cantidades de dinero en fechas futuras, y cómo se calcularán.
 
-El producto más popular es el _swap_ de tipos de interés es uno donde el LIBOR se intercambia por un tipo fijo.
+El derivadomás popular es el _swap_ de tipos de interés es uno donde el LIBOR se intercambia por un tipo fijo.
 Vamos a considerar el caso en el que el interés se paga con atraso.
 
 #proposition[

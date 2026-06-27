@@ -93,55 +93,63 @@ Muchas de las construcciones que vamos a hacer son completamente generales, pero
 
 Una presentación introductoria de esta sección se puede encontrar en @etheridgeCourseFinancialCalculus. Una presentación más avanzada puede verse en @bjorkArbitrageTheoryContinuous2019.
 
-#definition(breakable: true)[Cartera de inversión][
-  Si tenemos $M$ activos de cuyo valores denotamos $S_t^((i))$ una cartera consiste en mantener cantidades $theta^((i))_t in RR$ de ellos en los tiempos $[t , t + Delta t]$.
-  Utilizamos la siguiente convención:
-  - si $theta_t^((i)) > 0$ decimos que estamos en una posición larga (hemos comprado el activo en el mercado), y
-  - si $theta_t^((i)) < 0$ decimos que estamos en una posición corta (hemos pedido prestado a un broker el activo).
-  Una cartera es un proceso estocástico $theta_t = (theta_t^((1)), dots.c, theta_t^((M)))$
+#definition[Derivado o derecho contingente en el modelo @eq-arbol][
+  Proceso estocástico $H = (H_0, H_(Delta t), dots.c, H_T)$ contingente de los valores conocidos de $S$
+  $
+    H_t = h_t (S_0, dots.c, S_t)
+  $
+  donde si $t = n Delta t$ entonces $h_t : RR^n -> RR$ y depender de los parámetros del modelo
+]
+En inglés se habla de _contingente claim_.
+
+#definition(breakable: true)[Cartera de inversión en el modelo @eq-arbol][
+  Si tenemos $M$ derivados cuyos valores denotamos $S_t^((i))$ una cartera en el mercado ${S^((1)), dots.c , S^((M))}$ consiste en mantener cantidades $theta^((i))_t in RR$ de ellos en los tiempos $[t - Delta t, t ]$.
+  Las escribimos en un vector $bold(theta)$.
+  Fijamos por convención $bold(theta)_0 = bold(theta)_(Delta t)$.
+  Una cartera es un proceso estocástico $bold(theta)_t = (theta_t^((1)), dots.c, theta_t^((M)))$
   definido para $t = 0, ..., T-Delta t$
   adaptado a la información conocida, es decir tal que
   $
-    theta_t = F_t (S_0, S_(Delta t), S_(2 Delta t), dots.c, S_(t-Delta t)).
+    bold(theta)_t = bold(F)_t (bold(S)_0, bold(S)_(Delta t), bold(S)_(2 Delta t), dots.c, bold(S)_(t-Delta t)).
   $<eq-arbol-carteraadaptada>
-  Fijamos por convención $theta_0 = theta_(Delta t)$.
+  $bold(F)_t$ puede depender de los parámetros en @eq-arbol.
   El valor de la cartera se expresa
   $
-    V_t := sum_(i=1)^M theta_t^((i)) S_t^((i)) = theta_t dot S_t.
+    V^(bold(theta))_t := sum_(i=1)^M theta_t^((i)) S_t^((i)) = bold(theta)_t dot bold(S)_t.
   $<eq-arbol-valorcartera>
 ]
 Añadimos la condición de que sea autofinanciada, es decir que a tiempo $t+Delta t$ podríamos la posición y usamos todo el dinero para una nueva cartera
 $
-  underbrace(theta_t dot S_(t), "valor de la cartera" \ "construida a tiempo" t-Delta t "en" t) = underbrace(theta_(t+ Delta t) dot S_(t), "valor de la nueva cartera" \ "en" t)
+  underbrace(bold(theta)_t dot bold(S)_(t), "valor de la cartera" \ "construida a tiempo" t-Delta t "en" t) = underbrace(bold(theta)_(t+ Delta t) dot bold(S)_(t), "valor de la nueva cartera" \ "en" t)
   " para todo " t = 0, ..., T - Delta t.
 $
 Denotando
 $
-  Delta S_t := S_(t + Delta t) - S_t,
+  Delta bold(S)_t := bold(S)_(t + Delta t) - bold(S)_t,
 $
 $Delta theta_t := theta_(t+Delta t) - theta_t$, etc...  esto significa que
 $
-  S_(t) dot Delta theta_t = 0.
+  bold(S)_(t) dot Delta bold(theta)_t = 0.
 $<eq:arbol-autofinanciacion2>
 Desarrollando
 $
-  Delta V_t & = (Delta theta_t) dot S_(t) + theta_t dot Delta S_t
+  Delta V_t & = (Delta bold(theta)_t) dot bold(S)_(t) + bold(theta)_t dot Delta bold(S)_t
 $
 obtenemos la formulación equivalente
 #definition[Cartera autofinanciada][
-  Diremos que una cartera $theta_t$ es autofinanciada si satisface
+  Diremos que una cartera $bold(theta)_t$ es autofinanciada si satisface
   $
-    Delta V_t = theta_t dot Delta S_t " para todo " t = 0, ... , T - Delta t.
+    Delta V^(bold(theta))_t = bold(theta)_t dot Delta bold(S)_t " para todo " t = 0, ... , T - Delta t.
   $<eq:arbol-autofinanciacion>
 ]
 La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nuestra parte. Esto quiere decir no hacer inversión inicial, y no tener que hacer inversiones posteriores. De aquí que nuestra nueva definición incluya la autofinanciación.
 #definition[Oportunidad de arbitraje en el modelo discreto en tiempo][
-  Decimos que una cartera $theta$ es una oportunidad de arbitraje si existe
+  Decimos que una cartera $bold(theta)$ es una oportunidad de arbitraje si existe
   $
-    theta_t "es autofinanciada",
-    quad quad & V_0 <= 0,
-                quad quad & V_T >= 0,
-                            quad quad & PP(V_T > 0) > 0.
+    bold(theta) "es autofinanciada",
+    quad quad & V_0^(bold(theta)) <= 0,
+                quad quad & V_T^(bold(theta)) >= 0,
+                            quad quad & PP(V_T^(bold(theta)) > 0) > 0.
   $
 ]
 
@@ -158,13 +166,13 @@ La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nue
 Veamos ahora que las carteras autofinanciadas son las única que
 
 #theorem[Valoración por replicación][
-  Si $V_t$ y $H_t$ son dos productos tales que $H_T = V_T != 0$, entonces $H_t = V_t$ para todo $t in [0,T]$ o el mercado ${S, B, H}$ admite arbitrajes.
+  Si $V_t$ y $H_t$ son dos derivados tales que $H_T = V_T != 0$, entonces $H_t = V_t$ para todo $t in [0,T]$ o el mercado ${S, B, H}$ admite arbitrajes.
 ]<thm-arbol-valor-replicacion>
 #proof[
   Veamos que si $V_t != H_t$ para algún $t$ entonces el mercado admite una oportunidad de arbitraje.
   Sea $t_0$ cualquier tiempo donde.
   Por construcción $t_0 < T$.
-  En el mercado de productos $(V_t, H_t)$ podemos construir el producto
+  En el mercado de derivados $(V_t, H_t)$ podemos construir el derivado
   construímos una nueva cartera formada por $hat(theta)_t^((1))$ unidades de la cartera replicante, y $hat(theta)_t^((2))$ unidades del derivado donde
   $
     hat(theta)_t^((1)) & := cases(0 & "si" t<=t_0, -sign(V_(t_0) - H_(t_0))H_(t_0) & "si" t>=t_0+Delta t) \
@@ -261,26 +269,27 @@ $
 Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noción detallada, vamos simplemente a demostrar la siguiente propiedad que nos permitirá valor activos a tiempo $t = 0$.
 
 #proposition[][
-  En un árbol binomial, una cartera @eq-arbol-valorcartera autofinanciada, es decir tal que @eq:arbol-autofinanciacion satisface
+  En un árbol binomial, una cartera $bold(theta)$ autofinanciada satisface
   $
-    EE^QQ [tilde(V)_t] = V_0
+    EE^QQ [tilde(V)^(bold(theta))_t] = V_0
   $
 ]
 #proof[
   Multiplicando @eq:arbol-autofinanciacion2 por $e^(-r (t + Delta t))$ obtenemos la versión descontada
   $
-    (Delta theta_t) dot tilde(S)_(t+Delta t) = 0.
+    (Delta bold(theta)_t) dot tilde(bold(S))_(t+Delta t) = 0.
   $
   Así, desarrollamos la resta
   $
-    Delta tilde(V_t) & = theta_t dot Delta tilde(S)_t.
+    Delta tilde(V_t) & = bold(theta)_t dot Delta tilde(bold(S))_t.
   $
   Aplicando @eq-arbol-martingala con $s = 0$ deducimos que $EE^QQ [tilde(S)_t] = S_0$ y deducimos que $EE^QQ [tilde(V)_(t + Delta t)] = E^QQ [tilde(V)_t]$. Inductivamente deducimos el resultado.
 ]
 
 
-#corollary[Valor de un producto mediante medida de riesgo neutro][
-  En el modelo @eq-arbol, consideremos un producto $H$. Entonces el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
+#corollary[Valor de un derivadomediante medida de riesgo neutro][
+  En el modelo @eq-arbol, consideremos un derivado$H$.
+  Entonces el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
   $
     H_0 = e^(-r T) EE^QQ [H_T].
   $
@@ -393,10 +402,10 @@ $
 $<eq-arbol-americana>
 Dado que $V_t$ depende sólo del valor "futuro", podemos resolver este sistema a tiempo $t = T - Delta t, T - 2 Delta t, dots.c$
 
-Hasta ahora hemos demostrado la valoración de productos a tiempo $T$, pero no de frontera libre. Se propone el siguiente ejercicio.
+Hasta ahora hemos demostrado la valoración de derivados a tiempo $T$, pero no de frontera libre. Se propone el siguiente ejercicio.
 #exercise[
-  Como el mercado ${S,B}$ en el modelo @eq-arbol es completo, cualquier _producto_ (en nuestro sentido riguroso) se puede escribir como un cartera autofinanciada
-  + Comprobar que @eq-arbol-americana es un _producto_ en nuestro sentido riguroso.
+  Como el mercado ${S,B}$ en el modelo @eq-arbol es completo, cualquier _derivado_ (en nuestro sentido riguroso) se puede escribir como un cartera autofinanciada
+  + Comprobar que @eq-arbol-americana es un _derivado_ en nuestro sentido riguroso.
 
   + Suponer que la opción americana tiene valor $H_t$, y comprobar que si $V_t != H_t$ entonces el mercado ${S,B,H}$ admite arbitraje.
     Sugerencia: considerar el máximo de los $t$ donde no coinciden y distinguir casos.
@@ -443,21 +452,20 @@ son los que están en la $sigma$-álgebra correspondiente es
 $
   cal(F)_t := {S_s^(-1) (B) : B in cal(B), s in [0,t]}.
 $
-Si $A in cal(F)_t$ entonces
-$
-  A = A' times {0,1}^(N-n) " con " A' in {0,1}^n.
-$
-
+// Si $A in cal(F)_t$ entonces
+// $
+//   A = A' times {0,1}^(N-n) " con " A' in {0,1}^n.
+// $
 Esta es la llamada $sigma$-álgebra generada por $(S_s | s in [0,s])$, que a veces se denota $cal(U)(S_s | s in [0,s])$.
 
 La condición de que la cartera esté adaptada a la información conocida (ver @eq-arbol-carteraadaptada) se expresa en estos términos como que $theta_t$ sea medible respecto de $cal(F)_(t-Delta t)$, lo que a veces se llama que sea *proceso adaptado a $cal(F)_(t-Delta t)$*.
 
 #exercise[
-  Sea $theta_t = F_t (S_0, dots.c, S_N)$ con $T = N Delta t$ y sea $t = n Delta t$ con $n < N$.
+  Sea $bold(theta)_t = bold(F)_t (S_0, dots.c, S_N)$ con $T = N Delta t$ y sea $t = n Delta t$ con $n < N$.
   Comprobar que son equivalentes
-  - $theta_t = F_t (S_0, dots.c, S_(t-Delta t))$
-  - $theta_t^(-1) ({a}) = A' times {0,1}^(N-n+1)$
-  - $theta_t$ es medible respecto $cal(F)_(t-Delta t)$
+  + $bold(theta)_t = bold(F)_t (S_0, dots.c, S_(t-Delta t))$
+  // - $bold(theta)_t^(-1) ({a}) = A' times {0,1}^(N-n+1)$
+  + $bold(theta)_t$ es medible respecto $cal(F)_(t-Delta t)$
 ]
 
 Podemos pensar en
