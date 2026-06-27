@@ -3,7 +3,7 @@
 #import "../header/template.typ": *
 #import "@preview/diagraph:0.3.7": *
 
-= Modelos de un periodo temporal
+// = Modelos de un periodo temporal
 
 // Modelo matricial (un periodo de tiempo)
 // Valoración por replicación, carteras de cobertura, oportunidades de arbitraje.
@@ -15,10 +15,7 @@
 // periodo al límite, fórmulas de Black-Scholes.
 // Valoración de opciones americanas, ejercicio óptimo.
 
-Supondremos un modelo de un periodo temporal, que pasa de $t=0$ a $t = T$.
-Consideramos un bono, $B$, con $B_T = e^(r T)$.
-
-== Modelo binomial: un sólo activo con dos posible estados
+= Modelo binomial: un sólo activo con dos posible estados
 
 Modelicemos un activo financiero por el proceso estocástico más sencillo.
 Denotemos por el precio en € de una unidad de este activo a tiempo por $S_t$.
@@ -43,7 +40,7 @@ Los derivados de los que hablaremos (por ejemplo las opciones) puede escribirse 
   Permitimos que $h$ dependa de los parámetros de @eq-unperiodo-2states.
 ]<def-unpaso-derivado>
 
-=== $S_t$ como proceso estocástico
+== $S_t$ como proceso estocástico
 
 De esta manera, a lo largo supondremos que este un espacio de probabilidad $(Omega, cal(F), PP)$ y $S_t : Omega -> RR$ es una variable aleatoria.
 Habitualmente hay más de un activo de riesgo, con lo que $bold(S)_t = (S_t^((1)), dots, S_t^((N)))$ donde cada $S_t^((i)) : Omega -> [0,oo)$.
@@ -95,7 +92,7 @@ Lo más habitual es el que valor de estos derivados a tiempo $T$ se escriba en f
 
 // TODO FINISH
 
-=== Cartera
+== Cartera
 
 Si pensamos en el modelo @eq-unperiodo-2states con un activo subyacente de valor $S_t$ y un bono de valor $B_t$, una _cartera_ consiste en tener $theta^((1)) in RR$ unidades de la activo, y $theta^((2)) in RR$ unidades del bono.
 Así, una cartera en el mercado ${S,B}$ es un vector $bold(theta) in RR^2$. El valor de esta cartera es el proceso estocástico
@@ -155,12 +152,73 @@ Utilizamos la siguiente convención:
 - si $theta_t^((i)) > 0$ decimos que estamos en una posición larga (hemos comprado el activo en el mercado), y
 - si $theta_t^((i)) < 0$ decimos que estamos en una posición corta (hemos pedido prestado a un broker el activo).
 
+== Opción europea
 
-=== Arbitraje
+En este caso una opción europea corresponde a <fig:binomial_opcion>
+#figure(
+  raw-render(```
+  digraph {
+    rankdir=LR
+  node[math=true, xmath=true]
+  edge[lmath=true]
+  // s[label="sum_(n=0)^3 n"]
+  s[label="C_0"]
+  s -> s1[label="p"]
+  s -> s2[label="1-p"]
+  s1[label="(u S_0-K)_+"]
+  s2[label="(d S_T-K)_+"]
+  }
+  ```),
+  caption: "Opción europea y cartera con un período de tiempo",
+)<fig:binomial_opcion>
+
+Desconocemos el valor $C_0$. De manera similar a lo que hicimos con las opciones forward en @example-arbitrage-forward vamos a intentar encontrar el precio de no arbitraje por argumentos "de palabra".
+
+Como el único activo que sabemos valorar son las carteras, vamos a crear lo que se llama una *cartera de cobertura*, es decir haciendo que tanto si ocurre $u S_0$ como si ocurre $d S_0$ obtengamos el mismo pago a tiempo a $T$
+$
+  theta^((1)) u S_0 + theta^((2)) e^(r T) 1 = (u S_0 - K)_+ \
+  theta^((1)) d S_0 + theta^((2)) e^(r T) 1 = (d S_0 - K)_+.
+$
+Matricialmente
+$
+  mat(
+    u S_0, e^(r T);
+    d S_0, e^(r T)
+  )
+  mat(theta^((1)); theta^((2)))
+  =
+  mat((u S_0-K)_+; (d S_0 - K)_+)
+$<eq:cobertura>
+Como $u S_0 eq.not d S_0$ entonces encontramos una única solución del sistema.
+
+Supongamos que yo valoro la opción con un valor $C_0 > V_0$ (y estoy dispuesto a comprarla o venderla a ese precio). En este caso, un inversor inteligente hace lo siguiente:
+- Hoy: venderme la opción a precio $C_0$, y comprar en el mercado la cartera de cobertura lo que le cuesta $V_0$.
+  Por ahora tiene un beneficio neto de $C_0 - V_0 > 0$.
+  Esto requiere pedir "prestada" una de las acciones (lo que habitualmente se conoce como quedarse "corto").
+- Mañana: como el inversor a pedido prestadas acciones, debe liquidar la cartera.
+  + Si el valor de la acción es $S_T <= K$, yo no ejercerá la opción. La cartera ahora vale $theta^((2)) S_T + theta^((2)) e^(r T) = (S_T - K)_+ = 0$, con lo que puede liquidarla sin perder o ganar dinero y ya no está corto ni largo acciones.
+  + Si el valor de la acción es $S_T > K$. Yo querré ejercer la opción, y comprar la acción por $K$€. Al liquidar la cartera el inversor obtiene (o pierde) $theta^((1)) S_T + theta^((2)) e^(r T) = (S_T - K)_+ = S_T - K$. Junto esto con los $K$€ que yo le doy, puede comprar la acción, y dármela. En esta operación no pierde o gana dinero.
+
+Al final de la jugada, el inversor inteligente se va a casa con $C_0 - V_0 > 0$ ¡con probabilidad 1! Este es el efecto es el conocido como *arbitraje*.
+En caso de que $C_0 < V_0$ entonces el inversor me compra la opción, y vende en el mercado la cartera.
+De tal manera que el único precio que no genera opciones de arbitraje es
+$
+  C_0 = theta^((1)) S_0 + theta^((2)) e^(r T),
+$
+donde $(theta^((1)),theta^((2)))$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*. Hay otra forma, más elegante, de expresar este valor.
+
+#remark[Hipótesis sobre el mercado][
+  Hemos hecho algunas suposiciones:
+  - Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
+  - Liquidez: el mercado está dispuesto a comprar y vender de todas las acciones que quiera, y en cantidades fraccionarias
+]
+
+
+== Arbitraje: unicidad de precios, carteras de cobertura, completitud de mercado
 
 Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversión inicial
 #definition[Arbitraje en el modelo @eq-unperiodo-2states][
-  Un derivado$H$ es una oportunidad de arbitraje si existe
+  Un derivado $H$ es una oportunidad de arbitraje si existe
   $
     H_0 <= 0,
     quad quad & H_T >= 0,
@@ -228,89 +286,6 @@ $
 // $
 // ]
 
-
-=== Opción europea
-
-En este caso una opción europea corresponde a <fig:binomial_opcion>
-#figure(
-  raw-render(```
-  digraph {
-    rankdir=LR
-  node[math=true, xmath=true]
-  edge[lmath=true]
-  // s[label="sum_(n=0)^3 n"]
-  s[label="C_0"]
-  s -> s1[label="p"]
-  s -> s2[label="1-p"]
-  s1[label="(u S_0-K)_+"]
-  s2[label="(d S_T-K)_+"]
-  }
-  ```),
-  caption: "Opción europea y cartera con un período de tiempo",
-)<fig:binomial_opcion>
-
-Creemos una *cartera de cobertura* haciendo que tanto si ocurre $u S_0$ como si ocurre $d S_0$ obtengamos el mismo resultado
-$
-  theta^((1)) u S_0 + theta^((1)) e^(r T) 1 = (u S_0 - K)_+ \
-  theta^((1)) d S_0 + theta^((2)) e^(r T) 1 = (d S_0 - K)_+
-$
-Matricialmente
-$
-  mat(
-    u S_0, e^(r T);
-    d S_0, e^(r T)
-  )
-  mat(theta^((1)); theta^((2)))
-  =
-  mat((u S_0-K)_+; (d S_0 - K)_+)
-$<eq:cobertura>
-Como $u S_0 eq.not d S_0$ entonces encontramos una única solución del sistema.
-
-Supongamos que yo valoro la opción con un valor $C_0 > V_0$ (y estoy dispuesto a comprarla o venderla a ese precio). En este caso, un inversor inteligente hace lo siguiente:
-- Hoy: venderme la opción a precio $C_0$, y comprar en el mercado la cartera de cobertura lo que le cuesta $V_0$.
-  Por ahora tiene un beneficio neto de $C_0 - V_0 > 0$.
-  Esto requiere pedir "prestada" una de las acciones (lo que habitualmente se conoce como quedarse "corto").
-- Mañana: como el inversor a pedido prestadas acciones, debe liquidar la cartera.
-  + Si el valor de la acción es $S_T <= K$, yo no ejercerá la opción. La cartera ahora vale $theta^((2)) S_T + theta^((2)) e^(r T) = (S_T - K)_+ = 0$, con lo que puede liquidarla sin perder o ganar dinero y ya no está corto ni largo acciones.
-  + Si el valor de la acción es $S_T > K$. Yo querré ejercer la opción, y comprar la acción por $K$€. Al liquidar la cartera el inversor obtiene (o pierde) $theta^((1)) S_T + theta^((2)) e^(r T) = (S_T - K)_+ = S_T - K$. Junto esto con los $K$€ que yo le doy, puede comprar la acción, y dármela. En esta operación no pierde o gana dinero.
-
-Al final de la jugada, el inversor inteligente se va a casa con $C_0 - V_0 > 0$ ¡con probabilidad 1! Este es el efecto es el conocido como *arbitraje*.
-En caso de que $C_0 < V_0$ entonces el inversor me compra la opción, y vende en el mercado la cartera.
-De tal manera que el único precio que no genera opciones de arbitraje es
-$
-  C_0 = theta^((1)) S_0 + theta^((2)) e^(r T),
-$
-donde $(theta^((1)),theta^((2)))$ es la solución de @eq:cobertura, es el llamado *precio libre de arbitraje*. Hay otra forma, más elegante, de expresar este valor.
-
-#remark[Hipótesis sobre el mercado][
-  Hemos hecho algunas suposiciones:
-  - Ausencia de comisiones: todas las operaciones de compra y venta se han hecho "gratis"
-  - Liquidez: el mercado está dispuesto a comprar y vender de todas las acciones que quiera, y en cantidades fraccionarias
-]
-
-=== Completitud del mercado
-
-Llamaremos _contingent claim_ a un derivadocuyo valor futuro puede deducirse del valor del activo subyacente (_underlying asset_). En este modelo, este _claim_ es otro proceso estocástico ${H_t}_(t in cal(T))$.
-Llamamos cartera de cobertura a una cartera con valor $V_t = theta^((1)) S_t + theta^((2)) B_t$ y tal que $H_T = V_T$. Esto quiere decir que $H_T (omega) = V_T (omega)$ para todo $omega in Omega$.
-
-Como en el caso de la opción _call_ europea, esto nos lleva a un sistema compatible determinado
-$
-  mat(
-    u S_0, e^(r T);
-    d S_0, e^(r T)
-  )
-  mat(theta^((1)); theta^((2)))
-  =
-  mat(H_T ("sube"); H_T ("baja")).
-$
-
-#definition[Mercado completo][
-  Decimos que un mercado es completo si para cada derivadoexiste una cartera de cobertura.
-]
-Este mercado es completo.
-
-=== Valoración por replicación
-
 Vamos a hacer rigurosa la idea de que si hay dos derivados que tienen el mismo _payoff_, entonces tienen el mismo valor en todo momento
 
 #theorem[Unicidad del precio][
@@ -333,8 +308,31 @@ Vamos a hacer rigurosa la idea de que si hay dos derivados que tienen el mismo _
   Se tiene $hat(V)_0 = 0$ y $hat(V)_T = |V_0 - H_0| H_T.$
 ]
 
+Como el precio es único y conocemos el valor de carteras, introducimos la siguiente idea:
 
-=== La medida riesgo neutro
+#definition[Cartera de cobertura][
+  Llamamos cartera de cobertura en un mercado a una cartera $bold(theta)$ en el mismo mercado que $H_T = V_T^(bold(theta))$. Esto quiere decir que $H_T (omega) = V_T (omega)$ para todo $omega in Omega$.
+]
+
+
+Como en el caso de la opción _call_ europea, esto nos lleva a un sistema compatible determinado
+$
+  mat(
+    u S_0, e^(r T);
+    d S_0, e^(r T)
+  )
+  mat(theta^((1)); theta^((2)))
+  =
+  mat(H_T ("sube"); H_T ("baja")).
+$
+
+#definition[Mercado completo][
+  Decimos que un mercado es completo si para cada derivado existe una cartera de cobertura.
+]
+En el modelo @eq-unperiodo-2states el mercado ${S, B}$ es completo.
+
+
+== La medida riesgo neutro
 
 Empezamos recordando una definición
 #definition[Equivalencia de medidas][
@@ -497,6 +495,7 @@ $
 $
 de modo que siempre se puede asumir que $S_0 = 1$, y reescalar $K$. Trabajando con los precios descontados podemos suponer que $r = 1$, lo que puede simplificar operaciones.
 
+= Otros modelos de un periodo de tiempo
 
 == Modelo trinomial: un sólo activo con 3 estados
 
