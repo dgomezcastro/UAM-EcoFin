@@ -34,12 +34,12 @@ Podría ocurrir que algunos de los valores anteriores coincidan.
 $
   Omega = {(00), (01), (10), (11)}
 $
-En este modelo definimos $S_0, S_1, S_2 : Omega -> RR$ mediante
+En este modelo definimos $S_0, S_(T/2), S_T : Omega -> RR$ mediante
 $
-  S_0 (omega_1 omega_2) := S_0, quad S_1 (omega_1 omega_2) := s_1^( (omega_1)), quad S_2(omega_1 omega_2) := s_2^((omega_1omega_2))
+  S_0 (omega_1 omega_2) := S_0, quad S_(T/2) (omega_1 omega_2) := s_1^( (omega_1)), quad S_T (omega_1 omega_2) := s_2^((omega_1omega_2))
 $
 En interesante señalar que $S_1$ no depende de $omega_2$.
-Esta misma idea puede reproducirse en múltiples periodos.
+Esta misma idea puede reproducirse en múltiples periodos aunque no escribiremos los detalles.
 
 == Modelo de $N$ periodos
 
@@ -136,9 +136,9 @@ obtenemos la formulación equivalente
 ]
 La idea de arbitraje sigue siendo que conseguiremos dinero sin poner nada de nuestra parte. Esto quiere decir no hacer inversión inicial, y no tener que hacer inversiones posteriores. De aquí que nuestra nueva definición incluya la autofinanciación.
 #definition[Oportunidad de arbitraje en el modelo discreto en tiempo][
-  Decimos que una cartera $V$ es una oportunidad de arbitraje si existe
+  Decimos que una cartera $theta$ es una oportunidad de arbitraje si existe
   $
-    V_t "es autofinanciada",
+    theta_t "es autofinanciada",
     quad quad & V_0 <= 0,
                 quad quad & V_T >= 0,
                             quad quad & PP(V_T > 0) > 0.
@@ -396,13 +396,13 @@ Dado que $V_t$ depende sólo del valor "futuro", podemos resolver este sistema a
 Hasta ahora hemos demostrado la valoración de productos a tiempo $T$, pero no de frontera libre. Se propone el siguiente ejercicio.
 #exercise[
   Como el mercado ${S,B}$ en el modelo @eq-arbol es completo, cualquier _producto_ (en nuestro sentido riguroso) se puede escribir como un cartera autofinanciada
-  + Comprobar que @eq-arbol-americana es un _producto_ en nuestro sentido riguroso
+  + Comprobar que @eq-arbol-americana es un _producto_ en nuestro sentido riguroso.
+
   + Suponer que la opción americana tiene valor $H_t$, y comprobar que si $V_t != H_t$ entonces el mercado ${S,B,H}$ admite arbitraje.
-    Sugerencia: considerar el máximo de los $t$ donde no coinciden.
+    Sugerencia: considerar el máximo de los $t$ donde no coinciden y distinguir casos.
 ]
 
-
-Para construir estos valores a lo largo del árbol, vamos a considerar
+Para calcular estos valores a lo largo del árbol, vamos a considerar
 $
   V_j^((i)) := lr([V_(t) "en" t = j Delta t "si el activo" S_(t) = S_0 u^(i) d^(j - i)], size: #150%)
 $

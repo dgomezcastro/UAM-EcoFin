@@ -249,7 +249,7 @@ Algunas de ellas admiten resolución analítica.
 
 === Resolución analítica
 
-#exercise[Ecuación sin _drift_][
+#exercise(breakable: true)[Ecuación sin _drift_][
   Consider el problema de valor inicial
   $
     dif X_t = g(t) X_t dif W_t "para" t>0, quad X_0 = 1.

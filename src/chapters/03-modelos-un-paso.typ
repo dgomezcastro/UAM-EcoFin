@@ -79,9 +79,9 @@ Por salud mental, en adelante no volveremos a mencionar esta construcción tan c
 
 Los derivados de los que hablaremos (por ejemplo las opciones) puede escribirse dentro de estos modelos como productos en el siguiente sentido
 
-#definition[Producto en el modelo @eq-unperiodo-2states][
+#definition[Producto financiero en el modelo @eq-unperiodo-2states][
   Cualquier $H = (H_0, H_T)$ donde $H_0 in RR$ y $H_T : Omega -> RR$.
-]
+]<def-unpaso-producto>
 Nótese que como $cal(F)$ es la $sigma$-álgebra discreta, $H_T$ es medible.
 
 Lo más habitual es el que valor de estos productos a tiempo $T$ se escriba en función de $S_T$, en lugar de $Omega$. Por esto, es frecuente hablar de _contingent claims_.
@@ -95,10 +95,12 @@ Lo más habitual es el que valor de estos productos a tiempo $T$ se escriba en f
 
 === Cartera
 
-Si pensamos en el modelo @eq-unperiodo-2states con un activo subyacente de valor $S_t$ y un bono de valor $B_t$, una _cartera_ consiste en tener $theta^((1)) in RR$ unidades de la activo, y $theta^((2)) in RR$ unidades del bono. El valor de esta cartera es
+Si pensamos en el modelo @eq-unperiodo-2states con un activo subyacente de valor $S_t$ y un bono de valor $B_t$, una _cartera_ consiste en tener $theta^((1)) in RR$ unidades de la activo, y $theta^((2)) in RR$ unidades del bono.
+Así, una cartera en el mercado ${S,B}$ es un vector $theta in RR^2$. El valor de esta cartera es el proceso estocástico
 $
-  V_t = theta^((1)) S_t + theta^((2)) B_t " donde " t in {0, T}.
+  V_t^((theta)) = theta^((1)) S_t + theta^((2)) B_t " donde " t in {0, T}.
 $
+Algunos autores la denotan $V^((theta))$ para especificar que lo importante es el vector $theta$.
 
 #figure(
   raw-render(```
@@ -119,7 +121,9 @@ $
 
 #exercise(breakable: true)[Volatilidad de una cartera][
   Hemos visto que
-  $ EE [V_T] = theta^((1)) EE [S_T] + theta^((2)) e^(r T) = theta^((1)) (p u S_0 + (1-p) d S_0) + theta^((2)) e^(r T). $
+  $
+    EE [V^((theta))_T] = theta^((1)) EE [S_T] + theta^((2)) e^(r T) = theta^((1)) (p u S_0 + (1-p) d S_0) + theta^((2)) e^(r T).
+  $
   Comprobar que
   $
     var (V_T)
@@ -134,11 +138,15 @@ $
   ¿Qué sugiere esta gráfica?
 ]
 
-#definition[Cartera en un mercado][
-  Si en el modelo @eq-unperiodo-2states contamos productos de valor $S^((1)), dots.c, S^((N))$, una cartera en el mercado ${S^((1)), dots.c, S^((N))}$ consiste en una combinación de estos activos en cantidades $theta^((i))$. El valor de la cartera a tiempo $t$ es
+#definition[Cartera en un mercado sobre el modelo @eq-unperiodo-2states][
+  Si en el modelo @eq-unperiodo-2states contamos productos de valor $S^((1)), dots.c, S^((N))$, una cartera en el mercado ${S^((1)), dots.c, S^((N))}$ consiste en una combinación de estos activos en cantidades $theta^((i)) in RR$.
+  Así, la cartera es un vector $theta in RR^N$.
+  El valor de la cartera a tiempo $t$ es
   $
-    hat(V)_t := sum_(i=1)^N theta^((i)) S_t^((i)) = theta dot S_t.
+    V^((theta))_t := sum_(i=1)^N theta^((i)) S_t^((i)).
   $
+  Habitual la denotaremos simplemente $V$.
+  Nótese que si $S^((i))$ son productos en el modelo @eq-unperiodo-2states entonces las carteras son también productos financieros.
 ]
 
 
@@ -146,13 +154,13 @@ $
 
 Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversión inicial
 #definition[Arbitraje en el modelo @eq-unperiodo-2states][
-  Un producto $V$ es una oportunidad de arbitraje si existe
+  Un producto $H$ es una oportunidad de arbitraje si existe
   $
-    V_0 <= 0,
-    quad quad & V_T >= 0,
-                quad quad & PP(V_T > 0) > 0.
+    H_0 <= 0,
+    quad quad & H_T >= 0,
+                quad quad & PP(H_T > 0) > 0.
   $
-  Habitualmente podemos construirlo con $V_0 = 0.$
+  Habitualmente podemos construirlo con $H_0 = 0.$
 
   Dados productos $S^((1)), dots.c, S^((N))$ decimos que el mercado ${S^((1)), dots.c, S^((N))}$ admite arbitraje si existe una cartera que es una oportunidad de arbitraje. En caso contrario, diremos que el mercado está _libre de arbitraje_.
 ]
@@ -308,21 +316,17 @@ Vamos a hacer rigurosa la idea de que si hay dos productos que tienen el mismo _
   Sea $V_t$ la cartera autofinanciada que reproduce la opción (es decir $H_T = V_T$), y
   supongamos que $H_0 != V_0$, para comprobar que hay una oportunidad de arbitraje.
 
-  En realidad, lo que estamos diciendo es que el mercado extendido $(S_t, B_t, H_t)$
-
-  Si estamos dispuesto a tomar fracciones de la opción, entonces podemos construir
+  Consideramos en el mercado ${V, B}$ la cartera dada por
   $
-    hat(V)_t := op("signo")(V_0 - H_0 )( V_0 H_t - H_0 V_t )
+    hat(theta)^((1)) = op("signo")(H_0 - V_0 ) H_0 quad "y" quad hat(theta)^((2)) = -op("signo")(H_0 - V_0 ) V_0
+  $
+  es decir la cartera de valor
+  $
+    hat(V)_t := op("signo")(V_0 - H_0 )( H_0 V_t - V_0 H_t )
   $
   Se tiene $hat(V)_0 = 0$ y $hat(V)_T = |V_0 - H_0| H_T.$
 ]
 
-Si no queremos tomar fracciones de la opción, entonces distinguimos dos casos
-- Si $V_0 = 0$ entonces
-  $hat(V)_t = op("signo")(H_0) H_t$.
-
-- Si $V_0 != 0$ entonces puedo construir la siguiente cartera
-  $hat(V)_t := op("signo")(V_0 - H_0)( H_t - H_0 / V_0 V_t )$.
 
 === La medida riesgo neutro
 
@@ -336,9 +340,9 @@ Empezamos recordando una definición
 El motivo por el que se pide la equivalencia es
 
 #lemma[Valor esperado de una oportunidad de arbitraje][
-  Si $V$ es una oportunidad de arbitraje y $QQ ~ PP$ entonces
+  Si un producto $H$ es una oportunidad de arbitraje y $QQ ~ PP$ entonces
   $
-    EE^QQ [V_T] > 0.
+    EE^QQ [H_T] > 0.
   $
 ]<lem-binomial-esperanza-oportunidad-arbitraje>
 #proof[
@@ -362,7 +366,7 @@ $
 Se dice que $tilde(S)_T$ es una martingala respecto de $QQ$. Volveremos sobre este concepto.
 Dado que sólo hay posibilidades, si llamemos
 $
-  q := QQ(tilde(S)_T = u e^(-r T) S_0)
+  q := QQ(S_T = u S_0).
 $
 Entonces $tilde(S)$ satisface un segundo modelo binomial representado en @fig:binomial_riesgo_neutro
 #figure(
@@ -413,9 +417,9 @@ De modo que, como $p in (0,1)$ tenemos
 
 Una gran propiedad es la siguiente
 #theorem[Valoración de cartera por riesgo neutro][
-  Si $V$ es una cartera es una cartera en el mercado ${S, B}$ entonces para $t in {0,T}$
+  Si $theta$ es una cartera es una cartera en el mercado ${S, B}$ entonces para $t in {0,T}$
   $
-    e^(-r t) EE^QQ [V_t] = V_0.
+    e^(-r t) EE^QQ [V_t^((theta))] = V_0^((theta)).
   $
 ]<thm-binomial-valor-cartera-riesgo-neutro>
 #proof[
@@ -513,16 +517,16 @@ Consideremos como caso académico como $u > m > d$ y el sistema
 === Condición de no arbitraje en el mercado ${S,B}$
 
 Veamos si el mercado ${S, B}$ admite arbitraje.
-Construyamos, por el contrario, una cartera con arbitraje
+Estudiamos una cartera $theta$
 $
-  hat(V)_t = theta^((1)) S_t + theta^((2)) B_t.
+  V_t = theta^((1)) S_t + theta^((2)) B_t.
 $
 Habría arbitraje si existe $theta$ tal que
 - La primera condición es que no me cueste nada
   $
     theta^((1))S_0 + theta^((2)) = 0
   $
-- La segunda es que gane dinero de forma segura
+- La segunda es que no pierda dinero
   $
     cases(
       theta^((1)) u S_0 & + theta^((2)) e^(r T) & >= 0,
@@ -530,6 +534,7 @@ Habría arbitraje si existe $theta$ tal que
       theta^((1)) d S_0 & + theta^((2)) e^(r T) & >= 0,
     )
   $
+- La tercera es que gane dinero con probabilidad no nula, es decir que alguna de las desigualdades anteriores sea estricta.
 
 Simplificamos el sistema y deducimos
 $
@@ -539,15 +544,21 @@ $
     theta^((1)) S_0 (d - e^(r T)) & >= 0,
   )
 $
-Es decir que existe arbitraje si $u <= e^(r T)$ o $d <= e^(r T)$ (y tomamos $theta^((1)) = plus.minus 1$). La condición de no arbitraje es precisamente
+Es decir que existe arbitraje si $u <= e^(r T)$ o $d <= e^(r T)$ (y tomamos $theta^((1)) = plus.minus 1$). La condición de no arbitraje es precisamente es, como en modelo @eq-unperiodo-2states
 $
   d < e^(r T) < u.
 $
+Recordamos que esta es la ecuación @eq-binomial-condicion-no-arbitraje.
 
 
 === Medida de riesgo neutro
 
-Vamos a intentar construir esta medida. Tenemos que pedir que el precio descontado sea una martingala, es decir que
+Vamos a intentar construir esta medida. Las medidas $QQ$ equivalentes a $PP$ vienen dadas por los valores
+$
+  q_u := QQ(S_T = u S_0), quad q_m := QQ(S_T = m S_0), quad "y" quad q_d := QQ(S_T = d S_0) .
+$
+Debemos pedir $q_u, q_m, q_d in (0,1)$.
+Tenemos que pedir que el precio descontado sea una martingala, es decir que
 $
   S_0 = e^(-r T) EE^QQ [S_T] = e^(-r T) (q_u u S_0 + q_m m S_0 + q_d d S_0).
 $
@@ -568,7 +579,7 @@ Hay tres opciones:
 
 De hecho, la intersección es siempre un intervalo y, por tanto,
 #proposition[
-  En el mercado @fig-trinomial, bajo la hipótesis $d < e^(r T) < u$ existen infinitas medidas de riesgo neutro.
+  En el mercado @fig-trinomial, bajo la hipótesis @eq-binomial-condicion-no-arbitraje existen infinitas medidas de riesgo neutro.
 ]
 
 === Valoración de derivados
@@ -586,7 +597,7 @@ Siguiendo el mismo razonamiento que en @prop-binomial-esperanza-implica-noarbitr
 ]
 
 #proof[
-  Por ejemplo, sea $C_t$ una _call_ europea. No hay una forma de dar un precio por replicación a $C_0$. Supongamos que existe un arbitraje
+  Por ejemplo, sea $C_t$ una _call_ europea. No hay una forma de dar un precio por replicación a $C_0$. Supongamos que existe una cartera $hat(theta)$ con arbitraje
   $
     hat(V)_t = theta^((1)) S_t + theta^((2)) B_t + theta^((3)) C_t.
   $
