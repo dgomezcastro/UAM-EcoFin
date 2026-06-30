@@ -218,13 +218,13 @@ donde $(theta^((1)),theta^((2)))$ es la solución de @eq:cobertura, es el llamad
 
 Llamamos arbitraje a la posibilidad de ganar dinero de manera segura sin inversión inicial
 #definition[Arbitraje en el modelo @eq-unperiodo-2states][
-  Un derivado $H$ es una oportunidad de arbitraje si existe
-  $
-    H_0 <= 0,
-    quad quad & H_T >= 0,
-                quad quad & PP(H_T > 0) > 0.
-  $
-  Habitualmente podemos construirlo con $H_0 = 0.$
+  Un derivado $H$ es una oportunidad de arbitraje si se da una de las siguientes:
+  + $H_0 <= 0$, $H_T >= 0$ y
+    $PP(H_T > 0) > 0.$
+
+  + $H_0 < 0$, $H_T >= 0.$
+
+  Habitualmente podemos construirlo en el primer caso con $H_0 = 0.$
 
   Dados derivados $S^((1)), dots.c, S^((N))$ decimos que el mercado ${S^((1)), dots.c, S^((N))}$ admite arbitraje si existe una cartera que es una oportunidad de arbitraje. En caso contrario, diremos que el mercado está _libre de arbitraje_.
 ]
@@ -599,7 +599,7 @@ Siguiendo el mismo razonamiento que en @prop-binomial-esperanza-implica-noarbitr
     C_0 = e^(-r T) EE^QQ [C_T] "para alguna" QQ "medida de riesgo neutro".
   $
   Entonces el mercado ${S, B, C}$ no admite arbitraje.
-]
+]<eq-binomial-measure-gives-prize>
 
 #proof[
   Por ejemplo, sea $C_t$ una _call_ europea. No hay una forma de dar un precio por replicación a $C_0$. Supongamos que existe una cartera $hat(theta)$ con arbitraje
@@ -630,17 +630,22 @@ $
 $
 donde $S^i_t$ denota la cantidad del activo $i$-ésimo a tiempo $t$.
 Asumimos que $S_0$ es conocido y $S_T$ puede estar en $M$ estados.
-Una cartera consiste en un vector $theta in RR^N$ donde $theta_i$ indica el número de acciones del activo $i$-ésimo.
+Una cartera consiste en un vector $bold(theta) in RR^N$ donde $bold(theta)_i$ indica el número de acciones del activo $i$-ésimo.
 Denotamos $D_(i j)$ al valor del activo $i$-ésimo en el estado $j$-ésimo a tiempo $T$, de modo que
 $
   bold(S)_T in { D_(bullet 1), dots, D_(bullet M) } "donde" D_(bullet j) = vec(D_(1j), dots.v, D_(N j))
 $
 y $PP(bold(S)_T = D_(bullet j)) > 0$ para todo $j$.
 
+Es un resultado elemento de Álgebra Lineal que
+#theorem[][
+  Este modelo es completo (es decir todo producto se reproducirse con cartera) si y sólo $N >= M$ y $op("rango")(D) = M.$
+]
+
 === Carteras y vector de estado
 Así el valor de cartera a tiempo $t$
 $
-  V_0 = bold(S)_0 dot theta => V_T in { D_(bullet 1) dot theta, dots, D_(bullet M) dot theta } = op("elements") (D^trans theta).
+  V_0 = bold(S)_0 dot bold(theta) => V_T in { D_(bullet 1) dot bold(theta), dots, D_(bullet M) dot bold(theta) } = op("elements") (D^trans bold(theta)).
 $
 donde $trans$ denota la transposición de matrices.
 
@@ -649,34 +654,79 @@ Introducimos la notación para $x in RR^N$ se dice que
 - $x gt.neq 0$ o si $x>=0$ y $x != 0$. Es decir, tiene alguna entrada positiva.
 - $x > 0$ (o $x in RR^N_(++)$) si $x_i > 0$ para todo $i$. Es decir, tiene _todas_ las entradas positivas.
 
-Así, la condición de no-arbitraje se traduce en que existe $theta in RR^N$ tal que
+Así, la condición de no-arbitraje se traduce en que existe $bold(theta) in RR^N$ tal que
 $
-  bold(S)_0 dot bold(theta) <= 0 & " y " D^trans bold(theta) gt.neq 0.
+  lr((bold(S)_0 dot bold(theta) <= 0 & " y " D^trans bold(theta) gt.neq 0), size: #150%)
+  "ó"
+  lr((bold(S)_0 dot bold(theta) < 0 & " y " D^trans bold(theta) gt 0), size: #150%).
 $
+Para estudiar las oportunidades de arbitraje miramos la imagen de la aplicación
+$
+  A := { (-bold(S)_0 dot bold(theta), D^trans bold(theta) ): bold(theta) in RR^N}.
+$
+Este un subespacio lineal de $RR^(N+1)$.
+Existe oportunidades de arbitraje si, dado el cuadrante positivo,
+$K := [0,+oo)^(N+1).$
+Se tiene que
+$
+  "existen oportunidades de arbitraje" <=> {bold(0)_(RR^(N+1))} subset.neq (A inter K)
+$
+Introducimos el siguiente objeto
 #definition[Vector de estado][
-  Vector $psi in RR^M_(++)$ tal que
+  Vector $bold(psi) in RR^M_(++)$ tal que
   $
-    bold(S)_T = D psi.
+    bold(S)_0 = D bold(psi).
   $
 ]
-Supongamos que podemos encontrar carteras $bold(theta)^([i])$ tales que
-$
-  D^trans bold(theta)^([i]) = e_i in RR^M "para todo" i in {1,dots,N}.
-$
-se llaman valores de Arrow-Debreu. En tal caso tenemos
-$
-  bold(S)_0 dot bold(theta)^([i]) = (D psi) dot bold(theta)^([i]) = psi dot (D^trans bold(theta)^([i])) = psi dot e_i = psi_i.
-$
 
-#theorem[Teorema Fundamental de Valoración de Activos][
+Consideremos $(alpha, bold(phi)) in A^perp$.
+Si tomamos cualquier $theta in RR^N$ esto significa $x=-bold(S)_0 dot bold(theta)$ y $bold(y) = D^trans bold(theta)$. Entonces, podemos escribir
+$
+  0 = alpha x + bold(phi) dot bold(y) = (- alpha bold(S)_0 + D^trans bold(phi)) dot bold(theta)
+$
+La idea fundamental es que $(1, bold(psi)) in A^perp$.
+Nos permite probar este teorema.
+
+
+// Supongamos que podemos encontrar carteras $bold(theta)^([i])$ tales que
+// $
+//   D^trans bold(theta)^([i]) = e_i in RR^M "para todo" i in {1,dots,N}.
+// $
+// se llaman valores de Arrow-Debreu. En tal caso tenemos
+// $
+//   bold(S)_0 dot bold(theta)^([i]) = (D psi) dot bold(theta)^([i]) = psi dot (D^trans bold(theta)^([i])) = psi dot e_i = psi_i.
+// $
+
+
+
+#theorem[
   En el modelo de un periodo temporal, $N$ activos, $M$ estados no existe arbitraje si y sólo si existe un vector de estados.
 ]
 
-La demostración de este teorema es una aplicación del teorema de separación de Hahn-Banach.
-Ver #cite(<etheridgeCourseFinancialCalculus>, supplement: "Theorem 1.5.2").
+#proof[
+  Supongamos que existe vector de estados $bold(psi)$. Entonces $(1, bold(psi)) in A^perp$.
+  Si $(x, bold(y)) in K inter A$ como todas las entradas son positivas, si $x + bold(y) dot bold(psi) = 0$ entonces $x = 0, bold(y) = bold(0)$. Deducimos que
+  $K inter A = {bold(0)_(RR^(N+1))}.$
+  Por tanto, no hay oportunidades de arbitraje.
+
+  Por el contrario, supongamos que ${bold(0)_(RR^(N+1))}= K inter A$.
+  Sea $(alpha, bold(phi)) in A^perp$. Como $K$ es conexo tenemos que la función
+  $F(bold(z)) := (alpha, bold(phi)) dot bold(z)$
+  no cambia de signo en $K without {bold(0)_(RR^(N+1))}$. Supongamos, si pérdida de generalidad, que $F(bold(z)) > 0$ en $K without {bold(0)_(RR^(N+1))}$.
+  Se tiene $alpha = F(bold(e)_1) > 0$ y $phi_k = F(bold(e)_(k+1)) > 0$. Tomamos
+  $bold(psi) := bold(phi)/alpha.$
+  Comprobamos que para cualquier $bold(theta) in RR^N$
+  $
+    (-bold(S_0) + D bold(psi) ) dot bold(theta) = x + bold(psi) dot bold(y) = 1/alpha (alpha x + bold(phi) dot bold(y)) = 0.
+  $
+  De modo que $bold(psi)$ es un vector de estado.
+]
+
+La base de la prueba es que los conjuntos $K$ y $A$ pueden separarse por una función lineal, al estilo del teorema de Hahn-Banach.
+Una prueba usando este teorema puede verse en #cite(<etheridgeCourseFinancialCalculus>, supplement: "Theorem 1.5.2").
 
 === Medida de riesgo neutro
-Este vector de estados, también nos da una forma de construir la medida de riesgo nulo
+Dado un vector de estados, tenemos una forma de construir la medida de riesgo nulo
 $
   QQ(bold(S)_T = D_(bullet j)) := psi_j / psi_0
   quad "y" quad
@@ -686,28 +736,37 @@ Entonces observamos que
 $
   EE^QQ [bold(S)_T] = bold(S)_0 / psi_0
 $
+De forma complementaria, si existen $QQ$ y $psi_0$ entonces existe vector de estado.
+Así $B_0 = 1$ y $B_T = psi_0$.
+
 Así, $psi_0$ resulta nuestro factor de descuento, y el precio descontado $tilde(bold(S)_t) = psi_0 bold(S)_t$ es una martingala respecto de $QQ$.
 
-#proposition[][
-  Si existe vector de estados, y $C$ de un _contigent claim_ que puede reproducirse con una cartera, entonces su valor actual libre de arbitraje es
+De manera similar a @eq-binomial-measure-gives-prize, si $C$ es un derivado podemos dar un precio libre de arbitraje
+$
+  C_0 = psi_0 EE^QQ [C_T].
+$<eq-Nestados-valoracion-riesgoneutro>
+
+#remark[Teoremas fundamentales de valoración][
+  Hemos demostrado los siguientes componentes
   $
-    C_0 = psi_0 EE^QQ [C_T].
-  $<eq-Nestados-valoracion-riesgoneutro>
-]
+    exists bold(psi)
+    <=>
+    exists (QQ,psi_0)
+    => {S,B} "es libre de arbitraje donde " B_0 = 1, B_T = psi_0.
+  $
+  La última implicación es sencilla.
 
-Concluímos la parte de valoración con este resultado
-#theorem[][
-  Este modelo es completo (es decir todo _contingent claim_ se reproducirse con cartera) si y sólo $N >= M$ y $op("rango")(D) = M.$
-]
-Como $psi_0$ es único, si el mercado es completo y libre de riesgo, entonces $QQ$ es única. En resumen:
-#remark[Completitud, arbitraje, y medida libre riesgo][
-  - Son equivalentes:
-    - El mercado es libre de arbitraje
-    - existe medida libre de riesgo
-    - existe vector de estado.
-    Este es el Teorema Fundamental de Valoración de Activos.
-
-  - El mercado es completo si y sólo si $QQ$ es única.
+  Tenemos también la parte de unicidad
+  $
+    {S,B} "es completo"
+    <=>
+    N >= M = op("rango")(D)
+    =>
+    bold(psi) "es único"
+    <=>
+    (QQ, psi_0) "es único"
+  $
+  En el resultado anterior se tiene también $<=$ si $bold(psi)$ es único para todo $bold(S_0)$.
 ]
 
 === Volatilidad de una cartera
