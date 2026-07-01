@@ -5,17 +5,24 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ 63bef3e7-6965-4df3-ab75-fac09a5d3248
-using PlutoUI, Distributions, SpecialFunctions, Plots
+using PlutoUI, Distributions, SpecialFunctions, Plots;
 
-# ╔═╡ d8b123c6-6fd3-11f1-89df-c122336820d2
-S₀ = 1.0;
+# ╔═╡ 000cc36e-89f0-4fba-aa53-09e1664de557
+md"""
+# Precio de una opción _call_ europea en el modelo de árbol binomial
+"""
+
+# ╔═╡ dc04d02a-84e2-4995-9741-7a7ecd5dad2c
+md"""
+## La función $B$
+"""
 
 # ╔═╡ 101f05c7-b769-4a4d-bd98-55072eabdb59
 B(a, N, p) = 1 - cdf(Binomial(N,p), a-1); 
 
 # ╔═╡ f75e5026-2ab4-4b2f-8104-20da1a5c74a4
 md"""
-Verificamos que hemos bien el cálculo de la cdf
+Verificamos que hemos bien el cálculo del sumatorio
 """
 
 # ╔═╡ 4fcc559d-fe44-471f-89fe-95900c595765
@@ -23,7 +30,7 @@ begin
 	B2(a,N,p) = sum(binomial(N,j) * p^j * (1-p)^(N-j) for j=a:N)
 	for N in 1:10, a in 0:N, p in 0.1:0.1:0.9
 		if B2(a,N,p) ≉ B(a,N,p) 
-			println("N=$N, a=$a, p=$p")
+			println("No coindicen en N=$N, a=$a, p=$p")
 		end
 	end
 end
@@ -46,7 +53,7 @@ begin
 		println("B2(25,100,0.1) gives error:")
 		println(e)
 	end
-	println("whereas the Distributions library is able to approximate")
+	println("mientras que el valor en Distributions.jl")
 	@show B(25,100,0.1)
 end;
 
@@ -54,6 +61,9 @@ end;
 md"""
 ## Precio de la call europea
 """
+
+# ╔═╡ 5e60f0df-808c-43ea-8f3d-84ad2963fca6
+S₀ = 1.0;
 
 # ╔═╡ 44562b57-a6cf-403e-a75d-b5114c76cf30
 function binomial_tree_european_call(;K,r,Δt,N,u,d)
@@ -1371,8 +1381,9 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─000cc36e-89f0-4fba-aa53-09e1664de557
 # ╠═63bef3e7-6965-4df3-ab75-fac09a5d3248
-# ╠═d8b123c6-6fd3-11f1-89df-c122336820d2
+# ╟─dc04d02a-84e2-4995-9741-7a7ecd5dad2c
 # ╠═101f05c7-b769-4a4d-bd98-55072eabdb59
 # ╟─f75e5026-2ab4-4b2f-8104-20da1a5c74a4
 # ╠═4fcc559d-fe44-471f-89fe-95900c595765
@@ -1380,6 +1391,7 @@ version = "1.13.0+0"
 # ╟─66bdf5a0-4535-4a9c-b3a4-c5463fdc3451
 # ╠═8e8228a5-ae57-4c02-af71-8f5732cf756d
 # ╟─46228c59-416a-48a9-a22d-c977d17c2493
+# ╠═5e60f0df-808c-43ea-8f3d-84ad2963fca6
 # ╠═44562b57-a6cf-403e-a75d-b5114c76cf30
 # ╠═4f8b04cb-d307-4a42-b61b-de9e44e58fec
 # ╟─e4046f87-f2d5-4725-89f6-f4e501a93c04

@@ -22,6 +22,16 @@ begin
 	Random.seed!(1234); # Para mejorar la reproducibilidad
 end
 
+# ╔═╡ 58693ab5-9fc0-45bc-86af-fb9f35b6be02
+md"""
+# El movimiento Browniano como límite de paseos aleatorios
+"""
+
+# ╔═╡ 821f6d9b-6ba2-439e-941e-35357fc064fc
+md"""
+Recordamos como se construye un paseo aleatorio de $N$ pasos
+"""
+
 # ╔═╡ 85ad69f6-6ae1-11f1-8afe-51e97cf403a4
 function randomwalk(N)
     x = zeros(N+1)
@@ -38,6 +48,11 @@ function randomwalk(N)
     return x
 end;
 
+# ╔═╡ f995c86c-0e44-4044-9037-96adc2c6e26c
+md"""
+Representamos algunas muestras
+"""
+
 # ╔═╡ e6c07d5b-d1fb-48b9-83dd-d7a67f274726
 begin 
     runs = 5
@@ -48,32 +63,53 @@ begin
     end
     p = plot()
     for r=1:runs
-        p = plot!(X[:,r],label="",xlabel=L"n",ylabel=L"x")
+        p = plot!(X[:,r],label="",xlabel=L"n",ylabel=L"X_n")
     end
     plot(p)
 end
 
+# ╔═╡ be30fcaa-6b52-4590-a861-535da6969f54
+md"""
+Vamos a ver qué ocurre con los paseos con $t = h^2$, es decir representamos $h X_{h^2 t}$
+"""
+
+# ╔═╡ 5c6418a8-8920-40e0-afe1-da16312484dc
+function randomwalk_rescaled(h, T)
+	t = [0.0:h^2:T;]
+    N = length(t)
+	x = h*randomwalk(N-1)
+	return t, x
+end
+
+# ╔═╡ 2d319442-c099-4afa-8b57-c4a4e7e48592
+md"""
+Elegimos $h=2^{-k}$ con $k=$
+"""
+
 # ╔═╡ 9a636b53-1095-4c18-bef2-8451001efa6b
-@bind log2h Slider(-2:-1:-10)
+@bind log2h Slider(-2:-1:-10, default=-3, show_value=true)
 
 # ╔═╡ 0827d32f-4487-431a-a01e-782287b25b6e
 begin 
-    p2 = plot(legend=:outerright, title="Paseos aleatorios rescalados",xlabel=L"t",ylabel=L"x")
+    p2 = plot(legend=:outerright, title="Paseos aleatorios rescalados",xlabel=L"t = n h",ylabel=L"h X_{h^2 n}")
     h = 2.0^log2h
-    t = [0.0:h^2:1.0;]
-    N = length(t)
-    p2 = plot!(t,h*randomwalk(N-1),label=latexstring("h=2^{$log2h}"))
+    t,x = randomwalk_rescaled(h,1.0)
+    p2 = plot!(t,x,label=latexstring("h=2^{$log2h}"))
     plot(p2)
 end
+
+# ╔═╡ f2591bc7-9519-4b4f-806c-6f9640ebc0c0
+md"""
+Como comparación, representamos varios paseos reescalados con distintos $h$
+"""
 
 # ╔═╡ 568dc74f-f9cf-4d88-af32-cd14f461b083
 begin 
     p3 = plot(legend=:outerright, title="Paseos aleatorios rescalados",xlabel=L"t",ylabel=L"x")
     for log2h_iter = -3:-1:-9
-       h = 2.0^log2h_iter
-       t = [0.0:h^2:1.0;]
-       N = length(t)
-       p3 = plot!(t,h*randomwalk(N-1),label=latexstring("h=2^{$log2h}"))
+        h = 2.0^log2h_iter
+        t,x = randomwalk_rescaled(h,1.0)
+        p3 = plot!(t,x,label=latexstring("h=2^{$log2h}"))
     end
     plot(p3)
 end
@@ -1252,11 +1288,18 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─58693ab5-9fc0-45bc-86af-fb9f35b6be02
 # ╠═39830628-519f-46c6-89b3-faeb3a5dd8af
+# ╟─821f6d9b-6ba2-439e-941e-35357fc064fc
 # ╠═85ad69f6-6ae1-11f1-8afe-51e97cf403a4
+# ╟─f995c86c-0e44-4044-9037-96adc2c6e26c
 # ╠═e6c07d5b-d1fb-48b9-83dd-d7a67f274726
-# ╠═9a636b53-1095-4c18-bef2-8451001efa6b
+# ╟─be30fcaa-6b52-4590-a861-535da6969f54
+# ╠═5c6418a8-8920-40e0-afe1-da16312484dc
+# ╟─2d319442-c099-4afa-8b57-c4a4e7e48592
+# ╟─9a636b53-1095-4c18-bef2-8451001efa6b
 # ╠═0827d32f-4487-431a-a01e-782287b25b6e
+# ╟─f2591bc7-9519-4b4f-806c-6f9640ebc0c0
 # ╠═568dc74f-f9cf-4d88-af32-cd14f461b083
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

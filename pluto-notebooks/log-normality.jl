@@ -19,6 +19,22 @@ end
 # ╔═╡ 064c06d7-91b7-4516-86a8-dafbcb56c6a4
 using YFinance, DataFrames, Plots, LaTeXStrings, PlutoUI
 
+# ╔═╡ 8c958e1c-b479-42b0-b0c9-bf701795ac71
+md"""
+# Comprobación de la log-normalidad en datos de mercado
+
+El objetivo es comprobar que, en un primera aproximación, si $S_t$ es el precio de la acción de una empresa entonces 
+```math
+\log S_{t + Δt} - \log S_t
+```
+puede aproximarse como una cierta distribución normal.
+"""
+
+# ╔═╡ 55a3bf40-4110-400e-b206-dc6b2954dde7
+md"""
+Seleccione uno de los siguientes stocks e índices
+"""
+
 # ╔═╡ 37466ad4-66ac-40e4-9f48-77c6e66c8b32
 stocks = [
 	"^SPX" #S&P500
@@ -36,11 +52,11 @@ stocks = [
 
 # ╔═╡ 11763e6a-181e-435f-8dea-882b58b3f255
 md"""
-Select $\Delta t$
+Elija $\Delta t$
 """
 
 # ╔═╡ 7f9fe695-87d1-428e-9909-21039bc407ce
-@bind Δt Slider(["1d", "1wk", "1mo", "3mo"]; default="1d", show_value=true)
+@bind Δt Slider(["1d", "1wk", "1mo", "3mo"]; default="1wk", show_value=true)
 
 # ╔═╡ 68929910-6659-11f1-b30e-b72b93d79a89
 begin 
@@ -86,6 +102,11 @@ begin
     
     plot(p1, p2, p3, p4, plot_title=latexstring("$ticker, \$\\Delta t = \$$Δt"))
 end
+
+# ╔═╡ 3afad63f-a9e9-43c0-82f8-6575f8a370df
+md"""
+*Ejercicio.* Adaptar el código anterior para estudiar si $\sigma(\Delta t) \sim C (\Delta t)^\alpha$ e interpretar el resultado.
+"""
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1392,11 +1413,14 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─8c958e1c-b479-42b0-b0c9-bf701795ac71
 # ╠═064c06d7-91b7-4516-86a8-dafbcb56c6a4
+# ╟─55a3bf40-4110-400e-b206-dc6b2954dde7
 # ╠═37466ad4-66ac-40e4-9f48-77c6e66c8b32
-# ╟─ea1f5e1d-26a0-4a8c-b4fd-09f969330e33
+# ╠═ea1f5e1d-26a0-4a8c-b4fd-09f969330e33
 # ╟─11763e6a-181e-435f-8dea-882b58b3f255
 # ╟─7f9fe695-87d1-428e-9909-21039bc407ce
 # ╟─68929910-6659-11f1-b30e-b72b93d79a89
+# ╟─3afad63f-a9e9-43c0-82f8-6575f8a370df
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

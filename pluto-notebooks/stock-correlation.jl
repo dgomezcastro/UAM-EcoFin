@@ -19,6 +19,11 @@ end
 # ╔═╡ d041d108-75d3-41b9-b345-1a8f59eb6c47
 using YFinance, DataFrames, Plots, LaTeXStrings, PlutoUI
 
+# ╔═╡ 58f2b09f-328b-450a-9728-dd454aac9af9
+md"""
+# Correlación entre distintos activos financieros
+"""
+
 # ╔═╡ b601da01-cd3c-4fe4-850a-3e8b8d5a9642
 stocks = [
 	"^SPX" #S&P500
@@ -33,7 +38,7 @@ stocks = [
 
 # ╔═╡ 557caa23-cabf-47c0-87bd-f8c847ed74c5
 md"""
-Select to tickers:
+Elegir dos activos:
 """
 
 # ╔═╡ 432db68c-9586-4768-9211-5eff4d0d2390
@@ -44,7 +49,7 @@ Select to tickers:
 
 # ╔═╡ 4afc158d-64f8-4c7b-b218-e2797e6bc269
 md"""
-Select $\Delta t$
+Elegir $\Delta t$
 """
 
 # ╔═╡ 0f2f4b3b-e50b-4642-9974-5df2b42850be
@@ -1394,12 +1399,13 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─58f2b09f-328b-450a-9728-dd454aac9af9
 # ╠═d041d108-75d3-41b9-b345-1a8f59eb6c47
 # ╠═b601da01-cd3c-4fe4-850a-3e8b8d5a9642
 # ╟─557caa23-cabf-47c0-87bd-f8c847ed74c5
 # ╟─432db68c-9586-4768-9211-5eff4d0d2390
 # ╟─9cf68c7c-6655-11f1-a12f-8b4d9411788c
-# ╠═4afc158d-64f8-4c7b-b218-e2797e6bc269
+# ╟─4afc158d-64f8-4c7b-b218-e2797e6bc269
 # ╟─0f2f4b3b-e50b-4642-9974-5df2b42850be
 # ╟─afb64ce1-de77-4d90-ae04-afad0b9e08aa
 # ╟─faaa86c8-15e1-4faa-bd57-7cd2b14d055c

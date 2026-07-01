@@ -24,11 +24,26 @@ md"""
 # Calculadora de hipotecas
 """
 
+# ╔═╡ 4dc0cc2a-5f9a-4e7e-8102-dd649a890f6b
+md"""
+Cantidad del préstamo:
+"""
+
 # ╔═╡ 7f29daa6-6ee2-11f1-adec-3bcc301f3886
-@bind principal Slider(100_000:25_000:1_000_000, default=500_000)
+@bind principal Slider(100_000:25_000:1_000_000, default=500_000, show_value=true)
+
+# ╔═╡ 89cc85d7-710d-436f-afd4-71f12a024465
+md"""
+TIN %:
+"""
 
 # ╔═╡ 0a40b325-92f4-4afc-b9f9-00aa6a1b42f4
-@bind TIN Slider(1.8:0.1:5.0, default=3.0)
+@bind TIN Slider(1.8:0.1:5.0, default=3.0, show_value=true)
+
+# ╔═╡ 1b481bb5-4a9e-4ede-a660-63ed854e6f4f
+md"""
+Plazo en años:
+"""
 
 # ╔═╡ 4dd49529-9002-45c4-a8d4-f446c92ebb09
 @bind plazo_años Slider(10:5:40, default=30)
@@ -1223,9 +1238,12 @@ version = "1.13.0+0"
 # ╔═╡ Cell order:
 # ╟─779b9638-d4ff-4ac9-9f50-390fa67699f2
 # ╠═80cde6e3-292f-4489-8101-4cfccc892a79
-# ╠═7f29daa6-6ee2-11f1-adec-3bcc301f3886
+# ╟─4dc0cc2a-5f9a-4e7e-8102-dd649a890f6b
+# ╟─7f29daa6-6ee2-11f1-adec-3bcc301f3886
+# ╟─89cc85d7-710d-436f-afd4-71f12a024465
 # ╠═0a40b325-92f4-4afc-b9f9-00aa6a1b42f4
-# ╠═4dd49529-9002-45c4-a8d4-f446c92ebb09
+# ╟─1b481bb5-4a9e-4ede-a660-63ed854e6f4f
+# ╟─4dd49529-9002-45c4-a8d4-f446c92ebb09
 # ╠═f032203f-7fef-4522-9287-9e3643112bb4
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

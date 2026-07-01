@@ -7,12 +7,21 @@ using InteractiveUtils
 # ╔═╡ 5a9d3404-1759-443a-b031-f334825e628d
 using Plots, LaTeXStrings
 
+# ╔═╡ 39a65d25-655c-4b25-8d05-ee555ff0623e
+md"""
+# Modelo de un periodo y dos estados: volatilidad de una cartera
+"""
+
 # ╔═╡ 5641cf6a-6945-11f1-a4e9-c7e8379937f4
 begin 
 	u = 2
 	d = 1/2
 	p = 0.6
 	V₀ = 1
+end;
+
+# ╔═╡ 1e36904f-c23e-4cf2-bde7-ae8b50ba2dd0
+begin
 	θ₂(θ₁) = V₀ - θ₁
 	ES_T = p*u + (1-p)*d
 	EV_T(θ₁) = θ₁*ES_T + (V₀-θ₁)
@@ -20,10 +29,7 @@ begin
 	VarV_T(θ₁) = θ₁^2 * VarS_T
 	V_Tup(θ₁) = θ₁*u + (V₀-θ₁)
 	V_Tdown(θ₁) = θ₁*d + (V₀-θ₁)
-end
-
-# ╔═╡ 1e36904f-c23e-4cf2-bde7-ae8b50ba2dd0
-begin
+	
 	p1 = plot(xlabel=L"θ_1", ylabel=L"V_T",xlims=(-1.0,1.0))
 	plot!(p1,θ₁ -> V_Tup(θ₁), label=L"$V_T$ si sube")
 	plot!(p1,θ₁ -> EV_T(θ₁), label=L"\mathbb{E}[V_T]")
@@ -1164,6 +1170,7 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─39a65d25-655c-4b25-8d05-ee555ff0623e
 # ╠═5a9d3404-1759-443a-b031-f334825e628d
 # ╠═5641cf6a-6945-11f1-a4e9-c7e8379937f4
 # ╠═1e36904f-c23e-4cf2-bde7-ae8b50ba2dd0

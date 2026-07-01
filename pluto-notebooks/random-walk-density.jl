@@ -21,7 +21,7 @@ using PlutoUI, Plots, LaTeXStrings
 
 # ╔═╡ edd33875-6a90-4c2a-9c1a-b3a658d994a2
 md"""
-# Función de densidad de paseos aleatorios
+# Función de densidad de un paseo aleatorio
 
 A continuación vamos a estudiar la función de densidad paseo aleatorio
 ```math
