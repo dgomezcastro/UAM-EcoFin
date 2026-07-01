@@ -28,6 +28,50 @@
   ),
 )
 
+#let (theorem-counter, theorem-box, theorem, show-theorem) = make-frame(
+  "example",
+  theorion-i18n-map.at("theorem"),
+  counter: theorem-counter,
+  render: fancy-box.with(
+    get-border-color: _ => red.darken(20%),
+    get-body-color: _ => red.lighten(90%),
+    get-symbol: get-quaternary-symbol,
+  ),
+)
+
+#let (lemma-counter, lemma-box, lemma, show-lemma) = make-frame(
+  "example",
+  theorion-i18n-map.at("lemma"),
+  counter: theorem-counter,
+  render: fancy-box.with(
+    get-border-color: _ => blue,
+    get-body-color: _ => blue.lighten(90%),
+    get-symbol: get-quaternary-symbol,
+  ),
+)
+
+#let (proposition-counter, proposition-box, proposition, show-proposition) = make-frame(
+  "example",
+  theorion-i18n-map.at("proposition"),
+  counter: theorem-counter,
+  render: fancy-box.with(
+    get-border-color: _ => blue,
+    get-body-color: _ => blue.lighten(90%),
+    get-symbol: get-quaternary-symbol,
+  ),
+)
+
+#let (corollary-counter, corollary-box, proposition, show-corollary) = make-frame(
+  "example",
+  theorion-i18n-map.at("corollary"),
+  counter: theorem-counter,
+  render: fancy-box.with(
+    get-border-color: _ => blue,
+    get-body-color: _ => blue.lighten(90%),
+    get-symbol: get-quaternary-symbol,
+  ),
+)
+
 #let (exercise-counter, exercise-box, exercise, show-exercise) = make-frame(
   "exercise",
   theorion-i18n-map.at("exercise"),
