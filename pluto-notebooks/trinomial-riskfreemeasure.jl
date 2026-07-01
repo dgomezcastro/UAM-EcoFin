@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v1.0.1
+# v0.20.28
 
 using Markdown
 using InteractiveUtils
@@ -19,54 +19,84 @@ end
 # ╔═╡ e1cb3a88-23e5-4e9c-a3af-41261f477cd6
 using PlutoUI, Plots, LaTeXStrings
 
+# ╔═╡ 2b676aac-abfa-46c8-9f5a-77f5cfadfb76
+md"""
+# Multiplicidad de medidas de riesgo neutro en el modelo trinomial
+"""
+
 # ╔═╡ 8c067c2f-1445-49f1-835a-a20014664edd
 begin 
 	u = 2.0
 	d = 0.7
-	r = 0.0 
 	T = 0.1
 	S₀ = 1.0
 end;
 
-# ╔═╡ 6c47b30d-5211-45b5-b47a-a8c6b82fcc59
+# ╔═╡ 0fad1fbc-06b2-4ca8-8010-aa89640d7255
 md"""
-We check the no arbitrage condition
-"""
+La medida de riesgo neutro se construye a partir de los valores 
+```math
+	q_u = \mathbb{Q}(S_T = u S_0)
+	\qquad 
+	q_m = \mathbb{Q}(S_T = m S_0)
+	\qquad 
+	q_d = \mathbb{Q}(S_T = d S_0)
+```
+Despejando $q_m = 1 - q_u - q_d$, basta construir el par $(q_u, q_d)$. Representamos las condiciones importantes geométricamente:
 
-# ╔═╡ d5b33971-5477-4b40-a77e-90159b2b9484
-no_arbitrage = d < exp(r * T) < u
+- El triángulo azul corresponde a la condición de que $\mathbb{Q}$ sea una medida de probabilidad equivalente a $\mathbb{PP}$: $q_u, q_d \in (0,1)$ y $q_u + q_d \in (0,1)$.
+- La línea verde corresponde a la relación "$\mathbb{Q}$ es una medida martingala" deducida en teoría
+$$q_d = \frac{m - e^{r T}}{m-d} + q_u \frac{u-m}{m-d}$$
+
+Mover $r$ para comprobar que: 
+```math
+\text{existe }\mathbb{Q} \iff \text{se da la condición de no arbitraje } d < e^{rT} < u.
+```
+
+*Ejercicio.* ¿Son las válidas las medidas que corresponden a la frontera del triángulo?
+"""
 
 # ╔═╡ 8bebefba-f057-4fee-87ce-6c6a3dd768e2
 md"""
-We can play with the value of $m \in (d, u)$
+Podemos tomar cualquier valor $m \in (d, u)$
 """
 
 # ╔═╡ 1fa70e43-1ec0-4985-93e2-f2050168e467
 begin 
 	ϵ = 0.01
-	@bind m Slider(d+ϵ:ϵ:u-ϵ,default=(u+d)/2) 
+	@bind m Slider(d+ϵ:ϵ:u-ϵ,default=(u+d)/2, show_value=true) 
 end
 
-# ╔═╡ 0fad1fbc-06b2-4ca8-8010-aa89640d7255
+# ╔═╡ 80827865-40f8-49fe-a7eb-a74097919d8a
 md"""
-Risk neutral measures are constructed by taking $(q_u, q_d)$ in the intersection between the green line and the interior of the blue triangle.
+Elegimos $r$
 """
+
+# ╔═╡ 5ca23beb-0a49-49d6-90fb-f0438b65ae9a
+@bind r Slider(0:0.1:10.0, default=0.0, show_value=true)
+
+# ╔═╡ 6c47b30d-5211-45b5-b47a-a8c6b82fcc59
+md"""
+Comprobamos la condición de no arbitraje
+"""
+
+# ╔═╡ d5b33971-5477-4b40-a77e-90159b2b9484
+no_arbitrage = d < exp(r * T) < u
 
 # ╔═╡ c5f7b40e-2dee-4710-865f-1cbdba51226a
 begin 
     plot(xlims=(-0.1,1.1), ylims=(-0.1,1.1),xlabel=L"q_u", ylabel=L"q_d", legend=:right)
+    plot!(qu->1-qu, label=L"q_u + q_d=1",color=:blue)
     x_coords = [0.0, 1.0, 0.0]
     y_coords = [0.0, 0.0, 1.0]
     plot!(Shape(x_coords, y_coords), 
          fillcolor = :cyan, 
          fillalpha = 0.5,  
-         label = "Admissible region",
+         label = L"$\mathbb{Q}$ es una medida de probabilidad",
     )
-    plot!(qu->1-qu, label=L"q_u + q_d=1",color=:blue)
-    plot!(qu->-qu, label=L"q_u + q_d=0",color=:red)
     plot!(qu->0,label="", color=:black)
     plot!([0,0],[-1,2],label="",color=:black)
-    plot!(qu->(m-exp(r*T))/(m-d) + qu*(u-m)/(m-d),label=latexstring("\$q_d = \\frac{m - e^{r T}}{m-d} + q_u (u-m)/(m-d)\$"), linewidth=3, color=:green)
+    plot!(qu->(m-exp(r*T))/(m-d) + qu*(u-m)/(m-d),label="Medida martingala", linewidth=3, color=:green)
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -1242,13 +1272,16 @@ version = "1.13.0+0"
 """
 
 # ╔═╡ Cell order:
+# ╟─2b676aac-abfa-46c8-9f5a-77f5cfadfb76
 # ╠═e1cb3a88-23e5-4e9c-a3af-41261f477cd6
 # ╠═8c067c2f-1445-49f1-835a-a20014664edd
-# ╠═6c47b30d-5211-45b5-b47a-a8c6b82fcc59
-# ╠═d5b33971-5477-4b40-a77e-90159b2b9484
-# ╟─8bebefba-f057-4fee-87ce-6c6a3dd768e2
-# ╠═1fa70e43-1ec0-4985-93e2-f2050168e467
 # ╟─0fad1fbc-06b2-4ca8-8010-aa89640d7255
-# ╟─c5f7b40e-2dee-4710-865f-1cbdba51226a
+# ╟─8bebefba-f057-4fee-87ce-6c6a3dd768e2
+# ╟─1fa70e43-1ec0-4985-93e2-f2050168e467
+# ╟─80827865-40f8-49fe-a7eb-a74097919d8a
+# ╠═5ca23beb-0a49-49d6-90fb-f0438b65ae9a
+# ╟─6c47b30d-5211-45b5-b47a-a8c6b82fcc59
+# ╠═d5b33971-5477-4b40-a77e-90159b2b9484
+# ╠═c5f7b40e-2dee-4710-865f-1cbdba51226a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
