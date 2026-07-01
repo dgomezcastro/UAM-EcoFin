@@ -27,8 +27,6 @@
   bibliography: bibliography("refs.bib", style: "harvard-cite-them-right"),
 )
 
-CC BY-NC 4.0
-
 #include "chapters/00-intro.typ"
 #include "chapters/01-nociones.typ"
 #include "chapters/02-instrumentos.typ"
