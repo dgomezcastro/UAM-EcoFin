@@ -407,7 +407,7 @@ De modo que, como $p in (0,1)$ tenemos
   En tal caso, es única.
 ]<prop-arbol-existenciaQ>
 
-#remark[][
+#remark[Teoremas fundamentales de valoración de activos][
   Hay dos "principios" que se cumplen habitualmente tanto en los modelos de mercado tanto continuos como discretos.
   @prop-arbol-existenciaQ es un ejemplo del llamado *primer teorema fundamental de valoración de activos*, que dice:
   $
@@ -420,7 +420,7 @@ De modo que, como $p in (0,1)$ tenemos
 ]
 
 Una gran propiedad es la siguiente
-#theorem[Valoración de cartera por riesgo neutro][
+#lemma[Valoración de cartera por riesgo neutro][
   Si $theta$ es una cartera es una cartera en el mercado ${S, B}$ entonces para $t in {0,T}$
   $
     e^(-r t) EE^QQ [V_t^(bold(theta))] = V_0^(bold(theta)).
@@ -638,9 +638,9 @@ $
 y $PP(bold(S)_T = D_(bullet j)) > 0$ para todo $j$.
 
 Es un resultado elemento de Álgebra Lineal que
-#theorem[][
-  Este modelo es completo (es decir todo producto se reproducirse con cartera) si y sólo $N >= M$ y $op("rango")(D) = M.$
-]
+#theorem[Completitud][
+  Este modelo es completo si y sólo $N >= M$ y $op("rango")(D) = M.$
+]<thm-unperiodo-sistema-completitud>
 
 === Carteras y vector de estado
 Así el valor de cartera a tiempo $t$
@@ -725,6 +725,12 @@ Nos permite probar este teorema.
 La base de la prueba es que los conjuntos $K$ y $A$ pueden separarse por una función lineal, al estilo del teorema de Hahn-Banach.
 Una prueba usando este teorema puede verse en #cite(<etheridgeCourseFinancialCalculus>, supplement: "Theorem 1.5.2").
 
+#exercise[Escribir el modelo binomial y el modelo trinomial sea $bold(S) = (S, B)$. Escribir la matriz $D$ en cada uno de los casos:
+  + Estudiar la completitud del mercado usando el @thm-unperiodo-sistema-completitud
+  + Comprobar que en el modelo binomial existe un único vector de estados
+  + Comprobar que en el modelo trinomial existen varios vectores de estado
+]
+
 === Medida de riesgo neutro
 Dado un vector de estados, tenemos una forma de construir la medida de riesgo nulo
 $
@@ -736,10 +742,11 @@ Entonces observamos que
 $
   EE^QQ [bold(S)_T] = bold(S)_0 / psi_0
 $
-De forma complementaria, si existen $QQ$ y $psi_0$ entonces existe vector de estado.
-Así $B_0 = 1$ y $B_T = psi_0$.
 
-Así, $psi_0$ resulta nuestro factor de descuento, y el precio descontado $tilde(bold(S)_t) = psi_0 bold(S)_t$ es una martingala respecto de $QQ$.
+#exercise[Dados una medida libre de riesgo $QQ$ y un factor de descuento $psi_0$, construir un vector de estado.]
+
+Si existe este factor de descuento se puede construir el bono natural dado por $B_0 = 1$ y $B_T = 1/psi_0$.
+El precio descontado $tilde(bold(S)_t) = psi_0 bold(S)_t$ es una martingala respecto de $QQ$.
 
 De manera similar a @eq-binomial-measure-gives-prize, si $C$ es un derivado podemos dar un precio libre de arbitraje
 $
@@ -767,6 +774,10 @@ $<eq-Nestados-valoracion-riesgoneutro>
     (QQ, psi_0) "es único"
   $
   En el resultado anterior se tiene también $<=$ si $bold(psi)$ es único para todo $bold(S_0)$.
+]
+
+#exercise[
+  En el modelo binomial analizar el único vector de estado para deducir que $psi_0 = e^(-r T)$.
 ]
 
 === Volatilidad de una cartera
