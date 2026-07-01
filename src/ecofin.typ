@@ -42,4 +42,5 @@ CC BY-NC 4.0
 #include "chapters/06-repaso-estadistica.typ"
 #include "chapters/07-tae.typ"
 
+// #outline(title: [List of exercises], target: figure.where(kind: "exercise"))
 
