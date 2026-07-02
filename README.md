@@ -1,6 +1,8 @@
 # Economía y Finanzas Matemáticas
 ## Universidad Autónoma de Madrid
 
+### [Guía Docente 2026-2027](https://secretaria-virtual.uam.es/doa/consultaPublica/look%5bconpub%5dMostrarPubGuiaDocAs?entradaPublica=true&idiomaPais=es.ES&_anoAcademico=2026&_codAsignatura=16461)
+
 ### [Descargar PDF de las notas](https://github.com/dgomezcastro/UAM-EcoFin/releases/latest/download/ecofin.pdf)
 
 Las notas del curso están creadas con `typst` y las fuentes del documento y las figuras se encuentran en la carpeta [src](src).
