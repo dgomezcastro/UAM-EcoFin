@@ -43,32 +43,7 @@ En interesante señalar que $S_1$ no depende de $omega_2$.
 
 == Modelo de $N$ periodos
 
-En general tomamos
-- $Omega = {0,1}^N$ donde $N Delta t = T$
-- $cal(F) = 2^Omega$, la $sigma$-álgebra de puntos
-y escribimos $S_0$ determinista y
-$
-  S_t := R_t S_(t-1)
-$
-donde las subidas o bajadas son siempre fijas es decir para $bold(omega) in Omega$ se tiene
-$
-  R_t (bold(omega)) := cases(
-    u & "si" omega_t = 1\,,
-    d & "si" omega_t = 0.
-  )
-$
-y además la probabilidad de subir o bajar no cambia
-$
-  PP(bold(omega)) := p^(a) (1-p)^(N-a) "donde" a := sum_(t=1)^N omega_t = "número de 1s en "bold(omega).
-$
-#exercise[
-  Comprobar que
-  $
-    PP(R_t = u) = PP(omega_t = 1) = p.
-  $
-]
-
-Equivalentemente, podemos escribir que
+Introducimos donde constantes $0 < d < u$ e, informalmente, el modelo dado por $S_0$ determinista y
 $
   PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p \
   PP(B_t = e^(r t)) = 1
@@ -103,8 +78,6 @@ Podemos verlo en como @fig-arbol
 
 Según las hipótesis la elección de $u$ y $d$ se habla de modelo de Cox-Ross-Rubinstein o Jarrow-Rudd.
 
-Muchas de las construcciones que vamos a hacer son completamente generales, pero este elección simple basta para la mayoría de ejemplos.
-
 #exercise[
   Comprobar que si $t = n Delta t$ entonces las probabilidades de alcanzar un estado concreto vienen dadas por
   $
@@ -112,6 +85,41 @@ Muchas de las construcciones que vamos a hacer son completamente generales, pero
   $
   Relacionar este resultado con la distribución binomial.
 ]
+
+== Proceso estocástico
+
+Tomamos
+- $Omega = {0,1}^N$ donde $N Delta t = T$. Para $bold(omega) in Omega$ usaremos la notación $bold(omega) = (omega_(Delta t), omega_(2Delta t), dots.c , omega_T)$.
+- $cal(F) = 2^Omega$, la $sigma$-álgebra de puntos
+- La medida de probabilidad es
+  $ PP(bold(omega)) := p^(a) (1-p)^(N-a) "donde" a := "número de 1s en "bold(omega) = sum_(t=1)^N omega_t. $
+
+#exercise[Comprobar que la construcción $PP$ es la única medida de probabilidad en $Omega$ tal que
+  + $PP({bold(omega) in Omega : omega_t = 1}) = p$ y
+  + las variables aleatorias $X_t : Omega -> RR$ dadas por $X_t (bold(omega)) = omega_t$ son independientes.
+]
+
+Tomamos $S_0$ determinista y
+$
+  S_t := R_t S_(t-1)
+$
+donde los retornos $R_t$ vienen dados por
+$
+  R_t (bold(omega)) := cases(
+    u & "si" omega_t = 1\,,
+    d & "si" omega_t = 0.
+  )
+$
+con $d < u$. Por supuesto $B_t (bold(omega)) = e^(r t)$.
+
+#exercise[
+  Comprobar que
+  $
+    PP(R_t = u) = PP(omega_t = 1) = p.
+  $
+]
+
+Muchas de las construcciones que vamos a hacer son completamente generales, pero este elección simple basta para la mayoría de ejemplos.
 
 
 == Carteras y arbitraje
