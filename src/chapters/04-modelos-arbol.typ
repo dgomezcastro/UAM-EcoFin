@@ -39,11 +39,36 @@ $
   S_0 (omega_1 omega_2) := S_0, quad S_(T/2) (omega_1 omega_2) := s_1^( (omega_1)), quad S_T (omega_1 omega_2) := s_2^((omega_1omega_2))
 $
 En interesante señalar que $S_1$ no depende de $omega_2$.
-Esta misma idea puede reproducirse en múltiples periodos aunque no escribiremos los detalles.
+
 
 == Modelo de $N$ periodos
 
-Consideremos ahora un árbol, donde consideramos los eventos que ocurren en $t_k = k Delta t$ donde, por simplicidad, nos vamos
+En general tomamos
+- $Omega = {0,1}^N$ donde $N Delta t = T$
+- $cal(F) = 2^Omega$, la $sigma$-álgebra de puntos
+y escribimos $S_0$ determinista y
+$
+  S_t := R_t S_(t-1)
+$
+donde las subidas o bajadas son siempre fijas es decir para $bold(omega) in Omega$ se tiene
+$
+  R_t (bold(omega)) := cases(
+    u & "si" omega_t = 1\,,
+    d & "si" omega_t = 0.
+  )
+$
+y además la probabilidad de subir o bajar no cambia
+$
+  PP(bold(omega)) := p^(a) (1-p)^(N-a) "donde" a := sum_(t=1)^N omega_t = "número de 1s en "bold(omega).
+$
+#exercise[
+  Comprobar que
+  $
+    PP(R_t = u) = PP(omega_t = 1) = p.
+  $
+]
+
+Equivalentemente, podemos escribir que
 $
   PP(S_(t + Delta t) = u S_t) = p " y " PP(S_(t+Delta t)= d S_t) = 1-p \
   PP(B_t = e^(r t)) = 1
@@ -440,45 +465,84 @@ $
 
 == Filtraciones y valor de una call en tiempo $t$
 
+=== Intuición y definición riguosa
+
 Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por que cada periodo depende sólo del anterior, a esto se lo conoce como Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
 
-Una filtración es una sucesión no-decreciente de $sigma$-algebras
-$
-  s < t => cal(F)_s subset cal(F)_t.
-$
+Definimos la siguiente sucesión de $sigma$-álgebras:
+- $cal(F)_0 := {emptyset, Omega}$
+- Definimos $A_1 = {bold(omega) in Omega: omega_(Delta t) =1 }$ y $A_0 = {bold(omega) in Omega: omega_(Delta t) =0 }$ y definimos
+  $
+    cal(F)_(Delta t) := {emptyset, A_1, A_0, Omega}.
+  $
+- Definimos los conjuntso $A_(00) = {bold(omega) in Omega: omega_(Delta_t) = 0, omega_(2 Delta t) =0 }$, etc... y definimos $cal(F)_(2 Delta t)$ la $sigma$-álgebra generada
+  $
+    cal(F)_(2 Delta t) := sigma(A_(11), A_(10), A_(01), A_(00)).
+  $
+- Repetimos este proceso hasta que $F_T = 2^Omega$.
 
-Dado que a tiempo $t = n Delta t$ sabemos qué ha ocurrido pero no qué ocurrirá, los conjuntos de sucesos que podemos medir
-son los que están en la $sigma$-álgebra correspondiente es
+#exercise[Construir $cal(F)_(2 Delta t)$.]
+
+#definition[
+  Una filtración es una sucesión no-decreciente de $sigma$-algebras
+  $
+    cal(F)_0 subset cal(F)_(Delta t) subset dots.c subset cal(F)_T.
+  $
+]
+
+#exercise[Comprobar que lo construído anteriormente es una filtración]
+
+=== Filtraciones y procesos
+
+Una vez tenemos la construcción rigurosa, señalamos que la condición de "utilizar la información conocida" puede escribirse en términos de las filtraciones.
+#exercise[
+  Sea $H_t : Omega -> RR$.
+  Comprobar que son equivalentes
+  + $H_t = bold(F)_t (S_0, dots.c, S_(t))$
+  // - $bold(theta)_t^(-1) ({a}) = A' times {0,1}^(N-n+1)$
+  + $H_t$ es medible respecto $cal(F)_t$
+  Cuando $H_t$ es un proceso estocástico y esto ocurre para todo $t$, se dice que es *proceso adaptado a $cal(F)_(t)$*
+]
+
+#remark[
+  Los productos son procesos $H_t$ adaptados $cal(F)_t$,
+  mientras que las carteras (@eq-arbol-carteraadaptada) son procesos $bold(theta)_t$ adaptados a $cal(F)_(t-Delta t)$.
+]
+
+Para facilitar la analogía al caso continuo, también podemos escribir
 $
-  cal(F)_t := {S_s^(-1) (B) : B in cal(B), s in [0,t]}.
+  cal(F)_t = {S_s^(-1) (B) : B in cal(B), s in [0,t] inter NN_(Delta t)}
 $
+donde $NN_(Delta t) := {0, Delta t, 2 Delta t, dots.c}$.
 // Si $A in cal(F)_t$ entonces
 // $
 //   A = A' times {0,1}^(N-n) " con " A' in {0,1}^n.
 // $
-Esta es la llamada $sigma$-álgebra generada por $(S_s | s in [0,s])$, que a veces se denota $cal(U)(S_s | s in [0,s])$.
+Esta es la llamada $sigma$-álgebra generada por $(S_s | s in [0,t]inter NN_(Delta t))$, que a veces se denota $cal(U)(S_s | s in [0,t] inter NN_(Delta t))$. Nótese que también podemos escribir
+$
+  cal(F)_t = cal(U)(R_s | s in [0,t] inter NN_(Delta t))
+$
 
-La condición de que la cartera esté adaptada a la información conocida (ver @eq-arbol-carteraadaptada) se expresa en estos términos como que $theta_t$ sea medible respecto de $cal(F)_(t-Delta t)$, lo que a veces se llama que sea *proceso adaptado a $cal(F)_(t-Delta t)$*.
-
-#exercise[
-  Sea $bold(theta)_t = bold(F)_t (S_0, dots.c, S_N)$ con $T = N Delta t$ y sea $t = n Delta t$ con $n < N$.
-  Comprobar que son equivalentes
-  + $bold(theta)_t = bold(F)_t (S_0, dots.c, S_(t-Delta t))$
-  // - $bold(theta)_t^(-1) ({a}) = A' times {0,1}^(N-n+1)$
-  + $bold(theta)_t$ es medible respecto $cal(F)_(t-Delta t)$
-]
+=== Esperanza condicionada a la filtración y valoración a tiempo $t$
 
 Podemos pensar en
 $
   EE[Phi(S_0, dots.c, S_T) | cal(F)_t]
 $
-como la esperanza fijados $S_0, dots.c, S_t$ y promediando entre los valores de $S_(t+Delta t), dots.c, S_T$.
+como la esperanza fijados $S_0, dots.c, S_t$ y promediando entre los valores de $S_(t+Delta t), dots.c, S_T$. De manera rigurosa definimos
 
-De manera que podemos escribir
+#definition[Esperanza condicionada a una $sigma$-álgebra][
+  Dada $cal(G)$ una $sigma$-álgebra, definimos $EE[X | cal(G)] := Y$ la única variable aleatoria tal que:
+  - $EE[ |Y| ] < oo$
+  - $Y$ es medible respecto de $cal(G)$
+  - Para todo evento $A in cal(G)$ se tiene $EE[Y bold(1)_A] = EE[X bold(1)_A]$, donde $bold(1)_A$ es la función indicatriz de $A$.
+]
+
+De manera que podemos escribir la condición de martingala como
 $
   tilde(S)_s = EE^QQ [tilde(S_t) | tilde(S)_s] = EE^QQ [tilde(S_t) | cal(F)_s].
 $
-De este modo, razonando como lo hicimos a tiempo $t = 0$ para tiempos generales, tenemos que
+Razonando como lo hicimos a tiempo $t = 0$ para tiempos generales, tenemos que
 $
   C_t = e^(-r(T-t)) EE^QQ [(S_T - K)_+ | cal(F)_t].
 $<eq-arbol-call-tiempot>
