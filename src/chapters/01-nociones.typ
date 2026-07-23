@@ -128,8 +128,16 @@ $
 
 === ¿Quién fija los tipos de interés?
 
-Hay diferentes productos con tipos de interés públicos.
-Los bonos estatales tiene unos cupones fijados a través de los cuales se obtiene beneficio. Este derivadonos permite valorar "la evolución del valor del dinero" si no queremos que exista arbitraje. Nos habla del valor del dinero en los momentos de vencimiento de estos cupones.
+Hay diferentes productos con tipos de interés conocidos.
+
+==== Bonos estatales <sec-bonos-estatales>
+Los bonos estatales son la forma en la que los Estados reciben dinero prestado.
+- Un bono se compone de una fecha de vencimiento, un valor nominal (el dinero que se entrega para comprar el bono y se recupera al en la fecha de vencimiento) y cupones en tiempo fijados (cantidades de dinero que el Estado paga al quién posea el bono en el momento de vencimiento del cupón). Cuando un Estado hace una oferta de bonos elige el valor nominal y las cantidades y vencimiento de los cupones. Este es el conocido como _mercado primario_.
+- El poseedor de estos bonos puede venderlos en cualquier momento anterior al vencimiento, en el conocido como _mercado secundario_. Estos valores son habitualmente conocidos, aunque se puedan hacer negocios privados. Lo más habitual es que la venta en el mercado secundario no sea por el valor nominal, sino por otra cantidad. Dado que quién compra el bono en el mercado secundario paga una cantidad distinta, pero va a recibir el mismo valor nominal a vencimiento y los mismos cupones podemos calcular el "tipo interés por su inversión". En sentido amplio esto es lo que se conoce como "rendimiento del bono" o "_bond yield_" en inglés.
+
+Esto nos da una forma de estimar "la evolución del valor del dinero" si no queremos que exista arbitraje. Nos habla del valor del dinero en los momentos de vencimiento de estos cupones.
+
+==== Prestamos interbancarios
 
 También existen tipos de interés a "corto plazo", con el que los bancos se prestan dinero entre sí.
 Esto también estable "restricciones".
@@ -157,7 +165,7 @@ Este derivadoes un derivadollamado «bono»
 Además, este derivadoes un tipo muy sencillo de «bono», que hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
 
 #definition[Bono de cupón cero bajo la hipótesis de no-arbitraje][
-  Un bono de cupón cero con fecha de vencimiento $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ unidades monetarias (por ejemplo \$) pagada en la fecha $T$.
+  Un bono de cupón cero con fecha de vencimiento $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ unidades monetarias (por ejemplo USD denotado por \$) pagada en la fecha $T$.
   Denotaremos
   $
     p(t, T) := "precio a tiempo "t" de un bono de principal "K = 1" y maduración" T.
