@@ -133,9 +133,17 @@ Hay diferentes productos con tipos de interés conocidos.
 ==== Bonos estatales <sec-bonos-estatales>
 Los bonos estatales son la forma en la que los Estados reciben dinero prestado.
 - Un bono se compone de una fecha de vencimiento, un valor nominal (el dinero que se entrega para comprar el bono y se recupera al en la fecha de vencimiento) y cupones en tiempo fijados (cantidades de dinero que el Estado paga al quién posea el bono en el momento de vencimiento del cupón). Cuando un Estado hace una oferta de bonos elige el valor nominal y las cantidades y vencimiento de los cupones. Este es el conocido como _mercado primario_.
-- El poseedor de estos bonos puede venderlos en cualquier momento anterior al vencimiento, en el conocido como _mercado secundario_. Estos valores son habitualmente conocidos, aunque se puedan hacer negocios privados. Lo más habitual es que la venta en el mercado secundario no sea por el valor nominal, sino por otra cantidad. Dado que quién compra el bono en el mercado secundario paga una cantidad distinta, pero va a recibir el mismo valor nominal a vencimiento y los mismos cupones podemos calcular el "tipo interés por su inversión". En sentido amplio esto es lo que se conoce como "rendimiento del bono" o "_bond yield_" en inglés.
+- El poseedor de estos bonos puede venderlos en cualquier momento anterior al vencimiento, en el conocido como _mercado secundario_. Estos valores son habitualmente conocidos, aunque se puedan hacer negocios privados. Lo más habitual es que la venta en el mercado secundario no sea por el valor nominal, sino por otra cantidad. Dado que quién compra el bono en el mercado secundario paga una cantidad distinta, pero va a recibir el mismo valor nominal a vencimiento y los mismos cupones podemos calcular el "tipo interés por su inversión". En sentido amplio esto es lo que se conoce como "rendimiento del bono" o "_bond yield_" en inglés. Una primera aproximación es
+  $
+    "«rendimiento actual del bono»" = "cupón anual"/"valor actual del bono".
+  $
+  Cuando un Estado va a sacar nuevos bonos, calcula los cupones de manera que el rendimiento de los nuevos bonos sea similar al de los ya existentes. Como el Estado que los respalda es el mismo, en otro caso los bonos nuevos o los bonos existentes serían mucho menos interesantes.
+  Para ver el rendimiento del bono español a 10 años ver, por ejemplo, #link("https://es.investing.com/rates-bonds/spain-10-year-bond-yield")[Investing.com].
+
 
 Esto nos da una forma de estimar "la evolución del valor del dinero" si no queremos que exista arbitraje. Nos habla del valor del dinero en los momentos de vencimiento de estos cupones.
+
+De nuevo, la explicación que estamos haciendo es una simplificación. Por ejemplo, no siempre que un Estado emite bonos con un cierto cupón encuentra compradores interesados. Por ejemplo podemos señalar el caso de Rusia durante la guerra de Ucrania. Ver #link("https://www.bloomberg.com/news/articles/2026-07-21/russia-halts-bond-auctions-with-more-monetary-easing-in-question")[Bloomberg].
 
 ==== Prestamos interbancarios
 
@@ -148,8 +156,9 @@ Los dos ejemplo más relevantes en nuestro contexto son:
 - El euríbor (del inglés euribor), acrónimo de _Euro Interbank Offered Rate_ es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.
 
 #figure(
-  image("../figures/euribor.png"),
-  caption: [Euribor a 12 meses. https://www.euribor-rates.eu/en/euribor-charts/],
+  image("../figures/euribor-vs-bono.pdf"),
+  caption: [Comparación entre el euribor a 12 meses y el bono español a 10 años],
+  placement: auto,
 )
 
 
