@@ -164,14 +164,14 @@ Los dos ejemplo más relevantes en nuestro contexto son:
 
 === Bono de cupón cero
 
-La hipótesis de no-arbitraje hace que un derivadoconsistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
-Vamos a utilizar este derivadocomo referencia para valorar el resto de productos, bajo la hipótesis de no arbitraje.
-El derivadomás habitual de esta naturaleza
+La hipótesis de no-arbitraje hace que un derivado consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
+Vamos a utilizar este derivado como referencia para valorar el resto de productos, bajo la hipótesis de no arbitraje.
+El derivado más habitual de esta naturaleza
 
-Lo expresión más habitual del contrato no es escribir así el derivadoun contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
-Asumiremos que quién vende el contrato (típicamente un estado o una entidad grande) es «de fiar» y pagará con total garantía, de modo que este derivadono tiene riesgo.
-Este derivadoes un derivadollamado «bono»
-Además, este derivadoes un tipo muy sencillo de «bono», que hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
+La expresión más habitual del contrato no es escribir así el derivado un contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
+Asumiremos que quién vende el contrato (típicamente un estado o una entidad grande) es «de fiar» y pagará con total garantía, de modo que este derivado no tiene riesgo.
+Este derivado es un derivado llamado «bono»
+Además, este derivado es un tipo muy sencillo de «bono», que hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
 
 #definition[Bono de cupón cero bajo la hipótesis de no-arbitraje][
   Un bono de cupón cero con fecha de vencimiento $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ unidades monetarias (por ejemplo USD denotado por \$) pagada en la fecha $T$.
@@ -377,12 +377,13 @@ $
 
 ==== Ejemplo para varios activos
 
-Para reproducir el argumento anterior en un cartera con dos activos debemos tener en cuenta que
+Para reproducir el argumento anterior en una cartera con dos activos debemos tener en cuenta que si $(X,Y)$ es una normal bi-dimensional
 $
   sigma_(X+Y) = sqrt(sigma_X^2 + sigma_Y^2 + 2 rho sigma_X sigma_Y).
 $
 donde $rho$ es la correlación entre ambos productos.
-Y de hecho,
+Y de hecho, si suponemos que $X_1, dots, X_N$ es una normal $N$-dimensional entonces
+
 $
   var(sum_i a_i X_i) & =
                        underbrace((a_1, dots, a_N), a^trans)
