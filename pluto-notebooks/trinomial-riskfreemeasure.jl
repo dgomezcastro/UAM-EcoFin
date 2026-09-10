@@ -116,7 +116,7 @@ PlutoUI = "~0.7.83"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.12.6"
+julia_version = "1.13.0"
 manifest_format = "2.0"
 project_hash = "c4f704049b9848f44617ca7d7884c95290710e4c"
 
