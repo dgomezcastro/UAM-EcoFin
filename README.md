@@ -11,7 +11,7 @@ Las notas del curso están creadas con `typst` y las fuentes del documento y las
 
 Estas notas corresponde al curso impartido en 2026-2027 por David Gómez-Castro.
 
-El curso consta de 16 semanas:
+El curso consta de 15 semanas:
 1. Introducción. El mercado financiero. <br> [Notebook: comprobando la log-normalidad en datos de mercado](pluto-notebooks/log-normality.jl)
 1. Tipos de interés: interés compuesto, interés continuo, bono cupón-cero, fórmulas de amortización, TAE. 
     <br> [Notebook: amortización de una hipoteca](pluto-notebooks/mortgage.jl)
@@ -34,9 +34,8 @@ El curso consta de 16 semanas:
     <br> [Notebook: comparación de las integrales de Itô y Stratonovich al integral $W_t d W_t$](pluto-notebooks/ito-v-stratonovich.jl)
 1. Ecuaciones diferenciales estocásticas
     <br> [Notebook: el método numérico de Euler-Maruyama](pluto-notebooks/euler-maruyama.jl)
-1. Límite de árboles al continuo: Black-Scholes. 
+1. Black-Scholes: límite de árboles al continuo, opción europea, volatilidad implícita.
     <br> [Notebook: el precio de _calls_ europeas como límite del árbol binomial](pluto-notebooks/binomial-tree-call-limit.jl)
-1. Black-Scholes: opción europea. Volatilidad implícita
 1. Carteras en tiempo continuo. 
     <br> [Notebook: comprobando la correlación en el mercado](pluto-notebooks/stock-correlation.jl)
 
