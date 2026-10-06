@@ -299,7 +299,7 @@ $
   Dado que $QQ ~ PP$ debemos imponer que $0 < q < 1$.
 ]
 
-Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noción detallada, vamos simplemente a demostrar la siguiente propiedad que nos permitirá valor activos a tiempo $t = 0$.
+Las carteras autofinanciadas son martingalas. Para evitar introducir ahora la noción detallada, vamos simplemente a demostrar la siguiente propiedad que nos permitirá valorar activos a tiempo $t = 0$.
 
 #proposition[][
   En un árbol binomial, una cartera $bold(theta)$ autofinanciada satisface
@@ -473,9 +473,9 @@ $
 
 == Filtraciones y valor de una call en tiempo $t$
 
-=== Intuición y definición riguosa
+=== Intuición y definición rigurosa
 
-Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por que cada periodo depende sólo del anterior, a esto se lo conoce como Markovianidad. Para valor una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
+Para la definición de una $QQ$ nos ha bastado con condicionar $|tilde(S_t)$ por que cada periodo depende sólo del anterior, a esto se lo conoce como Markovianidad. Para valorar una cartera, debemos saber el precio actual de la cartera, lo que requiere conocer los pesos. La forma más sencilla de hacer esto es utilizar "toda la información en $[0,t]$". La forma de hacer es con la filtración temporal.
 
 Definimos la siguiente sucesión de $sigma$-álgebras:
 - $cal(F)_0 := {emptyset, Omega}$
@@ -483,7 +483,7 @@ Definimos la siguiente sucesión de $sigma$-álgebras:
   $
     cal(F)_(Delta t) := {emptyset, A_1, A_0, Omega}.
   $
-- Definimos los conjuntso $A_(00) = {bold(omega) in Omega: omega_(Delta_t) = 0, omega_(2 Delta t) =0 }$, etc... y definimos $cal(F)_(2 Delta t)$ la $sigma$-álgebra generada
+- Definimos los conjuntos $A_(00) = {bold(omega) in Omega: omega_(Delta_t) = 0, omega_(2 Delta t) =0 }$, etc... y definimos $cal(F)_(2 Delta t)$ la $sigma$-álgebra generada
   $
     cal(F)_(2 Delta t) := sigma(A_(11), A_(10), A_(01), A_(00)).
   $

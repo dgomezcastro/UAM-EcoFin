@@ -6,7 +6,7 @@
 
 // #set heading(numbering: none)
 
-El objetivo de estas notas es introducir al alumno al "universo" de la Matemática en Mercados Financieros. Veremos quiénes brevemente quienes son los actores, cuáles son los productos, y cuáles son las ideas básica que soportan la valoración.
+El objetivo de estas notas es introducir al alumno al "universo" de la Matemática en Mercados Financieros. Veremos brevemente quiénes son los actores, cuáles son los productos y cuáles son las ideas básicas que soportan la valoración.
 
 Al ser un curso introductorio, cubriremos solamente conceptos básicos sin entrar en algunas de las principales sutilezas, y los métodos de valoración que presentaremos están ya algo desfasados respecto al "estado del arte". Sin embargo, son el fundamento que sustenta estos métodos más nuevos.
 
@@ -18,26 +18,26 @@ A continuación vamos a introducir informalmente algunos de los conceptos con lo
 === Activos
 Un *activo* (_asset_) es un "objeto" con valor.
 En esta asignatura trataremos sobre todo con activos financieros, que son no físicos y cuyo valor se deriva de un contrato:
-- divisas: unidades monetarias imprimidas normalmente por bancos centrales. Por ejemplo el euro € de código EUR.
+- divisas: unidades monetarias emitidas normalmente por bancos centrales. Por ejemplo el euro € de código EUR.
 - acciones bursátiles: fracciones de una compañía que esta ha puesto a la venta. Por ejemplo, Apple `AAPL`
 - bonos: compromisos de una entidad (por ejemplo el Tesoro de un estado) a pagar cantidades en fechas fijas.
   Estos contratos tienen una fecha de vencimiento, donde se devuelve el principal, y pagos intermedios de intereses llamados cupones.
 - bonos de renta fija: si los cupones están prefijados.
   Estos activos se consideran "seguros".
-- bonos de renta variable: si los cupones dependen un _benchmark_ que se determinará en el futuro. Por ejemplo el LIBOR o el euribor.
-- fondo índices: es una colección de dinero cuyo objetivo es seguir unas normas prefijadas para intentar reproducir el rendimiento de alguna parte del mercado. Por ejemplo, el S&P500, IBEX35.
+- bonos de renta variable: si los cupones dependen de un _benchmark_ que se determinará en el futuro. Por ejemplo el LIBOR o el euribor.
+- fondos indexados: es una colección de dinero cuyo objetivo es seguir unas normas prefijadas para intentar reproducir el rendimiento de alguna parte del mercado. Por ejemplo, el S&P500, IBEX35.
 
 También hay activos no-financieros: tanto tangibles (también llamados reales) como tierra o cereales, e intangibles como patentes y propiedad intelectual.
 
 === Derivados
-Sobre estos activos se construyen a veces otros contratos, llamados *derivados*, que tiene 4 elementos:
+Sobre estos activos se construyen a veces otros contratos, llamados *derivados*, que tienen 4 elementos:
 - un elemento (llamado subyacente) que se puede o debe comprar o vender
 - un acto futuro
 - un precio al que ocurrirá la transacción futura
 - una fecha futura en que ocurrirá el acto
 
 Veremos ejemplos al final del capítulo.
-Estos compromisos futuros habitualmente pueden ser comprados o vendidos en cualquier momento, a cualquier persona o entidad. Establecer el precio actual y otras posibles cantidades involucradas (como el precio de compra-venta un contrato a plazo) de estos contratos es precisamente el objetivo de esta asignatura.
+Estos compromisos futuros habitualmente pueden ser comprados o vendidos en cualquier momento, a cualquier persona o entidad. Establecer el precio actual y otras posibles cantidades involucradas (como el precio de compraventa de un contrato a plazo) de estos contratos es precisamente el objetivo de esta asignatura.
 
 === Beneficio o retorno de una inversión.
 
@@ -148,12 +148,12 @@ Su valoración es similar a la de un futuro, y por tanto no los trataremos en es
 === Opciones
 
 Una opción es el derecho, pero no la obligación, de comprar (o vender) un activo a un precio y en un momento (que puede ser una fecha o cuando se satisfagan unas condiciones).
-Existen diferentes variantes que comentaremos que veremos en diferentes niveles de detalle: europeas, americanas, asiáticas, bermúdeas, ...
+Existen diferentes variantes, que veremos con distinto nivel de detalle: europeas, americanas, asiáticas, bermudas, ...
 
 
 == Tipos de _traders_
 
-Existen esencilamente tres tipos de _traders_: hedgers, especuladores y arbitrageurs.
+Existen esencialmente tres tipos de _traders_: hedgers, especuladores y arbitrageurs.
 Ver #cite(<Hull2015>, supplement: "Secciones 1.6-1.10"), donde se describen estos actores, se explica qué es un _hedge fund_ y se dan ejemplos de los peligros involucrados en este tipo de actividades con ejemplos concretos.
 
 
@@ -163,7 +163,7 @@ El mercado contiene una serie de activos de diferentes tipos que ya hemos presen
 Habitualmente denotamos por $S_t$ al valor de un activo a tiempo $t$.
 Modelizar la evolución valor de los activos de riesgo, $S_t$, es el problema más difícil en Matemática Financiera. Dado que en este valor influyen muchos factores que no somos capaces de modelizar, pensaremos que el valor tiene una componente estocástica. Así, usaremos nociones de procesos estocásticos.
 
-=== Precio del activo subjacente
+=== Precio del activo subyacente
 Consideremos un activo muy sencillo descrito mediante
 Supongamos que el valor del activo a tiempo $T$ sólo puede subir por un factor $u$ con cierta probabilidad $p$ o bajar por un factor $d$, es decir
 $

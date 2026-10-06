@@ -227,10 +227,10 @@ $
 $
 <eq-forward>
 
-Supongamos que podemos pedir prestado dinero $S_0$ es el valor actual de un activo, es decir, por cada € que pida prestado hoy he devolver $e^(r T)$€ al vencimiento del contrato. Supongamos que el contrato tiene un strike $F_0$, al que se produce la venta del activo.
+Supongamos que $S_0$ es el valor actual de un activo y que podemos pedir dinero prestado, es decir, por cada € que pida prestado hoy he de devolver $e^(r T)$€ al vencimiento del contrato. Supongamos que el contrato tiene un strike $F_0$, al que se produce la venta del activo.
 
-A vencimiento, si soy el vendedor del contrato, debo honrarlo. Para ello, debo vender a quien tiene el contrato, el activo al precio pacto.
-Por ejemplo, si no tengo el activo debo comprarlo en el mercado (pagando $S_T$) y venderlo a mi contrapartido del _forward_ al precio $F_0$. De modo que en mi balance contable resulta en $F_0 - S_T$. Si este valor es positivo gano dinero, si es negativo lo pierdo. Pero lo importante es saber si consigo salir de la operación completa ganando dinero. Para ello, hay que pensar cuál es el valor justo $F_0$ y qué puedo hacer en cada caso.
+A vencimiento, si soy el vendedor del contrato, debo honrarlo. Para ello, debo vender a quien tiene el contrato, el activo al precio pactado.
+Por ejemplo, si no tengo el activo debo comprarlo en el mercado (pagando $S_T$) y venderlo a mi contraparte del _forward_ al precio $F_0$. De modo que en mi balance contable resulta en $F_0 - S_T$. Si este valor es positivo gano dinero, si es negativo lo pierdo. Pero lo importante es saber si consigo salir de la operación completa ganando dinero. Para ello, hay que pensar cuál es el valor justo $F_0$ y qué puedo hacer en cada caso.
 
 Argumentamos que si $F_0 != S_0 e^(r T)$ entonces se puede ganar dinero sin riesgo.
 
@@ -240,7 +240,7 @@ El resultado contable es la @table-forward-arbitrage1. El resultado es que _inde
 #figure(
   table(
     columns: (auto, auto, auto),
-    table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
+    table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago a vencimiento (€) \ $t = T$*]),
     [Comprar el contrato], [#text(fill: red)[0]], [$F_0 - S_T$ \ (positivo o negativo)],
     [Comprar el activo], [-#text(fill: red)[$S_0$]], [$S_T$],
     [Pedir prestado], [+$S_0$], [-#text(fill: red)[$S_0 e^(r T)$]],
@@ -253,7 +253,7 @@ Por contra, si hubiese alguien dispuesto a hacer el contrato con $F_0 < S_0 e^(r
 #figure(
   table(
     columns: (auto, auto, auto),
-    table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago bencimiento (€) \ $t = T$*]),
+    table.header([*Transacción*], [*Pago ahora (€) \ $t = 0$*], [*Pago a vencimiento (€) \ $t = T$*]),
     [Vender el contrato], [#text(fill: black)[0]], [-#text(fill: red)[$(S_T - F_0)$]],
     [Comprar el activo], [#text(fill: black)[$S_0$]], [-#text(fill: red)[$S_T$]],
     [Pretar \
@@ -327,7 +327,7 @@ Vamos a considerar el caso en el que el interés se paga con atraso.
   Reordenando la suma se obtiene el resultado.
 ]
 
-Por convención se supone que el contrato está escrito escrito a tiempo $t = 0$ y entonces tipo del swap viene dado por
+Por convención se supone que el contrato está escrito a tiempo $t = 0$ y entonces el tipo del swap viene dado por
 $
   R = (p(0,T_0) - p(0,T_n)) / (delta sum_(i=1)^n p(0,T_i)).
 $
@@ -408,7 +408,7 @@ Lo contrario es una opción de venta (_put option_) que es derecho, pero no la o
 
 Si esta operación se realiza en un instante concreto $T$ y a un precio fijado $K$ (llamado _strike_) se habla de *opciones europeas*.
 Si la opción puede ejercerse en cualquier momento anterior a $T$ a un precio $K$, se habla de *opciones americanas*.
-Existen muchos más tipos de opciones: asiáticas, bermúdeas, ...
+Existen muchos más tipos de opciones: asiáticas, bermudas, ...
 
 En este tipo de derivados, lo que conocemos con certeza es el valor a vencimiento en función del valor del activo subyacente. Pero el valor del activo subyacente es deconocido, y tan sólo podemos modelizarlo, típicamente como una distribución de probabilidad.
 

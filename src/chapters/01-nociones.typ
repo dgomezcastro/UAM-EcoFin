@@ -14,9 +14,9 @@ Un tipo de interés en una situación particular es la cantidad que el prestatar
 Esto incluye tipos hipotecarios, depositarios, y otros.
 El tipo de interés aplicable depende del riesgo del crédito, es decir el riesgo de que el crédito no sea devuelto.
 
-=== Intución
+=== Intuición
 
-Esto funciona bien si pensamos por ejemplo, en una inversión hecha el 1 de enero 2025, y que devuelve el dinero el 1 de 2026.
+Pensemos, por ejemplo, en una inversión hecha el 1 de enero de 2025 y que devuelve el dinero el 1 de enero de 2026.
 
 En su presentación más sencilla, el tipo de interés $r$ (expresado en %), es el número tal que
 $
@@ -27,7 +27,6 @@ $
   "retorno" & := "dinero recibido" - "dinero invertido" \
             & = r times "dinero invertido"
 $
-Esto funciona bien si pensamos por ejemplo, en una inversión hecha el 1 de enero 2025, y que devuelve el dinero el 1 de 2026.
 
 Si tomamos todo el dinero que sale de una inversión, y lo volvemos a invertir por el mismo plazo, al mismo tiempo entonces obtendremos
 $
@@ -42,7 +41,7 @@ $
 
 === Fórmulas de conversión
 
-Si tenemos una inversión que promete un retorno de $r$ a $T = 1/N$ años con $N in NN$, podemos utilizar la fórmula del interés compuesto para deducir cual es el tipo anual
+Si tenemos una inversión que promete un retorno de $r$ a $T = 1/N$ años con $N in NN$, podemos utilizar la fórmula del interés compuesto para deducir cuál es el tipo anual
 $
   1 + r_("anual") = (1 + r)^N.
 $
@@ -105,7 +104,7 @@ Vemos más ejemplos en @table-interes-compuesto.
 
 
 === Tipo de interés continuo
-Jacob Bernouilli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
+Jacob Bernoulli descubrió el número $e$, llamado número de Euler o de Napier, calculando límites en la fórmula de interés compuesto
 $
   e := lim_(x -> oo) (1 + 1/x)^x.
 $
@@ -397,7 +396,7 @@ $
                        )
                        underbrace(vec(a_1, dots.v, a_N), a).
 $
-Esta matriz es simétrica. La matriz de covarianzas se puede escribir en térmions de la matriz de correlaciones
+Esta matriz es simétrica. La matriz de covarianzas se puede escribir en términos de la matriz de correlaciones
 $
   cov(X, X) = var(X)^trans
   underbrace(

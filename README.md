@@ -13,25 +13,25 @@ Estas notas corresponde al curso impartido en 2026-2027 por David Gómez-Castro.
 
 El curso consta de 15 semanas:
 1. Introducción. El mercado financiero. <br> [Notebook: comprobando la log-normalidad en datos de mercado](pluto-notebooks/log-normality.jl)
-1. Tipos de interés: interés compuesto, interés continuo, bono cupón-cero, fórmulas de amortización, TAE. 
+1. Tipos de interés: interés compuesto, interés continuo, capitalización, préstamos y rentas, fórmulas de amortización, TAE. 
     <br> [Notebook: amortización de una hipoteca](pluto-notebooks/mortgage.jl)
-1. Activos y derivados, bonos, curva cupón-cero
-1. Derivados: contrato a plazo, _swap_, opciones
-1. El modelo binomial: carteras, arbitraje, opciones europeas. 
+1. Rendimientos y activos de renta fija: rendimiento y tasa interna de rendimiento (TIR), bonos, estructura temporal de tipos y curva cupón-cero, nociones de cálculo actuarial
+1. Instrumentos financieros: acciones, contratos a plazo, _swaps_, opciones europeas y americanas, otros derivados
+1. El modelo binomial de un periodo: carteras, arbitraje, valoración por replicación de opciones europeas. 
     <br> [Notebook: valor de carteras](pluto-notebooks/oneperiod-portfolio.jl) 
-1. El modelo binomial: la medida de riesgo neutro
+1. El modelo binomial de un periodo: numerarios y probabilidad de valoración; la medida de riesgo neutro
     <br> [Notebook: medidas libres de riesgo en el modelo trinomial](pluto-notebooks/trinomial-riskfreemeasure.jl)
-1. El modelo matricial para un periodo de tiempo
-1. Árboles binomiales: Carteras y arbitraje.
-1. Árboles binomiales: medida libre de riesgo y opciones europeas. 
+1. El modelo matricial para un periodo de tiempo: teorema fundamental de valoración, mercados completos e incompletos
+1. Árboles binomiales: carteras y arbitraje. Examen parcial.
+1. Árboles binomiales: construcción del modelo de Jarrow-Rudd, medida libre de riesgo y opciones europeas. 
     <br> [Notebook: el valor de una _call_ europea](pluto-notebooks/binomial-tree-call.jl)
-1. Árboles binomiales: opciones americanas
+1. Árboles binomiales: opciones americanas y ejercicio óptimo
 1. Paseos aleatorios y movimiento Browniano. 
-    <br> [Notebook: estudio de paseos aleatorias](pluto-notebooks/random-walk-density.jl)
+    <br> [Notebook: estudio de paseos aleatorios](pluto-notebooks/random-walk-density.jl)
     <br> [Notebook: de paseos aleatorios a movimiento Browniano](pluto-notebooks/random-walk-limit.jl)
 1. Cálculo de Itô
     <br> [Notebook: justificación visual de $(d W_t)^2=dt$](pluto-notebooks/brownian-dW-squared.jl)
-    <br> [Notebook: comparación de las integrales de Itô y Stratonovich al integral $W_t d W_t$](pluto-notebooks/ito-v-stratonovich.jl)
+    <br> [Notebook: comparación de las integrales de Itô y Stratonovich de $W_t d W_t$](pluto-notebooks/ito-v-stratonovich.jl)
 1. Ecuaciones diferenciales estocásticas
     <br> [Notebook: el método numérico de Euler-Maruyama](pluto-notebooks/euler-maruyama.jl)
 1. Black-Scholes: límite de árboles al continuo, opción europea, volatilidad implícita.

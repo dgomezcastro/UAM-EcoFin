@@ -15,7 +15,7 @@
 // periodo al límite, fórmulas de Black-Scholes.
 // Valoración de opciones americanas, ejercicio óptimo.
 
-= Modelo binomial: un sólo activo con dos posible estados
+= Modelo binomial: un solo activo con dos posibles estados
 
 Modelicemos un activo financiero por el proceso estocástico más sencillo.
 Denotemos por el precio en € de una unidad de este activo a tiempo por $S_t$.
@@ -83,7 +83,7 @@ Por salud mental, en adelante no volveremos a mencionar esta construcción tan c
 
 Nótese que como $cal(F)$ es la $sigma$-álgebra discreta, cualquier derivado cumple que $H_T : Omega -> RR$ es medible.
 
-Lo más habitual es el que valor de estos derivados a tiempo $T$ se escriba en función de $S_T$, en lugar de $Omega$. Por esto, es frecuente hablar de _contingent claims_.
+Lo más habitual es que el valor de estos derivados a tiempo $T$ se escriba en función de $S_T$, en lugar de $Omega$. Por esto, es frecuente hablar de _contingent claims_.
 
 
 #exercise[
@@ -94,7 +94,7 @@ Lo más habitual es el que valor de estos derivados a tiempo $T$ se escriba en f
 
 == Cartera
 
-Si pensamos en el modelo @eq-unperiodo-2states con un activo subyacente de valor $S_t$ y un bono de valor $B_t$, una _cartera_ consiste en tener $theta^((1)) in RR$ unidades de la activo, y $theta^((2)) in RR$ unidades del bono.
+Si pensamos en el modelo @eq-unperiodo-2states con un activo subyacente de valor $S_t$ y un bono de valor $B_t$, una _cartera_ consiste en tener $theta^((1)) in RR$ unidades del activo, y $theta^((2)) in RR$ unidades del bono.
 Así, una cartera en el mercado ${S,B}$ es un vector $bold(theta) in RR^2$. El valor de esta cartera es el proceso estocástico
 $
   V_t^(bold(theta)) = theta^((1)) S_t + theta^((2)) B_t " donde " t in {0, T}.
@@ -368,7 +368,7 @@ $
   $
 ]
 Se dice que $tilde(S)_T$ es una martingala respecto de $QQ$. Volveremos sobre este concepto.
-Dado que sólo hay posibilidades, si llamemos
+Dado que solo hay dos posibilidades, llamemos
 $
   q := QQ(S_T = u S_0).
 $

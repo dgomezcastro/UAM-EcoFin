@@ -14,7 +14,7 @@ $
 
 == Distribución binomial
 
-En un espacio de probabilidad $(Omega, cal(F), PP)$ se dice que una  $X$ se distribuye como una distribucional binomial de $N$ pasos y probabilidad $p$, y se denota $X ~^PP "Binomial"(n,p)$ si se tiene
+En un espacio de probabilidad $(Omega, cal(F), PP)$ se dice que una variable aleatoria $X$ se distribuye como una binomial de $N$ pasos y probabilidad $p$, y se denota $X ~^PP "Binomial"(n,p)$ si se tiene
 $
   PP(X = k) = binom(n, k) p^k (1-p)^(n-k) "para todo" k in {0, dots.c, N}.
 $

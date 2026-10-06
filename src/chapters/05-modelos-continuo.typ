@@ -6,7 +6,7 @@
 
 == Paseos aleatorios y movimiento Browniano
 
-Consideremos el proceso aleatorio dado por la siguiente distribución de Bernouilli
+Consideremos el proceso aleatorio dado por la siguiente distribución de Bernoulli
 $
   Z := cases(
     +1 & "con probabilidad " 1/2,
@@ -42,7 +42,7 @@ Recordamos el teorema central del límite
     overline(Z)_n ->^d N(mu_Z, sigma_Z^2).
   $
 ]
-Equivalentemente, este teorema pueda rescribirse como
+Equivalentemente, este teorema puede reescribirse como
 $
   (overline(Z)_n - mu_Z)/(sigma_Z) ->^d N(0,1).
 $
@@ -172,7 +172,7 @@ Y esta construcción puede extenderse por continuidad a todo $L^2(0,T)$.
   + $EE[integral_0^T G_t dif W_t] = 0$
 ]
 
-La elección del punto $A_(t_i)$ en la suma de Riemann es complemetamente intencional. También se puede construir la integral de Stratonovich
+La elección del punto $A_(t_i)$ en la suma de Riemann es completamente intencional. También se puede construir la integral de Stratonovich
 $
   integral_0^T A_s compose dif W_t & := sum_(i=0)^N (A_(t_(i+1)) + A_(t_i))/2 (W_(t_(i+1)) - W_(t_i)).
 $
@@ -244,7 +244,7 @@ Se puede escribir una teoría existencia y unicidad para ecuaciones de la forma
 $
   dif X_t = a(t, X_t) dif t + b(t, X_t) dif W_t
 $<eq-SDE>
-bajo la condición de que $a$ y $b$ sean Lipschitzianas. Ver @Evans2013.
+bajo la condición de que $a$ y $b$ sean lipschitzianas. Ver @Evans2013.
 Algunas de ellas admiten resolución analítica.
 
 === Resolución analítica
@@ -301,7 +301,7 @@ De manera que si tomamos $xi_1, xi_2, dots.c$ muestras de una normal $N(0, 1)$ e
 $
   w_k = sqrt(Delta t) sum_(i=1)^k xi_k
 $
-forman una muestra de $W_(k Delta t)$. Notése que $sqrt(Delta t) xi_k ~ N(0,Delta t) ~ Delta W_t = W_(t + Delta t) - W_t$
+forman una muestra de $W_(k Delta t)$. Nótese que $sqrt(Delta t) xi_k ~ N(0,Delta t) ~ Delta W_t = W_(t + Delta t) - W_t$
 
 Existen múltiples métodos numéricos para la resolución de ecuaciones diferenciales de la forma @eq-SDE. Un método sencillo es el método de Euler-Maruyama, dado por
 $
@@ -650,4 +650,4 @@ $<eq-correlation-from-market-data>
 
 Podemos deducir estos valores de datos de mercado.
 
-Esta cantidad nos permite construir "carteras equilibridas" donde el riesgo de que un active baje se compensa con el que tiene negativamente correlado suba. Existe toda una cartera de optimización de carteras, en la que no entraremos.
+Esta cantidad nos permite construir "carteras equilibradas" en las que el riesgo de que un activo baje se compensa con la subida de otro negativamente correlacionado. Existe toda una teoría de optimización de carteras, en la que no entraremos.
