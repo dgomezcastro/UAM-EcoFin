@@ -164,14 +164,14 @@ Los dos ejemplo más relevantes en nuestro contexto son:
 
 === Bono de cupón cero
 
-La hipótesis de no-arbitraje hace que un derivado consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
-Vamos a utilizar este derivado como referencia para valorar el resto de productos, bajo la hipótesis de no arbitraje.
-El derivado más habitual de esta naturaleza
+La hipótesis de no-arbitraje hace que un producto consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
+Vamos a utilizar este producto como referencia para valorar el resto de productos, bajo la hipótesis de no arbitraje.
+El producto más habitual de esta naturaleza
 
-La expresión más habitual del contrato no es escribir así el derivado un contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
-Asumiremos que quién vende el contrato (típicamente un estado o una entidad grande) es «de fiar» y pagará con total garantía, de modo que este derivado no tiene riesgo.
-Este derivado es un derivado llamado «bono»
-Además, este derivado es un tipo muy sencillo de «bono», que hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
+La expresión más habitual del contrato no es escribir así el producto: un contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
+Asumiremos que quien vende el contrato (típicamente un estado o una entidad grande) es «de fiar» y pagará con total garantía, de modo que este producto no tiene riesgo.
+Este producto es lo que se llama un «bono»
+Además, este producto es un tipo muy sencillo de «bono», que no hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
 
 #definition[Bono de cupón cero bajo la hipótesis de no-arbitraje][
   Un bono de cupón cero con fecha de vencimiento $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ unidades monetarias (por ejemplo USD denotado por \$) pagada en la fecha $T$.
@@ -180,7 +180,7 @@ Además, este derivado es un tipo muy sencillo de «bono», que hace pagos inter
     p(t, T) := "precio a tiempo "t" de un bono de principal "K = 1" y maduración" T.
   $
   Asumimos que:
-  - Siempre podemos comprar a tiempo $t$ un derivado(que llamaremos _bono cupón cero_) a precio $p(t,T)$ que garantiza $1$\$ a tiempo $T$.
+  - Siempre podemos comprar a tiempo $t$ un producto (que llamaremos _bono cupón cero_) a precio $p(t,T)$ que garantiza $1$\$ a tiempo $T$.
   - Se puede comprar o vender sin coste
   - A vencimiento instantáneo el precio es el principal, es decir
   $

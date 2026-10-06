@@ -344,7 +344,7 @@ Empezamos recordando una definición
 El motivo por el que se pide la equivalencia es
 
 #lemma[Valor esperado de una oportunidad de arbitraje][
-  Si un derivado$H$ es una oportunidad de arbitraje y $QQ ~ PP$ entonces
+  Si un derivado $H$ es una oportunidad de arbitraje y $QQ ~ PP$ entonces
   $
     EE^QQ [H_T] > 0.
   $
@@ -439,7 +439,7 @@ $
 Enunciemos el siguiente resultado como teorema, porque nos será de gran utilidad más adelante:
 #theorem[Valoración por riesgo neutro][
   Consideremos el modelo @eq-unperiodo-2states y la condición de no arbitraje @eq-binomial-condicion-no-arbitraje.
-  Para todo derivado$H$ el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
+  Para todo derivado $H$ el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
   $
     H_0 = e^(-r T) EE^QQ [H_T].
   $
@@ -449,7 +449,7 @@ Para demostrar esto existe una cartera de cobertura, el precio de la cartera de 
 Veamos, por último, que este precio garantiza la ausencia de arbitraje.
 #proposition[
   Consideremos el modelo @eq-unperiodo-2states y la condición de no arbitraje @eq-binomial-condicion-no-arbitraje.
-  Para todo derivado$H$ si
+  Para todo derivado $H$ si
   $
     H_0 = e^(-r T) EE^QQ [H_T].
   $

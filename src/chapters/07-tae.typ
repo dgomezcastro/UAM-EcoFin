@@ -3,9 +3,9 @@
 = Tasa anual equivalente: TAE <sec-TAE>
 
 #quote(block: true, attribution: "Wikipedia")[
-  En finanzas, la Tasa Anual Equivalente o de Equivalencia (TAE) es una referencia orientativa del coste o rendimiento efectivo anual de un derivadofinanciero independientemente de su plazo. Su cálculo incluye la tasa de interés nominal, los gastos, comisiones, pagos e ingresos y permite comparar de una manera homogénea el rendimiento de productos financieros diferentes.
+  En finanzas, la Tasa Anual Equivalente o de Equivalencia (TAE) es una referencia orientativa del coste o rendimiento efectivo anual de un producto financiero independientemente de su plazo. Su cálculo incluye la tasa de interés nominal, los gastos, comisiones, pagos e ingresos y permite comparar de una manera homogénea el rendimiento de productos financieros diferentes.
 
-  El cálculo de la TAE es simplemente el cálculo del tipo de interés anual según el interés compuesto, donde los intereses obtenidos son remunerados al mismo tipo de interés (no son ignorados o trasladados en el tiempo). Además, el cálculo de la TAE debe incluir todos los pagos (incluidas comisiones u otros costes obligatorios como la contratación de seguros). Los pagos a incluir varían según el derivadobancario de que se trate y vienen establecidos en España por la Circular 5/12 del Banco de España.
+  El cálculo de la TAE es simplemente el cálculo del tipo de interés anual según el interés compuesto, donde los intereses obtenidos son remunerados al mismo tipo de interés (no son ignorados o trasladados en el tiempo). Además, el cálculo de la TAE debe incluir todos los pagos (incluidas comisiones u otros costes obligatorios como la contratación de seguros). Los pagos a incluir varían según el producto bancario de que se trate y vienen establecidos en España por la Circular 5/12 del Banco de España.
 
   Se calcula como el resultado de una fórmula matemática normalizada que tiene en cuenta el tipo de interés, las comisiones bancarias, la frecuencia de los pagos (mensuales, trimestrales, etc.) y otros gastos o ingresos.
 ]

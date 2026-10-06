@@ -320,8 +320,8 @@ Las carteras autofinanciadas son martigalas. Para evitar introducir ahora la noc
 ]
 
 
-#corollary[Valor de un derivadomediante medida de riesgo neutro][
-  En el modelo @eq-arbol, consideremos un derivado$H$.
+#corollary[Valor de un derivado mediante medida de riesgo neutro][
+  En el modelo @eq-arbol, consideremos un derivado $H$.
   Entonces el mercado ${S, B, H}$ es libre de arbitraje si y sólo si
   $
     H_0 = e^(-r T) EE^QQ [H_T].
