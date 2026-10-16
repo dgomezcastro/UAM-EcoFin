@@ -76,7 +76,7 @@ $
 $<eq-limite-paseo-aleatorio>
 Si $t = k / n$ y $s = ell/n$ entonces
 $
-  W_(t)^((n)) - W_(s)^((n)) = sqrt(n) sum_(ell = ell)^(k-1) Z_k approx N(0, t - s)
+  W_(t)^((n)) - W_(s)^((n)) = 1/sqrt(n) sum_(j = ell + 1)^(k) Z_j approx N(0, t - s)
 $
 Además, como los $Z_k$ son independientes, si $s < t <= k/n < ell/n <= r < u$ entonces
 $
