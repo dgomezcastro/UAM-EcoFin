@@ -61,7 +61,7 @@
   ),
 )
 
-#let (corollary-counter, corollary-box, proposition, show-corollary) = make-frame(
+#let (corollary-counter, corollary-box, corollary, show-corollary) = make-frame(
   "example",
   theorion-i18n-map.at("corollary"),
   counter: theorem-counter,
@@ -117,6 +117,8 @@
   // #set heading(numbering: (first, ..nums) => numbering("1.", ..nums))
   set figure(numbering: dependent-numbering("1.1"))
   show heading: reset-counter(counter(figure.where(kind: image)))
+  show heading: reset-counter(counter(figure.where(kind: table)))
+  show heading: reset-counter(counter(figure.where(kind: "code")))
 
   // 1. Setup equation numbering and remove the "Equation" prefix
   set math.equation(numbering: dependent-numbering("(1.1)"), supplement: none)

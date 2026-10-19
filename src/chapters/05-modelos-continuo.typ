@@ -4,7 +4,7 @@
 
 = Modelo en tiempo continuo: Black-Scholes
 
-== Paseos aleatorios y movimiento Browniano
+== Paseos aleatorios y movimiento browniano
 
 Consideremos el proceso aleatorio dado por la siguiente distribución de Bernoulli
 $
@@ -14,7 +14,7 @@ $
   )
 $
 Consideremos $Z_1, Z_2, ...$ independientes e idénticamente distribuidas.
-Llamamos _paseo aleatorio_ a la variable aleatoria
+Llamamos _paseo aleatorio_ al proceso
 $
   X_0 := 0, quad X_n := sum_(i=1)^n Z_i
 $
@@ -22,37 +22,37 @@ Dado que $Z$ es esencialmente un lanzamiento de moneda, podemos contar el númer
 $
   PP(X_n = 2k - n) = PP("B"(n,1/2) = k)= binom(n, k) (1/2)^n.
 $
-#exercise[Representar la función de masa del paseo aleatorio para diferentes valores de $n$. Comparar con una distribución normal. ¿Qué relación encuentras? Lee la entrada de Wikipedia sobre el tablero de Galton, y en particular mira el video:
+#exercise[Representar la función de masa del paseo aleatorio para diferentes valores de $n$. Comparar con una distribución normal. ¿Qué relación se observa? Leer la entrada de Wikipedia sobre el tablero de Galton y, en particular, ver el vídeo:
 
   https://en.wikipedia.org/wiki/Galton_board
 
 ]
 // TODO Añadir alguna figura. Hacer un pluto notebook.
 
-Recordamos el teorema central del límite
+Recordamos el teorema central del límite:
 #theorem[Teorema central del límite][
-  Sean $Z_1, Z_2, ...$ una sucesión de proceso aleatorios independientes e idénticamente distribuidos como una variable aleatoria $Z$,
+  Sean $Z_1, Z_2, ...$ una sucesión de variables aleatorias independientes e idénticamente distribuidos como una variable aleatoria $Z$,
   de media $mu_Z$ y varianza $sigma_Z^2$.
   Entonces, las medias muestrales dadas por
   $
     overline(Z)_n := 1/n sum_(k=1)^n Z_k
   $
-  convergence en distribución a una normal
+  convergen en distribución a una normal
   $
-    overline(Z)_n ->^d N(mu_Z, sigma_Z^2).
+    overline(Z)_n ->^d Normal(mu_Z, sigma_Z^2).
   $
 ]
 Equivalentemente, este teorema puede reescribirse como
 $
-  (overline(Z)_n - mu_Z)/(sigma_Z) ->^d N(0,1).
+  (overline(Z)_n - mu_Z)/(sigma_Z) ->^d Normal(0,1).
 $
 Escalando, también deducimos el comportamiento de las sumas
 $
-  (n overline(Z)_n - n mu_Z)/(sigma_Z sqrt(n)) ->^d Y ~ N(0,1) " cuando " n -> oo.
+  (n overline(Z)_n - n mu_Z)/(sigma_Z sqrt(n)) ->^d Y ~ Normal(0,1) " cuando " n -> oo.
 $
 Nótese que
 $
-  mu_Z := EE[Z] = 0, quad sigma_Z := sqrt(V(Z)) = EE[(Z-0)^2]^(1/2) = 1.
+  mu_Z := EE[Z] = 0, quad sigma_Z := sqrt(var(Z)) = EE[(Z-0)^2]^(1/2) = 1.
 $
 El teorema central del límite asegura que
 $
@@ -64,19 +64,19 @@ $
 $
 // Deducimos de los anterior que
 // $
-//   W_(n Delta t)^((n)) approx lambda_(n) sqrt(n) N(0,1).
+//   W_(n Delta t)^((n)) approx lambda_(n) sqrt(n) Normal(0,1).
 // $
 de modo que
 $
-  W_t^((n)) approx sqrt(t) N(0,1) ~ N(0, t)
+  W_t^((n)) approx sqrt(t) Normal(0,1) ~ Normal(0, t)
 $
 Utilizando el teorema central del límite, existe el siguiente límite en sentido de distribuciones
 $
-  W_t := lim_(Delta t -> 0) W^((n))_(t) .
+  W_t := lim_(n -> oo) W^((n))_(t) .
 $<eq-limite-paseo-aleatorio>
 Si $t = k / n$ y $s = ell/n$ entonces
 $
-  W_(t)^((n)) - W_(s)^((n)) = 1/sqrt(n) sum_(j = ell + 1)^(k) Z_j approx N(0, t - s)
+  W_(t)^((n)) - W_(s)^((n)) = 1/sqrt(n) sum_(j = ell + 1)^(k) Z_j approx Normal(0, t - s)
 $
 Además, como los $Z_k$ son independientes, si $s < t <= k/n < ell/n <= r < u$ entonces
 $
@@ -84,15 +84,14 @@ $
   " y "
   W_r^((n)) - W_u^((n))
 $
-son independientes
+son independientes.
 
-
-#definition[Movimiento Browniano][
+#definition[Movimiento browniano][
   Proceso continuo en tiempo con las propiedades
   - $W_0 = 0$
   - Si $t > s >= 0$ tenemos
   $
-    W_t - W_s ~ N(0,t-s)
+    W_t - W_s ~ Normal(0,t-s)
   $ <eq-browniano-incrementos-normales>
   - Si $0 < s < t < u < r$ entonces
   $
@@ -101,12 +100,12 @@ son independientes
 ]
 En algunos contextos se habla de _proceso de Wiener_, de donde surge la notación $W$.
 
-Hemos hecho la construcción de manera formal. Para una construcción analítica con funciones de Haar ver @Evans2013.
-Es interesante también la presentación hecha en @bjorkArbitrageTheoryContinuous2019, donde se justifica con más detalle el paso el límite $Delta t -> 0$.
+Hemos hecho la construcción de manera formal. Para una construcción analítica con funciones de Haar ver #cite(<Evans2013>, form: "prose").
+Es interesante también la presentación hecha en #cite(<bjorkArbitrageTheoryContinuous2019>, form: "prose"), donde se justifica con más detalle el paso al límite $Delta t -> 0$.
 
 La construcción que hemos hecho se puede justificar, y de hecho es un resultado famoso.
 #theorem[Teorema de Donsker][
-  El límite @eq-limite-paseo-aleatorio se da  en sentido de distribuciones, y $W_t$ es un movimiento Browniano.
+  El límite @eq-limite-paseo-aleatorio se da  en sentido de distribuciones, y $W_t$ es un movimiento browniano.
 ]
 
 Si consideramos un paseo aleatorio sesgado
@@ -121,24 +120,24 @@ Aplicando un razonamiento similar al anterior
 $
   1 / sqrt(n)sum_(k=1)^( floor(t n) ) xi_k ->^d mu_xi t + W_t
 $
-donde $W_t$ es un movimiento Browniano.
+donde $W_t$ es un movimiento browniano.
 
 #figure(
   image("../figures/random-walk-limit.pdf"),
-  caption: [Algunas muestras de paseos aleatorios re-escalados $h X_(h^2 t)$. Nótese que $W_t^((n))$ son constantes a trozos.],
+  caption: [Algunas muestras de paseos aleatorios reescalados $h X_(h^2 t)$. Nótese que $W_t^((n))$ son constantes a trozos.],
 )
 
 == Cálculo de Itô
 
 === Integral de Itô
-En tiempo descrito vamos a escribir incrementos de la forma
+En tiempo discreto vamos a escribir incrementos de la forma
 $
   X_(t + Delta t) - X_t = A_t Delta t + B_t (W_(t + Delta t) - W_t),
 $
 donde típicamente $A_t = a(t, X_t)$ y $B_t = b(t, X_t)$.
 Cuando $Delta t -> 0$ formalmente querríamos escribir algo de la forma
 $
-  d X_t = A_t dif t + B_t dif W_t.
+  dif X_t = A_t dif t + B_t dif W_t.
 $<eq-Itodifferential>
 La forma de justificar esta "fórmula" es en términos de formas diferenciales. De manera rigurosa, diremos que se cumple @eq-Itodifferential si se cumple para todo $t$ la fórmula integral
 $
@@ -152,18 +151,18 @@ Como $X_t : Omega -> RR$ y $(Omega, cal(F), PP)$ es un espacio de probabilidad, 
 $
   LL^2(0,T) = { (X_t)_t | integral_0^T X_t^2 dif t < oo}
 $
-Las funciones de este espacio pueden ser aproximar en $LL^2$ por funciones constantes a trozos.
+Las funciones de este espacio pueden aproximarse en $LL^2$ por funciones constantes a trozos.
 
-Construimos ahora la integral respecto del movimiento Browniano.
-Recordamos que si $X_t$ es constante a trozos $(t_i, t_(i+1))$ donde $t_N = T$, entonces sabemos que
+Construimos ahora la integral respecto del movimiento browniano.
+Recordamos que si $X_t$ es constante a trozos en $(t_i, t_(i+1))$ donde $t_N = T$, entonces sabemos que
 $
   integral_0^T A_s dif s & = sum_(i=0)^N A_(t_i) (t_(i+1) - t_i).
 $
 Definimos la integral de Itô
 $
-  integral_0^T A_s dif W_t & := sum_(i=0)^N A_(t_i) (W_(t_(i+1)) - W_(t_i)).
+  integral_0^T A_s dif W_s & := sum_(i=0)^N A_(t_i) (W_(t_(i+1)) - W_(t_i)).
 $
-Y esta construcción puede extenderse por continuidad a todo $L^2(0,T)$.
+Y esta construcción puede extenderse por continuidad a todo $LL^2(0,T)$.
 
 #exercise[][
   Sean $a,b in RR$ y $G, H in LL^2(0,T)$. Demostrar que
@@ -174,9 +173,9 @@ Y esta construcción puede extenderse por continuidad a todo $L^2(0,T)$.
 
 La elección del punto $A_(t_i)$ en la suma de Riemann es completamente intencional. También se puede construir la integral de Stratonovich
 $
-  integral_0^T A_s compose dif W_t & := sum_(i=0)^N (A_(t_(i+1)) + A_(t_i))/2 (W_(t_(i+1)) - W_(t_i)).
+  integral_0^T A_s compose dif W_s & := sum_(i=0)^N (A_(t_(i+1)) + A_(t_i))/2 (W_(t_(i+1)) - W_(t_i)).
 $
-Veremos que son distintas
+Veremos que son distintas.
 
 === El cuadrado del ruido
 
@@ -196,9 +195,9 @@ De esta forma, obtenemos que asintóticamente $(W_(t + Delta t) - W_(t))^2 appro
 #exercise[][
   Sean $a,b in RR$ y $G, H in LL^2(0,T)$. Demostrar rigurosamente que
 
-  + $EE [(integral_0^T G_t d W_t)^2] = EE[integral_0^T G_t^2 dif s]$
+  + $EE [(integral_0^T G_t dif W_t)^2] = EE[integral_0^T G_t^2 dif t]$
 
-  + $EE[integral_0^T G_t dif W_t integral_0^T H_t dif W_t] = EE[integral_0^T G_t H_t dif W_t]$
+  + $EE[integral_0^T G_t dif W_t integral_0^T H_t dif W_t] = EE[integral_0^T G_t H_t dif t]$
 
   + $integral_0^T W_t dif W_t = W_T^2 / 2 - T/2$
 
@@ -206,7 +205,7 @@ De esta forma, obtenemos que asintóticamente $(W_(t + Delta t) - W_(t))^2 appro
 ]
 === Regla de la cadena
 
-Sea $X_t$ solución de @eq-Itodifferential y $u : [0,T] times R -> R$ regular. Queremos ver qué ecuación satisface $Y_t = u(t, X_t)$. Usando desarrollos de Taylor escribimos
+Sea $X_t$ solución de @eq-Itodifferential y $u : [0,T] times RR -> RR$ regular. Queremos ver qué ecuación satisface $Y_t = u(t, X_t)$. Usando desarrollos de Taylor escribimos
 $
   Y_(t + Delta t) &= Y_t + (partial u)/(partial t)(t, X_t) (Delta t) + (partial u)/(partial x) (X_(t + Delta t) - X_t) + 1/2 (partial^2 u)/(partial x^2) (X_(t + Delta t) - X_t)^2 + O((Delta t)^2)
 $
@@ -219,11 +218,11 @@ De esta forma calculamos
 $
   (X_(t + Delta t) - X_t)^2 & approx A_t^2 (Delta t)^2 + 2 A_t B_t (Delta t) (Delta W_t) + B_t^2 (Delta W_t)^2 \
                             & = B_t^2 (Delta W_t)^2 + O((Delta t)^(3/2)) \
-                            & approx B_t^2 (Delta t)^2 + + O((Delta t)^(3/2)).
+                            & approx B_t^2 Delta t + O((Delta t)^(3/2)).
 $
 Así, deducimos que
 $
-  Y_(t + Delta t) - Y_t &approx ((partial u)/(partial t) + A_t (partial u)/(partial x) + 1/2 B_t (partial^2 u)/(partial x^2) )(Delta t) + B_t (partial u)/(partial x) (Delta W_t) + O((Delta t)^(3/2))
+  Y_(t + Delta t) - Y_t &approx ((partial u)/(partial t) + A_t (partial u)/(partial x) + 1/2 B_t^2 (partial^2 u)/(partial x^2) )(Delta t) + B_t (partial u)/(partial x) (Delta W_t) + O((Delta t)^(3/2))
 $
 
 Con un poco de trabajo, de manera similar se prueba
@@ -231,30 +230,30 @@ Con un poco de trabajo, de manera similar se prueba
   Sea $X_t$ solución de @eq-Itodifferential
   y sea $u$ dos veces diferenciable en $x$ y una vez en $t$ con derivada continua. Sea $Y_t = u(t, X_t)$ entonces
   $
-    d Y_t = ((partial u)/(partial t) + A_t (partial u)/(partial x) + B_t^2 /2 (partial^2 u)/(partial x^2) ) dif t + B (partial u)/(partial x) dif W_t
+    dif Y_t = ((partial u)/(partial t) + A_t (partial u)/(partial x) + B_t^2 /2 (partial^2 u)/(partial x^2) ) dif t + B_t (partial u)/(partial x) dif W_t.
   $
 ]<thm-Itochainrule>
 
-La demostración rigurosa de este resultado y todos los detalles de esta construcción pueden verse in @Evans2013.
+La demostración rigurosa de este resultado y todos los detalles de esta construcción pueden verse en #cite(<Evans2013>, form: "prose").
 
 == Ecuaciones diferenciales estocásticas
 
-Ahora es el momento de utilizar la regla de la cadena para resolver algunas ecuaciones diferenciales estocásticas de la forma
-Se puede escribir una teoría existencia y unicidad para ecuaciones de la forma
+Ahora es el momento de utilizar la regla de la cadena para resolver algunas ecuaciones diferenciales estocásticas.
+Se puede escribir una teoría de existencia y unicidad para ecuaciones de la forma
 $
   dif X_t = a(t, X_t) dif t + b(t, X_t) dif W_t
 $<eq-SDE>
-bajo la condición de que $a$ y $b$ sean lipschitzianas. Ver @Evans2013.
+bajo la condición de que $a$ y $b$ sean lipschitzianas. Ver #cite(<Evans2013>, form: "prose").
 Algunas de ellas admiten resolución analítica.
 
 === Resolución analítica
 
 #exercise(breakable: true)[Ecuación sin _drift_][
-  Consider el problema de valor inicial
+  Considerar el problema de valor inicial
   $
     dif X_t = g(t) X_t dif W_t "para" t>0, quad X_0 = 1.
   $
-  Se pide
+  Se pide:
 
   + Utilizar cálculo de Itô para escribir la ecuación de $log X_t$.
 
@@ -264,12 +263,12 @@ Algunas de ellas admiten resolución analítica.
   $
 ]
 
-#exercise(breakable: true)[Movimiento Browniano geométrico][
-  Se llama movimiento Browniano geométrico a la solución de
+#exercise(breakable: true)[Movimiento browniano geométrico][
+  Se llama movimiento browniano geométrico a la solución de
   $
-    dif S_t = S_t (mu dif t + sigma d W_t).
+    dif S_t = S_t (mu dif t + sigma dif W_t).
   $<eq-BlackScholes-SDE>
-  Se pide
+  Se pide:
 
   + Utilizar la regla de la cadena de Itô para demostrar que
     $
@@ -278,15 +277,15 @@ Algunas de ellas admiten resolución analítica.
 
   + Integrar la ecuación de $log S_t$ para deducir que
     $
-      S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t).
+      S_t = S_0 exp((mu - sigma^2/2)t + sigma W_t)
     $<eq-BlackScholes-St-P>
     es la única solución de @eq-BlackScholes-SDE.
 ]<ex-brownianogeometrico>
 
-#exercise[Puente Browniano][
-  Un puente Browniano es un ejemplo de proceso estocástico con los valores $B_0 = B_1 = 0$. Se puede obtener resolviendo la ecuación
+#exercise[Puente browniano][
+  Un puente browniano es un ejemplo de proceso estocástico con los valores $B_0 = B_1 = 0$. Se puede obtener resolviendo la ecuación
   $
-    dif B_t = - B / (1 -t) dif t + dif W_t, quad B_0 = 0.
+    dif B_t = - B_t / (1 -t) dif t + dif W_t, quad B_0 = 0.
   $
   Usar la regla de la cadena de Itô para deducir que
   $
@@ -297,23 +296,22 @@ Algunas de ellas admiten resolución analítica.
 === Resolución numérica
 
 Los paseos aleatorios pueden "representarse" de manera "rigurosa", dado que los incrementos son normales.
-De manera que si tomamos $xi_1, xi_2, dots.c$ muestras de una normal $N(0, 1)$ entonces
+De manera que si tomamos $xi_1, xi_2, dots.c$ muestras de una normal $Normal(0, 1)$ entonces
 $
-  w_k = sqrt(Delta t) sum_(i=1)^k xi_k
+  w_k = sqrt(Delta t) sum_(i=1)^k xi_i
 $
-forman una muestra de $W_(k Delta t)$. Nótese que $sqrt(Delta t) xi_k ~ N(0,Delta t) ~ Delta W_t = W_(t + Delta t) - W_t$
+forman una muestra de $W_(k Delta t)$. Nótese que $sqrt(Delta t) xi_k ~ Normal(0,Delta t) ~ Delta W_t = W_(t + Delta t) - W_t$
 
 Existen múltiples métodos numéricos para la resolución de ecuaciones diferenciales de la forma @eq-SDE. Un método sencillo es el método de Euler-Maruyama, dado por
 $
   X_(t + Delta t) = X_t + a(t, X_t) Delta t + b(t, X_t) xi_t sqrt(Delta t)
 $
-donde $xi_t$ son variables i.i.d como $N(0, 1)$.
+donde $xi_t$ son variables i.i.d. como $Normal(0, 1)$.
 
 == Límite de árboles binomiales
 
 === Condiciones suficientes de convergencia
-Vamos a empezar esta sección con el siguiente resultado
-$$
+Vamos a empezar esta sección con el siguiente resultado:
 #theorem(breakable: true)[Límite de árboles binomiales cuando $Delta t -> 0$][
   Sea $S^((Delta t))$ el proceso construido por el árbol binomial @eq-arbol, añadiendo la dependencia en tiempo como $(Delta t)$.
   Definimos la interpolación constante a trozos
@@ -326,13 +324,13 @@ $$
     quad "y" quad
     log d^((Delta t)) = nu^((Delta t)) - sigma^((Delta t))
   $
-  de tal modo que existen los límite
+  de tal modo que existen los límites
   $
     nu := lim_(Delta t -> 0) nu^((Delta t)) / (Delta t) quad "y" quad sigma := lim_(Delta t -> 0) sigma^((Delta t)) / sqrt(Delta t).
   $<eq-BlackScholes-condicionud2>
   Entonces se tiene que
   $S_t^((Delta t)) ->^d S_t$
-  donde $S_t$ viene dada por @eq-BlackScholes-St-P y $W_t$ es un movimiento Browniano
+  donde $S_t$ viene dada por @eq-BlackScholes-St-P y $W_t$ es un movimiento browniano.
 ]
 #proof[
   Para $t in (Delta t) NN$ tenemos que
@@ -345,18 +343,18 @@ $$
   $
   Aplicando las propiedades del logaritmo deducimos que
   $
-    log S^((Delta t))_(n Delta t) = ln S_0 + sum_(k=1)^(n) log R^((Delta t))_(n Delta t)
+    log S^((Delta t))_(n Delta t) = log S_0 + sum_(k=1)^(n) log R^((Delta t))_(k Delta t)
   $
-  Descomponemos $log R^((Delta t))_(n Delta t)$ en una parte determinista y un paseo aleatorio $xi_k$ sesgado
+  Descomponemos $log R^((Delta t))_(k Delta t)$ en una parte determinista y un paseo aleatorio $xi_k$ sesgado
   $
-    log R^((Delta t))_(n Delta t) = nu^((Delta t)) + sigma^((Delta t)) xi_k .
+    log R^((Delta t))_(k Delta t) = nu^((Delta t)) + sigma^((Delta t)) xi_k .
   $<eq-BlackScholes-condicionud1>
   Así
   $
     log S^((Delta t))_(n Delta t) & = log S_0 + n nu^((Delta t)) + sigma^((Delta t)) sum_(k=1)^(n)xi_k \
                                   & ->^d log S_0 + underbrace((nu + 2p-1), kappa) t + sigma W_t,
   $
-  Es decir que $S_t$ es log-normal. No sólo eso, si no que para cualquier $Delta t$
+  Es decir que $S_t$ es log-normal. No solo eso, sino que para cualquier $Delta t$
   $
     log S_(t + Delta t) - log S_t = kappa Delta t + sigma (W_(t+Delta t) - W_t).
   $<eq-BlackScholes-incremento-log>
@@ -369,15 +367,15 @@ $$
 
 === Los modelos Cox-Ross-Rubinstein y Jarrow-Rudd
 
-Hay dos aproximaciones clásicas para obtener @eq-BlackScholes-condicionud1 y @eq-BlackScholes-condicionud2. La más sencilla consiste es $nu_(Delta t) = 0$ y $sigma_(Delta t) = sigma sqrt(Delta t)$, que corresponde con
+Hay dos aproximaciones clásicas para obtener @eq-BlackScholes-condicionud1 y @eq-BlackScholes-condicionud2. La más sencilla consiste en $nu^((Delta t)) = 0$ y $sigma^((Delta t)) = sigma sqrt(Delta t)$, que corresponde con
 $
   u = e^(sigma sqrt(Delta t)) " y " d := e^(-sigma sqrt(Delta t)).
 $
 Otra posibilidad, propuesta por Jarrow-Rudd es tomar
 $
-  u = e^((r - sigma^2/2) t + sigma sqrt(Delta t))
+  u = e^((r - sigma^2/2) Delta t + sigma sqrt(Delta t))
   quad "y" quad
-  d = e^((r - sigma^2/2) t - sigma sqrt(Delta t))
+  d = e^((r - sigma^2/2) Delta t - sigma sqrt(Delta t))
 $
 Cuando $p = 1/2$ esta fórmula lleva a la muy útil representación @eq-BlackScholes-St-Q, en la que no entraremos por ahora.
 
@@ -385,9 +383,9 @@ Cuando $p = 1/2$ esta fórmula lleva a la muy útil representación @eq-BlackSch
 
 Hasta ahora, nuestros modelos han sido puramente teóricos. Pero ahora podemos verificar si @eq-BlackScholes-St-P tiene sentido comprobando si @eq-BlackScholes-incremento-log se cumple.
 Vamos a tomar datos _reales_ de mercado para el valor de un activo, y a mirar si los incrementos del log-precio parecen normalmente distribuidos.
-Para esto, vamos a usar `julia`.
-Los activos que mejor representan este compartimento son los índices, como el S&P500 (`SPX` que include las 500 "principales" empresas americanas) o el Euro Stoxx 50 (`SX5E`).
-Estudiar con el siguiente código de `julia`, cuyo resultado es @fig-BlackScholes-lognormality-of-returns:
+Para esto, vamos a usar Julia.
+Los activos que mejor representan este comportamiento son los índices, como el S&P500 (`SPX`, que incluye las 500 "principales" empresas americanas) o el Euro Stoxx 50 (`SX5E`).
+Estudiar con el siguiente código de Julia, cuyo resultado es la @fig-BlackScholes-lognormality-of-returns:
 // #code-block(
 #show: codly-init.with()
 #codly(languages: codly-languages)
@@ -402,7 +400,7 @@ Vamos a demostrar la siguiente fórmula de valoración de varias formas distinta
   $
     C_0 = S_0 op("N")(d_1) - K e^(-r T) op("N") (d_2)
   $<eq-BlackScholes-call>
-  donde $"N"$ es la función de distribución de una $N(0,1)$
+  donde $"N"$ es la función de distribución de una $Normal(0,1)$
   $
     op("N")(x) := 1 / sqrt(2 pi) integral_(-oo)^x e^(-z^2/2) dif z
   $
@@ -416,7 +414,7 @@ Nótese que @eq-BlackScholes-call no involucra a $mu$.
 
 #exercise[Precio de una _call_ europea a través de la medida libre de riesgo][
   Sea $X_T := log S_T / S_0 = (r - sigma^2/2)T + sigma W_T^QQ$
-  + Comprobar que $X_T$ que se distrubuye respecto de $QQ$ es una normal $op("N")(mu_T, sigma_T)$ donde $mu_T = (r - sigma^2/2)T$ y $sigma_T = sigma sqrt(T)$.
+  + Comprobar que $X_T$ se distribuye respecto de $QQ$ como una normal $Normal(mu_T, sigma_T^2)$ donde $mu_T = (r - sigma^2/2)T$ y $sigma_T = sigma sqrt(T)$.
   + Deducir que
     $
       C_0
@@ -427,29 +425,28 @@ Nótese que @eq-BlackScholes-call no involucra a $mu$.
     $
     donde $phi(x; mu, sigma) = 1/sqrt(2 pi sigma^2) e^(-1/2 ((x-mu)/sigma)^2)$ es la función de densidad de una normal.
 
-  + Sea $y = log K / S_0$. Descomponer esta integral en $[-oo,y]$ e $[y,+oo]$.
+  + Sea $y = log K / S_0$. Descomponer esta integral en $(-oo,y]$ e $[y,+oo)$.
 
   + Reordenar términos para deducir @eq-BlackScholes-call.
 ]<ex-blackscholes-call-riskfreemeasure>
 
 #exercise[Precio de una _call_ europea como límite del modelo binomial][
-  Vamos a deducir @eq-BlackScholes-call como límite de @eq-arbol-call siguiendo @hsiaBINOMIALOPTIONPRICING1983.
+  Vamos a deducir @eq-BlackScholes-call como límite de @eq-arbol-call siguiendo a #cite(<hsiaBINOMIALOPTIONPRICING1983>, form: "prose").
 
   + Sea $J ~ "Binomial"(N,p)$. Observar que
     $
       op("B")(a; N, p) = PP(J >= a) = PP((J - mu_J) / sigma_J >= (a - mu_J)/sigma_J)
     $
-    Nótese que $mu_J = p N$ y $sigma_J = N p (1-p)$.
+    Nótese que $mu_J = p N$ y $sigma_J = sqrt(N p (1-p))$.
 
   + Tomar $u=e^(sigma sqrt(Delta t))$ y $d=e^(-sigma sqrt(Delta t))$. Usar el teorema central del límite para deducir que si $a^((N)), q^((N)), rho^((N))$ vienen dadas por el @thm-arbol-call entonces
   $
-    op("B")(a^((N)); N, q^((N))) -> N(d_1) quad "y" quad op("B")(a^((N)); N, rho^((N))) -> N(d_2)
+    op("B")(a^((N)); N, rho^((N))) -> op("N")(d_1) quad "y" quad op("B")(a^((N)); N, q^((N))) -> op("N")(d_2).
   $
   //#link("https://gregorygundersen.com/blog/2023/06/03/hsia-proof-black-scholes/")
 ]
 
-Otra opción para deducir esta fórmula consiste en
-que permite escribir el precio de una opción _call_ europea a partir de una Ecuación en Derivadas Parciales (EDP).
+Otra opción para deducir esta fórmula consiste en escribir el precio de una opción _call_ europea a partir de una Ecuación en Derivadas Parciales (EDP).
 
 #exercise(breakable: true)[Precio de una _call_ europea mediante EDPs][
   Consideremos una cartera autofinanciada de la forma $C_t = theta_t^((1)) S_t + theta_t^((2)) B_t$. Supongamos además que su precio viene descrito como
@@ -457,7 +454,7 @@ que permite escribir el precio de una opción _call_ europea a partir de una Ecu
     C_t = u(t, S_t).
   $
 
-  + Para al límite en @eq:arbol-autofinanciacion para deducir que la condición de auto-financiación se escribe
+  + Pasar al límite en @eq:arbol-autofinanciacion para deducir que la condición de autofinanciación se escribe
     $
       dif C_t = theta_t^((1)) dif S_t + theta_t^((2)) dif B_t.
     $
@@ -465,13 +462,13 @@ que permite escribir el precio de una opción _call_ europea a partir de una Ecu
   + Usar la regla de la cadena de Itô para deducir que si $u$ es la solución de la famosa ecuación de Black-Scholes
     $
       cases(
-        display((partial u)/(partial t) + 1/2 sigma^2 s^2 (partial u)/(partial s^2) + r s (partial u)/(partial s)- r u = 0)
-        & "for " t in [0,T] "and" s > 0,
-        u(T,s) = e^(-r T)(s - K)_+
+        display((partial u)/(partial t) + 1/2 sigma^2 s^2 (partial^2 u)/(partial s^2) + r s (partial u)/(partial s)- r u = 0)
+        & "para " t in [0,T] "y" s > 0,
+        u(T,s) = (s - K)_+
       )
     $<eq-BlackScholes-PDE>
 
-  + Buscar una cambio de variable que permita escribir $u$ en función de la solución de la ecuación de calor con dato inicial, y utilizar la solución fundamental de la ecuación del calor para resolver la ecuación para obtener una expresión integral.
+  + Buscar un cambio de variable que permita escribir $u$ en función de la solución de la ecuación de calor con dato inicial, y utilizar la solución fundamental de la ecuación del calor para resolver la ecuación para obtener una expresión integral.
 
   + Comparar con el @ex-blackscholes-call-riskfreemeasure.
 ]
@@ -491,9 +488,9 @@ En esta función $S_0, K, r, T$ son conocidos a la hora de hacer el contrato, pe
     (0,oo) & ->  && (0,oo) \
      sigma & |-> && "Call"_"BS" (sigma,S_0, K,r,T)
   $
-  es estrictamente decreciente y, además,
-  $ partial / (partial sigma) "Call"_"BS" (sigma,S_0, K,r,T) = S_0 sqrt(T) op("N")'(d_1) < 0. $
-  Esta valor es habitualmente conocido como _vega_ (que no es una letra griega) y se denota $nu$ (nu sí es una letra griega). En algunos contextos se utiliza el nombre kappa: $kappa$.
+  es estrictamente creciente y, además,
+  $ partial / (partial sigma) "Call"_"BS" (sigma,S_0, K,r,T) = S_0 sqrt(T) op("N")'(d_1) > 0. $
+  Este valor es habitualmente conocido como _vega_ (que no es una letra griega) y se denota $nu$ (nu sí es una letra griega). En algunos contextos se utiliza el nombre kappa: $kappa$.
 ]
 
 Además, es fácil ver que
@@ -533,14 +530,14 @@ Es posible acceder a datos de mercado de estos valores, por ejemplo a través de
 #raw(read("../scripts/yfinance-option.jl"), lang: "julia", block: true)
 Aunque los datos de mayor "calidad" se obtienen de proveedores de pago.
 
-Nótese en particular que estos datos hablan de bid y ask. Volvemos sobre la idea de que los market-makers no venden y comprar las opciones al mismo precio, si no que se quedan una diferencia como beneficio.
+Nótese en particular que estos datos hablan de bid y ask. Volvemos sobre la idea de que los _market makers_ no compran y venden las opciones al mismo precio, sino que se quedan una diferencia como beneficio.
 
 Si tomamos, para un vencimiento fijo $T$, los diferentes precios reales de opciones call, encontraremos una curva, que no es muy descriptiva.
 En la práctica, lo que se estudia es la curva de volatilidades implícitas. Ver @fig-BlackScholes-smiles.
 #figure(
   placement: auto,
   image("../figures/gatheral-smiles.pdf"),
-  caption: [Tomado de @gatheralVolatilitySurfacePractitioners2006],
+  caption: [Sonrisas de volatilidad implícita del SPX para distintos vencimientos. Tomada de #cite(<gatheralVolatilitySurfacePractitioners2006>, form: "prose")],
 )<fig-BlackScholes-smiles>
 
 Del mismo modo, si tomamos precios reales para diferentes $K$ y $T$, obtenemos una superficie de precios, que no es muy descriptiva.
@@ -549,10 +546,10 @@ En la práctica, lo que se estudia es la superficie de volatilidad implícita, q
 #figure(
   placement: auto,
   image("../figures/gatheral-surface.pdf"),
-  caption: [Tomado de @gatheralVolatilitySurfacePractitioners2006],
+  caption: [Superficie de volatilidad implícita del SPX. Tomada de #cite(<gatheralVolatilitySurfacePractitioners2006>, form: "prose")],
 )<fig-BlackScholes-surface>
 
-== Medida libre de riesgo
+== Medida libre de riesgo en tiempo continuo
 
 Siguiendo la idea del caso discreto, busquemos escribir para algún valor $nu$
 $
@@ -575,16 +572,16 @@ $
 $
 En términos diferenciales se tiene
 $
-  dif W_t^QQ = (mu - r)/sigma + dif W_t
+  dif W_t^QQ = (mu - r)/sigma dif t + dif W_t.
 $
 
 La existencia de $QQ$ con esta propiedad se sigue del teorema de Girsanov, que no estudiaremos en este curso.
 
 #theorem[Existencia de $QQ$ en el mercado de Black-Scholes][
-  Existe una medida $QQ$ tal que @eq-BlackScholes-St-Q.
+  Existe una medida $QQ$ tal que se cumple @eq-BlackScholes-St-Q.
 ]
 
-De nuevo, en medida libre de riesgo $QQ$, la ecuación sólo depende de $sigma$ y $r$.
+De nuevo, bajo la medida libre de riesgo $QQ$, la ecuación solo depende de $sigma$ y $r$.
 Al igual que para árboles, de la versión continua de @eq-arbol-martingala se deduce que
 $
   C_0 = e^(-r T) EE^QQ [(S_T - K)_+].
@@ -595,15 +592,15 @@ No lo demostraremos rigurosamente.
   + En el caso continuo se dice que $X_t$ es una martingala respecto a $PP$ si
     para todo $T>=t$ se tiene
     $
-      X_t = EE^PP [X_T | cal(F)_t]
+      X_t = EE^PP [X_T | cal(F)_t].
     $
 
-  + Si $X_t$ es solución de @eq-Itodifferential donde $W_t$ es un movimiento  Browniano respecto a $PP$
-    entonces $X$ es una martingala respecto a $PP$ si y sólo si $A_t = 0$.
+  + Si $X_t$ es solución de @eq-Itodifferential donde $W_t$ es un movimiento browniano respecto a $PP$
+    entonces $X$ es una martingala respecto a $PP$ si y solo si $A_t = 0$.
 
   + Usando cálculo de Itô, @eq-BlackScholes-St-Q es equivalente a que
     $
-      d tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
+      dif tilde(S)_t = sigma tilde(S)_t dif W_t^QQ.
     $<eq-BlackScholes-SDEriskfree>
     Es decir que $QQ$ es una medida que hace a $tilde(S)_t$ una $QQ$-martingala. Por eso en ocasiones se la llama _medida martingala_.
 
@@ -613,27 +610,27 @@ No lo demostraremos rigurosamente.
 
 
 
-== Sistemas de activos. Correlación.
+== Sistemas de activos. Correlación
 
 Al igual que en el mercado discreto en tiempo, podemos tener sistemas de activos en cuyo caso el límite satisface ecuaciones
 $
-  d S_t^((i)) = mu^((i)) S_t^((i)) dif t + sigma^((i)) S_t^((i)) dif W_t^((i))
+  dif S_t^((i)) = mu^((i)) S_t^((i)) dif t + sigma^((i)) S_t^((i)) dif W_t^((i))
 $
 cuya solución es
 $
   log S_t^((i)) = (mu^((i)) - (sigma^((i)))^2/2) t + sigma^((i)) W_t^((i))
 $
-Dado que los activos son "independientes", estamos ante un movimiento Browniano multi-dimensional $W_t = (W_t^((i)))$. Podemos pensar en medir
+Dado que los activos son "independientes", estamos ante un movimiento browniano multidimensional $W_t = (W_t^((i)))$. Podemos pensar en medir
 $
   corr(W_(t + h)^((i)) - W_t^((i)), W_(t+h)^((j)) - W_t^((j)))
-  &= (EE[(W_(t + h)^((i)) - W_t^((i)))( W_(t+h)^((j)) - W_t^((j)))])/(EE[W_(t+h)^((i)) - W_t^((i))] EE[W_(t+h)^((j)) - W_t^((j))])
+  &= (EE[(W_(t + h)^((i)) - W_t^((i)))( W_(t+h)^((j)) - W_t^((j)))])/sqrt(var(W_(t+h)^((i)) - W_t^((i))) var(W_(t+h)^((j)) - W_t^((j))))
   \
   &= (EE[(W_(t + h)^((i)) - W_t^((i)))( W_(t+h)^((j)) - W_t^((j)))])/(h).
 $
 Si seguimos una construcción como la de Cox-Ross-Rubinstein, llegaremos a que esta cantidad es constante en $h$, y la podemos llamar $rho^((i j))$.
-Para un Browniano multi-dimensional asumimos que este valor es constante, y en términos de cálculo de Itô se denota
+Para un browniano multidimensional asumimos que este valor es constante, y en términos de cálculo de Itô se denota
 $
-  dif W_t^((i)) dot.c dif W_t^((j)) := rho_(i j).
+  dif W_t^((i)) dot.c dif W_t^((j)) := rho^((i j)).
 $
 Dado que
 $
@@ -643,7 +640,7 @@ La primera parte nos da el valor esperado. Así, deducimos que
 $
   cov(log S_(t + h)^((i)) - log S_t^((i)), log S_(t + h)^((j)) - log S_t^((j))) = sigma^((i)) sigma^((j)) rho^((i j)) h.
 $
-Dado que $sigma^((i)) sqrt(h) = var(log S_(t +h)^((i)) - log S_(t)^((i)))$ obtenemos
+Dado que $sigma^((i)) sqrt(h) = sqrt(var(log S_(t +h)^((i)) - log S_(t)^((i))))$ obtenemos
 $
   rho^((i j)) = corr(log S_(t + h)^((i)) - log S_t^((i)), log S_(t + h)^((j)) - log S_t^((j))) .
 $<eq-correlation-from-market-data>

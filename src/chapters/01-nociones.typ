@@ -8,17 +8,17 @@
 // Rendimientos, tasa interna de rendimientos. Estructura temporal de tipos de interés, la curva cupón cero. Algunos
 // cálculos actuariales.
 
-== Tipos de interés y el bono cupón-cero
+== Tipos de interés y el bono cupón cero
 
 Un tipo de interés en una situación particular es la cantidad que el prestatario promete pagar al prestamista.
-Esto incluye tipos hipotecarios, depositarios, y otros.
+Esto incluye tipos hipotecarios, de depósito y otros.
 El tipo de interés aplicable depende del riesgo del crédito, es decir el riesgo de que el crédito no sea devuelto.
 
 === Intuición
 
 Pensemos, por ejemplo, en una inversión hecha el 1 de enero de 2025 y que devuelve el dinero el 1 de enero de 2026.
 
-En su presentación más sencilla, el tipo de interés $r$ (expresado en %), es el número tal que
+En su presentación más sencilla, el tipo de interés $r$ (expresado en %) es el número tal que
 $
   "dinero recibido \n el 1 de enero de 2026" = (1 + r) times "dinero invertido \n el 1 de enero de 2025."
 $
@@ -28,13 +28,13 @@ $
             & = r times "dinero invertido"
 $
 
-Si tomamos todo el dinero que sale de una inversión, y lo volvemos a invertir por el mismo plazo, al mismo tiempo entonces obtendremos
+Si tomamos todo el dinero que sale de una inversión, y lo volvemos a invertir por el mismo plazo y al mismo tipo, entonces obtendremos
 $
   "dinero recibido \n el 1 de enero de 2027" = (1 + r)^2 times "dinero invertido \n el 1 de enero de 2025".
 $
 
 #exercise[
-  Supongamos que si invertimos 1€ en el índice S&P500 obtenemos una rentabilidad del 7% anual en promedio. Si invertimos 500€ hoy y cada año re-invertimos el principal y los intereses acumulados ¿cuánto dinero tendremos en 5, 10, 15 años?
+  Supongamos que si invertimos 1€ en el índice S&P500 obtenemos una rentabilidad del 7% anual en promedio. Si invertimos 500€ hoy y cada año reinvertimos el principal y los intereses acumulados, ¿cuánto dinero tendremos en 5, 10, 15 años?
 ]<ex-interes-compuesto>
 
 
@@ -47,31 +47,31 @@ $
 $
 Habitualmente se habla de Tipo de Interés Nominal cuando $r = "TIN" / N$.
 
-Esta es la idea detrás del TAE, que es un asunto más profundo del que hablaremos más adelante.
+Esta es la idea detrás de la TAE, que es un asunto más profundo del que hablaremos más adelante.
 
 #exercise[
   El 1 de enero de 2007, invirtió 1000€ en su libreta. El 1 de enero de 2008 el banco le informa que ha recibido 40€ de intereses a lo largo del año.
-  - ¿Cuales son los intereses brutos asociados?
+  - ¿Cuáles son los intereses brutos asociados?
   - ¿Qué intereses recibirá a lo largo de 2008?
   - ¿Cuánto habría recibido de haber cerrado su cuenta el 1 de julio?
 ]
 
 === Midiendo tipos de interés. Interés compuesto
 
-Anunciar el tipo de interés como un 10% anual parece claro y nada ambiguo. Sin embargo, depende de cómo se mida. El habitual permitir dividir el tipo de composición.
-Si el tipo de interés con $r = 10%$ se mide con composición anual (_annual compunding_) entonces $100€$ crecen como
+Anunciar el tipo de interés como un 10% anual parece claro y nada ambiguo. Sin embargo, depende de cómo se mida. Lo habitual es permitir distintas frecuencias de composición.
+Si el tipo de interés con $r = 10%$ se mide con composición anual (_annual compounding_) entonces $100€$ crecen como
 $
   100€ times 1.1 = 110€.
 $
-Sin embargo, si hablamos de composición bi-anual (_semi-annual compounding_) entonces aplicamos $5%$ cada 6 meses. Tras $6$ meses tendremos $100€ times 1.05 = 110.25€$ y acabado el año
+Sin embargo, si hablamos de composición semestral (_semi-annual compounding_) entonces aplicamos $5%$ cada 6 meses. Tras $6$ meses tendremos $100€ times 1.05 = 105€$ y acabado el año
 $
-  100€ times 1.05 times 1.05€ = 110.25€
+  100€ times 1.05 times 1.05 = 110.25€.
 $
 En general si lo hacemos en $n$ periodos tendremos
 $
   100€ times (1 + 0.1/n)^n.
 $
-Vemos más ejemplos en @table-interes-compuesto.
+Vemos más ejemplos en la @table-interes-compuesto.
 // #table(
 //   columns: (1fr, auto),
 //   table.header([*Composición*], [*Valor de $100€$ a final de año*]),
@@ -85,8 +85,8 @@ Vemos más ejemplos en @table-interes-compuesto.
     align: (left, right),
     table.header([*Frecuencia \ de composición*], [*Valor de $100€$ \ a final de año*]),
     [Anual ($n=1$)], [110.00€],
-    [Semi-anual ($n=2$)], [110.25€],
-    [Cuatrimestral ($n=4$)], [110.38€],
+    [Semestral ($n=2$)], [110.25€],
+    [Trimestral ($n=4$)], [110.38€],
     [Mensual ($n=12$)], [110.47€],
     [Semanal ($n=52$)], [110.51€],
     [Diario ($n=365$)], [110.52€],
@@ -97,8 +97,8 @@ Vemos más ejemplos en @table-interes-compuesto.
 #exercise[
   Ordenar de menor a mayor los siguientes tipos de interés:
   - 6% anual;
-  - 0,5% mensual;
-  - 30% por 5 años;
+  - 0.5% mensual;
+  - 30% a 5 años;
   - 10% el primer año y 4% los dos siguientes.
 ]
 
@@ -121,7 +121,7 @@ $
 
 #exercise[
   Responder a las siguientes preguntas:
-  - Dado un tipo del 10% compuesto semianualmente, ¿Cuál es el tipo continuo equivalente?
+  - Dado un tipo del 10% compuesto semestralmente, ¿cuál es el tipo continuo equivalente?
   - Un prestamista pretende conseguir el 8% continuo y cobra trimestralmente. ¿Cuál es el tipo anual para composición trimestral equivalente?
 ]
 
@@ -131,8 +131,8 @@ Hay diferentes productos con tipos de interés conocidos.
 
 ==== Bonos estatales <sec-bonos-estatales>
 Los bonos estatales son la forma en la que los Estados reciben dinero prestado.
-- Un bono se compone de una fecha de vencimiento, un valor nominal (el dinero que se entrega para comprar el bono y se recupera al en la fecha de vencimiento) y cupones en tiempo fijados (cantidades de dinero que el Estado paga al quién posea el bono en el momento de vencimiento del cupón). Cuando un Estado hace una oferta de bonos elige el valor nominal y las cantidades y vencimiento de los cupones. Este es el conocido como _mercado primario_.
-- El poseedor de estos bonos puede venderlos en cualquier momento anterior al vencimiento, en el conocido como _mercado secundario_. Estos valores son habitualmente conocidos, aunque se puedan hacer negocios privados. Lo más habitual es que la venta en el mercado secundario no sea por el valor nominal, sino por otra cantidad. Dado que quién compra el bono en el mercado secundario paga una cantidad distinta, pero va a recibir el mismo valor nominal a vencimiento y los mismos cupones podemos calcular el "tipo interés por su inversión". En sentido amplio esto es lo que se conoce como "rendimiento del bono" o "_bond yield_" en inglés. Una primera aproximación es
+- Un bono se compone de una fecha de vencimiento, un valor nominal (el dinero que se entrega para comprar el bono y se recupera en la fecha de vencimiento) y cupones en tiempos fijados (cantidades de dinero que el Estado paga a quien posea el bono en el momento de vencimiento del cupón). Cuando un Estado hace una oferta de bonos elige el valor nominal y las cantidades y vencimiento de los cupones. Este es el conocido como _mercado primario_.
+- El poseedor de estos bonos puede venderlos en cualquier momento anterior al vencimiento, en el conocido como _mercado secundario_. Estos valores son habitualmente conocidos, aunque se puedan hacer negocios privados. Lo más habitual es que la venta en el mercado secundario no sea por el valor nominal, sino por otra cantidad. Dado que quien compra el bono en el mercado secundario paga una cantidad distinta, pero va a recibir el mismo valor nominal a vencimiento y los mismos cupones, podemos calcular el "tipo de interés por su inversión". En sentido amplio esto es lo que se conoce como "rendimiento del bono" o "_bond yield_" en inglés. Una primera aproximación es
   $
     "«rendimiento actual del bono»" = "cupón anual"/"valor actual del bono".
   $
@@ -144,43 +144,41 @@ Esto nos da una forma de estimar "la evolución del valor del dinero" si no quer
 
 De nuevo, la explicación que estamos haciendo es una simplificación. Por ejemplo, no siempre que un Estado emite bonos con un cierto cupón encuentra compradores interesados. Por ejemplo podemos señalar el caso de Rusia durante la guerra de Ucrania. Ver #link("https://www.bloomberg.com/news/articles/2026-07-21/russia-halts-bond-auctions-with-more-monetary-easing-in-question")[Bloomberg].
 
-==== Prestamos interbancarios
+==== Préstamos interbancarios
 
-También existen tipos de interés a "corto plazo", con el que los bancos se prestan dinero entre sí.
-Esto también estable "restricciones".
-Los dos ejemplo más relevantes en nuestro contexto son:
+También existen tipos de interés a "corto plazo", con los que los bancos se prestan dinero entre sí.
+Esto también establece "restricciones".
+Los dos ejemplos más relevantes en nuestro contexto son:
 
-- LIBOR es el acrónimo del _London Interbank Offered Rate_. Es un tipo de préstamo a corto plazo entre bancos, sin garantías. Se calculan a diario cada día laborable en 10 monedas y 15 periodos (desde 1 día hasta 1 año).
+- LIBOR es el acrónimo del _London Interbank Offered Rate_. Es un tipo de préstamo a corto plazo entre bancos, sin garantías. Se calcula cada día laborable en 10 monedas y 15 periodos (desde 1 día hasta 1 año).
 
 - El euríbor (del inglés euribor), acrónimo de _Euro Interbank Offered Rate_ es un índice de referencia publicado diariamente que indica el tipo de interés promedio al que un gran número de bancos europeos dicen concederse préstamos a corto plazo entre ellos para prestárselo a terceros —particulares y empresas—.
 
 #figure(
   image("../figures/euribor-vs-bono.pdf"),
-  caption: [Comparación entre el euribor a 12 meses y el bono español a 10 años],
+  caption: [Comparación entre el euríbor a 12 meses y el bono español a 10 años],
   placement: auto,
 )
 
 
 === Bono de cupón cero
 
-La hipótesis de no-arbitraje hace que un producto consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" puede dar un único beneficio a tiempo $T$.
+La hipótesis de no arbitraje hace que un producto consistente en "invertir 1€ a tiempo $t$ con vencimiento a tiempo $T$" pueda dar un único beneficio a tiempo $T$.
 Vamos a utilizar este producto como referencia para valorar el resto de productos, bajo la hipótesis de no arbitraje.
-El producto más habitual de esta naturaleza
-
-La expresión más habitual del contrato no es escribir así el producto: un contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
+El producto más habitual de esta naturaleza es el siguiente: un contrato por el que una entidad se compromete a pagarnos una cantidad llamada «principal» denotado $K$ en la fecha de vencimiento $T$.
 Asumiremos que quien vende el contrato (típicamente un estado o una entidad grande) es «de fiar» y pagará con total garantía, de modo que este producto no tiene riesgo.
-Este producto es lo que se llama un «bono»
+Este producto es lo que se llama un «bono».
 Además, este producto es un tipo muy sencillo de «bono», que no hace pagos intermedios, los llamados «cupones». Por eso se habla de «cupón cero».
 
-#definition[Bono de cupón cero bajo la hipótesis de no-arbitraje][
-  Un bono de cupón cero con fecha de vencimiento $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ unidades monetarias (por ejemplo USD denotado por \$) pagada en la fecha $T$.
+#definition[Bono de cupón cero bajo la hipótesis de no arbitraje][
+  Un bono de cupón cero con fecha de vencimiento $T$ y principal $K$ es un contrato que garantiza a su poseedor $K$ unidades monetarias (por ejemplo USD denotado por \$) pagadas en la fecha $T$.
   Denotaremos
   $
-    p(t, T) := "precio a tiempo "t" de un bono de principal "K = 1" y maduración" T.
+    p(t, T) := "precio a tiempo "t" de un bono de principal "K = 1" y vencimiento" T.
   $
   Asumimos que:
   - Siempre podemos comprar a tiempo $t$ un producto (que llamaremos _bono cupón cero_) a precio $p(t,T)$ que garantiza $1$\$ a tiempo $T$.
-  - Se puede comprar o vender sin coste
+  - Se puede comprar o vender sin coste.
   - A vencimiento instantáneo el precio es el principal, es decir
   $
     p(t,t) = 1 "para todo "t.
@@ -188,9 +186,9 @@ Además, este producto es un tipo muy sencillo de «bono», que no hace pagos in
 ]<def-bonocuponcero>
 Así, el valor a tiempo $t$ de un bono de cupón cero y principal $K$ es $K p(t,T)$.
 
-Una de las tareas difíciles de la Matemática Financiera es aproximar este valor. Nótese que su existencia depende fuertemente de la hipótesis de no-arbitraje (que podría no cumplirse).
+Una de las tareas difíciles de la Matemática Financiera es aproximar este valor. Nótese que su existencia depende fuertemente de la hipótesis de no arbitraje (que podría no cumplirse).
 
-Hay otra forma muy habitual de expresar este valor, que es la siguiente
+Hay otra forma muy habitual de expresar este valor, que es la siguiente:
 
 #definition[Rendimiento (o _yield_) del cupón cero con composición continua a tiempo $t$ con vencimiento $T$][
   Valor $R(t,T)$ tal que $p(t,T) = e^(-R dot.c (T -t))$, es decir
@@ -209,10 +207,10 @@ La traducción de vencimiento en inglés es _maturity_.
   $
     p(t, T_1) / p(t, T_2)
   $
-  Este el llamado *tipo _forward_*.
+  Este es el llamado *tipo _forward_*.
 ]
 #proof[
-  Para entender el precio de un bono cupón cero a diferentes tiempo podemos pensar en la siguiente estrategia. Sea $t < T_1 < T_2$:
+  Para entender el precio de un bono cupón cero a diferentes tiempos podemos pensar en la siguiente estrategia. Sea $t < T_1 < T_2$:
   - A tiempo $t$ vendemos un bono con vencimiento en $T_1$ (es decir el compromiso de devolver 1\$ a tiempo $T_1$).
     Su valor es $p(t, T_1)$\$.
   - A tiempo $t$ usamos ese dinero para comprar $p(t,T_1) / p(t, T_2)$ bonos con vencimiento $T_2$. No hemos invertido nada.
@@ -223,22 +221,22 @@ La traducción de vencimiento en inglés es _maturity_.
 
 Podemos escribirlos de diferentes maneras:
 
-- El tipo simple hacia adelante (_simple forward rate_ o tipo LIBOR _forward_), es la solución de la ecuación
+- El tipo simple hacia adelante (_simple forward rate_ o tipo LIBOR _forward_) es la solución de la ecuación
   $
-    1 + (T-S) L = p(t,S)/p(t,T)
+    1 + (T_2 - T_1) L = p(t,T_1)/p(t,T_2).
   $
   De modo que
   $
-    L(t; T_1, T_2) := - (p(t, T_2) - p(t, T_1)) / ((T_2 - T_1) p(t; T_2).)
+    L(t; T_1, T_2) := - (p(t, T_2) - p(t, T_1)) / ((T_2 - T_1) p(t, T_2)).
   $<eq-LIBOR>
 
-- El _simple spot rate for $[S,T]$_ o _LIBOR spot rate_ se define como
+- El _simple spot rate_ para $[T_1,T_2]$ o _LIBOR spot rate_ se define como
   $
     L(T_1, T_2) := - (p(T_1, T_2) - 1)/((T_2-T_1) p(T_1, T_2))
   $
 #remark[
   En realidad, el tipo LIBOR entre $T_1$ y $T_2$ (denotado $L(T_1, T_2)$) es un valor que decide el organismo correspondiente a tiempo $T_1$, y este «fija una condición» sobre el rendimiento cupón cero (que es un ente "a posteriori"), si creemos en la ausencia de arbitraje.
-  Más abajo en @ex-calculo-zerocouponyield construiremos $y(t;T)$ en varios tiempos a partir de bonos de cupón fijo. Podríamos al cálculo otros productos, como tipos LIBOR entre fechas, o precios de otros derivados.
+  Más abajo, en el @ex-calculo-zerocouponyield, construiremos $R(0,T)$ en varios tiempos a partir de bonos de cupón fijo. Podríamos añadir al cálculo otros productos, como tipos LIBOR entre fechas, o precios de otros derivados.
 ]
 
 // - El *_continuously compounded spot rate_* en el periodo $[T_1,T_2]$ contratado en $t$ viene dado por
@@ -255,11 +253,11 @@ Podemos escribirlos de diferentes maneras:
 //   $
 //   Nótese que coincide con el rendimiento del cupón cero en ese periodo.
 
-- Se llama _instantenous forward rate with maturity $T$ contracted at $t$_ a
+- Se llama tipo _forward_ instantáneo con vencimiento $T$ contratado en $t$ (_instantaneous forward rate_) a
   $
     f(t, T) := - (partial log p (t,T)) / (partial T)
   $
-- _instanteneous short rate_ viene dado por
+- El tipo corto instantáneo (_instantaneous short rate_) viene dado por
   $
     r(t) := f(t,t).
   $
@@ -288,11 +286,11 @@ $
 
 #example(breakable: true)[Hipoteca con tipo fijo y amortización francesa][
   En una hipoteca el tipo de interés se suele expresar en TIN anual.
-  A esto hay que añadirle una comisión de apertura (por ejemplo el 1.5% del principal), así como otras posibles comisiones por cancelación anticipada, etc...
+  A esto hay que añadirle una comisión de apertura (por ejemplo el 1.5% del principal), así como otras posibles comisiones por cancelación anticipada, etc.
 
   La premisa de esta amortización es que la cuota mensual, $c$, permanece fija si el interés nominal no cambia.
   De manera que hemos de deducir $c$.
-  El interés en el mes $n$-ésimo, $i_n$, es siempre la proporcionales al principal pendiente, $p_n$, es decir $i_n = r p_n$, donde $r$ es el tipo de interés mensual.
+  El interés en el mes $n$-ésimo, $i_n$, es siempre proporcional al principal pendiente, $p_n$, es decir $i_n = r p_n$, donde $r$ es el tipo de interés mensual.
   Vamos a suponer que la amortización y pago de intereses se hace mensualmente.
   En la práctica se aplica la convención de que el tipo mensual es
   $
@@ -309,66 +307,66 @@ $
   $x_(n+1) = (1 + r)x_n$
   de modo que, por inducción, $x_n = (1 + r)^n x_0$.
   // Así $p_n = p^* + (1 + r)^n (p_0 - p^*).$
-  Dado que buscamos que $p_N = 0$, si queremos que amortizar la hipoteca en $N$ años,  despejamos
+  Dado que buscamos que $p_N = 0$, si queremos amortizar la hipoteca en $N$ meses, despejamos
   $
     c = (p_0 r)/(1-(1+r)^(-N)).
   $
 ]
 
-*Comentario: Hipotecas variables*. Un tipo habitual de hipotecas tiene tipo variable o es mixta (unos primeros años con tipo fijo, y luego tipo variable).
-Es habitual que el tipo variable se exprese en función como
+*Comentario: Hipotecas variables*. Un tipo habitual de hipotecas tiene tipo variable o mixto (unos primeros años con tipo fijo, y luego tipo variable).
+Es habitual que el tipo variable se exprese como
 $
-  "Euribor" + "Diferencial".
+  "Euríbor" + "Diferencial".
 $
-El diferencial se pacta con el banco en la hipoteca, y el euribor es anunciado
-En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses utiliza como $"TIN"_"anual"$ el correspondiente #link("https://www.euribor-rates.eu/es/tipos-euribor-actualmente/4/euribor-valor-12-meses/")["Euribor a 12 meses"].
+El diferencial se pacta con el banco en la hipoteca, y el euríbor es anunciado periódicamente.
+En este caso, $r$ va cambiando. Es habitual que se revise cada 6 meses, utilizando como TIN anual el correspondiente #link("https://www.euribor-rates.eu/es/tipos-euribor-actualmente/4/euribor-valor-12-meses/")[«euríbor a 12 meses»].
 El capital amortizado cada mes no cambia, pero se pagan los intereses que correspondan.
 
 *Otros tipos de amortización:* Existen hipotecas con otros tipos de amortización como el alemán, pero no son muy relevantes en nuestro contexto.
 
-== _Value-at-risk_ VaR
+== Valor en riesgo (_Value-at-Risk_, VaR)
 
 Cuando se usa un valor en riesgo se expresa:
 #quote(block: true)[
   Estoy $X$% seguro de que no habrá una pérdida de más de $v$\$ en los próximos $N$ días.
 ]
-Si supiésemos la distribución de los retornos y esta fuese continua, $R$
+Si supiésemos la distribución de los retornos, y esta fuese continua, definiríamos
 $
   op("VaR") N"-días al" X% := v "tal que" PP lr(("ganancia en" N "días" <= v), size: #200%) = 1 - X/100.
 $
-Por motivos que veremos abajo, la ganancia/pérdida escala se suele modelizar con distribuciones normales independientes como veremos más adelante
+Por motivos que veremos más adelante, la ganancia/pérdida se suele modelizar con distribuciones normales independientes
 y por tanto se suele aproximar
 $
-  op("VaR") N"-días al" X approx sqrt(N) dot lr((op("VaR") 1"-día al" X), size: #200%)
+  op("VaR") N"-días al" X% approx sqrt(N) dot lr((op("VaR") 1"-día al" X%), size: #200%).
 $
 
-El modelo más habitual es el modelo histórico, que se leer en #cite(<Hull2015>, supplement: "Chapter 22").
+El modelo más habitual es el modelo histórico, que se puede leer en #cite(<Hull2015>, form: "prose", supplement: "cap. 22").
 
-==== Ejemplo para un sólo activo
+==== Ejemplo para un solo activo
 
 Estudiemos el VaR de una cartera de 10M\$ en acciones de Microsoft, al 99% de confianza a lo largo de $N=10$ días.
 
 Normalmente se asume que el cambio esperado de valor de una variable de mercado en un periodo corto es cero. Esto no es estrictamente cierto, pero es una hipótesis razonable porque es un cambio pequeño comparado con la volatilidad.
 Si pensamos que
 $
-  "Ganancia/pérdida" N "días" approx dot Normal (N mu, N sigma^2).
+  "Ganancia/pérdida" N "días" approx Normal (N mu, N sigma^2),
 $
 entonces estamos diciendo que $mu << sigma$ y que podemos suponer $mu = 0$.
 Por ejemplo, podríamos pensar que Microsoft tiene una volatilidad diaria del $sigma = 2%$ (que es una volatilidad anual del 32%).
-Supongamos además que tiene un retornos del 20% anual.
-En el periodo de 1 día estamos diciendo que tiene un retorno del $0.2/252 = 0.08%$ mientas que la volatilidad es del 2%.
+Supongamos además que tiene un retorno del 20% anual.
+En el periodo de 1 día estamos diciendo que tiene un retorno del $0.2/252 = 0.08%$ mientras que la volatilidad es del 2%.
 
 En el periodo de 10 días, la volatilidad es de $sqrt(10) dot 2% approx 6.3%$.
 
-Sobre esta cartera esto significa que $sigma = 200.000$\$.
+Sobre esta cartera esto significa que $sigma = 200 thin 000$\$.
 Busquemos el VaR de 1 día al 99% de confianza
 $
   0.01 = PP(10 dot Normal(0, sigma^2) < v) = PP(Normal(0, 1) < v / sigma).
 $
-con lo que, utilizan las tablas de la Normal (o algún método más novedoso) $v/(sigma) = 2.326$ y deducimos que el VaR de un día resulta $v = 465,300$\$.
-El VaR de diez días corresponde el VaR de 10 días es $sqrt(10) dot 465,300 = 1,471,300$\$.
+con lo que, utilizando las tablas de la normal (o algún método más novedoso) $v/(sigma) = 2.326$ y deducimos que el VaR de un día resulta $v = 465 thin 300$\$.
+El VaR de 10 días es $sqrt(10) dot 465 thin 300 approx 1 thin 471 thin 300$\$.
 
-En resumen, supuesto un compartimento normal de media nula
+En resumen, supuesto un comportamiento normal de media nula
 $
   "VaR" N"-días al" X% = sqrt(N) dot sigma_(1 "día") dot "erf"(1-X/100)
 $
@@ -376,7 +374,7 @@ $
 
 ==== Ejemplo para varios activos
 
-Para reproducir el argumento anterior en una cartera con dos activos debemos tener en cuenta que si $(X,Y)$ es una normal bi-dimensional
+Para reproducir el argumento anterior en una cartera con dos activos debemos tener en cuenta que si $(X,Y)$ es una normal bidimensional
 $
   sigma_(X+Y) = sqrt(sigma_X^2 + sigma_Y^2 + 2 rho sigma_X sigma_Y).
 $

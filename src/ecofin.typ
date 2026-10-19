@@ -12,7 +12,7 @@
     \
     #custom-date-format(datetime.today(), pattern: "long", lang: "es")
     #footnote[
-      Licensed under CC BY-NC 4.0.  #box(
+      Publicado bajo licencia CC BY-NC 4.0. #box(
         stack(
           dir: ltr, // left-to-right
           image("chapters/cc.svg", height: 1.5em),
@@ -21,7 +21,7 @@
         ),
         height: 1em,
       ) \
-      To view a copy of this license, visit https://creativecommons.org/licenses/by-nc/4.0/
+      Para ver una copia de esta licencia, visite https://creativecommons.org/licenses/by-nc/4.0/
     ]
   ],
   bibliography: bibliography("refs.bib", style: "harvard-cite-them-right"),
@@ -36,6 +36,7 @@
 
 #set heading(numbering: "A.1", supplement: [Apéndice])
 #counter(heading).update(0)
+#set-theorion-numbering("A.1")
 
 #include "chapters/06-repaso-estadistica.typ"
 #include "chapters/07-tae.typ"
