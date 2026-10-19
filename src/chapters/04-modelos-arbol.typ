@@ -90,9 +90,9 @@ Según las hipótesis sobre la elección de $u$ y $d$ se habla de modelo de Cox-
 
 Tomamos
 - $Omega = {0,1}^N$ donde $N Delta t = T$. Para $bold(omega) in Omega$ usaremos la notación $bold(omega) = (omega_(Delta t), omega_(2Delta t), dots.c , omega_T)$.
-- $cal(F) = 2^Omega$, la $sigma$-álgebra de puntos
+- $cal(F) = 2^Omega$, la $sigma$-álgebra de puntos.
 - La medida de probabilidad es
-  $ PP(bold(omega)) := p^(a) (1-p)^(N-a) "donde" a := "número de unos en "bold(omega) = sum_(t=1)^N omega_t. $
+  $ PP(bold(omega)) := p^(a) (1-p)^(N-a) quad "donde" quad a := "número de unos en "bold(omega) = sum_(t=1)^N omega_t. $
 
 #exercise[Comprobar que la medida $PP$ así construida es la única medida de probabilidad en $Omega$ tal que
   + $PP({bold(omega) in Omega : omega_t = 1}) = p$ y

@@ -95,9 +95,9 @@ Vamos a hablar ahora de dónde se compran y se venden estos activos y derivados.
 #quote(block: true, attribution: [https://es.wikipedia.org/wiki/Bolsa_de_valores])[
   La bolsa de valores es una institución, organizada generalmente como sociedad mercantil o asociación civil, que facilita la negociación de valores mobiliarios entre inversores. Su función principal es ofrecer un espacio regulado y transparente en el que los intermediarios financieros introducen órdenes de compra y venta en nombre propio o de sus clientes, contribuyendo a la formación de precios y a la canalización del ahorro hacia la inversión productiva.
 
-  Entre los instrumentos que se negocian en las bolsas se encuentran las acciones de sociedades anónimas, los bonos públicos y privados, los certificados, los títulos de participación y una amplia variedad de instrumentos financieros derivados.[2][3]
+  Entre los instrumentos que se negocian en las bolsas se encuentran las acciones de sociedades anónimas, los bonos públicos y privados, los certificados, los títulos de participación y una amplia variedad de instrumentos financieros derivados.
 
-  Las bolsas están supervisadas por organismos reguladores de los mercados financieros, como la Comisión Nacional del Mercado de Valores (CNMV) en España, la Comisión Nacional Bancaria y de Valores (CNBV) en México o la Securities and Exchange Commission (SEC) en Estados Unidos, con el fin de garantizar la transparencia, la seguridad y la protección de los inversores.[4]
+  Las bolsas están supervisadas por organismos reguladores de los mercados financieros, como la Comisión Nacional del Mercado de Valores (CNMV) en España, la Comisión Nacional Bancaria y de Valores (CNBV) en México o la Securities and Exchange Commission (SEC) en Estados Unidos, con el fin de garantizar la transparencia, la seguridad y la protección de los inversores.
 ]
 
 ==== Mercado extrabursátil (_over-the-counter_ market)
